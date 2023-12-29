@@ -1,0 +1,113 @@
+.recent-event-section{
+    .slider-item {
+          .event-recent-date ,.event-more-details{
+            position: absolute;
+            bottom: 0px;
+            background-color: white;
+            padding: 5px;
+            border-radius: 5px;
+            font-weight: 500;
+            color: indianred;
+            margin-bottom: 2px;
+            margin-left: 7px;
+        }
+        .event-more-details {
+            right: 0px;
+            text-decoration: none;
+            margin-right: 8px
+        }
+    }
+}
+.daily-event-section {
+    .event-anchor{
+        position: absolute;
+        bottom: 0px;
+        right: 0px;
+        text-decoration: none;
+        background-color: white;
+        padding: 5px 20px 5px 20px;
+        border-radius: 5px;
+        color: indianred;
+        margin-bottom: 2px;
+        margin-right: 7px;
+        span {
+            margin-left: 6px;
+            font-weight: 600;
+        }
+    }
+}
+.regularsponsor-event-section {
+    .sponsor-details {
+        position: absolute;
+        bottom: 0px;
+        right: 0px;
+        text-decoration: none;
+        background-color: white;
+        padding: 5px 20px 5px 20px;
+        border-radius: 5px;
+        color: indianred;
+        margin-bottom: 2px;
+        margin-right: 7px;
+        span {
+            margin-left: 6px;
+            font-weight: 600;
+        }
+    }
+}
+.home-events {
+    
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+  
+    .next {
+        right:-14px !important;
+    }
+    .prev{
+        left: -10px !important;
+    }
+    .slick-arrow{
+        left:auto;
+    }
+    
+    .slider-item {
+      height: 300px !important;
+    }
+
+    &:before {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        top: 0;
+        left: 0;
+        right: 0;
+    }
+
+    .slider-item {
+        position: relative;
+    }
+    .slider-content {
+        font-size: 16px;
+        font-weight: 500;
+        display: flex;
+        position: absolute;
+        bottom: 50%;
+        right: 0px;
+        flex-direction: column;
+        margin: auto;
+        align-items: center;
+        width: 100%;
+        h2 {
+            font-size: 25px;
+            text-align: center;
+            color: white;
+            text-transform: uppercase;
+        }
+        p {
+            color: white;
+            text-align: center;
+        }
+    }
+}
+
+

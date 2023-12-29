@@ -1,0 +1,24 @@
+export interface Donation {
+    _id:string;
+    Type: string;
+    Date: string;
+    name:string;
+    amount:string;
+    address:string;
+}
+
+export interface DonationSingleRes {
+    success:boolean;
+    donation:Donation;
+    errorMessage:string;
+    errorCode:number;
+    message:string;
+}
+
+export interface DonationRes {
+    success:boolean;
+    donations:Donation[];
+    errorMessage:string;
+    errorCode:number;
+    message:string;
+}

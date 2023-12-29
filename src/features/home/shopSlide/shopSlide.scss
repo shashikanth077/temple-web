@@ -1,0 +1,94 @@
+.shopping{
+    .img-fluid {
+        height: 100%;
+    }
+    .single-shop-box {
+        border: 1px solid #e7eaef;
+        border-radius: 6px;
+        padding: 20px;
+        margin-left: 5px;
+        height: 332px;
+        margin-top: 30px;
+        &:hover .thumb .cart-list-icon{
+            top:-20px;
+            opacity: 1;
+            visibility: visible !important;
+        }
+        &:hover .thumb img{
+            -webkit-transition: .3s ease-in-out;
+            transition: .3s ease-in-out;
+        }
+        .thumb {
+            height: 250px;
+            position: relative;
+            img {
+                transition: all .5s linear;
+            }
+            .cart-list-icon {
+                position: absolute;
+                top: -20px;
+                right: 0;
+                display: block;
+                visibility: hidden;
+                opacity:0;
+                transition: all .5s linear;
+                ul {
+                    margin: 0;
+                    padding: 0;
+                    list-style-type: none;
+                    a {
+                        height: 36px;
+                        width: 36px;
+                        text-align: center;
+                        line-height: 41px;
+                        background: #eef1f6;
+                        color: #0e1133;
+                        padding: 6px;
+                        margin-bottom: 6px;
+                        border-radius: 5px;
+                    }
+                }
+            }
+        }
+        .content {
+            padding-bottom: 10px;
+            a {
+                font-size: 14px;
+                font-weight: 500;
+                color: #0e1133;
+                margin-bottom: 5px;
+                &:hover{
+                    background: #2b70fa;
+                    color: #fff
+                }
+            }
+            .pricing {
+                display: flex;
+                font-size: 18px;
+                font-weight: 700;
+                color: #0e1133;
+                .regular-price {
+                    color: #63636a;
+                    font-weight: 400;
+                 
+                    margin-left: 10px;
+                }
+            }
+
+        }
+    }
+    .fa, .fas {
+        font-family: 'Font Awesome 5 Pro';
+        font-weight: 300;
+    }
+    .next {
+        right:-14px !important;
+    }
+    .prev{
+        left: -10px !important;
+    }
+    .slick-arrow{
+        left:auto;
+    }
+
+}

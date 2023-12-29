@@ -1,0 +1,30 @@
+{
+    "data": [
+        {
+            "booking_id": 1,
+            "booking_type": "Event name one",
+            "booking_image": "event1.jpg",
+            "booking_description":"Something related to booking type"
+        },
+        {
+            "booking_id": 2,
+            "booking_type": "Event name one",
+            "booking_image": "event1.jpg",
+            "booking_description":"Something related to booking type"
+        },
+        {
+            "booking_id": 3,
+            "booking_type": "Event name one",
+            "booking_image": "event1.jpg",
+            "booking_description":"Something related to booking type"
+        },
+        {
+            "booking_id": 4,
+            "booking_type": "Event name one",
+            "booking_image": "event1.jpg",
+            "booking_description":"Something related to booking type"
+        }
+    ],
+    "status":true,
+    "error":""
+  }

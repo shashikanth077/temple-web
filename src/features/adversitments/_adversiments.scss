@@ -1,0 +1,43 @@
+.advertises {
+    position: relative;
+    .single-ads-wrap {
+        position: relative;
+        .advertise-overlay {
+            position: absolute;
+            background: rgba(0,0,0,.4);
+            -webkit-transform: translateY(100%);
+            transform: translateY(100%);
+            transition: all .5s;
+            opacity: 0;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            .advertise-content {
+                position: absolute;
+                top: 50%;
+                -webkit-transform: translateY(-50%);
+                transform: translateY(-50%);
+                right: 0;
+                left: 0;
+                text-align: center;
+                .advertise-icon {
+                    border: 1px solid #fff;
+                    color: #fff;
+                    height: 48px;
+                    width: 48px;
+                    line-height: 48px;
+                    margin: 0 auto;
+                    border-radius: 50px;
+                }
+            }
+        }
+        &:hover {
+            .advertise-overlay {
+                transform: translateY(0%);
+                opacity: 1;
+            }
+        }
+    }
+    
+}

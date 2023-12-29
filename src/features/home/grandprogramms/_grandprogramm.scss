@@ -1,0 +1,21 @@
+.grand-program {
+    background-color: #724D67;
+    .grand-program-section {
+        display: flex;
+        color:#fff;
+        font-size: 20px;
+        align-items: center;
+        padding: 11px;
+    }
+    .anchor-box {
+        text-decoration: none;
+        padding: 10px 30px 10px 30px ;
+        color: #fff;
+        font-weight: 600;
+        border: 1px solid #fff;
+        &:hover{
+            color: black;
+            background-color: #fff;
+        }
+    }
+}

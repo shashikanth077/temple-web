@@ -1,0 +1,127 @@
+{
+    "success":true,
+    "contentData" : {
+        "content" : {
+            "home" :{
+                "homeBanner":[
+                    {
+                        "id": 1,
+                        "banner_image": "slider1.jpg",
+                        "main_title": "The hub of creativity and spirituality",
+                        "caption": "Holy temple for the devotees",
+                        "status": true,
+                        "errors": ""
+                    },
+                    {
+                        "id": 2,
+                        "banner_image": "slider2.jpg",
+                        "main_title": "The hub of creativity and spirituality",
+                        "caption": "Holy temple for the devotees",
+                        "status": true,
+                        "errors": ""
+                    },
+                    {
+                        "id": 3,
+                        "banner_image": "slider3.jpg",
+                        "main_title": "The hub of creativity and spirituality",
+                        "caption": "Holy temple for the devotees",
+                        "status": true,
+                        "errors": ""
+                    }   
+                ],
+                "booking":{
+                    "heading":"Bookings"
+                },
+                "recentevents":{
+                    "heading":"Recent events"
+                },
+                "staff":{
+                    "heading":"Staffs"
+                },
+                "dailyevents":{
+                    "heading":"Daily events"
+                },
+                "shop":{
+                    "heading":"Shop"
+                },
+                "donations":{
+                    "donationOneTitle":"Journey to enlightenment: we invite you to experience divine love and grace",
+                    "Link1":"#",
+                    "Link2":"#",
+                    "donationTwoTitle":"Journey to enlightenment: we invite you to experience divine love and grace"
+                },
+                "adverstiments":
+                [
+                    {
+                        "ads_id": 1,
+                        "ads_image": "ads.jpg",
+                        "ads_title": "test@gmail.com",
+                        "ads_description": "333 Canada 6666 Near to chruch steert,Opposit to petrol bunk"
+                    },
+                    {
+                        "ads_id": 2,
+                        "ads_image": "ads.jpg",
+                        "ads_title": "test@gmail.com",
+                        "ads_description": "333 Canada 6666 Near to chruch steert,Opposit to petrol bunk"
+                    },
+                    {
+                        "ads_id": 3,
+                        "ads_image": "ads.jpg",
+                        "ads_title": "test@gmail.com",
+                        "ads_description": "333 Canada 6666 Near to chruch steert,Opposit to petrol bunk"
+                    },
+                    {
+                        "ads_id": 4,
+                        "ads_image": "ads.jpg",
+                        "ads_title": "test@gmail.com",
+                        "ads_description": "333 Canada 6666 Near to chruch steert,Opposit to petrol bunk"
+                    }
+                ]
+            },
+            "services":{
+                "homeServiceheading":"Our services"
+            },
+            "shop":{
+                "shop":"Our products"
+            },
+            "bookings":{
+                "heading":"Bookings"
+            },
+            "registration":{
+                "heading":"Register",
+                "registrationActivation":"Please check your email. Please use link which has sent to email for activation",
+                "submitBtnName":"Sign Up",
+                "formPlaceHolder":{
+                    "firstName":"Enter your first name",
+                    "lastName":"Enter your last name",
+                    "email":"Enter your email",
+                    "phonenumber":"Enter your phonenumber",
+                    "terms":"I accept Terms and Conditions"
+                },
+                "formValidation":{
+                    "firstName":"Please enter your first name",
+                    "lastName":"Please enter your last name",
+                    "email":"Please enter your email",
+                    "password":"Please enter your password",
+                    "phonenumber":"Please enter your phonenumber",
+                    "checkboxsignup":"I accept Terms and Conditions",
+                    "emailValid":"Please enter valid email address"
+                }
+            },
+            "login":{
+                "heading":"Sign In",
+                "formValidation":{
+                    "username":"Please enter your username",
+                    "password":"Please enter your password"
+                },
+                "formPlaceHolder":{
+                    "username":"Enter your username",
+                    "password":"Enter your password"
+                },
+                "IshasAccount":"Don`t have an account?",
+                "SubmitBtn":"Login"
+            }
+      
+        }
+    }
+}

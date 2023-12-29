@@ -1,0 +1,60 @@
+{
+    "aboutImages": [
+        {
+            "id": 1,
+            "about_image": "about1.jpg",
+            "caption": "about1"
+        },
+        {
+            "id": 2,
+            "about_image": "about2.jpg",
+            "caption": "about1"
+        },
+        {
+            "id": 3,
+            "about_image": "about3.jpg",
+            "caption": "about1"
+        },
+        {
+            "id": 4,
+            "about_image": "about4.jpg",
+            "caption": "about1"
+        },
+        {
+            "id": 5,
+            "about_image": "about5.jpg",
+            "caption": "about1"
+        },
+        {
+            "id": 6,
+            "about_image": "about5.jpg",
+            "caption": "about1"
+        }
+    ],
+    "homeaboutDescription": {
+            "image":"about.jpg",
+            "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
+    },
+    "aboutMainSection": {    
+        "aboutSection":   {
+            "aboutImage":"about.jpg",
+            "aboutDescription":"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+            "personQuote":"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+            "authorName":"Hanson Deck",
+            "authorDesignation":"Preist"
+        },
+        "aboutBooking":  {
+            "aboutBookingImage":"about.jpg",
+            "aboutBookingDescription":"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
+        },
+        "aboutService":    {
+            "aboutserviceImage":"about.jpg",
+            "aboutServiceDescription":"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
+        },
+        "aboutOthers":    {
+            "contactUsImage":"about.jpg",
+            "serviceImage":"about.jpg"
+        }
+    }
+    
+}

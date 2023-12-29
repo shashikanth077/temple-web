@@ -1,0 +1,34 @@
+.home-about {
+    img{
+        width: 100%;
+        height: 100%;
+    }
+    .about-headering {
+        text-transform: capitalize;
+        color:black;
+        font-weight: bold;
+    }
+    .about-description {
+        padding: 5px;
+    }
+    .home-slider-images {
+        .evenabout-image {
+            height: 250px;
+            max-width: 100%;
+        }
+        .oddabout-image {
+            height: 350px;
+            max-width: 100%;
+        }
+        .slider-item {
+            margin-left: 5px;
+            height: 400px;
+        }
+    }
+    .home-about-title {
+        font-size:49px;
+        font-weight: bold;
+        color:#322028;
+    }
+} 
+

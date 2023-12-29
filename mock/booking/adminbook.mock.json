@@ -1,0 +1,33 @@
+{
+    "success":true,
+	"bookings":[
+		{
+			"type":"Prasadam",
+			"orderdate":"23/12/2023",
+			"totalAmount":4455,
+			"orderStatus":"Pending",
+			"programDate":"23/12/2023"		
+		},
+		{
+			"type":"Vadamala",
+			"orderdate":"23/12/2023",
+			"totalAmount":25,
+			"orderStatus":"Confirmed",
+			"programDate":"23/12/2023"		
+		},
+		{
+			"type":"CarPooja",
+			"orderdate":"23/12/2023",
+			"totalAmount":234,
+			"orderStatus":"Confirmed",
+			"programDate":"23/12/2023"		
+		},
+		{
+			"type":"Shradam",
+			"orderdate":"23/12/2023",
+			"totalAmount":343,
+			"orderStatus":"Confirmed",
+			"programDate":"23/12/2023"		
+		}
+	]
+}

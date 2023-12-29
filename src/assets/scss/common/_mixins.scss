@@ -1,0 +1,39 @@
+/**
+* MEDIA QUERY MANAGER
+**/
+@mixin respond($breakpoint) {
+    @if $breakpoint == phone {
+      @media only screen and (max-width: 575px) {
+        @content;
+      } //575px
+    }
+    @if $breakpoint == tablet {
+      @media only screen and (max-width: 767px) {
+        @content;
+      } //767px
+    }
+    @if $breakpoint == laptop {
+      @media only screen and (max-width: 991px) {
+        @content;
+      } //991px
+    }
+    @if $breakpoint == desktop {
+      @media only screen and (max-width: 1199px) {
+        @content;
+      } //1199px
+    }
+    @if $breakpoint == big-desktop {
+      @media only screen and (max-width: 1400px) {
+        @content;
+      } //1400px
+    }
+  }
+
+@mixin font-prop($size: false, $colour: false, $weight: false,  $lh: false) {
+    @if $size { font-size: $size; }
+    @if $colour { color: $colour; }
+    @if $weight { font-weight: $weight; }
+    @if $lh { line-height: $lh; }
+}
+
+  

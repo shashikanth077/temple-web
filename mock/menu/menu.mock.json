@@ -1,0 +1,96 @@
+{
+    "data": [
+        {
+            "menuId":1,
+            "link": "/about",
+            "title": "About",
+            "isDropdown": false
+        },
+        {
+            "menuId":2,
+            "link": "/events",
+            "title": "Events",
+            "isDropdown": false
+        },
+        {
+            "menuId":3,
+            "link": "/bookings",
+            "title": "Bookings",
+            "isDropdown": true,
+            "dropdownItem": [
+                {
+                    "link": "/",
+                    "title": "Vadamala"
+                },
+                {
+                    "link": "/v2",
+                    "title": "Pooja bookings"
+                },
+                {
+                    "link": "/v3",
+                    "title": "Shardam booking"
+                },
+                {
+                    "link": "/v4",
+                    "title": "Hallbookings"
+                }
+            ]
+        },
+        {
+            "menuId":4,
+            "link": "/services",
+            "title": "Services",
+            "isDropdown": true,
+            "dropdownItem": [
+                {
+                    "link": "/",
+                    "title": "Vadamala"
+                },
+                {
+                    "link": "/v2",
+                    "title": "Pooja bookings"
+                },
+                {
+                    "link": "/v3",
+                    "title": "Shardam booking"
+                },
+                {
+                    "link": "/v4",
+                    "title": "Hallbookings"
+                }
+            ]
+        },
+        {
+            "menuId":5,
+            "link": "/events",
+            "title": "Activities",
+            "isDropdown": false
+        },
+        {
+            "menuId":6,
+            "link": "/donations",
+            "title": "Donations",
+            "isDropdown": false
+        },
+        {
+            "menuId":7,
+            "link": "/purchase",
+            "title": "Store",
+            "isDropdown": false
+        },
+        {
+            "menuId":8,
+            "link": "/volunteers",
+            "title": "Resources",
+            "isDropdown": false
+        },
+        {
+            "menuId":9,
+            "link": "/contact",
+            "title": "Contact Us",
+            "isDropdown": false
+        }
+    ],
+    "status":true,
+    "error":""
+}

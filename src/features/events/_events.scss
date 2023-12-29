@@ -1,0 +1,36 @@
+.recent-events {
+    .carousel-inner {
+        padding: 0;
+        width: 100%;
+        height: 410px;
+        display: block;
+        margin: 0 auto;
+        position: relative;
+        .carousel-item {
+            top: 0;
+            width: 100%;
+            height: 410px;
+            display: block;
+            position: absolute;
+            img {
+                width: 100%;
+                height: 100%;
+            }
+        }
+    }
+    .carousel-caption {
+        left: 0;
+        right: 0;
+        bottom: 0;
+        padding-top: 0px;
+        padding-bottom: 0px;
+        .event-more {
+            padding-left: 0.5rem;
+            .event-more-details {
+                margin-right: 0.5rem;
+                margin-bottom: 0.5rem;
+            }
+        }
+        
+    }
+}

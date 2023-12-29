@@ -1,0 +1,119 @@
+.topbar {
+    background:darkcyan;
+    height: 34px;
+    font-size: 14px;
+    transition: all 0.5s;
+    color: #fff;
+    padding: 0;
+  
+    .logout-btn{
+      outline: navajowhite;
+      background-color: darkcyan;
+      border: none;
+      color: white;
+      padding: 2px;
+      margin-left: -1px;
+      .fa-sign-out-alt {
+        color:$white;
+      }
+    }
+    .social-links {
+      display: flex;
+      .user-account-section {
+        margin-left: 30px;
+        a{
+          color:white;
+        }
+        .member-portal-link {
+          font-weight: 700;
+        }
+      }
+    }
+    .contact-info i a,
+    .topbar .contact-info i span {
+      padding-left: 5px;
+      color: #fff;
+    }
+    .contact-info {
+      gap: 1rem;
+    }
+    a {
+      text-decoration: none;
+    }
+    ul.social-icons {
+      .user-icon {
+        margin-right: 1px;
+      }
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-box-orient: horizontal;
+      -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+      flex-direction: row;
+      -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+      -webkit-box-pack: center;
+      -ms-flex-pack: center;
+      justify-content: center;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      height: auto;
+      width: auto;
+      li {
+        &:last-child a{
+          height: 10px;
+          font-weight: bold;
+        }
+        &:first-child {
+          margin-right: 5px;
+        }
+     }
+      a {
+        line-height: 14px;
+        padding: 1px;
+        transition: 0.3s;
+        border-radius: 1rem;
+        color: rgba(255, 255, 255, 0.7);
+        height: 28px;
+        width: 27px;
+        color:white;
+        margin-right: 9px;
+        &:hover{
+          color: white;
+        }
+      }
+    }
+
+    .cart-wrap {
+      position: relative;
+      .icon-cart {
+        position: relative;
+        background: transparent;
+        border: none;
+        color: #000;
+        display: inline-block;
+        font-size: 16px;
+        padding: 0;
+        position: relative;
+        .fa-shopping-cart {
+          color:white;
+        }
+        .count-style{
+          background-color: #000;
+          border-radius: 100%;
+          color: #fff;
+          display: inline-block;
+          font-size: 9px;
+          height: 19px;
+          line-height: 21px;
+          position: absolute;
+          right: -14px;
+          text-align: center;
+          top: -9px;
+          width: 17px;
+        }
+      }
+    }
+  }

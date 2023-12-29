@@ -1,0 +1,32 @@
+.services-home {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+  
+    .next {
+        right:-14px !important;
+    }
+    .prev{
+        left: 8px !important;
+    }
+    .slick-arrow{
+        left:auto;
+    }
+    
+    .slider-item {
+        padding-top: 4px;
+        padding-bottom: 4px;
+        .service-box {
+            transition: all 0.5s;
+            margin-left: 20px;
+            height: 205px;
+            padding: 8px;
+            overflow: hidden;
+            align-items: self-end;
+
+            &:hover {
+                box-shadow: 0 2px 10px -1px blueviolet;
+            }
+        }
+    }
+}

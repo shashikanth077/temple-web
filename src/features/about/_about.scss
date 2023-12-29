@@ -1,0 +1,49 @@
+.about {
+    p {
+        text-align: justify;
+        font-family: $about-font-family;
+    }
+    .temple-picture {
+        position: relative;
+        .button-arrow{
+            position: absolute;
+            z-index: auto;
+            right: 4px;
+            bottom: 3px
+        }
+    }
+    .about-image{
+        height: 100%;
+    }
+    .button-arrow{
+        float: right;
+        .fa-chevron-right {
+            color: white;
+        }
+    }
+    .message-box {
+        border-radius: 11px;
+        padding: 5px;
+        display: flex;
+        align-items: end;
+        flex-direction: column;
+        p {
+            font-size: 15px;
+            line-height: 30px;
+            font-family: $about-font-family;
+        }  
+        .author-info {
+            .title {
+                font-size: 15px;
+                font-weight: 600;
+            }
+            span {
+                font-size: 20px;
+                font-weight: 600;
+            }
+        }
+        .fa, .fas{
+            margin-right: 3px;
+        }
+    }
+}

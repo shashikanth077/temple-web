@@ -1,0 +1,20 @@
+{
+  "data": {
+    "id": 1,
+    "phonenumber": "+91 812319222",
+    "emailaddress": "test@gmail.com",
+    "address": "333 Canada Near to old steert,Opposit to petrol bunk",
+    "sociallinks": {
+      "fb_link": "#",
+      "fb_icon_name": "fab fa-facebook-f",
+      "twitter_icon_name": "fab fa-twitter",
+      "instagram_icon_name": "fab fa-pinterest-p",
+      "whatsapp_icon_name": "fab fa-linkedin-in",
+      "twitter_link": "#",
+      "whatsapp_link": "#",
+      "instagram_link": "#"
+    },
+    "status": true,
+    "errors": ""
+  }
+}

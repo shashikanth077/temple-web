@@ -1,0 +1,49 @@
+.button-with-icon {
+    display: inline-flex;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+    padding: 0;
+    text-decoration: none;
+    color:#5F2C70;
+}
+.ar_btn{
+    font-size: 11px;
+    height: 26px;
+    line-height: 26px;
+    padding: 5px;
+    text-align: center;
+    transition: border 0.3s;
+}
+.ar_btn_icon {
+    border-width: 1px;
+    height: 26px;
+    width: 26px;
+    position: relative;
+    top:0px;
+    border-radius: 50%;
+    border: 1px solid #DED4E1;
+    order:2;
+    border-color: #322038;
+    i {
+        position: absolute;
+        z-index: 1;
+        top: 50%;
+        left: 41%;
+        -webkit-transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+        width: 30px;
+        height: 30px;
+        line-height: 29px;
+    }
+}
+.ar_button_text{
+    margin-right: 0.5rem;
+    display: inline-block;
+    vertical-align: middle;
+    white-space: normal;
+    font-size: 15px;
+    font-weight: 700;
+    text-decoration: inherit;
+}

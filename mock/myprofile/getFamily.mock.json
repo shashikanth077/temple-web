@@ -1,0 +1,12 @@
+{
+    "family" : {
+        "_id":1,
+        "relationship":"Father",
+        "firstName":"Shashi",
+        "lastName":"hr",
+        "dateOfbirth":"06/06/1991",
+        "star":"Misa",
+        "gotram":"xyz"
+    }
+   
+}

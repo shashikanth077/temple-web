@@ -1,0 +1,37 @@
+.contact-section {
+    .contact-info-area{
+        display: flex;
+        .fas {
+            color: darkred;
+            font-size: 42px;
+        }
+        .contact-box {
+            padding:20px;
+            text-align: center;
+            &:hover {
+                transform: translateY(0px);
+                -webkit-box-shadow: 0px 25px 35px 0px rgba(0, 0, 0, 0.1);
+                -moz-box-shadow: 0px 25px 35px 0px rgba(0, 0, 0, 0.1);
+                -ms-box-shadow: 0px 25px 35px 0px rgba(0, 0, 0, 0.1);
+                -o-box-shadow: 0px 25px 35px 0px rgba(0, 0, 0, 0.1);
+                box-shadow: 0px 25px 35px 0px rgba(0, 0, 0, 0.1);
+            }
+        }
+        .Col {
+            flex:1;
+        }
+    }
+    .contact-btn {
+        padding: 10px 20px;
+        border: 1px solid #ffffff;
+        background-color: #ffffff;
+        font-weight: 700;
+        overflow: hidden;
+        border-radius: 0px;
+        transition: 0.4s;
+        &:hover{
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+    }
+}

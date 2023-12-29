@@ -1,0 +1,92 @@
+.home-slides {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    .slider-item {
+      height: 600px !important;
+    }
+    .next {
+        right:10px !important;
+    }
+    .prev{
+        left: 7px !important;
+    }
+    .slick-arrow{
+        left:auto;
+    }
+    .banner-home-prev-ar,.banner-home-next-pr{
+        color:#999;
+        background-color: inherit;
+    }
+    &:before {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        top: 0;
+        left: 0;
+        right: 0;
+    }
+    .slider-item {
+        position: relative;
+    }
+    .slider-content {
+        font-size: 16px;
+        font-weight: 500;
+        display: flex;
+        position: absolute;
+        bottom: 0;
+        top:50%;
+        right: 0px;
+        flex-direction: column;
+        margin: auto;
+        align-items: center;
+        width: 100%;
+        h2 {
+            font-size: 1.7rem;
+            text-align: center;
+            font-weight: 800;
+            color: white;
+            text-transform: uppercase;
+        }
+        p {
+            color: white;
+            text-align: center;
+            font-weight:600;
+            font-size: 20px;
+        }
+    }
+    .slider-area .slick-dots {
+        position: absolute;
+        margin-top: 0;
+        bottom: 0px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 100%;
+    }
+    .slick-dots {
+        .slick-active button {
+            opacity: 1; 
+            background-color:indianred;
+            &:before {
+                opacity: .75;
+                color:#000;
+            }
+        }
+        li {
+        display: inline-block;
+            button {
+                border: 0;
+                background: #fff;
+                height: 15px;
+                width:15px;
+                border-radius: 100%;
+                font-size: 0;
+                opacity: .5;
+                margin: 0 4px;
+                &:before {
+                    content: "";
+                }
+            }
+        }
+    }
+}

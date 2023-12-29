@@ -1,0 +1,12 @@
+{
+    "data": [
+        {
+            "cart_id": 1,
+            "totalProductCount":5,
+            "totalCartCount": 5,
+            "totalPrice": 566767
+        }
+    ],
+    "success": true
+  }
+ 

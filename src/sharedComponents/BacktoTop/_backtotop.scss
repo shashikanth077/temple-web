@@ -1,0 +1,17 @@
+.back-to-top {
+    position: fixed;
+    right: 30px;
+    bottom: 30px;
+    z-index: 999;
+    display: none;
+    a {
+        height: 40px;
+        width: 40px;
+        display: block;
+        text-align: center;
+        line-height: 40px;
+        background: black;
+        border-radius: 6px;
+        color: #fff;
+    }
+}

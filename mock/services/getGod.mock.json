@@ -1,0 +1,10 @@
+{
+    "success":true,
+    "god":
+        {
+            "_id":1,
+            "name":"Sri.Ganesha",
+            "holidayOfworkship":"Wednesday",
+            "isActive":true
+        }
+    }

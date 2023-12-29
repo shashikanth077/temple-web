@@ -1,0 +1,33 @@
+{
+    "success":true,
+    "users":[
+        {
+            "_id":1,
+            "firstName":"Shashi",
+            "lastName":"hr",
+            "email":"shashi@gmail.com",
+            "mobileNumber":"81231292799",
+            "isActive":true,
+            "roles":["admin"]
+        },
+        {
+            "_id":2,
+            "firstName":"Umesh",
+            "lastName":"hr",
+            "email":"Umesh@gmail.com",
+            "mobileNumber":"81231927299",
+            "isActive":true,
+            "roles":["user","admin"]
+        },
+        {
+            "_id":3,
+            "firstName":"Sathya",
+            "lastName":"hr",
+            "isActive":false,
+            "email":"Sathya@gmail.com",
+            "mobileNumber":"81231922799",
+            "roles":["user"]
+        }
+    ]
+   
+}

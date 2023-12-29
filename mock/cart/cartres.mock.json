@@ -1,0 +1,12 @@
+{
+    "data": [
+        {
+            "cart_id": 1,
+            "totalCartCount": 5,
+            "totalPrice": 566767
+        }
+    ],
+    "token":"345345345",
+    "success": true,
+    "error":""
+  }
