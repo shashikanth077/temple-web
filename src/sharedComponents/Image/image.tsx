@@ -16,6 +16,8 @@ const ImageComponent = (props:ImageProps) => {
     return (
         <img
             style={style}
+            width={width}
+            height={height}
             className={classname}
             src={imageUrl}
             alt={altText}

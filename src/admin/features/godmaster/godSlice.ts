@@ -38,20 +38,20 @@ const godSlice = createSlice({
             state.loading = false;
             state.gods = action.payload.gods;
         },
-        addgod(state, action: PayloadAction<God>) {
+        addgod(state, action: PayloadAction<any>) {
             state.loading = true;
         },
         addgodSuccess(state, action: PayloadAction<SuccessRes>) {
             state.loading = false;
         },
-        updategod(state, action: PayloadAction<God>) {
+        updategod(state, action: PayloadAction<any>) {
             state.loading = true;
         },
         updategodSuccess(state, action: PayloadAction<SuccessRes>) {
             state.loading = false;
             state.message = action.payload.message;
         },
-        deletegod(state, action: PayloadAction<God>) {
+        deletegod(state, action: PayloadAction<GetGodPayload>) {
             state.loading = true;
         },
         deletegodSuccess(state, action: PayloadAction<SuccessRes>) {

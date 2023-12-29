@@ -15,6 +15,7 @@ import { selectGods } from 'admin/features/godmaster/godSelector';
 import DeleteDiaLog from 'sharedComponents/dialogs/dialogs';
 import { useRedux } from 'hooks';
 import { clearState } from 'storeConfig/api/apiSlice';
+import Image from 'sharedComponents/Image/image';
 
 interface Gods {
     _id:string;
@@ -84,6 +85,7 @@ export default function ManageGods() {
     const deleteGod = () => {
         const _Gods = gods.filter((val:any) => val !== god._id);
         setGods(_Gods);
+        dispatch(admingodActions.deletegod({_id:god._id}))
         setDeleteGodDialog(false);
         setGod(emptyGod);
     };
@@ -111,6 +113,7 @@ export default function ManageGods() {
         </div>
     );
 
+    const imageBodyTemplate = (rowData:any) => <Image  imageUrl={`${rowData?.image}`} altText={rowData.name} classname="shadow-2 border-round" style={{ width: '64px' }} />;
     const rightToolbarTemplate = () => <Button label="Export" icon="pi pi-upload" className="p-button-help" onClick={exportCSV} />;
     const actionBodyTemplate = (rowData:any) => (
         <>
@@ -162,6 +165,7 @@ export default function ManageGods() {
                 >
                     <Column field="name" header="Name" sortable style={{ minWidth: '1rem' }} />
                     <Column field="worshipDay" header="Day of workship" />
+                    <Column field="image" header="Image" body={imageBodyTemplate} />
                     <Column body={actionBodyTemplate} exportable={false} style={{ minWidth: '6rem',textAlign:'center' }} />
                 </DataTable>
             </div>

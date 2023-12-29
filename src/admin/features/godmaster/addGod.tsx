@@ -30,7 +30,7 @@ const Days:any = [
 const AddGod = () => {
     const { dispatch } = useRedux();
     const { loading, error, successMessage } = useSelector((state:any) => state.apiState);
-    const [preview, setPreview] = useState();
+    const [image, setImage] = useState({ preview: '', data: '' })
 
     const toast = useRef<any>(null);
 
@@ -67,14 +67,27 @@ const AddGod = () => {
     } = methods;
 
     /*
-        handle form submission
+      handle form submission
     */
-    const onSubmit = handleSubmit((formData: God) => {
+    const onSubmit = handleSubmit((data: any) => {
+
         let wDays:any = [];
-        formData?.worshipDay?.forEach((worshipDay:any) => {
+        data?.worshipDay?.forEach((worshipDay:any) => {
             wDays.push(worshipDay.value)
         })
-        formData.worshipDay = wDays;
+
+        const formData = new FormData();
+        for (const k in data) {
+            if(k === 'image') {
+                formData.append('image', image.data)
+            } else if (k === 'worshipDay') { 
+                console.log('worshipDay',wDays);
+                formData.append('worshipDay', JSON.stringify(wDays))
+            } else {
+                formData.append(k, data[k]);
+            }
+        }
+
         dispatch(admingodActions.addgod(formData));
     });
 
@@ -92,9 +105,11 @@ const AddGod = () => {
     }, [successMessage, error, dispatch]);
 
     const handleUploadedFile = (event:any) => {
-        const file = event.target.files[0];
-        const urlImage:any = URL.createObjectURL(file);
-        setPreview(urlImage);
+        const img = {
+            preview: URL.createObjectURL(event.target.files[0]),
+            data: event.target.files[0],
+        }
+        setImage(img)
     };
 
     return (
@@ -116,7 +131,7 @@ const AddGod = () => {
 
                             <div className="card-body">
 
-                                <form name="Product-form" id="Product-form" onSubmit={onSubmit}>
+                                <form encType="multipart/form-data" name="God-form" id="God-form" onSubmit={onSubmit}>
                                     <div className="row">
                                         <div className="col-md-6">
                                             <div className="form-group">

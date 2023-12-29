@@ -17,11 +17,12 @@ import { useRedux } from 'hooks';
 import { God } from 'models';
 import { clearState } from 'storeConfig/api/apiSlice';
 import Loader from 'sharedComponents/loader/loader';
+import ImageComponent from 'sharedComponents/Image/image';
 
 interface OptionTypes {
     value: string;
     label: string;
-  }
+}
 
 const Days: Array<OptionTypes> = [
     { value: 'Monday', label: 'Monday' },
@@ -40,6 +41,7 @@ const EditGod = () => {
     const toast = useRef<any>(null);
     const [multiSelections, setMultiSelections] = useState<OptionTypes[]>([]);
     const { loading, error, successMessage } = useSelector((state:any) => state.apiState);
+    const [image, setImage] = useState({ preview: '', data: '' })
         
     const showToast = (severity:any, summary:any, detail:any) => {
         toast.current.show({ severity, summary, detail });
@@ -98,21 +100,39 @@ const EditGod = () => {
         handleSubmit,
         register,
         control,
-        setValue,
         formState: { errors },
     } = methods;
+
+    const handleUploadedFile = (event:any) => {
+        const img = {
+            preview: URL.createObjectURL(event.target.files[0]),
+            data: event.target.files[0],
+        }
+        setImage(img)
+    };
 
     /*
         handle form submission
     */
-    const onSubmit = handleSubmit((formData: God) => {
-        console.log("formdata",formData);
-        formData._id = id ? id : '';
+    const onSubmit = handleSubmit((data: any) => {
+
         let wDays:any = [];
-        formData?.worshipDay?.forEach((worshipDay:any) => {
+        data?.worshipDay?.forEach((worshipDay:any) => {
             wDays.push(worshipDay.value)
         })
-        formData.worshipDay = wDays;
+
+        const formData:any = new FormData();
+        for (const k in data) {
+            if(k === 'image') {
+                formData.append('image', image.data)
+            } else if (k === 'worshipDay') { 
+                console.log('worshipDay',wDays);
+                formData.append('worshipDay', JSON.stringify(wDays))
+            } else {
+                formData.append(k, data[k]);
+            }
+        }
+        formData.append('_id',id)
         dispatch(admingodActions.updategod(formData));
     });
  
@@ -183,14 +203,14 @@ const EditGod = () => {
                                                 </div>
                                             </div>                                    
 
-                                            {/* <div className="row">
+                                            <div className="row">
                                                 <div className="col-md-6">
                                                     <div className="form-group">
                                                         <FormInput
                                                             type="file"
                                                             name="image"
-                                                            defaultValue={god.image[0]}
                                                             label="image"
+                                                            onChange={handleUploadedFile}
                                                             register={register}
                                                             key="image"
                                                             errors={errors}
@@ -199,7 +219,8 @@ const EditGod = () => {
                                                         />
                                                     </div>
                                                 </div>
-                                            </div> */}
+                                            </div>
+                                            <ImageComponent classname="img-thumbnail" imageUrl={god?.image} width="50" height="50" altText={god.name} />
                                             <div className="row text-center">
                                                 <div className="col-sm-12">
 
