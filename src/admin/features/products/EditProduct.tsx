@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import {
@@ -20,6 +20,7 @@ const EditProduct = () => {
     const {id} = useParams<string>();
     const { dispatch } = useRedux();
     const toast = useRef<any>(null);
+    const [image, setImage] = useState({ preview: '', data: '' });
 
     const { loading, error, successMessage } = useSelector((state:any) => state.apiState);
     const { product } = useSelector((state:any) => state.adminproduct);
@@ -53,9 +54,9 @@ const EditProduct = () => {
             name: yup.string().required('Please enter product name').min(2, 'This value is too short. It should have 2 characters or more.'),
             price: yup.number().required('Please enter price'),
             stock: yup.number().required('Please enter stock'),
-            shortDescription: yup.string().required('Please enter stock description').min(10, 'This value is too short. It should have 10 characters or more.'),
+            shortDescription: yup.string().required('Please enter short description').min(10, 'This value is too short. It should have 10 characters or more.'),
             fullDescription: yup.string().required('Please enter full description').min(10, 'This value is too short. It should have 10 characters or more.'),
-            // image: yup
+            // productimage: yup
             //     .mixed()
             //     .test('required', 'product image is required', (value:any) => value.length > 0)
             //     .test('fileSize', 'File Size is too large', (value:any) => value.length && value[0].size <= 5242880)
@@ -87,11 +88,27 @@ const EditProduct = () => {
     /*
         handle form submission
     */
-    const onSubmit = handleSubmit((formData: Product) => {
-        formData._id = id ? id : '';
+    const onSubmit = handleSubmit((data: any) => {
+
+        const formData:any = new FormData();
+        for (const k in data) {
+            if (k === 'productimage') {
+                formData.append('productimage', image.data);
+             } else {
+                formData.append(k, data[k]);
+            }
+        }
+        formData.append('_id', id);
         dispatch(adminProductActions.updateProduct(formData));
     });
  
+    const handleUploadedFile = (event:any) => {
+        const img = {
+            preview: URL.createObjectURL(event.target.files[0]),
+            data: event.target.files[0],
+        }
+        setImage(img)
+    };
 
     return (
         <>
@@ -199,6 +216,24 @@ const EditProduct = () => {
                                                         />
                                                     </div>
                                                 </div>
+
+                                                <div className="col-md-6">
+                                                    <div className="form-group">
+                                                        <FormInput
+                                                            type="file"
+                                                            accept="image/*"
+                                                            name="productimage"
+                                                            label="Image"
+                                                            onChange={handleUploadedFile}
+                                                            register={register}
+                                                            key="productimage"
+                                                            errors={errors}
+                                                            control={control}
+                                                            containerClass="mb-3"
+                                                        />
+                                                    </div>
+                                                </div>
+
                                             </div>
                                             <div className="row text-center">
                                                 <div className="col-sm-12">

@@ -47,6 +47,7 @@ const GroceryCheckout = React.lazy(() => import('features/donations/grocery/groc
 const MyDonations = React.lazy(() => import('features/donations/mydonations/mydonations'));
 const UnAuth = React.lazy(() => import('features/UnAuth'));
 const MyBookings = React.lazy(() => import('features/bookings/reports/Reports'));
+const ProductDetails = React.lazy(() => import('features/shop/products/Details/Product'));
 
 export interface RoutesProps {
     path: RouteProps['path'];
@@ -386,6 +387,20 @@ const bookingsReportRoutes: RoutesProps = {
             path: '/mybookings/lists',
             name: 'Mydonations',
             element: <MyBookings />,
+
+        },
+    ],
+};
+
+const productUserRoutes: RoutesProps = {
+    path: '/products/',
+    name: 'Products',
+    roles: ['ROLE_USER'],
+    children: [
+        {
+            path: '/products/details/:id',
+            name: 'Products',
+            element: <ProductDetails />,
 
         },
     ],

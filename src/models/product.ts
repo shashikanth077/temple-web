@@ -1,7 +1,7 @@
 export interface Product {
     _id:string;
     name:string;
-    image:string;
+    productimage:string;
     shortDescription:string;
     fullDescription:string;
     categories:string[];

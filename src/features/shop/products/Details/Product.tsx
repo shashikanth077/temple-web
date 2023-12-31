@@ -4,13 +4,14 @@ import ProductImageDescription from './ProductDetails';
 import { useRedux } from 'hooks';
 import { selectProductsList } from 'features/shop/providers/productSelectors';
 
+/* eslint no-underscore-dangle: 0 */
 const Product = () => {
-    const { id } = useParams(); // getting from URL
+    const { id } = useParams();
     const { appSelector } = useRedux();
 
     const products = appSelector(selectProductsList);
 
-    const productInfo:any = products.find((product:any) => product.productid.toString() === id);
+    const productInfo:any = products.find((product:any) => product._id.toString() === id);
     // console.log('prod info', productInfo.productid);
     return (
         productInfo.productid > 0

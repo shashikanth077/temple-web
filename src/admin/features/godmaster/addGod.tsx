@@ -26,7 +26,6 @@ const Days:any = [
 ];
 
 /* eslint-disable */
-
 const AddGod = () => {
     const { dispatch } = useRedux();
     const { loading, error, successMessage } = useSelector((state:any) => state.apiState);
