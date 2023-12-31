@@ -126,7 +126,7 @@ export default function Products() {
     );
 
     const rightToolbarTemplate = () => <Button label="Export" icon="pi pi-upload" className="p-button-help" onClick={exportCSV} />;
-    const imageBodyTemplate = (rowData:any) => <img  src={`${window.location.origin}/${rowData.image[0]}`} alt={rowData.image[0]} className="shadow-2 border-round" style={{ width: '64px' }} />;
+    const imageBodyTemplate = (rowData:any) => <img  src={`${rowData.image}`} alt={rowData.name} className="shadow-2 border-round" style={{ width: '64px' }} />;
     const priceBodyTemplate = (rowData:any) => formatCurrency(rowData.price);
     const statusBodyTemplate = (rowData:any) => <Tag value={rowData.stock} severity={getSeverity(rowData)} />;
     const actionBodyTemplate = (rowData:any) => (
@@ -187,7 +187,7 @@ export default function Products() {
                     globalFilter={globalFilter}
                     header={header}
                 >
-                    <Column field="name" header="ProductName" sortable style={{ minWidth: '10rem' }} />
+                    <Column field="name" header="Product name" sortable style={{ minWidth: '10rem' }} />
                     <Column field="image" header="Image" body={imageBodyTemplate} />
                     <Column field="price" header="Price" body={priceBodyTemplate} sortable style={{ minWidth: '5rem' ,textAlign:'center'}} />
                     <Column field="stock" header="Stock" body={statusBodyTemplate} sortable style={{ minWidth: '3rem' }} />

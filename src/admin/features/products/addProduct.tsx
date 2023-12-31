@@ -14,10 +14,11 @@ import { useRedux } from 'hooks';
 import { Product } from 'models';
 import Loader from 'sharedComponents/loader/loader';
 
+/* eslint-disable */
 const AddProduct = () => {
     const { dispatch } = useRedux();
     const { loading, error, successMessage } = useSelector((state:any) => state.apiState);
-    const [preview, setPreview] = useState();
+    const [image, setImage] = useState({ preview: '', data: '' });
 
     const toast = useRef<any>(null);
 
@@ -35,7 +36,7 @@ const AddProduct = () => {
             stock: yup.number().required('Please enter stock'),
             shortDescription: yup.string().required('Please enter stock description').min(10, 'This value is too short. It should have 10 characters or more.'),
             fullDescription: yup.string().required('Please enter full description').min(10, 'This value is too short. It should have 10 characters or more.'),
-            image: yup
+            productimage: yup
                 .mixed()
                 .test('required', 'product image is required', (value:any) => value.length > 0)
                 .test('fileSize', 'File Size is too large', (value:any) => value.length && value[0].size <= 5242880)
@@ -58,7 +59,16 @@ const AddProduct = () => {
     /*
         handle form submission
     */
-    const onSubmit = handleSubmit((formData: Product) => {
+    const onSubmit = handleSubmit((data: any) => {
+        const formData:any = new FormData();
+        for (const k in data) {
+            if (k === 'productimage') {
+                formData.append('productimage', image.data);
+             } else {
+                formData.append(k, data[k]);
+            }
+        }
+
         dispatch(adminProductActions.addProduct(formData));
     });
 
@@ -68,7 +78,6 @@ const AddProduct = () => {
             dispatch(clearState());
             reset();
         }
-
         if (error) {
             showToast('error', 'Error', error);
             dispatch(clearState());
@@ -76,16 +85,16 @@ const AddProduct = () => {
     }, [successMessage, error, dispatch]);
 
     const handleUploadedFile = (event:any) => {
-        const file = event.target.files[0];
-        const urlImage:any = URL.createObjectURL(file);
-        setPreview(urlImage);
+        const img = {
+            preview: URL.createObjectURL(event.target.files[0]),
+            data: event.target.files[0],
+        }
+        setImage(img)
     };
 
     return (
         <>
-
             <Toast ref={toast} />
-
             {loading && <Loader />}
 
             <div className="container-fluid">
@@ -100,7 +109,7 @@ const AddProduct = () => {
 
                             <div className="card-body">
 
-                                <form name="Product-form" id="Product-form" onSubmit={onSubmit}>
+                                <form encType="multipart/form-data" name="Product-form" id="Product-form" onSubmit={onSubmit}>
                                     <div className="row">
                                         <div className="col-md-6">
                                             <div className="form-group">
@@ -181,11 +190,11 @@ const AddProduct = () => {
                                                 <FormInput
                                                     type="file"
                                                     accept="image/*"
-                                                    name="image"
+                                                    name="productimage"
                                                     label="Image"
                                                     onChange={handleUploadedFile}
                                                     register={register}
-                                                    key="image"
+                                                    key="productimage"
                                                     errors={errors}
                                                     control={control}
                                                     containerClass="mb-3"

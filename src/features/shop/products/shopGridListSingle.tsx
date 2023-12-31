@@ -13,6 +13,7 @@ interface ProductSingleProps {
     index:number;
 }
 
+/* eslint no-underscore-dangle: 0 */
 const ProductGridListSingle = (props:ProductSingleProps) => {
     const { dispatch } = useRedux();
 
@@ -68,7 +69,7 @@ const ProductGridListSingle = (props:ProductSingleProps) => {
             <button
                 aria-label="stock"
                 type="button"
-                onClick={() => AddtoCartItems(product.productid, 1)}
+                onClick={() => AddtoCartItems(product._id, 1)}
                 className={
                     cartBtnStatus
                         ? 'active'
@@ -102,10 +103,10 @@ const ProductGridListSingle = (props:ProductSingleProps) => {
         <>
             <div className="product-wrap mb-25">
                 <div className="product-img">
-                    <Link to={`${process.env.PUBLIC_URL}/product/${product.productid}`}>
+                    <Link to={`${process.env.PUBLIC_URL}/products/details/${product._id}`}>
                         <img
                             className="default-img"
-                            src={process.env.PUBLIC_URL + product.image[0]}
+                            src={product?.image}
                             alt=""
                         />
                         {/* {product.image.length > 1 ? (
@@ -153,8 +154,8 @@ const ProductGridListSingle = (props:ProductSingleProps) => {
                 </div>
                 <div className="product-content text-center">
                     <h3>
-                        <Link to={`${process.env.PUBLIC_URL}/product/${product.id}`}>
-                            {product.productname}
+                        <Link to={`${process.env.PUBLIC_URL}/products/details/${product._id}`}>
+                            {product.name}
                         </Link>
                     </h3>
 
@@ -177,13 +178,13 @@ const ProductGridListSingle = (props:ProductSingleProps) => {
                     <div className="col-xl-4 col-md-5 col-sm-6">
                         <div className="product-list-image-wrap">
                             <div className="product-img">
-                                <Link to={`${process.env.PUBLIC_URL}/product/${product.id}`}>
+                                <Link to={`${process.env.PUBLIC_URL}/products/details/${product.id}`}>
                                     <img
                                         className="default-img img-fluid"
-                                        src={process.env.PUBLIC_URL + product.image[0]}
-                                        alt=""
+                                        src={product.image}
+                                        alt={product.name}
                                     />
-                                    {product.image.length > 1 ? (
+                                    {/* {product.image.length > 1 ? (
                                         <img
                                             className="hover-img img-fluid"
                                             src={process.env.PUBLIC_URL + product.image[1]}
@@ -191,7 +192,7 @@ const ProductGridListSingle = (props:ProductSingleProps) => {
                                         />
                                     ) : (
                                         ''
-                                    )}
+                                    )} */}
                                 </Link>
                                 {product.discount || product.new ? (
                                     <div className="product-img-badges">
@@ -211,8 +212,8 @@ const ProductGridListSingle = (props:ProductSingleProps) => {
                     <div className="col-xl-8 col-md-7 col-sm-6">
                         <div className="shop-list-content">
                             <h3>
-                                <Link to={`${process.env.PUBLIC_URL}/product/${product.id}`}>
-                                    {product.productname}
+                                <Link to={`${process.env.PUBLIC_URL}/products/details/${product._id}`}>
+                                    {product.name}
                                 </Link>
                             </h3>
                             <div className="product-list-price">

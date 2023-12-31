@@ -103,20 +103,20 @@ function ProductModal(props:productModalProps) {
                 <div className="row">
                     <div className="col-md-5 col-sm-12 col-xs-12">
                         <div className="product-large-image-wrapper">
-                            <Swiper options={gallerySwiperParams}>
-                                {product.image
-                                    && product.image.map((img:string, i:number) => (
-                                        <SwiperSlide key={product.product_id}>
-                                            <div className="single-image">
-                                                <img
-                                                    src={process.env.PUBLIC_URL + img}
-                                                    className="img-fluid"
-                                                    alt="Product"
-                                                />
-                                            </div>
-                                        </SwiperSlide>
-                                    ))}
-                            </Swiper>
+                            {/* <Swiper options={gallerySwiperParams}> */}
+                            {/* {product.image */}
+                            {/* && product.image.map((img:string, i:number) => ( */}
+                            {/* <SwiperSlide key={product.product_id}> */}
+                            <div className="single-image">
+                                <img
+                                    src={product.image}
+                                    className="img-fluid"
+                                    alt="Product"
+                                />
+                            </div>
+                            {/* //     </SwiperSlide> */}
+                            {/* ))} */}
+                            {/* </Swiper> */}
                         </div>
                         {/* <div className="product-small-image-wrapper mt-15">
                             <Swiper options={thumbnailSwiperParams}>
@@ -137,7 +137,7 @@ function ProductModal(props:productModalProps) {
                     </div>
                     <div className="col-md-7 col-sm-12 col-xs-12">
                         <div className="product-details-content quickview-content">
-                            <h2>{product.productname}</h2>
+                            <h2>{product.name}</h2>
                             <div className="product-details-price">
                                 {/* {discountedPrice !== null ? (
                                     <>

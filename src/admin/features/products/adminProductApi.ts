@@ -9,13 +9,13 @@ export function getProductById(payload:any) {
 
 export function addProducts(payload:any) {
     const baseUrl = 'http://localhost:8080/api/product';
-    const response = APICore.create(`${baseUrl}`, payload);
+    const response = APICore.createWithFile(`${baseUrl}`, payload);
     return response;
 }
 
 export function updateProducts(payload:any) {
-    const baseUrl = `http://localhost:8080/api/product/${payload._id}`;
-    const response = APICore.update(`${baseUrl}`, payload);
+    const baseUrl = `http://localhost:8080/api/product/${payload.get('_id')}`;
+    const response = APICore.createWithFileUpdate(`${baseUrl}`, payload);
     return response;
 }
 
