@@ -23,7 +23,7 @@ function EventContent(props:EventProps) {
                     <>
                         <h2 className="events-calender-list-month-sep">
                             <time className="common-h6-min-medium" dateTime="2023-11">
-                                {moment(event.event_startdate).format('MMM YYYY')}
+                                {moment(event.startDate).format('MMM YYYY')}
                             </time>
                         </h2>
                         <div className="d-flex col-12 events-calendar-list-event-wrapper">
@@ -31,10 +31,10 @@ function EventContent(props:EventProps) {
                                 <div className="col-1 events-calendar-list-event-date-tag">
                                     <time className="events-calendar-list-event-date-tag-datetime" aria-hidden="true">
                                         <span className="events-calendar-list-event-date-tag-weekday">
-                                            {moment(event.event_startdate).format('ddd')}
+                                            {moment(event.startDate).format('ddd')}
                                         </span>
                                         <span className="events-common-h4--min-medium">
-                                            {moment(event.event_startdate).format('DD')}
+                                            {moment(event.endDate).format('DD')}
                                         </span>
                                     </time>
                                 </div>
@@ -44,12 +44,12 @@ function EventContent(props:EventProps) {
                                     <header className="events-calendar-list-event-header">
                                         <div className="events-calendar-list-event-datetime-wrapper">
                                             <span className="event-date-start">
-                                                <i className="fas fa-calendar-week" />{moment(event.event_startdate).format('MMM DD,YYYY @ h a')}
-                                            </span> - <span className="event-date-end">{moment(event.event_enddate).format('MMM DD,YYYY @ h a')}</span>
+                                                <i className="fas fa-calendar-week" />{moment(event.startDate).format('MMM DD,YYYY @ h a')}
+                                            </span> - <span className="event-date-end">{moment(event.endDate).format('MMM DD,YYYY @ h a')}</span>
 
                                         </div>
                                         <h3 className="events-calendar-list-event-title events-common-h4--min-medium">
-                                            <Link className="events-calendar-list-event-name" to={`${process.env.PUBLIC_URL}/eventDetails/${event._id}`}>
+                                            <Link className="events-calendar-list-event-name" to={`${process.env.PUBLIC_URL}/events/eventsdetails/${event._id}`}>
                                                 {event.name}
                                             </Link>
 
