@@ -20,7 +20,7 @@ function EventDetails() {
                 <Row>
                     <div className="event-details-heading">
                         <h1 className="event-headline">
-                            {events.event_name}
+                            {events.name}
                         </h1>
                         <div><i className="fas fa-calendar-week" /><span className="event-date"> {moment(events.startDate).format('MMM DD,YYYY @ h a')} -  {moment(events.endDate).format('MMM DD,YYYY @ h a')}</span></div>
                         <div className="event-price-book">

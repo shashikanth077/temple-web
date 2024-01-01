@@ -29,7 +29,7 @@ const EventSlice = createSlice({
             state.loading = false;
             state.event = action.payload.event;
         },
-        addEvent(state, action: PayloadAction<Event>) {
+        addEvent(state, action: PayloadAction<any>) {
             state.loading = true;
         },
         updateEvent(state, action: PayloadAction<Event>) {

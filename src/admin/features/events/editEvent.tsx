@@ -16,6 +16,7 @@ import { useRedux } from 'hooks';
 import { Event } from 'models';
 import Loader from 'sharedComponents/loader/loader';
 import { clearState } from 'storeConfig/api/apiSlice';
+import ImageComponent from 'sharedComponents/Image/image';
 
 /* eslint-disable */
 const EditEvent = () => {
@@ -268,7 +269,9 @@ const EditEvent = () => {
                                                         control={control}
                                                         containerClass="mb-3"
                                                     />
+                                                     <ImageComponent classname="img-thumbnail" imageUrl={event?.image} width="50" height="50" altText={event.name} />
                                                 </div>
+                                               
                                             </div>    
 
                                             <div className="row text-center">

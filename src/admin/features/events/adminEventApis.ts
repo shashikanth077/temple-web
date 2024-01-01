@@ -9,7 +9,7 @@ export function getEventById(payload:any) {
 
 export function addEvent(payload:any) {
     const baseUrl = 'http://localhost:8080/api/events';
-    const response = APICore.create(`${baseUrl}`, payload);
+    const response = APICore.createWithFile(`${baseUrl}`, payload);
     return response;
 }
 
