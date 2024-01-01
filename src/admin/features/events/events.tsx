@@ -16,6 +16,7 @@ import { useRedux } from 'hooks';
 import { Event } from 'models';
 import { selectEventsList } from 'features/events/eventSelector';
 import { clearState } from 'storeConfig/api/apiSlice';
+import ImageComponent from 'sharedComponents/Image/image';
 
 /* eslint-disable */
 export default function Events() {
@@ -115,7 +116,6 @@ export default function Events() {
     );
 
     const rightToolbarTemplate = () => <Button label="Export" icon="pi pi-upload" className="p-button-help" onClick={exportCSV} />;
-    const imageBodyTemplate = (rowData:any) => <img  src={`${window.location.origin}/${rowData.image[0]}`} alt={rowData.image[0]} className="shadow-2 border-round" style={{ width: '64px' }} />;
     const actionBodyTemplate = (rowData:any) => (
         <>
             <Button icon="pi pi-pencil" rounded outlined className="mr-2" onClick={() => editEvent(rowData)} />
@@ -147,7 +147,11 @@ export default function Events() {
         </>
     );
 
+    const imageBodyTemplate = (rowData:any) => <ImageComponent  imageUrl={`${rowData?.image}`} altText={rowData.name} classname="shadow-2 border-round" style={{ width: '64px' }} />;
+
     const eventsList:any = appSelector(selectEventsList);
+
+    console.log("eventsList",eventsList);
     
     return (
         <div>
@@ -175,6 +179,7 @@ export default function Events() {
                     <Column field="bookingPrice" header="Booking price" sortable style={{ minWidth: '10rem' }} />
                     <Column field="startDate"  body={dateFormatBody} header="Start date" sortable style={{ minWidth: '10rem' }} />
                     <Column field="endDate" body={dateFormatBody} header="End date" sortable style={{ minWidth: '10rem' }} />
+                    <Column field="image" header="Image" body={imageBodyTemplate} />
                     <Column body={actionBodyTemplate} exportable={false} style={{ minWidth: '6rem',textAlign:'center' }} />
                 </DataTable>
             </div>

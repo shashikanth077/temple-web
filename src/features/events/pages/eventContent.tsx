@@ -9,6 +9,7 @@ interface EventProps{
     pageCount:number;
     onchangclick:any;
 }
+/* eslint no-underscore-dangle: 0 */
 function EventContent(props:EventProps) {
     const {
         events, currentEventData, pageCount, onchangclick,
@@ -48,27 +49,24 @@ function EventContent(props:EventProps) {
 
                                         </div>
                                         <h3 className="events-calendar-list-event-title events-common-h4--min-medium">
-                                            <Link className="events-calendar-list-event-name" to={`${process.env.PUBLIC_URL}/eventDetails/${event.event_id}`}>
-                                                {event.event_name}
+                                            <Link className="events-calendar-list-event-name" to={`${process.env.PUBLIC_URL}/eventDetails/${event._id}`}>
+                                                {event.name}
                                             </Link>
 
                                         </h3>
                                         <address className="events-calendar-list-event-venue events-common-b2">
                                             <span className="events-calendar-list-event-venue-title events-common-b2--bold">
-                                                {event.event_venue}
+                                                {event.venue}
                                             </span>
-                                            {/* <span className="events-calendar-list-event-venue-address">
-                                            350 5th Ave, New York, NY, United States
-                                        </span> */}
                                         </address>
                                     </header>
 
                                     <div className="events-calendar-list-event-description">
-                                        <p>{event.event_description}</p>
+                                        <p>{event.description}</p>
                                     </div>
                                     <div className="events-c-small-cta events-common-b3 events-calendar-list-event-cost">
                                         <span className="events-c-small-cta-price">
-                                            ${event.event_booking_price}
+                                            ${event.bookingPrice}
                                         </span>
                                         <a href="##" className="events-common-c-btn-border-small events-c-top-bar-today-button" aria-label="Click to select today's date" title="Click to select today's date">
                                             Book now
@@ -77,7 +75,7 @@ function EventContent(props:EventProps) {
 
                                 </div>
                                 <div className="events-calendar-list-event-featured-image-wrapper events-common-g-col">
-                                    <img src={event.event_image} alt="eventImage" />
+                                    <img src={event.image} alt="eventImage" />
                                 </div>
                             </article>
                         </div>

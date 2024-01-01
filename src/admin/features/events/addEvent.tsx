@@ -19,6 +19,7 @@ import { clearState } from 'storeConfig/api/apiSlice';
 const AddEvent = () => {
     const { dispatch } = useRedux();
     const { loading, error, successMessage } = useSelector((state:any) => state.apiState);
+    const [image, setImage] = useState({ preview: '', data: '' })
 
     const toast = useRef<any>(null);
     const [datetime12h, setDateTime12h] = useState(null);
@@ -60,19 +61,31 @@ const AddEvent = () => {
     /*
         handle form submission
     */
-    const onSubmit = handleSubmit((formData: Event) => {
-        console.log(formData);
-        let formationData:any = {
-            events: [formData]
+    const onSubmit = handleSubmit((data: any) => {
+      
+        const formData = new FormData();
+        for (const k in data) {
+            if(k === 'image') {
+                formData.append('image', image.data)
+            } else {
+                formData.append(k, data[k]);
+            }
         }
 
-        dispatch(adminEventActions.addEvent(formationData));
+        //  let formationData:any = {
+        //     events: [formData]
+        // }
+
+        dispatch(adminEventActions.addEvent(formData));
     });
  
 
     const handleUploadedFile = (event:any) => {
-        const file = event.target.files[0];
-        const urlImage:any = URL.createObjectURL(file);
+        const img = {
+            preview: URL.createObjectURL(event.target.files[0]),
+            data: event.target.files[0],
+        }
+        setImage(img);
     };
  
     useEffect(() => {
@@ -105,7 +118,7 @@ const AddEvent = () => {
 
                             <div className="card-body">
                             
-                            <form name="Event-form" id="add-add-form" onSubmit={onSubmit}>
+                            <form encType="multipart/form-data" name="Event-form" id="add-add-form" onSubmit={onSubmit}>
                                             <div className="row">
                                                 <div className="col-md-6">
                                                     <div className="form-group">
