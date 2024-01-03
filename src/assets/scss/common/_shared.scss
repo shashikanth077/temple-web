@@ -1702,7 +1702,13 @@ button:disabled {
 {
   margin-bottom: 15px;
 }
-// .multiple-select-common {
-
-// }
-
+.roles-list {
+  color: wheat;
+  background: crimson;
+  display: inline-block;
+  margin-left: 4px;
+  padding: 4px;
+  text-align: center;
+  border-radius: 9px;
+  width: 56px;
+}
