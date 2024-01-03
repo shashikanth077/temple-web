@@ -1,0 +1,56 @@
+{
+    "success":true,
+    "reports": [
+     {
+        "tickerId":"34666",
+        "did":1345.5,
+        "firstName":"Shashikanth",
+        "emailAddress":"shashi@gmail.com",
+        "phoneNumber":"44444",
+        "mobileNumber":"444455",
+        "postalCode":"45677",
+        "devoteeId":34555,
+        "bookingType":"Regular",
+        "serviceName":"Archana",
+        "NoOfTickets":1,
+        "manualTicket":1,
+        "cost":156784.4,
+        "totalAmount":837477.33,
+        "paymentType":"Debit Card"
+     },
+     {
+        "tickerId":"346662",
+        "did":1345.5,
+        "emailAddress":"suresh@gmail.com",
+        "phoneNumber":"444444",
+        "mobileNumber":"44445d5",
+        "postalCode":"456377",
+        "devoteeId":345355,
+        "bookingType":"Regular",
+        "firstName":"Suresh",
+        "serviceName":"Dharsnam",
+        "NoOfTickets":1,
+        "manualTicket":1,
+        "cost":156784.4,
+        "totalAmount":837477.33,
+        "paymentType":"Debit Card"
+     },
+     {
+        "tickerId":"346636",
+        "did":1345.5,
+        "emailAddress":"ramesh@gmail.com",
+        "phoneNumber":"444444",
+        "mobileNumber":"4444455",
+        "postalCode":"456747",
+        "devoteeId":345455,
+        "bookingType":"Regular",
+        "firstName":"Ramesh",
+        "serviceName":"Vadamala",
+        "NoOfTickets":1,
+        "manualTicket":1,
+        "cost":156784.4,
+        "totalAmount":837477.33,
+        "paymentType":"Credit Card"
+     }
+   ]
+ }

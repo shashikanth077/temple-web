@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef } from 'react';
 import { FilterMatchMode } from 'primereact/api';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
-import { Tag } from 'primereact/tag';
 import classNames from 'classnames';
 import { Toast } from 'primereact/toast';
 import { Button } from 'primereact/button';

@@ -34,6 +34,7 @@ const getService = require('./mock/services/getService.mock.json');
 const getGroceries = require('./mock/grocery/groceries.mock.json');
 const mydonations = require('./mock/donations/mydonations.mock.json');
 const mybookings = require('./mock/booking/adminbook.mock.json');
+const incomeReports = require('./mock/reports/incomereports.mock.json');
 
 
 const server = express();
@@ -83,6 +84,7 @@ server.all("/api/getuser/:id", getJson(getUser));
 server.all("/api/groceries", getJson(getGroceries));
 server.all("/api/mydonations", getJson(mydonations));
 server.all("/api/mybookings", getJson(mybookings));
+server.all("/api/incomereports", getJson(incomeReports));
 
 
 server.listen(4000);

@@ -41,6 +41,7 @@ import { adminUserReducer } from 'admin/features/users/userSlice';
 import { adminGroceryReducer } from 'admin/features/grocery/adminGrocerySlice';
 import { GroceryCartReducer } from 'features/donations/grocery/grocerySlice';
 import { mydonationsReducer } from 'features/donations/mydonations/donationSlice';
+import { adminReportsReducer } from 'admin/features/reports/reportsSlice';
 
 const rootReducer = combineReducers({
     contact: contactReducer,
@@ -71,6 +72,7 @@ const rootReducer = combineReducers({
     admingrocery: adminGroceryReducer,
     donategrocert: GroceryCartReducer,
     mydonations: mydonationsReducer,
+    reports: adminReportsReducer,
 });
 
 const persistConfig = {
