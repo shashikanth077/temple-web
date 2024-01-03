@@ -16,3 +16,4 @@ export * from './product';
 export * from './content';
 export * from './grocery';
 export * from './donations';
+export * from './reports';

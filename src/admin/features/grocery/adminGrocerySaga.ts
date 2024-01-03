@@ -15,7 +15,7 @@ function* getGroceryByDetails(action:any) {
         yield put(startLoading());
         const response: GroceryListRes = yield call(getAllGroceries, action.payload);
         if (response.success) {
-            yield put(setSuccessMessage('Success'));
+            // yield put(setSuccessMessage('Success'));
             yield put(adminGroceryActions.getAllGroceriesSuccess(response));
         } else {
             yield put(setError(response.errorMessage));
@@ -34,7 +34,7 @@ function* getGroceryByIdRow(action:any) {
         yield put(startLoading());
         const response: GrocerySingleRes = yield call(getGroceryById, action.payload);
         if (response.success) {
-            yield put(setSuccessMessage('Success'));
+            // yield put(setSuccessMessage('Success'));
             yield put(adminGroceryActions.getGroceryByIdSuccess(response));
         } else {
             yield put(setError(response.errorMessage));

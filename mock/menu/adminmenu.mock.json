@@ -37,16 +37,30 @@
             "label": "Reports",
             "isTitle": false,
             "icon": "fas fa-file-invoice",
-            "url": "#",
+            "url": "/incomereports/list",
             "roles":["ROLE_ADMIN"]
         },
         {
-            "key": "sitemanage",
-            "label": "Site manager",
+            "key": "sitemanager",
+            "label": "Site Manager",
             "isTitle": false,
             "icon": "fas fa-wrench",
-            "url": "#",
-            "roles":["ROLE_ADMIN"]
+            "url": "/admin/site-manager",
+            "roles":["ROLE_ADMIN"],
+            "children": [
+                {
+                    "key": "menumanager",
+                    "label": "Menu Manager",
+                    "url": "/admin/site-manager/menu-manager",
+                    "parentKey": "donations"
+                },
+                {
+                    "key": "staticontent",
+                    "label": "Static Content Manager",
+                    "url": "/admin/site-manager/static-manager",
+                    "parentKey": "donations"
+                }
+              ]
         },
         {
             "key": "grocerymaster",

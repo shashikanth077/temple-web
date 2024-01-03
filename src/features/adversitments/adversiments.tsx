@@ -15,7 +15,7 @@ const Ads = () => {
         <section className="advertises area-padding">
             <Container>
                 <Row>
-                    {adsList?.adverstiments.map((adsItem:any, index:any) => (
+                    {adsList?.adverstiments?.map((adsItem:any, index:any) => (
                         <Col key={adsItem.ads_id} lg={3} md={6}>
                             <div className="single-ads-wrap mb-2">
                                 <div className="position-relative overflow-hidden rounded">

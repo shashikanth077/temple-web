@@ -48,6 +48,7 @@ const MyDonations = React.lazy(() => import('features/donations/mydonations/mydo
 const UnAuth = React.lazy(() => import('features/UnAuth'));
 const MyBookings = React.lazy(() => import('features/bookings/reports/Reports'));
 const ProductDetails = React.lazy(() => import('features/shop/products/Details/Product'));
+const IncomeReports = React.lazy(() => import('admin/features/reports/reports'));
 
 export interface RoutesProps {
     path: RouteProps['path'];
@@ -420,6 +421,20 @@ const eventUserRoutes: RoutesProps = {
     ],
 };
 
+const incomeReportsRoutes: RoutesProps = {
+    path: '/incomereports/',
+    name: 'InComeReports',
+    roles: ['ROLE_ADMIN'],
+    children: [
+        {
+            path: '/incomereports/list',
+            name: 'InComeReports',
+            element: <IncomeReports />,
+
+        },
+    ],
+};
+
 const userDonationReportsRoutes: RoutesProps = {
     path: '/mydonations/',
     name: 'DonateGrocry',
@@ -476,6 +491,7 @@ const authProtectedRoutes = [
     GodsRoutes,
     ServicesRoutes,
     UsersRoutes,
+    incomeReportsRoutes,
 ];
 
 const bothMemberAdminRoutes = [

@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef } from 'react';
 import { FilterMatchMode } from 'primereact/api';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
-import { Tag } from 'primereact/tag';
 import classNames from 'classnames';
 import { Toast } from 'primereact/toast';
 import { Button } from 'primereact/button';
@@ -117,15 +116,17 @@ export default function Users() {
         return <i className={classNames('pi', { 'true-icon pi-check-circle': rowData.isActive, 'false-icon pi-times-circle': !rowData.isActive })}></i>;
     };
     
-    // const statusBodyTemplate = (rowData:any) => {
-    //     return <Tag value={rowData.isActive ? "Active":"InActive"} severity={getStatus(rowData.isActive )}></Tag>;
-    // };
-
-    const getRoles = (value:boolean) => {
-        return value ? "success":"warning";
-    }
-    const rolesBodyTemplate = (rowData:any) => {
-        return <Tag value={rowData.roles.join('|')} severity={getRoles(rowData.roles )}></Tag>;
+   const rolesBodyTemplate = (rowData:any) => {
+        return (
+            <div>
+              {/* Map over the split values and apply styles */}
+              {rowData.roles.map((value:any, index:number) => (
+                <span key={index} className='roles-list'>
+                  {value}
+                </span>
+              ))}
+            </div>
+          );
     };
 
     const header = () => {
