@@ -28,13 +28,13 @@ const UserSlice = createSlice({
             state.loading = true;
         },
         getUsersSuccess(state, action: PayloadAction<userResponse>) {
-            state.users = action.payload.users;
+            state.users = action.payload.userViewData;
         },
         getUserById(state, action: PayloadAction<GetUserPayload>) {
             state.loading = true;
         },
         getUserByIdSuccess(state, action: PayloadAction<userSingleResponse>) {
-            state.user = action.payload.user;
+            state.user = action.payload.userData;
         },
         addUser(state, action: PayloadAction<User>) {
             state.loading = true;
