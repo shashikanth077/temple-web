@@ -1,12 +1,13 @@
 export interface User {
-    _id:string;
+    _id:string | undefined;
     email: string;
     password?:string;
     phonenumber:string;
-    roles:string[];
+    roles:any;
+    viewRoles:string[];
     firstName:string;
     lastName:string;
-    isactive:boolean;
+    activated:boolean;
 }
 
 export interface userResponse{
@@ -14,14 +15,14 @@ export interface userResponse{
   success:boolean;
   message:string;
   errorCode:number;
-  users:User[]
+  userViewData:User[]
 }
 
 export interface userSingleResponse{
   errorMessage:string;
   success:boolean;
   errorCode:number;
-  user:User;
+  userData:User;
 }
 
 export interface LoginUser {

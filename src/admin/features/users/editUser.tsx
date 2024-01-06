@@ -4,10 +4,12 @@ import * as yup from 'yup';
 import {
     Button,
 } from 'react-bootstrap';
-import { useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 import { Toast } from 'primereact/toast';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
+import { Typeahead } from 'react-bootstrap-typeahead';
+import 'react-bootstrap-typeahead/css/Typeahead.css';
 import { clearState } from '../../../storeConfig/api/apiSlice';
 import { adminUserActions } from './userSlice';
 import { FormInput } from 'sharedComponents/inputs';
@@ -15,16 +17,43 @@ import { useRedux } from 'hooks';
 import { User } from 'models';
 import Loader from 'sharedComponents/loader/loader';
 
+/* eslint-disable */
+
+interface OptionTypes {
+    value: string;
+    label: string;
+}
+
+const UserRoles: Array<OptionTypes> = [
+    { value: 'admin', label: 'admin' },
+    { value: 'user', label: 'user' },
+];
+
 const Edituser = () => {
     const { dispatch } = useRedux();
     const { loading, error, successMessage } = useSelector((state:any) => state.apiState);
-    const { id } = useParams<string>();
+    const { id } = useParams<any>();
+    const [multiSelections, setMultiSelections] = useState<OptionTypes[]>([]);
 
     const toast = useRef<any>(null);
 
     const showToast = (severity:any, summary:any, detail:any) => {
         toast.current.show({ severity, summary, detail });
     };
+
+    const onChangeMultipleSelection = (selected: any) => {
+        setMultiSelections(selected);
+    };
+
+    const user = useSelector((state:any) => state.adminuser.user);
+
+    useEffect(() => {
+        const uRoles:any = [];
+        user?.viewRoles?.forEach((day:any) => {
+            uRoles.push({ label: day });
+        });
+        setMultiSelections(uRoles);
+    }, [user]);
 
     useEffect(() => {
         dispatch(adminUserActions.getUserById({ _id: id }));
@@ -35,12 +64,8 @@ const Edituser = () => {
     */
     const schemaResolver = yupResolver(
         yup.object().shape({
-            role: yup.string().required('Please enter select the role'),
-            firstName: yup.string().required('Please enter first name').min(2, 'This value is too short. It should have 2 characters or more.'),
-            lastName: yup.string().required('Please enter last name').min(2, 'This value is too short. It should have 2 characters or more.'),
-            phonenumber: yup.string().required('Please enter phone number').min(2, 'This value is too short. It should have 2 characters or more.'),
-            email: yup.string().required('Please enter email address').email('please enter valid email id'),
-        }),
+            //roles: yup.string().required('Please enter select the role'),
+          }),
     );
 
     const methods = useForm<User>({
@@ -58,8 +83,23 @@ const Edituser = () => {
     /*
         handle form submission
     */
-    const onSubmit = handleSubmit((formData: User) => {
-        dispatch(adminUserActions.updateUser(formData));
+    const onSubmit = handleSubmit((formData: any) => {
+
+      
+        formData._id = id;
+
+        console.log("multiSelections",multiSelections);
+
+        let Roles:any = [];
+        multiSelections?.forEach((role:any) => {
+            Roles.push(role.label)
+        })
+
+        let Obj:any = {};
+        Obj.roles = Roles;
+        Obj._id = id;
+        
+        dispatch(adminUserActions.updateUser(Obj));
     });
 
     useEffect(() => {
@@ -74,9 +114,6 @@ const Edituser = () => {
             dispatch(clearState());
         }
     }, [successMessage, error, dispatch]);
-
-    const user = useSelector((state:any) => state.adminuser.user);
-    console.log('user', user);
 
     return (
         <>
@@ -97,27 +134,28 @@ const Edituser = () => {
 
                             <div className="card-body">
 
-                                <form name="Product-form" id="Product-form" onSubmit={onSubmit}>
+                                <form name="user-form" id="user-form" onSubmit={onSubmit}>
                                     <div className="row">
                                         <div className="col-md-6">
                                             <div className="form-group">
-                                                <FormInput
-                                                    register={register}
-                                                    key="role"
-                                                    // defaultValue={user?.roles}
-                                                    errors={errors}
+                                                <label>Select roles</label>
+                                                <Controller
+                                                    key="roles"
+                                                    name="roles"
                                                     control={control}
-                                                    label="Role"
-                                                    containerClass="mb-3"
-                                                    type="select"
-                                                    className=""
-                                                    id="role"
-                                                    name="role"
-                                                >
-                                                    <option value="">Select</option>
-                                                    <option value="Alabama">Admin </option>
-                                                    <option value="Alaska">User </option>
-                                                </FormInput>
+                                                    render={({ field }) => (
+                                                        <Typeahead
+                                                            {...field}
+                                                            id="select3"
+                                                            labelKey="label"
+                                                            multiple
+                                                            onChange={onChangeMultipleSelection}
+                                                            options={UserRoles}
+                                                            placeholder="Choose a day..."
+                                                            selected={multiSelections}
+                                                        />
+                                                    )}
+                                                />
                                             </div>
                                         </div>
                                     </div>
@@ -130,6 +168,7 @@ const Edituser = () => {
                                                     defaultValue={user?.firstName}
                                                     register={register}
                                                     key="firstName"
+                                                    disabled
                                                     errors={errors}
                                                     control={control}
                                                     label="First name"
@@ -143,6 +182,7 @@ const Edituser = () => {
                                                     type="text"
                                                     register={register}
                                                     key="lastName"
+                                                    disabled
                                                     defaultValue={user?.lastName}
                                                     errors={errors}
                                                     control={control}

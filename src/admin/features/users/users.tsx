@@ -26,7 +26,8 @@ export default function Users() {
         phonenumber:'',
         lastName:'',
         roles: [], 
-        isactive:false
+        viewRoles:[],
+        activated:false
         
     }
      
@@ -37,6 +38,7 @@ export default function Users() {
 
     const [users, setusers] = useState<any>([]);
     const [deleteuserDialog, setDeleteuserDialog] = useState(false);
+    const [deactiveDialog,setDeActivateuserDialog] = useState(false);
     const [user, setuser] = useState(emptyUser);
     const [selectedusers, setSelectedusers] = useState<any>(null);
     const [globalFilter, setGlobalFilter] = useState(null);
@@ -57,6 +59,10 @@ export default function Users() {
         setDeleteuserDialog(false);
     };
 
+    const hideDeactiveUserDialog = () => {
+        setDeActivateuserDialog(false);
+    };
+
     const onGlobalFilterChange = (event:any) => {
         const value = event.target.value;
         let _filters = { ...filters };
@@ -67,6 +73,11 @@ export default function Users() {
     const edituser = (data:any) => {
         navigate("/admin/users/edit/"+data._id);
     };
+
+    const confirmDeActivate = (data:any) => {
+        setuser(data);
+        setDeActivateuserDialog(true);
+    }
 
     const confirmDeleteuser = (user:any) => {
         setuser(user);
@@ -94,6 +105,25 @@ export default function Users() {
         
     };
 
+    const deactiveUser = () => {
+        const _users = users.filter((val:any) => val !== user._id);
+        setusers(_users);
+
+        let reqObject:any = {};
+
+        if(user.activated) {
+            reqObject.activated = false;
+            reqObject._id = user._id
+        } else {
+            reqObject.activated = true;
+            reqObject._id = user._id;
+        }
+
+        dispatch(adminUserActions.deleteUser(reqObject))
+        setDeActivateuserDialog(false);
+        setuser(emptyUser);
+    };
+
     const exportCSV = () => {
         dt.current.exportCSV();
     };
@@ -108,19 +138,20 @@ export default function Users() {
     const actionBodyTemplate = (rowData:any) => (
         <>
             <Button icon="pi pi-pencil" rounded outlined className="mr-2" onClick={() => edituser(rowData)} />
-            <Button icon="pi pi-trash" rounded outlined severity="danger" onClick={() => confirmDeleteuser(rowData)} />
+            <Button icon="pi pi-trash" className="mr-2"  rounded outlined severity="danger" onClick={() => confirmDeleteuser(rowData)} />
+            <Button icon="pi pi-times" rounded outlined onClick={() => confirmDeActivate(rowData)} />
         </>
     );
    
     const verifiedBodyTemplate = (rowData:any) => {
-        return <i className={classNames('pi', { 'true-icon pi-check-circle': rowData.isActive, 'false-icon pi-times-circle': !rowData.isActive })}></i>;
+        return <i className={classNames('pi', { 'true-icon pi-check-circle': rowData.activated, 'false-icon pi-times-circle': !rowData.activated })}></i>;
     };
     
    const rolesBodyTemplate = (rowData:any) => {
         return (
             <div>
               {/* Map over the split values and apply styles */}
-              {rowData.roles.map((value:any, index:number) => (
+              {rowData.viewRoles.map((value:any, index:number) => (
                 <span key={index} className='roles-list'>
                   {value}
                 </span>
@@ -146,6 +177,13 @@ export default function Users() {
         <>
             <Button label="No" icon="pi pi-times" outlined onClick={hideDeleteUserDialog} />
             <Button label="Yes" icon="pi pi-check" severity="danger" onClick={deleteUser} />
+        </>
+    );
+
+    const deActiveuserDialogFooter = (
+        <>
+            <Button label="No" icon="pi pi-times" outlined onClick={hideDeactiveUserDialog} />
+            <Button label="Yes" icon="pi pi-check" severity="danger" onClick={deactiveUser} />
         </>
     );
 
@@ -178,8 +216,8 @@ export default function Users() {
                     <Column field="firstName" header="First name" sortable style={{ minWidth: '10rem' }} />
                     <Column field="lastName" header="Last name" sortable style={{ minWidth: '10rem' }} />
                     <Column field="email" header="Login name" sortable style={{ minWidth: '10rem' }} />
-                    <Column field="isActive" header="IsActive" body={verifiedBodyTemplate} />
-                    <Column field="roles" header="Roles" body={rolesBodyTemplate} />
+                    <Column field="activated" header="IsActive" body={verifiedBodyTemplate} />
+                    <Column field="viewRoles" header="Roles" body={rolesBodyTemplate} />
                     <Column body={actionBodyTemplate} exportable={false} style={{ minWidth: '6rem',textAlign:'center' }} />
                 </DataTable>
             </div>
@@ -191,6 +229,15 @@ export default function Users() {
                 deleteTitle={user.firstName}
                 dataLength={user}
             />
+
+            <DeleteDiaLog 
+                deleteonClick={deactiveDialog}
+                deleteDialogFooter={deActiveuserDialogFooter}
+                hideDeleteDialog={hideDeactiveUserDialog}
+                deleteTitle={user.firstName}
+                dataLength={user}
+            />
+
             </>
             }
         </div>

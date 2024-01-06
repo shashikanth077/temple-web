@@ -2,7 +2,7 @@ import {
     call, put, all, fork, takeLatest,
 } from 'redux-saga/effects';
 import {
-    updateUser, getUserById, getUsers, addUser, deleteUser,
+    updateRoles, getUserById, getUsers, addUser, deleteUser,
 } from './userApi';
 import { adminUserActions } from './userSlice';
 import {
@@ -71,7 +71,7 @@ function* updateUsers(action:any) {
     console.log('User edit paylod', action.payload);
     try {
         yield put(startLoading());
-        const response: SuccesResponse = yield call(updateUser, action.payload);
+        const response: SuccesResponse = yield call(updateRoles, action.payload);
         if (response.success) {
             yield put(setSuccessMessage('Updated successfully'));
         } else {
