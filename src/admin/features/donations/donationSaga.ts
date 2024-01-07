@@ -3,8 +3,8 @@ import {
 } from 'redux-saga/effects';
 import {
     addServices, editServices, deleteServices, getServicesDetails, getServiceById,
-} from './serviceApi';
-import { adminServiceActions } from './serviceSlice';
+} from './donationApis';
+import { adminServiceActions } from './donationSlice';
 import { SuccesResponse, ServerList, ServerSingleList } from 'models';
 import {
     startLoading, endLoading, setError, setSuccessMessage,
