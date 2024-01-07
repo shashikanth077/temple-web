@@ -25,6 +25,22 @@
             "roles":["ROLE_ADMIN"]
         },
         {
+            "key": "bookings",
+            "label": "Bookings",
+            "isTitle": false,
+            "icon": "fas fa-gopuram",
+            "url": "/admin/bookings/list",
+            "roles":["ROLE_ADMIN"]
+        },
+        {
+            "key": "donations",
+            "label": "Donations",
+            "isTitle": false,
+            "icon": "fas fa-hand-holding-usd",
+            "url": "/admin/donations/list",
+            "roles":["ROLE_ADMIN"]
+        },
+        {
             "key": "godmasters",
             "label": "GodMaster",
             "isTitle": false,

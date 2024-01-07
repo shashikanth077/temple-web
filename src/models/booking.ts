@@ -1,9 +1,10 @@
 export interface Booking {
-    booking_id:number;
-    booking_type: string;
-    booking_description: string;
-    booking_image:string;
-  }
+    _id:string;
+    bookingType: string;
+    bookingName: string;
+    image:string;
+    description:string
+}
 
 export interface Bookings {
     _id:string;

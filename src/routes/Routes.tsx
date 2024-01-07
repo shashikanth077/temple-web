@@ -24,11 +24,13 @@ const AllRoutes = (props: RoutesProps) => {
     const [loggedInUser] = useUser();
 
     let RoleStatus;
-    if(loggedInUser?.roles?.includes('ROLE_ADMIN') && loggedInUser?.roles?.includes('ROLE_USER')) {
+    if(loggedInUser?.roles?.includes('ROLE_ADMIN')) {
+        console.log("loggedInadmin");
         RoleStatus = 'ROLE_ADMIN';
     } 
 
     if(loggedInUser?.roles?.includes('ROLE_USER') && !loggedInUser?.roles?.includes('ROLE_ADMIN')) {
+        console.log("loggeduser");
         RoleStatus = 'ROLE_USER';
     } 
 
