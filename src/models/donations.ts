@@ -1,3 +1,12 @@
+export interface DonationTypes {
+    _id:string;
+    type: string;
+    image:string;
+    description: string;
+    frequency:string;
+    denominations:string;
+}
+
 export interface Donation {
     _id:string;
     Type: string;

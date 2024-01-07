@@ -10,8 +10,8 @@ import { InputText } from 'primereact/inputtext';
 import { Tag } from 'primereact/tag';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { adminServiceActions } from './serviceSlice';
-import { selectServices } from './serviceSelector';
+import { adminServiceActions } from './donationSlice';
+import { selectServices } from './donationSelector';
 
 import DeleteDiaLog from 'sharedComponents/dialogs/dialogs';
 import { useRedux } from 'hooks';
