@@ -1,0 +1,55 @@
+{
+	"success": true,
+	"SevaTypes": [
+		{
+            "_id": "1",
+            "bookingType":"Regular",
+			"category": "specialevents",
+            "name":"Car pooja",
+            "amount":4455,
+            "days":3,
+            "description":"4566",
+            "image":"d.jpg"
+        },
+        {
+            "_id": "2",
+            "bookingType":"Pre-Booking",
+			"category": "specialevents",
+            "name":"Anniversary Pooja",
+            "amount":4455,
+            "days":3,
+            "description":"4566",
+            "image":"d.jpg"
+        },
+        {
+            "_id": "3",
+            "bookingType":"Pre-Booking",
+			"category": "personalpooja",
+            "name":"Sasthi pooja",
+            "amount":4455,
+            "days":3,
+            "description":"4566",
+            "image":"d.jpg"
+        },
+        {
+            "_id": "4",
+            "bookingType":"Pre-Booking",
+			"category": "personalpooja",
+            "name":"Sudharsan Homam",
+            "amount":4455,
+            "days":3,
+            "description":"4566",
+            "image":"d.jpg"
+        },
+        {
+            "_id": "5",
+            "bookingType":"Pre-Booking",
+			"category": "personalpooja",
+            "name":"Sathyanarayana Vratam",
+            "amount":4455,
+            "days":3,
+            "description":"4566",
+            "image":"d.jpg"
+        }
+    ]
+}
