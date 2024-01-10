@@ -29,7 +29,7 @@
             "label": "Bookings",
             "isTitle": false,
             "icon": "fas fa-gopuram",
-            "url": "/admin/bookings/list",
+            "url": "/admin/bookingtypes/list",
             "roles":["ROLE_ADMIN"]
         },
         {
@@ -37,7 +37,7 @@
             "label": "Donations",
             "isTitle": false,
             "icon": "fas fa-hand-holding-usd",
-            "url": "/admin/donations/list",
+            "url": "/admin/donationtypes/list",
             "roles":["ROLE_ADMIN"]
         },
         {

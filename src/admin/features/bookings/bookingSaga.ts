@@ -2,20 +2,22 @@ import {
     call, put, all, fork, takeLatest,
 } from 'redux-saga/effects';
 import {
-    addServices, editServices, deleteServices, getServicesDetails, getServiceById,
+    addBookings, editBookings, deleteBookings, getBookingsDetails, getBookingById,
 } from './bookingApi';
-import { adminServiceActions } from './bookingSlice';
-import { SuccesResponse, ServerList, ServerSingleList } from 'models';
+import { adminBookingActions } from './bookingSlice';
+import {
+    SuccesResponse, BookingTypeList, BookinSingleList,
+} from 'models';
 import {
     startLoading, endLoading, setError, setSuccessMessage,
 } from 'storeConfig/api/apiSlice';
 
-function* getServiceByIdRow(action:any) {
+function* getBookingByIdRow(action:any) {
     try {
         yield put(startLoading());
-        const response: ServerSingleList = yield call(getServiceById, action.payload);
+        const response: BookinSingleList = yield call(getBookingById, action.payload);
         if (response.success) {
-            yield put(adminServiceActions.getServiceByIdSuccess(response));
+            yield put(adminBookingActions.getBookingByIdSuccess(response));
         } else {
             yield put(setError(response.errorMessage));
         }
@@ -28,12 +30,12 @@ function* getServiceByIdRow(action:any) {
     }
 }
 
-function* getServiceDetails(action:any) {
+function* getBookingDetails(action:any) {
     try {
         yield put(startLoading());
-        const response: ServerList = yield call(getServicesDetails, action.payload);
+        const response: BookingTypeList = yield call(getBookingsDetails, action.payload);
         if (response.success) {
-            yield put(adminServiceActions.getServiceDetailsSuccess(response));
+            yield put(adminBookingActions.getBookingDetailsSuccess(response));
         } else {
             yield put(setError(response.errorMessage));
         }
@@ -46,10 +48,10 @@ function* getServiceDetails(action:any) {
     }
 }
 
-function* addService(action:any) {
+function* addBooking(action:any) {
     try {
         yield put(startLoading());
-        const response: SuccesResponse = yield call(addServices, action.payload);
+        const response: SuccesResponse = yield call(addBookings, action.payload);
         if (response.success) {
             yield put(setSuccessMessage('Added successfully'));
         } else {
@@ -65,10 +67,10 @@ function* addService(action:any) {
     }
 }
 
-function* updateService(action:any) {
+function* updateBooking(action:any) {
     try {
         yield put(startLoading());
-        const response: SuccesResponse = yield call(editServices, action.payload);
+        const response: SuccesResponse = yield call(editBookings, action.payload);
         if (response.success) {
             yield put(setSuccessMessage('Updated successfully'));
         } else {
@@ -83,10 +85,10 @@ function* updateService(action:any) {
     }
 }
 
-function* deleteService(action:any) {
+function* deleteBooking(action:any) {
     try {
         yield put(startLoading());
-        const response: SuccesResponse = yield call(deleteServices, action.payload);
+        const response: SuccesResponse = yield call(deleteBookings, action.payload);
         if (response.success) {
             yield put(setSuccessMessage('Deleted successfully'));
         } else {
@@ -101,26 +103,26 @@ function* deleteService(action:any) {
     }
 }
 
-export function* watchServiceDetails() {
-    yield takeLatest(adminServiceActions.getServiceDetails.type, getServiceDetails);
+export function* watchBookingDetails() {
+    yield takeLatest(adminBookingActions.getBookingDetails.type, getBookingDetails);
 }
 
-export function* watchAddService() {
-    yield takeLatest(adminServiceActions.addService.type, addService);
+export function* watchAddBooking() {
+    yield takeLatest(adminBookingActions.addBooking.type, addBooking);
 }
-export function* watchupdateService() {
-    yield takeLatest(adminServiceActions.updateService.type, updateService);
-}
-
-export function* watchServiceById() {
-    yield takeLatest(adminServiceActions.getServiceById.type, getServiceByIdRow);
+export function* watchupdateBooking() {
+    yield takeLatest(adminBookingActions.updateBooking.type, updateBooking);
 }
 
-export function* watchdeleteService() {
-    yield takeLatest(adminServiceActions.deleteService.type, deleteService);
-}
-function* adminServiceSaga() {
-    yield all([fork(watchServiceById), fork(watchAddService), fork(watchupdateService), fork(watchdeleteService), fork(watchServiceDetails)]);
+export function* watchBookingById() {
+    yield takeLatest(adminBookingActions.getBookingById.type, getBookingByIdRow);
 }
 
-export default adminServiceSaga;
+export function* watchdeleteBooking() {
+    yield takeLatest(adminBookingActions.deleteBooking.type, deleteBooking);
+}
+function* adminBookingSaga() {
+    yield all([fork(watchBookingById), fork(watchAddBooking), fork(watchupdateBooking), fork(watchdeleteBooking), fork(watchBookingDetails)]);
+}
+
+export default adminBookingSaga;

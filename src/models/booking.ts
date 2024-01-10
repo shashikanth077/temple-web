@@ -1,10 +1,29 @@
 export interface Booking {
     _id:string;
+    amount:string;
     bookingType: string;
-    bookingName: string;
+    name: string;
     image:string;
     description:string
 }
+
+export interface BookingTypeList {
+    _id:string;
+    bookings:string[];
+    message:string;
+    success:boolean;
+    errorMessage:string;
+    errorCode:number;
+  }
+
+export interface BookinSingleList {
+    _id:string;
+    booking:any;
+    message:string;
+    success:boolean;
+    errorMessage:string;
+    errorCode:number;
+  }
 
 export interface Bookings {
     _id:string;

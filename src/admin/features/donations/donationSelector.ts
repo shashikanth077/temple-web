@@ -1,4 +1,4 @@
 import { RootState } from 'storeConfig/store';
 
-export const selectServices = (state: RootState) => state.adminService.services;
-export const selectService = (state: RootState) => state.adminService.service;
+export const selectDonationTypes = (state: RootState) => state.admindonationtypes.donationtypes;
+export const selectDonationType = (state: RootState) => state.admindonationtypes.donationtype;

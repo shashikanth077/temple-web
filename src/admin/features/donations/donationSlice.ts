@@ -1,58 +1,58 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import {
-    AdminService, SuccessRes, ServerList, ServerSingleList,
+    DonationTypesList, DonationTypesSingle,
 } from 'models';
 
-export interface ServiceState {
+export interface DonationState {
     loading?: boolean;
-    service:any;
-    services:any;
+    donationtype:any;
+    donationtypes:any;
     message:string;
 }
 
-export interface ServicePayload {
+export interface DonationPayload {
     _id:string | undefined;
 }
 
-const initialState: ServiceState = {
+const initialState: DonationState = {
     loading: false,
-    service: {},
-    services: [],
+    donationtype: {},
+    donationtypes: [],
     message: '',
 };
 
-const ServiceSlice = createSlice({
-    name: 'adminService',
+const DonationSlice = createSlice({
+    name: 'admindonationtypes',
     initialState,
     reducers: {
-        getServiceById(state, action: PayloadAction<ServicePayload>) {
+        getDonationById(state, action: PayloadAction<DonationPayload>) {
             state.loading = true;
         },
-        getServiceByIdSuccess(state, action: PayloadAction<ServerSingleList>) {
+        getDonationByIdSuccess(state, action: PayloadAction<DonationTypesSingle>) {
             state.loading = false;
-            state.service = action.payload.service;
+            state.donationtypes = action.payload.donationtypes;
         },
-        getServiceDetails(state) {
+        getDonationDetails(state) {
             state.loading = true;
         },
-        getServiceDetailsSuccess(state, action: PayloadAction<ServerList>) {
+        getDonationDetailsSuccess(state, action: PayloadAction<DonationTypesList>) {
             state.loading = false;
-            state.services = action.payload.services;
+            state.donationtype = action.payload.donationtype;
         },
-        addService(state, action: PayloadAction<any>) {
+        addDonation(state, action: PayloadAction<any>) {
             state.loading = true;
         },
-        updateService(state, action: PayloadAction<any>) {
+        updateDonation(state, action: PayloadAction<any>) {
             state.loading = true;
         },
-        deleteService(state, action: PayloadAction<ServicePayload>) {
+        deleteDonation(state, action: PayloadAction<DonationPayload>) {
             state.loading = true;
         },
     },
 });
 
 // Actions
-export const adminServiceActions = ServiceSlice.actions;
+export const adminDonationTypeActions = DonationSlice.actions;
 
 // Reducer
-export const adminServiceReducer = ServiceSlice.reducer;
+export const adminDonationTypeReducer = DonationSlice.reducer;

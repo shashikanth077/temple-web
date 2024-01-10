@@ -9,7 +9,7 @@ import { Toast } from 'primereact/toast';
 import { useSelector } from 'react-redux';
 import { admingodActions } from '../godmaster/godSlice';
 import { selectGods } from '../godmaster/godSelector';
-import { adminServiceActions } from './donationSlice';
+import { adminDonationTypeActions } from './donationSlice';
 import { clearState } from 'storeConfig/api/apiSlice';
 import { FormInput } from 'sharedComponents/inputs';
 import { useRedux } from 'hooks';
@@ -87,7 +87,7 @@ const AddService = () => {
                 formData.append(k, data[k]);
             }
         }
-        dispatch(adminServiceActions.addService(formData));
+        dispatch(adminDonationTypeActions.addDonation(formData));
     });
 
     useEffect(() => {

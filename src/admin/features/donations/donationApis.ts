@@ -1,32 +1,32 @@
 import { APICore } from 'helpers/api';
 
 /* eslint-disable */
-export function getServiceById(payload:any) {
-    const baseUrl = 'http://localhost:8080/api/services/'+payload._id;;
+export function getDonationById(payload:any) {
+    const baseUrl = 'http://localhost:4000/api/donationtype/'+payload._id;;
     const response = APICore.get(`${baseUrl}`, {});
     return response;
 }
 
-export function getServicesDetails(payload:any) {
-    const baseUrl = 'http://localhost:8080/api/services';
+export function getDonationsDetails(payload:any) {
+    const baseUrl = 'http://localhost:4000/api/donationtypes';
     const response = APICore.get(`${baseUrl}`, {});
     return response;
 }
 
-export function addServices(payload:any) {
-    const baseUrl = 'http://localhost:8080/api/service/'+payload.get('godId');
+export function addDonations(payload:any) {
+    const baseUrl = 'http://localhost:4000/api/Donation/'+payload.get('godId');
     const response = APICore.createWithFile(`${baseUrl}`, payload);
     return response;
 }
 
-export function editServices(payload:any) {
-    const baseUrl = 'http://localhost:8080/api/service/'+payload.get('godId')+'/'+payload.get('_id');
+export function editDonations(payload:any) {
+    const baseUrl = 'http://localhost:4000/api/Donation/'+payload.get('godId')+'/'+payload.get('_id');
     const response = APICore.createWithFileUpdate(`${baseUrl}`, payload);
     return response;
 }
 
-export function deleteServices(payload:any) {
-    const baseUrl = 'http://localhost:8080/api/service/'+payload._id;
+export function deleteDonations(payload:any) {
+    const baseUrl = 'http://localhost:4000/api/Donation/'+payload._id;
     const response = APICore.update(`${baseUrl}`,{});
     return response;
 }

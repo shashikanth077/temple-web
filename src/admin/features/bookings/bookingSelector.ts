@@ -1,4 +1,4 @@
 import { RootState } from 'storeConfig/store';
 
-export const selectServices = (state: RootState) => state.adminService.services;
-export const selectService = (state: RootState) => state.adminService.service;
+export const selectBookings = (state: RootState) => state.adminbookingtypes.bookings;
+export const selectBooking = (state: RootState) => state.adminbookingtypes.booking;

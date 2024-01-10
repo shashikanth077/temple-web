@@ -2,20 +2,22 @@ import {
     call, put, all, fork, takeLatest,
 } from 'redux-saga/effects';
 import {
-    addServices, editServices, deleteServices, getServicesDetails, getServiceById,
+    addDonations, editDonations, deleteDonations, getDonationsDetails, getDonationById,
 } from './donationApis';
-import { adminServiceActions } from './donationSlice';
-import { SuccesResponse, ServerList, ServerSingleList } from 'models';
+import { adminDonationTypeActions } from './donationSlice';
+import {
+    SuccesResponse, ServerList, DonationTypesSingle, BookingTypeList, DonationTypesList,
+} from 'models';
 import {
     startLoading, endLoading, setError, setSuccessMessage,
 } from 'storeConfig/api/apiSlice';
 
-function* getServiceByIdRow(action:any) {
+function* getDonationByIdRow(action:any) {
     try {
         yield put(startLoading());
-        const response: ServerSingleList = yield call(getServiceById, action.payload);
+        const response: DonationTypesSingle = yield call(getDonationById, action.payload);
         if (response.success) {
-            yield put(adminServiceActions.getServiceByIdSuccess(response));
+            yield put(adminDonationTypeActions.getDonationByIdSuccess(response));
         } else {
             yield put(setError(response.errorMessage));
         }
@@ -28,12 +30,12 @@ function* getServiceByIdRow(action:any) {
     }
 }
 
-function* getServiceDetails(action:any) {
+function* getDonationDetails(action:any) {
     try {
         yield put(startLoading());
-        const response: ServerList = yield call(getServicesDetails, action.payload);
+        const response: DonationTypesList = yield call(getDonationsDetails, action.payload);
         if (response.success) {
-            yield put(adminServiceActions.getServiceDetailsSuccess(response));
+            yield put(adminDonationTypeActions.getDonationDetailsSuccess(response));
         } else {
             yield put(setError(response.errorMessage));
         }
@@ -46,10 +48,10 @@ function* getServiceDetails(action:any) {
     }
 }
 
-function* addService(action:any) {
+function* addDonation(action:any) {
     try {
         yield put(startLoading());
-        const response: SuccesResponse = yield call(addServices, action.payload);
+        const response: SuccesResponse = yield call(addDonations, action.payload);
         if (response.success) {
             yield put(setSuccessMessage('Added successfully'));
         } else {
@@ -65,10 +67,10 @@ function* addService(action:any) {
     }
 }
 
-function* updateService(action:any) {
+function* updateDonation(action:any) {
     try {
         yield put(startLoading());
-        const response: SuccesResponse = yield call(editServices, action.payload);
+        const response: SuccesResponse = yield call(editDonations, action.payload);
         if (response.success) {
             yield put(setSuccessMessage('Updated successfully'));
         } else {
@@ -83,10 +85,10 @@ function* updateService(action:any) {
     }
 }
 
-function* deleteService(action:any) {
+function* deleteDonation(action:any) {
     try {
         yield put(startLoading());
-        const response: SuccesResponse = yield call(deleteServices, action.payload);
+        const response: SuccesResponse = yield call(deleteDonations, action.payload);
         if (response.success) {
             yield put(setSuccessMessage('Deleted successfully'));
         } else {
@@ -101,26 +103,26 @@ function* deleteService(action:any) {
     }
 }
 
-export function* watchServiceDetails() {
-    yield takeLatest(adminServiceActions.getServiceDetails.type, getServiceDetails);
+export function* watchDonationDetails() {
+    yield takeLatest(adminDonationTypeActions.getDonationDetails.type, getDonationDetails);
 }
 
-export function* watchAddService() {
-    yield takeLatest(adminServiceActions.addService.type, addService);
+export function* watchAddDonation() {
+    yield takeLatest(adminDonationTypeActions.addDonation.type, addDonation);
 }
-export function* watchupdateService() {
-    yield takeLatest(adminServiceActions.updateService.type, updateService);
-}
-
-export function* watchServiceById() {
-    yield takeLatest(adminServiceActions.getServiceById.type, getServiceByIdRow);
+export function* watchupdateDonation() {
+    yield takeLatest(adminDonationTypeActions.updateDonation.type, updateDonation);
 }
 
-export function* watchdeleteService() {
-    yield takeLatest(adminServiceActions.deleteService.type, deleteService);
-}
-function* adminServiceSaga() {
-    yield all([fork(watchServiceById), fork(watchAddService), fork(watchupdateService), fork(watchdeleteService), fork(watchServiceDetails)]);
+export function* watchDonationById() {
+    yield takeLatest(adminDonationTypeActions.getDonationById.type, getDonationByIdRow);
 }
 
-export default adminServiceSaga;
+export function* watchdeleteDonation() {
+    yield takeLatest(adminDonationTypeActions.deleteDonation.type, deleteDonation);
+}
+function* adminDonationSaga() {
+    yield all([fork(watchDonationById), fork(watchAddDonation), fork(watchupdateDonation), fork(watchdeleteDonation), fork(watchDonationDetails)]);
+}
+
+export default adminDonationSaga;
