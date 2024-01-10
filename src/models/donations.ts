@@ -7,6 +7,22 @@ export interface DonationTypes {
     denominations:string;
 }
 
+export interface DonationTypesSingle {
+    success:boolean;
+    donationtypes:DonationTypes;
+    errorMessage:string;
+    errorCode:number;
+    message:string;
+}
+
+export interface DonationTypesList {
+    success:boolean;
+    donationtype:DonationTypes[];
+    errorMessage:string;
+    errorCode:number;
+    message:string;
+}
+
 export interface Donation {
     _id:string;
     Type: string;

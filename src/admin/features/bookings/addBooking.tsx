@@ -7,16 +7,15 @@ import {
 import { useForm } from 'react-hook-form';
 import { Toast } from 'primereact/toast';
 import { useSelector } from 'react-redux';
-import { admingodActions } from '../godmaster/godSlice';
 import { selectGods } from '../godmaster/godSelector';
-import { adminServiceActions } from './bookingSlice';
+import { adminBookingActions } from './bookingSlice';
 import { clearState } from 'storeConfig/api/apiSlice';
 import { FormInput } from 'sharedComponents/inputs';
 import { useRedux } from 'hooks';
 import { Booking } from 'models';
 import Loader from 'sharedComponents/loader/loader';
 
-const ServiceTypes:any = [
+const BookingTypes:any = [
     { id: 'Homam', name: 'Homam' },
     { id: 'Pooja', name: 'Pooja' },
     { id: 'Archana', name: 'Archana' },
@@ -34,12 +33,6 @@ const AddBooking = () => {
     const [image, setImage] = useState({ preview: '', data: '' })
 
     const toast = useRef<any>(null);
-
-    useEffect(() => {
-        dispatch(admingodActions.getGodDetails());
-    }, [dispatch]);
-
-    const GodDetails:any = appSelector(selectGods);
 
     const showToast = (severity:any, summary:any, detail:any) => {
         toast.current.show({ severity, summary, detail });
@@ -87,7 +80,7 @@ const AddBooking = () => {
                 formData.append(k, data[k]);
             }
         }
-        dispatch(adminServiceActions.addService(formData));
+        dispatch(adminBookingActions.addBooking(formData));
     });
 
     useEffect(() => {
@@ -123,13 +116,13 @@ const AddBooking = () => {
                         <div className="card">
                             <div className="card-header">
                                 <h3 className="card-title">
-                                    <b>Add Service</b>
+                                    <b>Add Sevas</b>
                                 </h3>
                             </div>
 
                             <div className="card-body">
 
-                                <form encType="multipart/form-data" name="Service-form" id="Service-form" onSubmit={onSubmit}>
+                                <form encType="multipart/form-data" name="Booking-form" id="Booking-form" onSubmit={onSubmit}>
                                     <div className="row">
                                         <div className="col-md-6">
                                             <div className="form-group">
@@ -139,15 +132,12 @@ const AddBooking = () => {
                                                     errors={errors}
                                                     control={control}
                                                     label="Booking name"
-                                                    type="select"
+                                                    type="input"
                                                     containerClass="mb-3"
                                                     id="bookingName"
                                                     name="bookingName"
                                                 >
-                                                    <option value="">Select</option>
-                                                    {GodDetails?.map((option:any, index:any) => (
-                                                        <option value={option._id}>{option.name} </option>
-                                                    ))}
+                                            
                                                 </FormInput>
                                             </div>
                                         </div>
@@ -166,7 +156,7 @@ const AddBooking = () => {
                                                 >
 
                                                     <option value="">Select</option>
-                                                    {ServiceTypes?.map((option:any, index:any) => (
+                                                    {BookingTypes?.map((option:any, index:any) => (
                                                         <option value={option.id}>{option.name} </option>
                                                     ))}
                                                 </FormInput>
@@ -226,7 +216,7 @@ const AddBooking = () => {
                                                 <Button type="submit" className="btn btn-primary submit-btn mr-5 waves-effect waves-light" disabled={loading}>
                                                     Add
                                                 </Button>
-                                                <a className="btn primary cancelbtn" href="/admin/services/list" id="cancel"> Cancel</a>
+                                                <a className="btn primary cancelbtn" href="/admin/Bookings/list" id="cancel"> Cancel</a>
                                             </div>
                                         </div>
                                     </div>

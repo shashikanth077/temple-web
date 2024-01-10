@@ -1,6 +1,6 @@
 {
 	"success": true,
-	"donationTypes": [
+	"donationtypes": [
 		{
             "_id": "1",
 			"type": "Anna Danam",

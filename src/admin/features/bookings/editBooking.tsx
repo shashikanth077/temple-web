@@ -8,10 +8,8 @@ import { useForm } from 'react-hook-form';
 import { Toast } from 'primereact/toast';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { admingodActions } from '../godmaster/godSlice';
-import { selectGods } from '../godmaster/godSelector';
-import { adminServiceActions } from './bookingSlice';
-import { selectService } from './bookingSelector';
+import { adminBookingActions } from './bookingSlice';
+import { selectBooking } from './bookingSelector';
 import { clearState } from 'storeConfig/api/apiSlice';
 import { FormInput } from 'sharedComponents/inputs';
 import { useRedux } from 'hooks';
@@ -20,7 +18,7 @@ import Loader from 'sharedComponents/loader/loader';
 import ImageComponent from 'sharedComponents/Image/image';
 
 /* eslint-disable */
-const ServiceTypes:any = [
+const BookingTypes:any = [
     { id: 'Homam', name: 'Homam' },
     { id: 'Pooja', name: 'Pooja' },
     { id: 'Archana', name: 'Archana' },
@@ -41,13 +39,7 @@ const EditBooking = () => {
     const [checkBoxVal, SetCheckboxVal] = useState(false);
 
     useEffect(() => {
-        dispatch(admingodActions.getGodDetails());
-    }, [dispatch]);
-
-    const GodDetails:any = appSelector(selectGods);
-
-    useEffect(() => {
-        dispatch(adminServiceActions.getServiceById({ _id: id }));
+        dispatch(adminBookingActions.getBookingById({ _id: id }));
     }, [dispatch, id]);
 
     const showToast = (severity:any, summary:any, detail:any) => {
@@ -93,15 +85,13 @@ const EditBooking = () => {
         for (const k in data) {
             if (k === 'image') {
                 formData.append('image', image.data);
-            } else if(k === 'isTaxable') {
-                formData.append('isTaxable', checkBoxVal);
             } else {
                 formData.append(k, data[k]);
             }
         }
         formData.append('_id', id);
 
-        dispatch(adminServiceActions.updateService(formData));
+        dispatch(adminBookingActions.updateBooking(formData));
     });
 
     useEffect(() => {
@@ -124,15 +114,15 @@ const EditBooking = () => {
         setImage(img)
     };
 
-    const service:any = appSelector(selectService);
+    const booking:any = appSelector(selectBooking);
 
     const SetCheckboxValue = (e:any) => {
         const { checked } = e.target;
         SetCheckboxVal(checked);
     };
     useEffect(() => {
-        SetCheckboxVal(service?.isTaxable);
-    }, [service]);
+        SetCheckboxVal(booking?.isTaxable);
+    }, [booking]);
 
     return (
         <>
@@ -147,13 +137,13 @@ const EditBooking = () => {
                         <div className="card">
                             <div className="card-header">
                                 <h3 className="card-title">
-                                    <b>Edit Service</b>
+                                    <b>Edit Sevas</b>
                                 </h3>
                             </div>
 
                             <div className="card-body">
 
-                                <form name="Service-form" id="Service-form" onSubmit={onSubmit}>
+                                <form name="Booking-form" id="Booking-form" onSubmit={onSubmit}>
                                    
                                     <div className="row">
                                         <div className="col-md-6">
@@ -161,7 +151,7 @@ const EditBooking = () => {
                                                 <FormInput
                                                     type="text"
                                                     name="bookingName"
-                                                    defaultValue={service?.serviceName}
+                                                    defaultValue={booking?.bookingName}
                                                     register={register}
                                                     key="bookingName"
                                                     errors={errors}
@@ -177,7 +167,7 @@ const EditBooking = () => {
                                                     type="text"
                                                     register={register}
                                                     key="bookingType"
-                                                    defaultValue={service?.price}
+                                                    defaultValue={booking?.bookingType}
                                                     errors={errors}
                                                     control={control}
                                                     name="bookingType"
@@ -196,7 +186,7 @@ const EditBooking = () => {
                                                     key="amount"
                                                     errors={errors}
                                                     control={control}
-                                                    defaultValue={service?.bookingType}
+                                                    defaultValue={booking?.amount}
                                                     label="Amount"
                                                     type="select"
                                                     containerClass="mb-3"
@@ -217,7 +207,7 @@ const EditBooking = () => {
                                                     register={register}
                                                     key="description"
                                                     errors={errors}
-                                                    defaultValue={service?.accountNumber}
+                                                    defaultValue={booking?.accountNumber}
                                                     control={control}
                                                     name="description"
                                                     label="Description"
@@ -232,7 +222,7 @@ const EditBooking = () => {
                                             <FormInput
                                                 type="textarea"
                                                 name="description"
-                                                defaultValue={service?.description}
+                                                defaultValue={booking?.description}
                                                 label="Description"
                                                 register={register}
                                                 key="description"
@@ -259,7 +249,7 @@ const EditBooking = () => {
                                                     containerClass="mb-3"
                                                 />
                                             </div>
-                                            <ImageComponent classname="img-thumbnail" imageUrl={service?.image} width="40" height="40" altText="s" />
+                                            <ImageComponent classname="img-thumbnail" imageUrl={booking?.image} width="40" height="40" altText="s" />
                                         </div>
                                     </div>
                             
@@ -270,7 +260,7 @@ const EditBooking = () => {
                                                 <Button type="submit" className="btn btn-primary submit-btn mr-5 waves-effect waves-light" disabled={loading}>
                                                     Update
                                                 </Button>
-                                                <a className="btn primary cancelbtn" href="/admin/services/list" id="cancel"> Cancel</a>
+                                                <a className="btn primary cancelbtn" href="/admin/Bookings/list" id="cancel"> Cancel</a>
                                             </div>
                                         </div>
                                     </div>

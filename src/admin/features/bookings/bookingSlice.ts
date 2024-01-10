@@ -1,58 +1,58 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import {
-    AdminService, SuccessRes, ServerList, ServerSingleList,
+    BookinSingleList, BookingTypeList,
 } from 'models';
 
-export interface ServiceState {
+export interface BookingState {
     loading?: boolean;
-    service:any;
-    services:any;
+    booking:any;
+    bookings:any;
     message:string;
 }
 
-export interface ServicePayload {
+export interface BookingPayload {
     _id:string | undefined;
 }
 
-const initialState: ServiceState = {
+const initialState: BookingState = {
     loading: false,
-    service: {},
-    services: [],
+    booking: {},
+    bookings: [],
     message: '',
 };
 
-const ServiceSlice = createSlice({
-    name: 'adminService',
+const BookingSlice = createSlice({
+    name: 'adminbookingtypes',
     initialState,
     reducers: {
-        getServiceById(state, action: PayloadAction<ServicePayload>) {
+        getBookingById(state, action: PayloadAction<BookingPayload>) {
             state.loading = true;
         },
-        getServiceByIdSuccess(state, action: PayloadAction<ServerSingleList>) {
+        getBookingByIdSuccess(state, action: PayloadAction<BookinSingleList>) {
             state.loading = false;
-            state.service = action.payload.service;
+            state.booking = action.payload.booking;
         },
-        getServiceDetails(state) {
+        getBookingDetails(state) {
             state.loading = true;
         },
-        getServiceDetailsSuccess(state, action: PayloadAction<ServerList>) {
+        getBookingDetailsSuccess(state, action: PayloadAction<BookingTypeList>) {
             state.loading = false;
-            state.services = action.payload.services;
+            state.bookings = action.payload.bookings;
         },
-        addService(state, action: PayloadAction<any>) {
+        addBooking(state, action: PayloadAction<any>) {
             state.loading = true;
         },
-        updateService(state, action: PayloadAction<any>) {
+        updateBooking(state, action: PayloadAction<any>) {
             state.loading = true;
         },
-        deleteService(state, action: PayloadAction<ServicePayload>) {
+        deleteBooking(state, action: PayloadAction<BookingPayload>) {
             state.loading = true;
         },
     },
 });
 
 // Actions
-export const adminServiceActions = ServiceSlice.actions;
+export const adminBookingActions = BookingSlice.actions;
 
 // Reducer
-export const adminServiceReducer = ServiceSlice.reducer;
+export const adminBookingReducer = BookingSlice.reducer;

@@ -10,8 +10,8 @@ import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { admingodActions } from '../godmaster/godSlice';
 import { selectGods } from '../godmaster/godSelector';
-import { adminServiceActions } from './donationSlice';
-import { selectService } from './donationSelector';
+import { adminDonationTypeActions } from './donationSlice';
+import { selectDonationType } from './donationSelector';
 import { clearState } from 'storeConfig/api/apiSlice';
 import { FormInput } from 'sharedComponents/inputs';
 import { useRedux } from 'hooks';
@@ -47,7 +47,7 @@ const EditService = () => {
     const GodDetails:any = appSelector(selectGods);
 
     useEffect(() => {
-        dispatch(adminServiceActions.getServiceById({ _id: id }));
+        dispatch(adminDonationTypeActions.getDonationById({ _id: id }));
     }, [dispatch, id]);
 
     const showToast = (severity:any, summary:any, detail:any) => {
@@ -101,7 +101,7 @@ const EditService = () => {
         }
         formData.append('_id', id);
 
-        dispatch(adminServiceActions.updateService(formData));
+        dispatch(adminDonationTypeActions.updateDonation(formData));
     });
 
     useEffect(() => {
@@ -124,7 +124,7 @@ const EditService = () => {
         setImage(img)
     };
 
-    const service:any = appSelector(selectService);
+    const service:any = appSelector(selectDonationType);
 
     const SetCheckboxValue = (e:any) => {
         const { checked } = e.target;

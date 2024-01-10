@@ -25,6 +25,8 @@ import adminUserSaga from 'admin/features/users/userSaga';
 import adminGrocerySaga from 'admin/features/grocery/adminGrocerySaga';
 import myDonationSaga from 'features/donations/mydonations/donationSaga';
 import ReportsSaga from 'admin/features/reports/reportsSaga';
+import adminBookingSaga from 'admin/features/bookings/bookingSaga';
+import adminDonationSaga from 'admin/features/donations/donationSaga';
 
 export default function* rootSaga() {
     yield all(
@@ -55,6 +57,8 @@ export default function* rootSaga() {
             adminGrocerySaga(),
             myDonationSaga(),
             ReportsSaga(),
+            adminBookingSaga(),
+            adminDonationSaga(),
         ],
     );
 }

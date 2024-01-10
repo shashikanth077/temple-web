@@ -1,6 +1,6 @@
 {
 	"success": true,
-	"SevaTypes": [
+	"bookings": [
 		{
             "_id": "1",
             "bookingType":"Regular",

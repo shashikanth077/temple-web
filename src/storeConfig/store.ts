@@ -5,12 +5,6 @@ import createSagaMiddleware from 'redux-saga';
 import {
     persistStore,
     persistReducer,
-    FLUSH,
-    REHYDRATE,
-    PAUSE,
-    PERSIST,
-    PURGE,
-    REGISTER,
 } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import { bannerReducer } from '../features/home/homeSlice';
@@ -42,6 +36,8 @@ import { adminGroceryReducer } from 'admin/features/grocery/adminGrocerySlice';
 import { GroceryCartReducer } from 'features/donations/grocery/grocerySlice';
 import { mydonationsReducer } from 'features/donations/mydonations/donationSlice';
 import { adminReportsReducer } from 'admin/features/reports/reportsSlice';
+import { adminBookingReducer } from 'admin/features/bookings/bookingSlice';
+import { adminDonationTypeReducer } from 'admin/features/donations/donationSlice';
 
 const rootReducer = combineReducers({
     contact: contactReducer,
@@ -73,6 +69,8 @@ const rootReducer = combineReducers({
     donategrocert: GroceryCartReducer,
     mydonations: mydonationsReducer,
     reports: adminReportsReducer,
+    adminbookingtypes: adminBookingReducer,
+    admindonationtypes: adminDonationTypeReducer,
 });
 
 const persistConfig = {

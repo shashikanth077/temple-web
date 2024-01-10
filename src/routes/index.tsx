@@ -49,6 +49,12 @@ const UnAuth = React.lazy(() => import('features/UnAuth'));
 const MyBookings = React.lazy(() => import('features/bookings/reports/Reports'));
 const ProductDetails = React.lazy(() => import('features/shop/products/Details/Product'));
 const IncomeReports = React.lazy(() => import('admin/features/reports/reports'));
+const BookingTypes = React.lazy(() => import('admin/features/bookings'));
+const EditBookingTypes = React.lazy(() => import('admin/features/bookings/addBooking'));
+const AddBookingTypes = React.lazy(() => import('admin/features/bookings/editBooking'));
+const DonationTypes = React.lazy(() => import('admin/features/donations'));
+const AddDonationType = React.lazy(() => import('admin/features/donations/addDonation'));
+const EditDonationType = React.lazy(() => import('admin/features/donations/editDonation'));
 
 export interface RoutesProps {
     path: RouteProps['path'];
@@ -306,6 +312,60 @@ const ServicesRoutes: RoutesProps = {
     ],
 };
 
+const donationTypesRoutes: RoutesProps = {
+    path: '/admin/donationtypes',
+    name: 'DonationTypes',
+
+    roles: ['ROLE_ADMIN'],
+    children: [
+        {
+            path: '/admin/donationtypes/list',
+            name: 'ServicesList',
+            element: <DonationTypes />,
+
+        },
+        {
+            path: '/admin/donationtypes/add',
+            name: 'addGod',
+            element: <AddDonationType />,
+
+        },
+        {
+            path: '/admin/donationtypes/edit/:id',
+            name: 'editGod',
+            element: <EditDonationType />,
+
+        },
+    ],
+};
+
+const bookingAdminRoutes: RoutesProps = {
+    path: '/admin/bookingtypes',
+    name: 'Bookings',
+
+    roles: ['ROLE_ADMIN'],
+    children: [
+        {
+            path: '/admin/bookingtypes/list',
+            name: 'ServicesList',
+            element: <BookingTypes />,
+
+        },
+        {
+            path: '/admin/bookingtypes/add',
+            name: 'addGod',
+            element: <AddBookingTypes />,
+
+        },
+        {
+            path: '/admin/bookingtypes/edit/:id',
+            name: 'editGod',
+            element: <EditBookingTypes />,
+
+        },
+    ],
+};
+
 const UsersRoutes: RoutesProps = {
     path: '/admin/users',
     name: 'Users',
@@ -492,6 +552,8 @@ const authProtectedRoutes = [
     ServicesRoutes,
     UsersRoutes,
     incomeReportsRoutes,
+    bookingAdminRoutes,
+    donationTypesRoutes,
 ];
 
 const bothMemberAdminRoutes = [

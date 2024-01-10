@@ -10,29 +10,25 @@ import { InputText } from 'primereact/inputtext';
 import { Tag } from 'primereact/tag';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { adminServiceActions } from './donationSlice';
-import { selectServices } from './donationSelector';
+import { adminDonationTypeActions } from './donationSlice';
+import { selectDonationTypes } from './donationSelector';
 
 import DeleteDiaLog from 'sharedComponents/dialogs/dialogs';
 import { useRedux } from 'hooks';
 import { clearState } from 'storeConfig/api/apiSlice';
-import { AdminService } from 'models';
+import { DonationTypes } from 'models';
 import Image from 'sharedComponents/Image/image';
 
 /* eslint-disable */
-export default function Services() {
+export default function ManageDonationTypes() {
     
-    const emptyService:AdminService = {
+    const emptyDonation:DonationTypes = {
             _id:'dummy',
-            godId:'',
-            serviceType:'',
-            serviceName:'',
+            type:'',
+            frequency:'',
             description:'',
             image:'',
-            bookingType:'',
-            price:'',
-            accountNumber:'',
-            isTaxable:true
+            denominations:'',
     }
      
     const navigate = useNavigate();
@@ -40,10 +36,10 @@ export default function Services() {
         global: { value: null, matchMode: FilterMatchMode.CONTAINS },
     });
 
-    const [Services, setServices] = useState<any>([]);
-    const [deleteServiceDialog, setDeleteServiceDialog] = useState(false);
-    const [Service, setService] = useState(emptyService);
-    const [selectedServices, setSelectedServices] = useState<any>(null);
+    const [DonationTypes, setDonationTypes] = useState<any>([]);
+    const [deleteDonationDialog, setDeleteDonationDialog] = useState(false);
+    const [Donation, setDonation] = useState(emptyDonation);
+    const [selectedDonationTypes, setSelectedDonationTypes] = useState<any>(null);
     const [globalFilter, setGlobalFilter] = useState(null);
     const toast = useRef<any>(null);
     const dt = useRef<any>(null);
@@ -55,21 +51,19 @@ export default function Services() {
     };
 
     useEffect(() => {
-        dispatch(adminServiceActions.getServiceDetails());
+        dispatch(adminDonationTypeActions.getDonationDetails());
     }, [dispatch]);
    
-    const ServiceDetails:any = appSelector(selectServices);
-
-    console.log("ServiceDetails",ServiceDetails);
+    const DonationDetails:any = appSelector(selectDonationTypes);
  
     const formatCurrency = (value:any) => value.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
 
     const openNew = () => {
-        navigate("/admin/services/add");
+        navigate("/admin/DonationTypes/add");
     };
 
-    const hideDeleteServiceDialog = () => {
-        setDeleteServiceDialog(false);
+    const hideDeleteDonationDialog = () => {
+        setDeleteDonationDialog(false);
     };
 
    
@@ -80,13 +74,13 @@ export default function Services() {
         setFilters(_filters);
     };
 
-    const editService = (data:any) => {
-        navigate("/admin/services/edit/"+data._id);
+    const editDonation = (data:any) => {
+        navigate("/admin/DonationTypes/edit/"+data._id);
     };
 
-    const confirmDeleteService = (Service:any) => {
-        setService(Service);
-        setDeleteServiceDialog(true);
+    const confirmDeleteDonation = (Donation:any) => {
+        setDonation(Donation);
+        setDeleteDonationDialog(true);
     };
 
     useEffect(() => {
@@ -101,12 +95,12 @@ export default function Services() {
         }
     }, [successMessage, error, dispatch]);
 
-    const deleteService = () => {
-        const _Services = Services.filter((val:any) => val !== Service._id);
-        setServices(_Services);
-        dispatch(adminServiceActions.deleteService({_id:Service._id}))
-        setDeleteServiceDialog(false);
-        setService(emptyService);
+    const deleteDonation = () => {
+        const _DonationTypes = DonationTypes.filter((val:any) => val !== Donation._id);
+        setDonationTypes(_DonationTypes);
+        dispatch(adminDonationTypeActions.deleteDonation({_id:Donation._id}))
+        setDeleteDonationDialog(false);
+        setDonation(emptyDonation);
         
     };
 
@@ -125,22 +119,22 @@ export default function Services() {
     };
 
     const rightToolbarTemplate = () => <Button label="Export" icon="pi pi-upload" className="p-button-help" onClick={exportCSV} />;
-    const imageBodyTemplate = (rowData:any) => <Image  imageUrl={`${rowData?.image}`} altText={rowData.serviceName} classname="shadow-2 border-round" style={{ width: '64px' }} />;
+    const imageBodyTemplate = (rowData:any) => <Image  imageUrl={`${rowData?.image}`} altText={rowData.DonationName} classname="shadow-2 border-round" style={{ width: '64px' }} />;
     const priceBodyTemplate = (rowData:any) => formatCurrency(rowData.price);
     const statusBodyTemplate = (rowData:any) => <Tag value={rowData.stock} severity={getSeverity(rowData)} />;
     const actionBodyTemplate = (rowData:any) => (
         <>
-            <Button icon="pi pi-pencil" rounded outlined className="mr-2" onClick={() => editService(rowData)} />
-            <Button icon="pi pi-trash" rounded outlined severity="danger" onClick={() => confirmDeleteService(rowData)} />
+            <Button icon="pi pi-pencil" rounded outlined className="mr-2" onClick={() => editDonation(rowData)} />
+            <Button icon="pi pi-trash" rounded outlined severity="danger" onClick={() => confirmDeleteDonation(rowData)} />
         </>
     );
 
-    const getSeverity = (Service:any) => {
-        if(Service.stock > 20){
+    const getSeverity = (Donation:any) => {
+        if(Donation.stock > 20){
             return 'success';
-        } else if(Service.stock >= 10 && Service.stock <= 20 ){
+        } else if(Donation.stock >= 10 && Donation.stock <= 20 ){
             return 'warning';
-        } else if(Service.stock < 9){
+        } else if(Donation.stock < 9){
             return 'danger';
         }
     };
@@ -149,20 +143,20 @@ export default function Services() {
         const value = filters['global'] ? filters['global'].value : '';
         return (
             <div className="flex flex-wrap gap-2 align-items-center justify-content-between">
-            <h4 className="m-0">Manage Services</h4>
+            <h4 className="m-0">Manage DonationTypes</h4>
             <span className="p-input-icon-left mb-1">
                 <i className="pi pi-search" />
-                <InputText type="search" value={value || ''} onChange={(e) => onGlobalFilterChange(e)} placeholder="Search Services" />
+                <InputText type="search" value={value || ''} onChange={(e) => onGlobalFilterChange(e)} placeholder="Search DonationTypes" />
             </span>
         </div>
         )
     }
        
 
-    const deleteServiceDialogFooter = (
+    const deleteDonationDialogFooter = (
         <>
-            <Button label="No" icon="pi pi-times" outlined onClick={hideDeleteServiceDialog} />
-            <Button label="Yes" icon="pi pi-check" severity="danger" onClick={deleteService} />
+            <Button label="No" icon="pi pi-times" outlined onClick={hideDeleteDonationDialog} />
+            <Button label="Yes" icon="pi pi-check" severity="danger" onClick={deleteDonation} />
         </>
     );
 
@@ -175,35 +169,33 @@ export default function Services() {
                 <DataTable
                     ref={dt}
                     filters={filters} onFilter={(e:any) => setFilters(e.filters)}
-                    value={ServiceDetails}
-                    selection={selectedServices} 
-                    onSelectionChange={(e:any) => setSelectedServices(e.value)} 
+                    value={DonationDetails}
+                    selection={selectedDonationTypes} 
+                    onSelectionChange={(e:any) => setSelectedDonationTypes(e.value)} 
                     dataKey="_id"
                     paginator
                     rows={10}
                     rowsPerPageOptions={[5, 10, 25]}
                     paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-                    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Services"
+                    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} DonationTypes"
                     globalFilter={globalFilter}
                     header={header}
                 >
-                    <Column field="godName" header="God name" sortable style={{ minWidth: '10rem' }} />
-                    <Column field="serviceName" header="Service name" sortable style={{ minWidth: '8rem' }} />
-                    <Column field="serviceType" header="Service type" sortable style={{ minWidth: '8rem' }} />
-                    <Column field="bookingType" header="Booking type" sortable style={{ minWidth: '5rem' }} />
-                    <Column field="price" header="Price" sortable style={{ minWidth: '10rem' }} />
+                    <Column field="type" header="Donation type" sortable style={{ minWidth: '10rem' }} />
+                    <Column field="frequency" header="Frequency" sortable style={{ minWidth: '8rem' }} />
+                    <Column field="denominations" header="Price" sortable style={{ minWidth: '10rem' }} />
                     <Column field="image" header="Image" body={imageBodyTemplate} />
-                    <Column field="deleted" header="isActive" body={verifiedBodyTemplate} sortable style={{ minWidth: '3rem' }} />
+                    {/* <Column field="deleted" header="isActive" body={verifiedBodyTemplate} sortable style={{ minWidth: '3rem' }} /> */}
                     <Column body={actionBodyTemplate} exportable={false} style={{ minWidth: '6rem',textAlign:'center' }} />
                 </DataTable>
             </div>
 
             <DeleteDiaLog 
-                deleteonClick={deleteServiceDialog}
-                deleteDialogFooter={deleteServiceDialogFooter}
-                hideDeleteDialog={hideDeleteServiceDialog}
-                deleteTitle={Service.serviceName}
-                dataLength={Service}
+                deleteonClick={deleteDonationDialog}
+                deleteDialogFooter={deleteDonationDialogFooter}
+                hideDeleteDialog={hideDeleteDonationDialog}
+                deleteTitle={Donation.type}
+                dataLength={Donation}
             />
           
 
