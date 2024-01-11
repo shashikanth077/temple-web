@@ -1,7 +1,4 @@
 import {
-    MENU_ITEMS,
-    HORIZONTAL_MENU_ITEMS,
-    TwoMenuitems,
     MenuItemTypes,
 } from 'constants/adminMenu';
 
