@@ -55,6 +55,8 @@ export default function ManageDonationTypes() {
     }, [dispatch]);
    
     const DonationDetails:any = appSelector(selectDonationTypes);
+
+    console.log("DonationDetails",DonationDetails);
  
     const formatCurrency = (value:any) => value.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
 

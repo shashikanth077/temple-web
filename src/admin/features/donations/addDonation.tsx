@@ -7,8 +7,6 @@ import {
 import { useForm } from 'react-hook-form';
 import { Toast } from 'primereact/toast';
 import { useSelector } from 'react-redux';
-import { admingodActions } from '../godmaster/godSlice';
-import { selectGods } from '../godmaster/godSelector';
 import { adminDonationTypeActions } from './donationSlice';
 import { clearState } from 'storeConfig/api/apiSlice';
 import { FormInput } from 'sharedComponents/inputs';
@@ -16,30 +14,18 @@ import { useRedux } from 'hooks';
 import { DonationTypes } from 'models';
 import Loader from 'sharedComponents/loader/loader';
 
-const ServiceTypes:any = [
-    { id: 'Homam', name: 'Homam' },
-    { id: 'Pooja', name: 'Pooja' },
-    { id: 'Archana', name: 'Archana' },
-];
-
-const bookingTypes:any = [
-    { id: 'Regular', name: 'Regular' },
-    { id: 'Pre-Booking', name: 'Pre-Booking' },
+const Frequency:any = [
+    { id: 'monthly', name: 'Monthly' },
+    { id: 'annually', name: 'Annually' },
 ];
 
 /* eslint-disable */
-const AddService = () => {
-    const { dispatch, appSelector } = useRedux();
+const AddDonation = () => {
+    const { dispatch } = useRedux();
     const { loading, error, successMessage } = useSelector((state:any) => state.apiState);
     const [image, setImage] = useState({ preview: '', data: '' })
 
     const toast = useRef<any>(null);
-
-    useEffect(() => {
-        dispatch(admingodActions.getGodDetails());
-    }, [dispatch]);
-
-    const GodDetails:any = appSelector(selectGods);
 
     const showToast = (severity:any, summary:any, detail:any) => {
         toast.current.show({ severity, summary, detail });
@@ -70,7 +56,6 @@ const AddService = () => {
         handleSubmit,
         register,
         control,
-        watch,
         reset,
         formState: { errors },
     } = methods;
@@ -124,32 +109,26 @@ const AddService = () => {
                         <div className="card">
                             <div className="card-header">
                                 <h3 className="card-title">
-                                    <b>Add Service</b>
+                                    <b>Add Donation type</b>
                                 </h3>
                             </div>
 
                             <div className="card-body">
 
-                                <form encType="multipart/form-data" name="Service-form" id="Service-form" onSubmit={onSubmit}>
+                                <form encType="multipart/form-data" name="Donation-type-form" id="Donation-type-form" onSubmit={onSubmit}>
                                     <div className="row">
                                         <div className="col-md-6">
                                             <div className="form-group">
                                                 <FormInput
+                                                    type="text"
                                                     register={register}
                                                     key="type"
                                                     errors={errors}
                                                     control={control}
-                                                    label="Donation type"
-                                                    type="select"
-                                                    containerClass="mb-3"
-                                                    id="type"
                                                     name="type"
-                                                >
-                                                    <option value="">Select</option>
-                                                    {GodDetails?.map((option:any, index:any) => (
-                                                        <option value={option._id}>{option.name} </option>
-                                                    ))}
-                                                </FormInput>
+                                                    label="Donation type"
+                                                    containerClass="mb-3"
+                                                />
                                             </div>
                                         </div>
                                         <div className="col-md-6">
@@ -167,7 +146,7 @@ const AddService = () => {
                                                 >
 
                                                     <option value="">Select</option>
-                                                    {ServiceTypes?.map((option:any, index:any) => (
+                                                    {Frequency?.map((option:any, index:any) => (
                                                         <option value={option.id}>{option.name} </option>
                                                     ))}
                                                 </FormInput>
@@ -175,10 +154,10 @@ const AddService = () => {
                                         </div>
                                     </div>
                                     <div className="row">
-                                        <div className="col-md-6">
+                                        <div className="col-md-12">
                                             <div className="form-group">
                                                 <FormInput
-                                                    type="text"
+                                                    type="textarea"
                                                     name="description"
                                                     register={register}
                                                     key="description"
@@ -189,6 +168,9 @@ const AddService = () => {
                                                 />
                                               </div>
                                         </div>
+                                    </div>
+                                 
+                                    <div className="row">
                                         <div className="col-md-6">
                                             <div className="form-group">
                                                 <FormInput
@@ -203,16 +185,14 @@ const AddService = () => {
                                                 />
                                             </div>
                                         </div>
-                                    </div>
-                                 
-                                    <div className="row">
+                                        
                                         <div className="col-md-6">
                                             <div className="form-group">
                                                 <FormInput
                                                     type="file"
                                                     accept="image/*"
                                                     name="image"
-                                                    label="Image"
+                                                    label="Upload image"
                                                     onChange={handleFileChange}
                                                     register={register}
                                                     key="image"
@@ -244,4 +224,4 @@ const AddService = () => {
     );
 };
 
-export default AddService;
+export default AddDonation;
