@@ -61,7 +61,7 @@ export default function ManageBookings() {
     const formatCurrency = (value:any) => value.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
 
     const openNew = () => {
-        navigate("/admin/Bookings/add");
+        navigate("/admin/bookingtypes/add");
     };
 
     const hideDeleteBookingDialog = () => {
@@ -77,7 +77,7 @@ export default function ManageBookings() {
     };
 
     const editBooking = (data:any) => {
-        navigate("/admin/Bookings/edit/"+data._id);
+        navigate("/admin/bookingtypes/edit/"+data._id);
     };
 
     const confirmDeleteBooking = (Booking:any) => {

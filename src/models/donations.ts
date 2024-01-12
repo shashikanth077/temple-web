@@ -9,7 +9,7 @@ export interface DonationTypes {
 
 export interface DonationTypesSingle {
     success:boolean;
-    donationtypes:DonationTypes;
+    donationtype:DonationTypes;
     errorMessage:string;
     errorCode:number;
     message:string;
@@ -17,7 +17,7 @@ export interface DonationTypesSingle {
 
 export interface DonationTypesList {
     success:boolean;
-    donationtype:DonationTypes[];
+    donationtypes:DonationTypes[];
     errorMessage:string;
     errorCode:number;
     message:string;

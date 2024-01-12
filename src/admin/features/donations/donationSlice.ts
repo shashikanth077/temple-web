@@ -30,14 +30,14 @@ const DonationSlice = createSlice({
         },
         getDonationByIdSuccess(state, action: PayloadAction<DonationTypesSingle>) {
             state.loading = false;
-            state.donationtypes = action.payload.donationtypes;
+            state.donationtype = action.payload.donationtype;
         },
         getDonationDetails(state) {
             state.loading = true;
         },
         getDonationDetailsSuccess(state, action: PayloadAction<DonationTypesList>) {
             state.loading = false;
-            state.donationtype = action.payload.donationtype;
+            state.donationtypes = action.payload.donationtypes;
         },
         addDonation(state, action: PayloadAction<any>) {
             state.loading = true;

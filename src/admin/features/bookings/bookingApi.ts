@@ -14,7 +14,7 @@ export function getBookingsDetails(payload:any) {
 }
 
 export function addBookings(payload:any) {
-    const baseUrl = 'http://localhost:4000/api/bookingtypes/'+payload.get('godId');
+    const baseUrl = 'http://localhost:4000/api/bookingtypes/add';
     const response = APICore.createWithFile(`${baseUrl}`, payload);
     return response;
 }
