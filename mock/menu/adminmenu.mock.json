@@ -79,14 +79,6 @@
               ]
         },
         {
-            "key": "grocerymaster",
-            "label": "Manage grocery",
-            "isTitle": false,
-            "icon": "fas fa-shopping-basket",
-            "url": "/admin/groceries/list",
-            "roles":["ROLE_ADMIN"]
-        },
-        {
             "key": "mydonations",
             "label": "My donations",
             "isTitle": false,
@@ -126,6 +118,5 @@
             "icon": "fas fa-user",
             "url": "/admin/users/list"
         }
-  
     ]
 }

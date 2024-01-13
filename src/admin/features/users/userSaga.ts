@@ -15,7 +15,6 @@ function* getAllUsers(action:any) {
         yield put(startLoading());
         const response: userResponse = yield call(getUsers, {});
         if (response.success) {
-            // yield put(setSuccessMessage('Success'));
             yield put(adminUserActions.getUsersSuccess(response));
         } else {
             yield put(setError(response.errorMessage));

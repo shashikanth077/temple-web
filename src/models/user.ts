@@ -68,20 +68,38 @@ export interface DeasedSingleResponse{
 export interface ProfileData {
   _id:string;
   userid:string;
-  dateofbirth:Date;
-  firstname: string;
-  lastname:string;
-  phone: string;
-  homenumber: string;
+  nationality:string;
+  star:string;
+  gotram:string;
+  dateOfBirth:Date;
+  firstName: string;
+  lastName:string;
+  zipcode:string;
+  mobileNumber: string;
+  homeNumber: string;
   address1:string;
   address2:string;
   city:string;
+  state:string;
+  billingaddress:string;
+  billingcity:string;
+  billingzipcode:string;
+  billingstate:string;
   postalCode:string;
   province:string;
-  billingaddress1:string;
-  billingaddress2:string;
-  billingcity:string;
-  billingpostalcode:string;
-  billingprovince:string;
+  homeAddress: {
+    address1: string;
+    address2: string;
+    city:string;
+    postalCode: string;
+    province: string;
+},
+billingAddress: {
+    address1: string;
+    address2: string;
+    city: string;
+    postalCode: string;
+    province: string;
+};
 
 }
