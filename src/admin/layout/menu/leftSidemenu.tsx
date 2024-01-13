@@ -1,13 +1,15 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Dropdown } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import SimpleBar from 'simplebar-react';
+import 'assets/css/simple.bar.css';
 
 // components
+/* eslint-disable */
 import AppMenu from './MainMenu';
 import { adminmenuActions } from './menuSlice';
 import { selectadminmenuList } from './menuSelectors';
 import { useRedux, useUser } from 'hooks';
-import { AdminMenuItemTypes } from 'models';
 
 // images
 /* eslint-disable */
@@ -104,9 +106,11 @@ const SideBarContent = () => {
         <>
             <UserBox />
             
-            <div id="sidebar-menu">
-                <AppMenu menuItems={updateItems} />
-            </div>
+            <SimpleBar style={{ maxHeight: '700px' }}>
+                <div id="sidebar-menu">
+                    <AppMenu menuItems={updateItems} />
+                </div>
+            </SimpleBar>
             <div className="clearfix" />
         </>
     )

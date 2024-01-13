@@ -138,7 +138,7 @@ export default function Users() {
     const actionBodyTemplate = (rowData:any) => (
         <>
             <Button icon="pi pi-pencil" rounded outlined className="mr-2" onClick={() => edituser(rowData)} />
-            <Button icon="pi pi-trash" className="mr-2"  rounded outlined severity="danger" onClick={() => confirmDeleteuser(rowData)} />
+            {/* <Button icon="pi pi-trash" className="mr-2"  rounded outlined severity="danger" onClick={() => confirmDeleteuser(rowData)} /> */}
             <Button icon="pi pi-times" rounded outlined onClick={() => confirmDeActivate(rowData)} />
         </>
     );
@@ -188,10 +188,10 @@ export default function Users() {
     );
 
     const userDetails:any = appSelector(selectUsers);
-       
+        
     return (
         <div>
-            {userDetails && 
+            {userDetails && userDetails.length > 0 &&
             <>
             <Toast ref={toast} />
            

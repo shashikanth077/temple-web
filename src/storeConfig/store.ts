@@ -77,7 +77,7 @@ const persistConfig = {
     key: 'arora',
     version: 1.1,
     storage,
-    blacklist: ['myprofile', 'apiState', 'adminproduct', 'login', 'about', 'product', 'menu', 'staff', 'events', 'contact', 'register', 'sendcontact'],
+    blacklist: ['adminuser', 'myprofile', 'apiState', 'adminproduct', 'login', 'about', 'product', 'menu', 'staff', 'events', 'contact', 'register', 'sendcontact'],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

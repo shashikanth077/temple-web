@@ -100,7 +100,6 @@ const AddDonation = () => {
         <>
 
             <Toast ref={toast} />
-
             {loading && <Loader />}
 
             <div className="container-fluid">
@@ -207,7 +206,7 @@ const AddDonation = () => {
                                     <div className="row text-center">
                                         <div className="col-sm-12">
                                             <div className="text-center d-flex mb-3 update-profile-btn">
-                                                <Button type="submit" className="btn btn-primary submit-btn mr-5 waves-effect waves-light" disabled={loading}>
+                                                <Button type="submit" className="btn btn-primary submit-btn mr-1 waves-effect waves-light" disabled={loading}>
                                                     Add
                                                 </Button>
                                                 <a className="btn primary cancelbtn" href="/admin/services/list" id="cancel"> Cancel</a>

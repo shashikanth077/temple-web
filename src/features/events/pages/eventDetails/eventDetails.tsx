@@ -10,9 +10,10 @@ function EventDetails() {
     const { id } = useParams(); // getting from URL
     const { appSelector } = useRedux();
 
-    const products = appSelector(selectEventsList);
+    const eventData = appSelector(selectEventsList);
 
-    const events:any = products.find((event:any) => event._id.toString() === id);
+    const events:any = eventData.find((event:any) => event._id.toString() === id);
+    console.log('events', eventData);
 
     return (
         <section className="event-details-section area-padding">
@@ -20,11 +21,11 @@ function EventDetails() {
                 <Row>
                     <div className="event-details-heading">
                         <h1 className="event-headline">
-                            {events.name}
+                            {events?.name}
                         </h1>
-                        <div><i className="fas fa-calendar-week" /><span className="event-date"> {moment(events.startDate).format('MMM DD,YYYY @ h a')} -  {moment(events.endDate).format('MMM DD,YYYY @ h a')}</span></div>
+                        <div><i className="fas fa-calendar-week" /><span className="event-date"> {moment(events?.startDate).format('MMM DD,YYYY @ h a')} -  {moment(events?.endDate).format('MMM DD,YYYY @ h a')}</span></div>
                         <div className="event-price-book">
-                            <span className="event-price">${events.bookingPrice}</span>
+                            <span className="event-price">${events?.bookingPrice}</span>
                             <a href="##" className="events-common-c-btn-border-small events-c-top-bar-today-button" aria-label="Click to select today's date" title="Click to select today's date">
                                 Book now
                             </a>
@@ -34,11 +35,11 @@ function EventDetails() {
                 <Row>
                     <div className="event-details-content">
                         <div className="event-details-image mt-15">
-                            <img src={`/${events.image}`} alt="event" />
+                            <img src={`${events?.image}`} alt="event" />
                         </div>
                         <div className="event-details-description mt-10 mb-20">
                             <p>
-                                {events.description}
+                                {events?.description}
                             </p>
                         </div>
                     </div>
@@ -51,16 +52,16 @@ function EventDetails() {
                             <dl>
                                 <dt> Start: </dt>
                                 <dd>
-                                    <abbr className="events-abbr"> {moment(events.startdate).format('MMM DD,YYYY @ h a')} </abbr>
+                                    <abbr className="events-abbr"> {moment(events?.startdate).format('MMM DD,YYYY @ h a')} </abbr>
                                 </dd>
 
                                 <dt className="events-end-datetime-label"> End: </dt>
                                 <dd>
-                                    <abbr className="events-abbr"> {moment(events.enddate).format('MMM DD,YYYY @ h a')} </abbr>
+                                    <abbr className="events-abbr"> {moment(events?.enddate).format('MMM DD,YYYY @ h a')} </abbr>
                                 </dd>
 
                                 <dt> Cost: </dt>
-                                <dd> ${events.bookingprice} </dd>
+                                <dd> ${events?.bookingPrice} </dd>
 
                             </dl>
                         </div>
@@ -69,15 +70,15 @@ function EventDetails() {
                             <dl>
                                 <dt> Name: </dt>
                                 <dd>
-                                    <abbr className="events-abbr"> {events.organizer}</abbr>
+                                    <abbr className="events-abbr"> {events?.organizer}</abbr>
                                 </dd>
 
                                 <dt> Phone: </dt>
                                 <dd>
-                                    <abbr className="events-abbr"> {events.organizerPhone}</abbr>
+                                    <abbr className="events-abbr"> {events?.organizerPhone}</abbr>
                                 </dd>
                                 <dt> Email: </dt>
-                                <dd> {events.organizerEmail}</dd>
+                                <dd> {events?.organizerEmail}</dd>
                             </dl>
                         </div>
                     </div>
@@ -88,7 +89,7 @@ function EventDetails() {
                                 <dt className="events-start-datetime-label"> </dt>
                                 <dd>
                                     <span>
-                                        {events.venue}
+                                        {events?.venue}
                                     </span>
                                 </dd>
 

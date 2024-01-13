@@ -7,6 +7,7 @@ import {
 import { useForm, Controller } from 'react-hook-form';
 import { Toast } from 'primereact/toast';
 import { Calendar } from 'primereact/calendar';
+import { useSelector } from 'react-redux';
 import { myprofileActions } from '../myProfileSlice';
 import { FormInput } from 'sharedComponents/inputs';
 import { useRedux } from 'hooks';
@@ -15,7 +16,10 @@ import Loader from 'sharedComponents/loader/loader';
 
 /* eslint-disable */
 const AddFamily = () => {
-    const { dispatch, appSelector } = useRedux();
+    const { dispatch } = useRedux();
+
+    const { loading, error, successMessage } = useSelector((state:any) => state.apiState);
+
     const toast = useRef<any>(null);
     const [date, setDate] = useState(null);
     const [selectedDate, setSelectedDate] = useState<Date>(new Date());
@@ -26,19 +30,13 @@ const AddFamily = () => {
     const schemaResolver = yupResolver(
         yup.object().shape({
             relationship: yup.string().required('Please select relationship'),
-            firstName: yup.string().required('Please enter firstName').min(2, 'This value is too short. It should have 2 characters or more.'),
-            lastName: yup.string().required('Please enter lastName').min(2, 'This value is too short. It should have 2 characters or more.'),
+            firstName: yup.string().required('Please enter firstname').min(2, 'This value is too short. It should have 2 characters or more.'),
+            lastName: yup.string().required('Please enter lastname').min(2, 'This value is too short. It should have 2 characters or more.'),
             dob: yup.string().required('Please enter DOB'),
             star: yup.string().required('Please enter Star').min(2, 'This value is too short. It should have 2 characters or more.'),
             gotram: yup.string().required('Please enter Gotram').min(2, 'This value is too short. It should have 2 characters or more.'),
         }),
     );
-
-    const { loading,error,message} = appSelector(state => ({
-        loading: state.myprofile.loading,
-        error: state.myprofile.error,
-        message: state.myprofile.message,
-    }));
 
     const methods = useForm<FamilyData>({
         resolver: schemaResolver,
@@ -62,21 +60,8 @@ const AddFamily = () => {
         handle form submission
     */
     const onSubmit = handleSubmit((formData: FamilyData) => {
-        console.log("family data",formData);
         dispatch(myprofileActions.addFamily(formData));
-        if(error) {
-            toast.current.show({
-                    severity: 'success', summary: 'Error', detail: error, life: 3000,
-                });
-            } 
-        if(message) {
-            toast.current.show({
-                severity: 'success', summary: 'Successful', detail: message, life: 3000,
-            });
-            reset();
-            dispatch(myprofileActions.resetProfile());
-        }
-    });
+     });
  
 
     return (
@@ -203,7 +188,7 @@ const AddFamily = () => {
                                                 <div className="col-sm-12">
 
                                                     <div className="text-center d-flex mb-3 update-profile-btn">
-                                                        <Button type="submit" className='btn btn-primary submit-btn mr-5 waves-effect waves-light' disabled={loading}>
+                                                        <Button type="submit" className='btn btn-primary submit-btn mr-1 waves-effect waves-light' disabled={loading}>
                                                             Add
                                                         </Button>
                                                         <a className="btn primary cancelbtn" href="/myprofile/profileview" id="cancel"> Cancel</a>

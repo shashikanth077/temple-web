@@ -126,6 +126,12 @@ const otherPublicRoutes: RoutesProps[] = [
         element: <Events />,
         route: Route,
     },
+    {
+        path: '/events/eventsdetails/:id',
+        name: 'EventDetails',
+        element: <EventDetails />,
+        route: Route,
+    },
 ];
 
 const authRoutes: RoutesProps[] = [
@@ -467,20 +473,6 @@ const productUserRoutes: RoutesProps = {
     ],
 };
 
-const eventUserRoutes: RoutesProps = {
-    path: '/events/',
-    name: 'Events',
-    roles: ['ROLE_USER'],
-    children: [
-        {
-            path: '/events/eventsdetails/:id',
-            name: 'Products',
-            element: <EventDetails />,
-
-        },
-    ],
-};
-
 const incomeReportsRoutes: RoutesProps = {
     path: '/incomereports/',
     name: 'InComeReports',
@@ -566,7 +558,6 @@ const noAdminProtectedRoutes = [
     userGroceryRoutes,
     userDonationReportsRoutes,
     bookingsReportRoutes,
-    eventUserRoutes,
     productUserRoutes,
 ];
 

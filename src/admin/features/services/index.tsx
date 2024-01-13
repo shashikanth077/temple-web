@@ -193,7 +193,7 @@ export default function Services() {
                     <Column field="bookingType" header="Booking type" sortable style={{ minWidth: '5rem' }} />
                     <Column field="price" header="Price" sortable style={{ minWidth: '10rem' }} />
                     <Column field="image" header="Image" body={imageBodyTemplate} />
-                    <Column field="deleted" header="isActive" body={verifiedBodyTemplate} sortable style={{ minWidth: '3rem' }} />
+                    {/* <Column field="deleted" header="isActive" body={verifiedBodyTemplate} sortable style={{ minWidth: '3rem' }} /> */}
                     <Column body={actionBodyTemplate} exportable={false} style={{ minWidth: '6rem',textAlign:'center' }} />
                 </DataTable>
             </div>

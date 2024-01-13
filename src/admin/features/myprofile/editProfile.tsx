@@ -15,6 +15,7 @@ import { FormInput } from 'sharedComponents/inputs';
 import { ProfileData } from 'models';
 import { useRedux, useToggle } from 'hooks';
 import { clearState } from 'storeConfig/api/apiSlice';
+import { CAProvinces } from 'constants/CAProvinces';
 
 /* eslint no-underscore-dangle: 0 */
 const EditProfile = () => {
@@ -33,61 +34,14 @@ const EditProfile = () => {
 
     useEffect(() => {
         dispatch(myprofileActions.getMyProfileDetails({ userid: userArr.id }));
-    }, [dispatch]);
+    }, [dispatch, userArr.id]);
 
     const ProfileDetails:any = appSelector(selectMyProfileDetails);
-
-    /*
-        form validation schema
-    */
-    const schemaResolver = yupResolver(
-        yup.object().shape({
-            firstName: yup.string().required('Please enter firstName'),
-            lastName: yup.string().required('Please enter lastName'),
-            phonenumber: yup.string().required('Please enter mobile number'),
-            homeNumber: yup.string().required('Please enter home number'),
-        }),
-    );
-
-    const methods = useForm<ProfileData>({
-        resolver: schemaResolver,
-    });
-
-    const {
-        handleSubmit,
-        register,
-        control,
-        reset,
-        formState: { errors },
-    } = methods;
-
-    /*
-        handle form submission
-    */
-    const onSubmit = handleSubmit((formData: any) => {
-        formData.userid = userArr.id || '';
-        formData.homeAddress = {
-            address1: formData.address1,
-            address2: '',
-            city: formData.city,
-            postalCode: formData.zipcode,
-            province: formData.state,
-        };
-        formData.billingAddress = {
-            address1: formData.billingaddress,
-            address2: '',
-            city: formData.billingcity,
-            postalCode: formData.billingzipcode,
-            province: formData.billingstate,
-        };
-        dispatch(myprofileActions.updateProfile(formData));
-    });
 
     useEffect(() => {
         if (successMessage) {
             showToast('success', 'Success', successMessage);
             dispatch(clearState());
-            // reset();
         }
 
         if (error) {
@@ -95,6 +49,64 @@ const EditProfile = () => {
             dispatch(clearState());
         }
     }, [successMessage, error, dispatch]);
+
+    /*
+       form validation schema
+    */
+    const schemaResolver = yupResolver(
+        yup.object().shape({
+            firstName: yup.string().required('Please enter first name'),
+            lastName: yup.string().required('Please enter last name'),
+            mobileNumber: yup.string().required('Please enter mobile number'),
+            homeNumber: yup.string().required('Please enter home number'),
+        }),
+    );
+
+    const methods = useForm<ProfileData>({
+        defaultValues: ProfileDetails,
+        resolver: schemaResolver,
+    });
+
+    const {
+        handleSubmit,
+        register,
+        control,
+        formState: { errors },
+    } = methods;
+
+    /*
+        handle form submission
+    */
+    const onSubmit = handleSubmit((formData: ProfileData) => {
+        const ProfileObj:any = {};
+
+        console.log('ProfileObj', formData);
+        ProfileObj.firstName = formData.firstName;
+        ProfileObj.lastName = formData.lastName;
+        ProfileObj.homeNumber = formData.homeNumber;
+        ProfileObj.mobileNumber = formData.mobileNumber;
+        ProfileObj.dateOfBirth = formData.dateOfBirth;
+        ProfileObj.star = formData.star;
+        ProfileObj.gotram = formData.gotram;
+        ProfileObj.classification = 'Individual';
+
+        ProfileObj.userid = userArr.id || '';
+        ProfileObj.homeAddress = {
+            address1: formData.address1,
+            address2: '',
+            city: formData.city,
+            postalCode: formData.zipcode,
+            province: formData.state,
+        };
+        ProfileObj.billingAddress = {
+            address1: formData.billingaddress,
+            address2: '',
+            city: formData.billingcity,
+            postalCode: formData.billingzipcode,
+            province: formData.billingstate,
+        };
+        dispatch(myprofileActions.updateProfile(ProfileObj));
+    });
 
     return (
         <>
@@ -162,11 +174,11 @@ const EditProfile = () => {
                                                             <FormInput
                                                                 type="text"
                                                                 defaultValue={ProfileDetails.mobileNumber}
-                                                                name="phonenumber"
+                                                                name="mobileNumber"
                                                                 label="Phone number"
                                                                 containerClass="mb-3"
                                                                 register={register}
-                                                                key="phonenumber"
+                                                                key="mobileNumber"
                                                                 errors={errors}
                                                                 control={control}
                                                             />
@@ -253,7 +265,7 @@ const EditProfile = () => {
                                                     <div className="col-md-6">
                                                         <div className="form-group">
                                                             <Controller
-                                                                name="dateofbirth"
+                                                                name="dateOfBirth"
                                                                 // errors={errors}
                                                                 defaultValue={new Date()}
                                                                 control={control}
@@ -304,8 +316,9 @@ const EditProfile = () => {
                                                                 name="State"
                                                             >
                                                                 <option value="">Select</option>
-                                                                <option value="Alabama">Alabama </option>
-                                                                <option value="Alaska">Alaska </option>
+                                                                {CAProvinces?.map((option:any, index:any) => (
+                                                                    <option value={option.name}>{option.name} </option>
+                                                                ))}
                                                             </FormInput>
                                                         </div>
                                                     </div>
@@ -351,6 +364,7 @@ const EditProfile = () => {
                                                                 <FormInput
                                                                     onClick={hideBillingToggle}
                                                                     type="checkbox"
+                                                                    key="samebillingaddress"
                                                                     errors={errors}
                                                                     control={control}
                                                                     register={register}
@@ -396,16 +410,9 @@ const EditProfile = () => {
                                                                         name="billingstate"
                                                                     >
                                                                         <option value="">Select</option>
-                                                                        <option value="Alabama">Alabama </option>
-                                                                        <option value="Alaska">Alaska </option>
-                                                                        <option value="Arizona">Arizona </option>
-                                                                        <option value="Arkansas">Arkansas </option>
-                                                                        <option value="California">California </option>
-                                                                        <option value="Colorado">Colorado </option>
-                                                                        <option value="Connecticut">Connecticut </option>
-                                                                        <option value="Delaware">Delaware </option>
-                                                                        <option value="District of Columbia">District of Columbia </option>
-                                                                        <option value="Florida">Florida </option>
+                                                                        {CAProvinces?.map((option:any, index:any) => (
+                                                                            <option value={option.name}>{option.name} </option>
+                                                                        ))}
                                                                     </FormInput>
                                                                 </div>
                                                             </div>
@@ -447,7 +454,7 @@ const EditProfile = () => {
                                                 <div className="row text-center">
                                                     <div className="col-sm-12">
                                                         <div className="text-center d-flex mb-3 update-profile-btn">
-                                                            <Button type="submit" className="btn btn-primary submit-btn mr-5 waves-effect waves-light" disabled={loading}>
+                                                            <Button type="submit" className="btn btn-primary submit-btn mr-1 waves-effect waves-light" disabled={loading}>
                                                                 Update
                                                             </Button>
                                                             <a className="btn primary cancelbtn" href="/myprofile" id="cancel"> Cancel</a>

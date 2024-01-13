@@ -57,7 +57,6 @@ const VerticalLayout = ({ children }: VerticalLayoutProps) => {
                         <Suspense fallback={loading()}>{children}</Suspense>
                     </Container>
                 </div>
-
                 <Suspense fallback={loading()}>
                     {/* <Footer /> */}
                 </Suspense>
