@@ -2,7 +2,6 @@ import React from 'react';
 import { Route, RouteProps } from 'react-router-dom';
 
 // components
-
 const Home = React.lazy(() => import('../features/home/Home'));
 const About = React.lazy(() => import('../features/about/about'));
 const Contact = React.lazy(() => import('../features/contact/contact'));
@@ -55,6 +54,7 @@ const AddBookingTypes = React.lazy(() => import('admin/features/bookings/addBook
 const DonationTypes = React.lazy(() => import('admin/features/donations'));
 const AddDonationType = React.lazy(() => import('admin/features/donations/addDonation'));
 const EditDonationType = React.lazy(() => import('admin/features/donations/editDonation'));
+const DonationList = React.lazy(() => import('features/donations/userdonations'));
 
 export interface RoutesProps {
     path: RouteProps['path'];
@@ -130,6 +130,12 @@ const otherPublicRoutes: RoutesProps[] = [
         path: '/events/eventsdetails/:id',
         name: 'EventDetails',
         element: <EventDetails />,
+        route: Route,
+    },
+    {
+        path: '/donations/types/',
+        name: 'DonationsTypes',
+        element: <DonationList />,
         route: Route,
     },
 ];
