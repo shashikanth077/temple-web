@@ -68,7 +68,7 @@
         },
         {
             "menuId":6,
-            "link": "/donations",
+            "link": "/donations/types",
             "title": "Donations",
             "isDropdown": false
         },

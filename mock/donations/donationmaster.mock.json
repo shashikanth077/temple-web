@@ -5,40 +5,40 @@
             "_id": "1",
 			"type": "Anna Danam",
             "frequency":"Monthly",
-            "description":"4566",
-            "image":"d.jpg",
+            "description":"Annadanam is Mahadanam or the greatest donation in Hindu religion and is an essential part of Sanatana Dharma tradition. The food donation is not limited to feeding a human being but it encompasses all living beings.",
+            "image":"1.jpeg",
             "denominations":"$100"
         },
         {
             "_id": "2",
 			"type": "Anna Danam",
             "frequency":"Annual",
-            "description":"4566",
-            "image":"d.jpg",
+            "description":"Annadanam is Mahadanam or the greatest donation in Hindu religion and is an essential part of Sanatana Dharma tradition. The food donation is not limited to feeding a human being but it encompasses all living beings.",
+            "image":"2.jpg",
             "denominations":"$100"
         },
         {
             "_id": "3",
 			"type": "Vastradanam",
             "frequency":"One time",
-            "description":"4566",
-            "image":"d.jpg",
+            "description":"Vastra Dhanam, or the act of donating clothes, holds significant importance in many traditions and cultures. In Hinduism, it is considered a virtuous act that brings blessings and good karma. The donation of clothes to those in need is seen as a way to show compassion and support for the less fortunate.",
+            "image":"3.jpg",
             "denominations":"$100"
         },
         {
             "_id": "4",
 			"type": "Souvineer",
-            "frequency":"One time",
+            "frequency":"Something..................",
             "description":"4566",
-            "image":"d.jpg",
+            "image":"4.jpeg",
             "denominations":"$100"
         },
         {
             "_id": "5",
-			"type": "Prasadam Sponsorship",
+			"type": "Prasadam",
             "frequency":"Annual",
-            "description":"4566",
-            "image":"d.jpg",
+            "description":"Prasam food and water offered to a deity during worship (puja). It is believed that the deity partakes of and then returns the offering, thereby consecrating it. The offering is then distributed and eaten by the worshippers.",
+            "image":"5.jpeg",
             "denominations":"$100"
         }
     ]

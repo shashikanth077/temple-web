@@ -3,11 +3,12 @@
 	"bookings": [
 		{
             "_id": "1",
-            "bookingType":"Regular",
+            "bookingType":"Pre-Booking",
 			"category": "specialevents",
             "name":"Car pooja",
             "amount":4455,
-            "days":3,
+            "avaiableSlot":10,
+            "avaiabletimes":["10am to 11am","3pm to 6pm"],
             "description":"4566",
             "image":"d.jpg"
         },
@@ -16,8 +17,9 @@
             "bookingType":"Pre-Booking",
 			"category": "specialevents",
             "name":"Anniversary Pooja",
+            "avaiableSlot":10,
+            "avaiabletimes":["10am to 11am","3pm to 6pm"],
             "amount":4455,
-            "days":3,
             "description":"4566",
             "image":"d.jpg"
         },
@@ -26,8 +28,9 @@
             "bookingType":"Pre-Booking",
 			"category": "personalpooja",
             "name":"Sasthi pooja",
+            "avaiableSlot":10,
+            "avaiabletimes":["10am to 11am","3pm to 6pm"],
             "amount":4455,
-            "days":3,
             "description":"4566",
             "image":"d.jpg"
         },
@@ -37,7 +40,8 @@
 			"category": "personalpooja",
             "name":"Sudharsan Homam",
             "amount":4455,
-            "days":3,
+            "avaiableSlot":10,
+            "avaiabletimes":["10am to 11am","3pm to 6pm"],
             "description":"4566",
             "image":"d.jpg"
         },
@@ -47,7 +51,8 @@
 			"category": "personalpooja",
             "name":"Sathyanarayana Vratam",
             "amount":4455,
-            "days":3,
+            "avaiableSlot":10,
+            "avaiabletimes":["10am to 11am","3pm to 6pm"],
             "description":"4566",
             "image":"d.jpg"
         }

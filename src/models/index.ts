@@ -17,3 +17,4 @@ export * from './content';
 export * from './grocery';
 export * from './donations';
 export * from './reports';
+export * from './cardGroup';
