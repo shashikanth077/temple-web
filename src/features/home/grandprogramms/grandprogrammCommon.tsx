@@ -10,14 +10,14 @@ const Grandprogram = (props:{title:string, url:string}) => {
         <section className="area-padding grand-program">
             <Container>
                 <Row className="justify-content-between align-items-center gy-4">
-                    <Col xs={12} md={9} lg={10}>
+                    <Col md={9} lg={10}>
                         <div className="grand-program-section">
                             <div className="grand-item">
                                 {title}
                             </div>
                         </div>
                     </Col>
-                    <Col xs={12} md={3} lg={2}>
+                    <Col md={3} lg={2}>
                         <a href={url} className="anchor-box">Donate Now</a>
                     </Col>
                 </Row>

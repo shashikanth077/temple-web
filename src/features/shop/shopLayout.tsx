@@ -2,15 +2,16 @@ import React, { useEffect } from 'react';
 import { productActions } from './providers/productSlice';
 import { cartActions } from './cart/cartSlice';
 import ShopMain from './shopProducts/shopMain';
-import { useRedux } from 'hooks';
+import { useRedux, useUser } from 'hooks';
 
 export default function ShopLayout() {
     const { dispatch } = useRedux();
+    const [loggedInUser] = useUser();
 
     useEffect(() => {
         dispatch(productActions.fetchproductList());
-        dispatch(cartActions.getCartDetails({ cartId: 3, userid: 0, token: '4353435' }));
-    }, [dispatch]);
+        dispatch(cartActions.getCartDetails({ userid: loggedInUser?.id }));
+    }, [dispatch, loggedInUser]);
 
     return <ShopMain />;
 }

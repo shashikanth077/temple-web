@@ -25,6 +25,7 @@ export default function Services() {
     const emptyService:AdminService = {
             _id:'dummy',
             godId:'',
+            dayahead:'',
             serviceType:'',
             serviceName:'',
             description:'',

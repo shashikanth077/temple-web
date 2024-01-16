@@ -16,9 +16,31 @@ export interface Cart {
 
 }
 
+interface CartItem {
+    productId: string;
+    name: string;
+    quantity: number;
+    price: number;
+    _id: string;
+    // ... other properties
+  }
+
+export interface CartData {
+    _id: string;
+    owner: string;
+    totalProducts: number;
+    totalQuantity: number;
+    totalPrice: number;
+    items: CartItem[];
+    createdAt: string;
+    updatedAt: string;
+    // ... other properties
+  }
+
 export interface AddtoCartRes{
     cart_id: number;
     totalProductCount:number;
     totalCartCount: number;
     totalPrice: number;
+    cartCount:number;
 }

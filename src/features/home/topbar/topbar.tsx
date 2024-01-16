@@ -78,7 +78,7 @@ function Topbar() {
                         <button type="button" className="icon-cart">
                             <i className="fas fa-shopping-cart" />
                             <span className="count-style">
-                                {cartItems.list.products !== undefined ? cartItems.list.products.length : 0}
+                                {cartItems?.list?.totalQuantity !== undefined ? cartItems.list.totalQuantity : 0}
                             </span>
                         </button>
                     </Link>

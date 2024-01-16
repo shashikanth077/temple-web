@@ -27,6 +27,24 @@ const bookingTypes:any = [
     { id: 'Pre-Booking', name: 'Pre-Booking' },
 ];
 
+const numberOfDaysAhead:any = [
+    { id: '1 day', name: '1 day' },
+    { id: '2 days', name: '2 days' },
+    { id: '3 days', name: '3 days' },
+    { id: '4 days', name: '4 days' },
+    { id: '5 days', name: '5 days' },
+    { id: '6 days', name: '6 days' },
+    { id: '7 days', name: '7 days' },
+    { id: '8 days', name: '8 days' },
+    { id: '9 days', name: '9 days' },
+    { id: '10 days', name: '10 days' },
+    { id: '11 days', name: '11 days' },
+    { id: '12 days', name: '12 days' },
+    { id: '13 days', name: '13 days' },
+    { id: '14 days', name: '14 days' },
+    { id: '15 days', name: '15 days' },
+];
+
 /* eslint-disable */
 const AddService = () => {
     const { dispatch, appSelector } = useRedux();
@@ -278,6 +296,26 @@ const AddService = () => {
                                             </div>
                                             {/* <img src={preview} width="50" height="60" alt="s" /> */}
                                         </div>
+                                        <div className="col-md-6">
+                                            <div className="form-group">
+                                                <FormInput
+                                                    register={register}
+                                                    key="daysahead"
+                                                    errors={errors}
+                                                    control={control}
+                                                    label="Number of days ahead"
+                                                    type="select"
+                                                    containerClass="mb-3"
+                                                    id="daysahead"
+                                                    name="daysahead"
+                                                >
+                                                    <option value="">Select</option>
+                                                    {numberOfDaysAhead?.map((option:any, index:any) => (
+                                                        <option  value={option.id}>{option.name} </option>
+                                                    ))}
+                                                </FormInput>
+                                            </div>
+                                        </div>
                                     </div>
                                     <div className="row">
                                         <div className="col-md-6">
@@ -298,7 +336,7 @@ const AddService = () => {
                                     <div className="row text-center">
                                         <div className="col-sm-12">
                                             <div className="text-center d-flex mb-3 update-profile-btn">
-                                                <Button type="submit" className="btn btn-primary submit-btn mr-5 waves-effect waves-light" disabled={loading}>
+                                                <Button type="submit" className="btn btn-primary submit-btn mr-1 waves-effect waves-light" disabled={loading}>
                                                     Add
                                                 </Button>
                                                 <a className="btn primary cancelbtn" href="/admin/services/list" id="cancel"> Cancel</a>

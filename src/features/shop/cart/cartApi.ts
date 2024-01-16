@@ -2,25 +2,19 @@ import { APICore } from 'helpers/api';
 
 // cart data
 export function getCartDetails(payload:any) {
-    const baseUrl = 'http://localhost:4000/api/getCartDetails/';
+    const baseUrl = `http://localhost:8080/api/cart/${payload.userid}`;
     const response = APICore.get(`${baseUrl}`, {});
     return response;
 }
 
 export function AddtoCart(payload:any) {
-    const baseUrl = 'http://localhost:4000/api/Addtocart/';
+    const baseUrl = 'http://localhost:8080/api/cart';
     const response = APICore.create(`${baseUrl}`, payload);
     return response;
 }
 
 export function deleteCart(payload:any) {
-    const baseUrl = 'http://localhost:4000/api/deletefromcart/';
-    const response = APICore.create(`${baseUrl}`, payload);
-    return response;
-}
-
-export function decreaseQty(payload:any) {
-    const baseUrl = 'http://localhost:4000/api/decreaseqty/';
-    const response = APICore.create(`${baseUrl}`, payload);
+    const baseUrl = `http://localhost:8080/api/cart/delete/${payload.productId}/${payload.userid}`;
+    const response = APICore.get(`${baseUrl}`, {});
     return response;
 }

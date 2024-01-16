@@ -1,6 +1,6 @@
 import { APICore } from 'helpers/api';
 
 export default function useUser() {
-    const loggedInUser = APICore.getLoggedInUser();
+    const loggedInUser:any = APICore.getLoggedInUser();
     return [loggedInUser];
 }
