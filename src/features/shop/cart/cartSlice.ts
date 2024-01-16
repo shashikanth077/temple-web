@@ -2,9 +2,11 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Cart, ListResponse, AddtoCartRes } from 'models';
 
 interface CartInfo{
-    cartId:number;
-    token:string;
     userid:number;
+}
+interface DeleteProduct{
+    userid:string;
+    productId:string;
 }
 interface descreaseCart {
     cartid:number;
@@ -35,9 +37,9 @@ const cartSlice = createSlice({
         getCartDetails(state, action: PayloadAction<CartInfo>) {
             state.loading = true;
         },
-        getCartDetailsSuccess(state, action: PayloadAction<ListResponse<Cart>>) {
+        getCartDetailsSuccess(state, action: PayloadAction<any>) {
             state.loading = true;
-            state.cartItems = action.payload.data;
+            state.cartItems = action.payload;
         },
         getCartDetailFailure(state, action: PayloadAction<string>) {
             state.loading = false;
@@ -54,7 +56,7 @@ const cartSlice = createSlice({
             state.loading = false;
             state.error = action.payload;
         },
-        deleteFromCart(state, action: PayloadAction<CartInfo>) {
+        deleteFromCart(state, action: PayloadAction<DeleteProduct>) {
             state.loading = true;
         },
         deleteFromCartSuccess(state, action: PayloadAction<ListResponse<AddtoCartRes>>) {
@@ -62,17 +64,6 @@ const cartSlice = createSlice({
             state.addCartResponse = action.payload.data;
         },
         deleteFromCartFailure(state, action: PayloadAction<string>) {
-            state.loading = false;
-            state.error = action.payload;
-        },
-        decreaseQuantity(state, action: PayloadAction<descreaseCart>) {
-            state.loading = true;
-        },
-        descreaseQtySuccess(state, action: PayloadAction<ListResponse<AddtoCartRes>>) {
-            state.loading = false;
-            state.addCartResponse = action.payload.data;
-        },
-        decreaseQtyFailure(state, action: PayloadAction<string>) {
             state.loading = false;
             state.error = action.payload;
         },

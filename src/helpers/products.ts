@@ -77,22 +77,7 @@ export const setActiveLayout = (e:any) => {
 };
 
 export const getProductCartQuantity = (cartItems:any, product:any) => {
-    console.log("helper cart",product);
-    let productInCart = cartItems.list.products.find(
-      (single:any) =>  single.productid === product.productid 
-    );
-    if (cartItems.length >= 1 && productInCart) {
-      if (product.variation) {
-        return cartItems.find(
-            (single:any) =>
-            single.productid === product.productid 
-        ).quantity;
-      } else {
-        return cartItems.products.find((single:any) => product.productid === single.productid).quantity;
-      }
-    } else {
-      return 0;
-    }
+    return 0;
   };
 
   export const cartItemStock = (item:any) => {

@@ -166,8 +166,13 @@ class APICore {
     /**
      * Deletes data
      */
-    static delete(url: string) { axios.delete(url)
-        }
+    static delete(url: string) { axios.delete(url) }
+
+    static deletePost(url: string, data: any) { 
+        return axios.delete(url, data)
+        .then(res => res)
+        .catch(err => err);
+    }
 
     /**
      * post given data to url with file

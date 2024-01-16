@@ -25,7 +25,7 @@ const ProductImageDescription = (props:imageProps) => {
 
     const { appSelector } = useRedux();
 
-    const discountedPrice:any = getDiscountPrice(product.price, product.discount);
+    const discountedPrice:any = getDiscountPrice(product?.price, product?.discount);
     const finalProductPrice = +(product.price * currency.currencyRate).toFixed(2);
     const finalDiscountedPrice = +(
         discountedPrice * currency.currencyRate
@@ -50,7 +50,7 @@ const ProductImageDescription = (props:imageProps) => {
         GalleryType = <ProductImageGallery product={product} />;
     }
     return (
-        product.productid > 0
+        Object.keys(product)?.length > 0
             ? (
                 <div className={clsx('shop-area', spaceTopClass, spaceBottomClass)}>
                     <div className="container">
@@ -59,7 +59,6 @@ const ProductImageDescription = (props:imageProps) => {
                                 {GalleryType}
                             </div>
                             <div className="col-lg-6 col-md-6">
-                                {/* product description info */}
                                 <ProductDescriptionInfo
                                     product={product}
                                     discountedPrice={discountedPrice}

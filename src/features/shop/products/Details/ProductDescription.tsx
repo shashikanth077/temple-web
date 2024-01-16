@@ -2,6 +2,7 @@ import React, { Fragment, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { cartActions } from '../../cart/cartSlice';
+import { getProductCartQuantity } from 'helpers/products';
 
 interface productProps{
     cartItems: any;
@@ -29,15 +30,16 @@ const ProductDescriptionInfo = (props:productProps) => {
     const [quantityCount, setQuantityCount] = useState(1);
 
 
-    // const productCartQty = getProductCartQuantity(
-    //     cartItems,
-    //     product,
-    // ); //enable in futre
-    const productCartQty = 7;
+    const productCartQty = getProductCartQuantity(
+        cartItems,
+        product,
+    ); 
+    console.log("productCartQty",productCartQty);
+    //const productCartQty = 7;
 
     return (
         <div className="product-details-content ml-70">
-            <h2>{product.productname}</h2>
+            <h2>{product.name}</h2>
             <div className="product-details-price">
                 {discountedPrice !== null ? (
                     <>
@@ -108,7 +110,7 @@ const ProductDescriptionInfo = (props:productProps) => {
                             <button
                                 type="button"
                                 onClick={() => dispatch(cartActions.addtoCartItems({
-                                    productid:product.productid,
+                                    productid:product._id,
                                     currentCart:cartItems,
                                     quantity: quantityCount,
 

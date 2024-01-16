@@ -25,9 +25,9 @@ const ProductImageFixed = (props:slideProps) => {
             <div className="product-fixed-image">
                 {product.image ? (
                     <img
-                        src={`${window.location.origin}/${product.image[0]}`}
+                        src={`${product.image}`}
                         alt=""
-                        className="img-fluid"
+                        className="img-fluid product-fixed-image"
                     />
                 ) : (
                     ''

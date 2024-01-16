@@ -9,6 +9,7 @@ export interface Service {
 export interface AdminService {
     _id:string;
     godId:string;
+    dayahead:string;
     serviceType:string;
     serviceName:string;
     description:string;

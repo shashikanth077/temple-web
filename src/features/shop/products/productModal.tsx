@@ -9,7 +9,7 @@ import { selectCurrentCartData } from '../cart/cartSelectors';
 import Swiper, { SwiperSlide } from 'sharedComponents/swiper/Swiper';
 // import SlickSlider from 'sharedComponents/carosel/carosel';
 import { getProductCartQuantity } from 'helpers/products';
-import { useRedux } from 'hooks';
+import { useRedux, useUser } from 'hooks';
 
 interface productModalProps{
     show:boolean;
@@ -23,6 +23,7 @@ interface productModalProps{
 function ProductModal(props:productModalProps) {
     const { dispatch, appSelector } = useRedux();
     const [thumbsSwiper, setThumbsSwiper] = useState(null);
+    const [loggedInUser] = useUser();
 
     const {
         product, currency, discountedPrice, finalProductPrice, finalDiscountedPrice, show, onHide,
@@ -35,11 +36,13 @@ function ProductModal(props:productModalProps) {
 
     const CurrentCartItems:any = appSelector(selectCurrentCartData);
 
+    console.log('CurrentCartItems', CurrentCartItems);
+
     useEffect(() => {
         console.log(quantityCount);
-        dispatch(cartActions.decreaseQuantity({
-            quantity: quantityCount, cartid: 5, productid: product.productid, userid: 4, sessionId: '565656',
-        }));
+        // dispatch(cartActions.decreaseQuantity({
+        //     quantity: quantityCount, cartid: 5, productid: product.productid, userid: 4, sessionId: '565656',
+        // }));
     }, [quantityCount]);
 
     const gallerySwiperParams = {
@@ -57,13 +60,12 @@ function ProductModal(props:productModalProps) {
 
     // console.log('modal', CurrentCartItems);
     const AddtoCartItemsModal = (productid:number, quantity:number) => {
-        console.log('prpduct', productid);
         dispatch(cartActions.addtoCartItems({
             productid,
             currentCart: CurrentCartItems,
             quantity,
         }));
-        dispatch(cartActions.getCartDetails({ cartId: 3, userid: 0, token: '4353435' }));
+        dispatch(cartActions.getCartDetails({ userid: loggedInUser.id }));
     };
 
     const thumbnailSwiperParams = {
@@ -82,7 +84,7 @@ function ProductModal(props:productModalProps) {
         product,
     );
 
-    const found:any = CurrentCartItems.list.products.find((item:any) => item.productid === product.productid);
+    const found:any = CurrentCartItems?.list?.products?.find((item:any) => item.productid === product.productid);
     let cartBtnStatus:boolean | undefined;
     if (!found) {
         cartBtnStatus = false;

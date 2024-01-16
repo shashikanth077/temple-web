@@ -24,10 +24,10 @@ export default function About() {
         <section className="about area-padding">
             <Container>
                 <Row className="justify-content-between gy-4">
-                    <Col xs={12} md={6} lg={6}>
+                    <Col md={6} lg={6}>
                         <img alt="about" className="about-image" src={`assets/images/about/${aboutList.aboutMainSection?.aboutSection?.aboutImage}`} />
                     </Col>
-                    <Col xs={12} md={6} lg={6} className="">
+                    <Col md={6} lg={6} className="">
                         <p className="about-description">
                             {aboutList.aboutMainSection?.aboutSection?.aboutDescription}
                         </p>
@@ -42,10 +42,10 @@ export default function About() {
                     </Col>
                 </Row>
                 <Row className="justify-content-between mt-2 gy-4">
-                    <Col xs={12} md={6} lg={6}>
+                    <Col md={6} lg={6}>
                         <img alt="about" className="about-image" src={`assets/images/about/${aboutList.aboutMainSection?.aboutBooking.aboutBookingImage}`} />
                     </Col>
-                    <Col xs={12} md={6} lg={6} className="">
+                    <Col md={6} lg={6} className="">
                         <p className="about-description">
                             {aboutList.aboutMainSection?.aboutBooking?.aboutBookingDescription}
                         </p>
@@ -55,10 +55,10 @@ export default function About() {
                     </Col>
                 </Row>
                 <Row className="justify-content-between mt-2 gy-4">
-                    <Col xs={12} md={6} lg={6}>
+                    <Col md={6} lg={6}>
                         <img alt="about" className="about-image" src={`assets/images/about/${aboutList.aboutMainSection?.aboutService.aboutserviceImage}`} />
                     </Col>
-                    <Col xs={12} md={6} lg={6} className="">
+                    <Col md={6} lg={6} className="">
                         <p className="about-description">
                             {aboutList.aboutMainSection?.aboutService.aboutServiceDescription}
                         </p>
@@ -71,7 +71,7 @@ export default function About() {
                     <Grandprogram />
                 </Row>
                 <Row className="justify-content-between mt-2 gy-4">
-                    <Col xs={12} md={6} lg={6}>
+                    <Col md={6} lg={6}>
                         <div className="temple-picture">
                             <img alt="about" className="about-image" src={`assets/images/about/${aboutList.aboutMainSection?.aboutOthers.contactUsImage}`} />
                             <div>
@@ -79,7 +79,7 @@ export default function About() {
                             </div>
                         </div>
                     </Col>
-                    <Col xs={12} md={6} lg={6}>
+                    <Col md={6} lg={6}>
                         <div className="temple-picture">
                             <img alt="about" className="about-image" src={`assets/images/about/${aboutList.aboutMainSection?.aboutOthers.serviceImage}`} />
                             <div>

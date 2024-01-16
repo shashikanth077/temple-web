@@ -138,6 +138,12 @@ const otherPublicRoutes: RoutesProps[] = [
         element: <DonationList />,
         route: Route,
     },
+    {
+        path: '/products/details/:id',
+        name: 'Products',
+        element: <ProductDetails />,
+        route: Route,
+    },
 ];
 
 const authRoutes: RoutesProps[] = [
@@ -465,20 +471,6 @@ const bookingsReportRoutes: RoutesProps = {
     ],
 };
 
-const productUserRoutes: RoutesProps = {
-    path: '/products/',
-    name: 'Products',
-    roles: ['ROLE_USER'],
-    children: [
-        {
-            path: '/products/details/:id',
-            name: 'Products',
-            element: <ProductDetails />,
-
-        },
-    ],
-};
-
 const incomeReportsRoutes: RoutesProps = {
     path: '/incomereports/',
     name: 'InComeReports',
@@ -564,7 +556,6 @@ const noAdminProtectedRoutes = [
     userGroceryRoutes,
     userDonationReportsRoutes,
     bookingsReportRoutes,
-    productUserRoutes,
 ];
 
 const publicRoutes = [...authRoutes, ...otherPublicRoutes];

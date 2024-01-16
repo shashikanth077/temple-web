@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { cartActions } from '../cart/cartSlice';
-// import { addToWishlist } from '../../store/slices/wishlist-slice';
+
 import ProductModal from './productModal';
 import { getDiscountPrice } from 'helpers/products';
-import { useRedux } from 'hooks';
+import { useRedux, useUser } from 'hooks';
 
 interface ProductSingleProps {
     cartItem: any;
@@ -16,12 +16,13 @@ interface ProductSingleProps {
 /* eslint no-underscore-dangle: 0 */
 const ProductGridListSingle = (props:ProductSingleProps) => {
     const { dispatch } = useRedux();
+    const [loggedInUser] = useUser();
+    const navigate = useNavigate();
 
     const {
         cartItem, currency, product, index,
     } = props;
 
-    // console.log('cart items', cartItem);
     const discountedPrice:number|null = getDiscountPrice(product.price, product.discount);
     const [modalShow, setModalShow] = useState(false);
     const finalProductPrice = +(product.price).toFixed(2);
@@ -30,24 +31,26 @@ const ProductGridListSingle = (props:ProductSingleProps) => {
     ).toFixed(2);
 
     const AddtoCartItems = (productid:number, quantity:number) => {
-        dispatch(cartActions.addtoCartItems({
-            productid,
-            currentCart: cartItem,
-            quantity,
-        }));
-        dispatch(cartActions.getCartDetails({ cartId: 3, userid: 0, token: '4353435' }));
+        if (loggedInUser?.id) {
+            dispatch(cartActions.addtoCartItems({
+                userid: loggedInUser?.id,
+                productId: productid,
+                currentCart: cartItem,
+                quantity,
+            }));
+            dispatch(cartActions.getCartDetails({ userid: loggedInUser.id }));
+        } else {
+            navigate('/login');
+        }
     };
 
-    const found:any = cartItem.list.products.find((item:any) => item.productid === product.productid);
+    const found:any = cartItem?.list?.products?.find((item:any) => item.productid === product.productid);
     let cartBtnStatus:boolean | undefined;
     if (!found) {
         cartBtnStatus = false;
     } else {
         cartBtnStatus = true;
     }
-
-    // console.log('final updated cart in product single page', cartItem);
-    // console.log('final updated cart in product id', product.productid);
 
     let affiliateLink;
     if (product.affiliateLink) {

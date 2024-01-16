@@ -1,17 +1,23 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Products, ProductListRes } from 'models';
+import { ProductSingleRes, ProductListRes } from 'models';
 
 export interface shopState {
   loading: boolean;
   products: any;
+  product:any;
   error:string;
 }
 
 const initialState: shopState = {
     loading: false,
     products: [],
+    product: {},
     error: '',
 };
+
+export interface ProductId {
+    id:string | undefined;
+}
 
 const productSlice = createSlice({
     name: 'products',
@@ -23,6 +29,13 @@ const productSlice = createSlice({
         fetchproductListSuccess(state, action: PayloadAction<ProductListRes>) {
             state.loading = false;
             state.products = action.payload.products;
+        },
+        fetchproduct(state, action: PayloadAction<ProductId>) {
+            state.loading = true;
+        },
+        fetchproductSuccess(state, action: PayloadAction<ProductSingleRes>) {
+            state.loading = false;
+            state.product = action.payload.product;
         },
     },
 });
