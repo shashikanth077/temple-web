@@ -1,15 +1,28 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { Toast } from 'primereact/toast';
 import { cartActions } from './cartSlice';
 import { selectCurrentCartData } from './cartSelectors';
 import { getDiscountPrice, cartItemStock } from 'helpers/products';
 import { useRedux, useUser } from 'hooks';
 import { CartData } from 'models';
+import Loader from 'sharedComponents/loader/loader';
+import { clearState } from 'storeConfig/api/apiSlice';
 
 /* eslint-disable */
 const Cart = () => {
     const [loggedInUser] = useUser();
     const { dispatch, appSelector } = useRedux();
+
+    const { loading, error, successMessage } = useSelector((state:any) => state.apiState);
+
+    const toast = useRef<any>(null);
+
+    const showToast = (severity:any, summary:any, detail:any) => {
+        toast.current.show({ severity, summary, detail });
+    };
+
 
     const currency = {
         currencyRate: 45.6,
@@ -42,6 +55,38 @@ const Cart = () => {
             dispatch(cartActions.getCartDetails({userid:loggedInUser.id}))
         }
     }, [cartDataState,actionName,productVal]); // Include cartDataState in the dependency array to run the effect when it changes
+
+    const handleDeleteCart = (payload:any) => {
+        dispatch(
+            cartActions.deleteFromCart(payload),
+        )
+        setCartDataState((prevCartData) => {
+            if (
+                !prevCartData ||
+                !prevCartData.items ||
+                !Array.isArray(prevCartData.items)
+            ) {
+                console.error("Invalid cart data structure");
+                return prevCartData; 
+            }
+
+            const updatedItems = prevCartData.items.filter((item) => item.productId !== payload.productId );
+            const updatedCartData = { ...prevCartData, items: updatedItems };
+            return updatedCartData;
+        });
+    }
+
+    useEffect(() => {
+        if (successMessage) {
+            showToast('success', 'Success', successMessage);
+            dispatch(clearState());
+        }
+
+        if (error) {
+            showToast('error', 'Error', error);
+            dispatch(clearState());
+        }
+    }, [successMessage, error, dispatch]);
 
     const handleIncrease = (
         e: React.MouseEvent,
@@ -80,9 +125,12 @@ const Cart = () => {
     };
 
     return (
+        <>
+        <Toast ref={toast} />
+         {loading && <Loader />}
         <div className="cart-main-area pt-90 pb-100">
             <div className="container">
-                {cartDataState && Object.keys(cartDataState).length >= 1 ? (
+                {cartDataState && cartDataState?.items?.length >= 1 ? (
                     <>
                         <h3 className="cart-page-title">Your cart items</h3>
                         <div className="row">
@@ -241,16 +289,12 @@ const Cart = () => {
                                                                 <button
                                                                     aria-label="delete cart"
                                                                     type="button"
-                                                                    onClick={() =>
-                                                                        dispatch(
-                                                                            cartActions.deleteFromCart(
-                                                                                {
-                                                                                    userid: loggedInUser.id,
-                                                                                    productId:cartItem.productId,
-                                                                                },
-                                                                            ),
-                                                                        )
-                                                                    }
+                                                                    onClick={() => handleDeleteCart(
+                                                                        {
+                                                                            userid: loggedInUser.id,
+                                                                            productId:cartItem.productId,
+                                                                        }
+                                                                    ) }
                                                                 >
                                                                     <i className="fa fa-times" />
                                                                 </button>
@@ -388,6 +432,7 @@ const Cart = () => {
                 )}
             </div>
         </div>
+        </>
     );
 };
 

@@ -6,40 +6,51 @@ import {
     getCartDetails, AddtoCart, deleteCart,
 } from './cartApi';
 import { Cart, AddtoCartRes, ListResponse } from 'models';
+import {
+    startLoading, endLoading, setError, setSuccessMessage,
+} from 'storeConfig/api/apiSlice';
 
 function* fetchecurrentcartList(action:any) {
     try {
+        yield put(startLoading());
         const response: ListResponse<Cart> = yield call(getCartDetails, action.payload);
         yield put(cartActions.getCartDetailsSuccess(response));
     } catch (error) {
         if (error instanceof Error) {
-            console.log('Failed to fetch current cart list', error);
-            yield put(cartActions.getCartDetailFailure(error.message));
+            yield put(setError(error.message));
         }
+    } finally {
+        yield put(endLoading());
     }
 }
 
 function* AddtoCartProduct(action:any) {
     try {
+        yield put(startLoading());
         const response: ListResponse<AddtoCartRes> = yield call(AddtoCart, action.payload);
         yield put(cartActions.addtoCartItemSuccess(response));
+        yield put(setSuccessMessage('Added to cart'));
     } catch (error) {
         if (error instanceof Error) {
-            console.log('Failed to add item to cart', error);
-            yield put(cartActions.addtoCartItemFailure(error.message));
+            yield put(setError(error.message));
         }
+    } finally {
+        yield put(endLoading());
     }
 }
 
 function* deleteProductFromCart(action:any) {
     try {
+        yield put(startLoading());
         const response: ListResponse<AddtoCartRes> = yield call(deleteCart, action.payload);
         yield put(cartActions.deleteFromCartSuccess(response));
+        yield put(setSuccessMessage('Product deleted'));
     } catch (error) {
         if (error instanceof Error) {
-            console.log('Failed to fetch current cart list', error);
-            yield put(cartActions.deleteFromCartFailure(error.message));
+            yield put(setError(error.message));
         }
+    } finally {
+        yield put(endLoading());
     }
 }
 

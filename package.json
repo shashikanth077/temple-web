@@ -55,6 +55,7 @@
     "react-to-print": "^2.14.15",
     "redux-persist": "^6.0.0",
     "redux-saga": "^1.2.3",
+    "reselect": "^5.1.0",
     "sass": "^1.69.4",
     "simplebar": "^6.2.5",
     "simplebar-react": "^3.2.4",
