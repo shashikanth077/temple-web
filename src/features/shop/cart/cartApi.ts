@@ -14,7 +14,7 @@ export function AddtoCart(payload:any) {
 }
 
 export function deleteCart(payload:any) {
-    const baseUrl = `http://localhost:8080/api/cart/delete/${payload.productId}/${payload.userid}`;
+    const baseUrl = `http://localhost:8080/api/cart/delete/${payload.productId}/${payload.userid}/${payload.type}`;
     const response = APICore.get(`${baseUrl}`, {});
     return response;
 }

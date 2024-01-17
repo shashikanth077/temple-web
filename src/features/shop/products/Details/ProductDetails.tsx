@@ -65,7 +65,6 @@ const ProductImageDescription = (props:imageProps) => {
                                     currency={4}
                                     finalDiscountedPrice={finalDiscountedPrice}
                                     finalProductPrice={finalProductPrice}
-                                    cartItems={cartItems}
                                 />
                             </div>
                         </div>

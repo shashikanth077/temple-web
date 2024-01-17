@@ -9,10 +9,8 @@ interface GridProps{
 function ProductGridList(props:GridProps) {
     const { products } = props;
     const { appSelector } = useRedux();
-
     const CurrentCartItems = appSelector(selectCurrentCartData);
 
-    const count = 1;
     return (
 
         products.length > 0
@@ -20,7 +18,6 @@ function ProductGridList(props:GridProps) {
                     <div className="col-xl-4 col-sm-6" key={product.id}>
                         <ProductGridListSingle
                             product={product}
-                            index={index}
                             cartItem={CurrentCartItems}
                             currency="$"
                         />

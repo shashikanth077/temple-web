@@ -198,7 +198,8 @@
         }
         .pro-cart {
           font-size: 14px;
-          width: calc(100% - 48px);
+          // width: calc(100% - 48px);
+          width: 100%;
           transition-delay: 0.1s;
         }
         .pro-quickview {
