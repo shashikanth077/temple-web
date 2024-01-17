@@ -4,8 +4,7 @@ import { useSelector } from 'react-redux';
 import { Loader } from 'react-bootstrap-typeahead';
 import { Toast } from 'primereact/toast';
 import { cartActions } from '../cart/cartSlice';
-
-import ProductModal from './productModal';
+// import ProductModal from './productModal';
 import { getDiscountPrice } from 'helpers/products';
 import { useRedux, useUser } from 'hooks';
 import { clearState } from 'storeConfig/api/apiSlice';
@@ -14,7 +13,6 @@ interface ProductSingleProps {
     cartItem: any;
     currency: any;
     product: any;
-    index:number;
 }
 
 /* eslint no-underscore-dangle: 0 */
@@ -31,7 +29,7 @@ const ProductGridListSingle = (props:ProductSingleProps) => {
     };
 
     const {
-        cartItem, currency, product, index,
+        cartItem, currency, product,
     } = props;
 
     const discountedPrice:number|null = getDiscountPrice(product.price, product.discount);
@@ -160,11 +158,11 @@ const ProductGridListSingle = (props:ProductSingleProps) => {
                             {affiliateLink}
                             {StockElement}
                         </div>
-                        <div className="pro-same-action pro-quickview">
+                        {/* <div className="pro-same-action pro-quickview">
                             <button type="button" aria-label="quickview" onClick={() => setModalShow(true)} title="Quick View">
                                 <i className="fas fa-low-vision" />
                             </button>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
                 <div className="product-content text-center">
@@ -233,7 +231,7 @@ const ProductGridListSingle = (props:ProductSingleProps) => {
                 </div>
             </div>
             {/* product modal */}
-            <ProductModal
+            {/* <ProductModal
                 show={modalShow}
                 onHide={() => setModalShow(false)}
                 product={product}
@@ -241,7 +239,7 @@ const ProductGridListSingle = (props:ProductSingleProps) => {
                 discountedPrice={discountedPrice}
                 finalProductPrice={finalProductPrice}
                 finalDiscountedPrice={finalDiscountedPrice}
-            />
+            /> */}
         </>
     );
 };

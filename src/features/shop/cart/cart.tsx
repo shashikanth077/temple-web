@@ -44,7 +44,7 @@ const Cart = () => {
     useEffect(() => {
         let totalPrice = cartDataState?.items?.reduce((acc, curr) => {
             return acc + curr.quantity * curr.price;
-          }, 0);
+        }, 0);
         setTotalPrice(totalPrice);
         if(actionName == 'increase') {
             dispatch(cartActions.addtoCartItems({productId:productVal,userid:loggedInUser.id,quantity:1}));
@@ -313,7 +313,7 @@ const Cart = () => {
                                 <div className="cart-shiping-update-wrapper">
                                     <div className="cart-shiping-update">
                                         <Link
-                                            to={`${process.env.PUBLIC_URL}/shop-grid-standard`}
+                                            to={`${process.env.PUBLIC_URL}/purchase`}
                                         >
                                             Continue Shopping
                                         </Link>
@@ -321,11 +321,13 @@ const Cart = () => {
                                     <div className="cart-clear">
                                         <button
                                             type="button"
-                                            onClick={() =>
-                                                dispatch(
-                                                    cartActions.deleteAllFromCart(),
-                                                )
-                                            }
+                                            onClick={() => handleDeleteCart(
+                                                {
+                                                    userid: loggedInUser.id,
+                                                    productId:0,
+                                                    type:"delete-all"
+                                                }
+                                            ) }
                                         >
                                             Clear Shopping Cart
                                         </button>
@@ -335,51 +337,7 @@ const Cart = () => {
                         </div>
 
                         <div className="row">
-                            <div className="col-lg-4 col-md-6">
-                                <div className="cart-tax">
-                                    <div className="title-wrap">
-                                        <h4 className="cart-bottom-title">
-                                            Estimate Shipping And Tax
-                                        </h4>
-                                    </div>
-                                    <div className="tax-wrapper">
-                                        <p>
-                                            Enter your destination to get a
-                                            shipping estimate.
-                                        </p>
-
-                                        <div className="tax-select-wrapper">
-                                            {/* <div className="tax-select">
-                                                <label>* Country</label>
-                                                <select className="email s-email s-wid">
-                                                    <option>Bangladesh</option>
-                                                    <option>Albania</option>
-                                                    <option>Åland Islands</option>
-                                                    <option>Afghanistan</option>
-                                                    <option>Belgium</option>
-                                                </select>
-                                            </div> */}
-                                            <div className="tax-select">
-                                                <label>* Region / State</label>
-                                                <select className="email s-email s-wid">
-                                                    <option>Toronto</option>
-                                                    <option>Others</option>
-                                                </select>
-                                            </div>
-                                            <div className="tax-select">
-                                                <label>* Zip/Postal Code</label>
-                                                <input type="text" />
-                                            </div>
-                                            <button
-                                                className="cart-btn-2"
-                                                type="submit"
-                                            >
-                                                Get A Quote
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                           
 
                             <div className="col-lg-4 col-md-12">
                                 <div className="grand-totall">
@@ -421,7 +379,7 @@ const Cart = () => {
                                 <div className="item-empty-area__text">
                                     No items found in cart <br />{" "}
                                     <Link
-                                        to={`${process.env.PUBLIC_URL}/shop-grid-standard`}
+                                        to={`${process.env.PUBLIC_URL}/purchase`}
                                     >
                                         Shop Now
                                     </Link>

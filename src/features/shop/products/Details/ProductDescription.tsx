@@ -1,11 +1,15 @@
-import React, { Fragment, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import React, { useEffect, useRef, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { Toast } from 'primereact/toast';
 import { cartActions } from '../../cart/cartSlice';
-import { getProductCartQuantity } from 'helpers/products';
+import { selectCurrentCartData } from '../../cart/cartSelectors';
+import { useRedux, useUser } from 'hooks';
+import Loader from 'sharedComponents/loader/loader';
+import { clearState } from 'storeConfig/api/apiSlice';
+import { CartData } from 'models';
 
 interface productProps{
-    cartItems: any;
     currency:any;
     product:any;
     discountedPrice:number;
@@ -18,51 +22,131 @@ const ProductDescriptionInfo = (props:productProps) => {
     const {
         product,
         currency,
-        cartItems,
         discountedPrice,
         finalDiscountedPrice,
         finalProductPrice
     } = props;
 
-    const dispatch = useDispatch();
+    const {dispatch,appSelector} = useRedux();
+    const [loggedInUser] = useUser();
+    const navigate = useNavigate();
+
+    const { loading, error, successMessage } = useSelector((state:any) => state.apiState);
+    const toast = useRef<any>(null);
+
+    const showToast = (severity:any, summary:any, detail:any) => {
+        toast?.current?.show({ severity, summary, detail });
+    };
+    
+    useEffect(() => {
+        dispatch(cartActions.getCartDetails({ userid: loggedInUser.id }));
+    }, [dispatch, loggedInUser.id]);
 
     const [productStock, setProductStock] = useState(product.stock);
-    const [quantityCount, setQuantityCount] = useState(1);
+    let cartItemList: any = appSelector(selectCurrentCartData);
+    let cartItems: any = cartItemList?.list ?? [];
+  
+    const [cartDataState, setCartDataState] = useState<CartData>(cartItems);
+    const [totalValue,setTotalPrice] = useState<number>(cartItems.totalPrice);
+    const [actionName,Setaction] =  useState<string>('');
+    const [productVal,setProductId] =  useState<string>('');
+  
+    const AddtoCartItems = (productid:number, quantity:number) => {
+        if (loggedInUser?.id) {
+            dispatch(cartActions.addtoCartItems({
+                userid: loggedInUser?.id,
+                productId: productid,
+                quantity,
+            }));
+        } else {
+            navigate('/login');
+        }
+    };
 
+    useEffect(() => {
+        let totalPrice = cartDataState?.items?.reduce((acc, curr) => {
+            return acc + curr.quantity * curr.price;
+        }, 0);
+        setTotalPrice(totalPrice);
+        if(actionName == 'increase') {
+            dispatch(cartActions.addtoCartItems({productId:productVal,userid:loggedInUser.id,quantity:1}));
+        }
+        if(actionName == 'decrease') {
+            dispatch(cartActions.addtoCartItems({type:"decrease",productId:productVal,userid:loggedInUser.id,quantity:1}));
+        }
+    }, [cartDataState,actionName,productVal]); 
 
-    const productCartQty = getProductCartQuantity(
-        cartItems,
-        product,
-    ); 
-    console.log("productCartQty",productCartQty);
-    //const productCartQty = 7;
+    let ProductCart = cartItems?.items.filter((item:any) => item.productId == product._id);
+
+    const handleCarts = (
+        e: React.MouseEvent,
+        productId: string,
+        action: string,
+    ) => {
+        e.stopPropagation();
+
+        Setaction(action);
+        setProductId(productId);
+        setCartDataState((prevCartData) => {
+            if (
+                !prevCartData ||
+                !prevCartData.items ||
+                !Array.isArray(prevCartData.items)
+            ) {
+                return prevCartData; 
+            }
+
+            const updatedItems = prevCartData.items.map((item) =>
+                item.productId === productId
+                    ? {
+                          ...item,
+                          quantity:
+                              action === "increase"
+                                  ? item.quantity + 1
+                                  : Math.max(0, item.quantity - 1),
+                      }
+                    : item,
+            );
+
+            const updatedCartData = { ...prevCartData, items: updatedItems };
+            return updatedCartData;
+        });
+    };
+
+   
+
+    useEffect(() => {
+        if (successMessage) {
+            showToast('success', 'Success', successMessage);
+            dispatch(clearState());
+        }
+
+        if (error) {
+            showToast('error', 'Error', error);
+            dispatch(clearState());
+        }
+    }, [successMessage, error, dispatch]);
 
     return (
+        <>
+            <Toast ref={toast} />
+            {loading && <Loader />}
         <div className="product-details-content ml-70">
             <h2>{product.name}</h2>
             <div className="product-details-price">
                 {discountedPrice !== null ? (
                     <>
-                        <span>{ finalDiscountedPrice}</span>{' '}
+                        <span>{finalDiscountedPrice}</span>{' '}
                         <span className="old">
                             {finalDiscountedPrice}
                         </span>
                     </>
                 ) : (
-                    <span>{ finalProductPrice} </span>
+                    <span>{finalProductPrice} </span>
                 )}
             </div>
-            {/* {product.rating && product.rating > 0 ? (
-                <div className="pro-details-rating-wrap">
-                    <div className="pro-details-rating">
-                        <Rating ratingValue={product.rating} />
-                    </div>
-                </div>
-            ) : (
-                ''
-            )} */}
             <div className="pro-details-list">
-                <p>{product.shortDescription}</p>
+                <p>{product.fullDescription}</p>
             </div>
 
             {product.affiliateLink ? (
@@ -82,7 +166,15 @@ const ProductDescriptionInfo = (props:productProps) => {
                     <div className="cart-plus-minus">
                         <button
                             type="button"
-                            onClick={() => setQuantityCount(quantityCount > 1 ? quantityCount - 1 : 1)}
+                            onClick={(
+                                e,
+                            ) =>
+                                handleCarts(
+                                    e,
+                                    product._id,
+                                    "decrease",
+                                )
+                            }
                             className="dec qtybutton"
                         >
                             -
@@ -90,16 +182,22 @@ const ProductDescriptionInfo = (props:productProps) => {
                         <input
                             className="cart-plus-minus-box"
                             type="text"
-                            value={quantityCount}
+                            value={
+                                ProductCart[0].quantity ? ProductCart[0].quantity : 0
+                            }
                             readOnly
                         />
                         <button
                             type="button"
-                            onClick={() => setQuantityCount(
-                                quantityCount < productStock - productCartQty
-                                    ? quantityCount + 1
-                                    : quantityCount,
-                            )}
+                            onClick={(
+                                e,
+                            ) =>
+                            handleCarts(
+                                    e,
+                                    product._id,
+                                    "increase",
+                                )
+                            }
                             className="inc qtybutton"
                         >
                             +
@@ -109,13 +207,8 @@ const ProductDescriptionInfo = (props:productProps) => {
                         {productStock && productStock > 0 ? (
                             <button
                                 type="button"
-                                onClick={() => dispatch(cartActions.addtoCartItems({
-                                    productid:product._id,
-                                    currentCart:cartItems,
-                                    quantity: quantityCount,
-
-                                }))}
-                                disabled={productCartQty >= productStock}
+                                onClick={() => AddtoCartItems(product._id,1)}
+                                disabled={ProductCart.quantity >= productStock}
                             >
                                 {' '}
                                 Add To Cart{' '}
@@ -127,40 +220,8 @@ const ProductDescriptionInfo = (props:productProps) => {
 
                 </div>
             )}
-            {/* {product.category ? (
-                <div className="pro-details-meta">
-                    <span>Categories :</span>
-                    <ul>
-                        {product.category.map((single:any, key:number) => (
-                            <li key={key}>
-                                <Link to={`${process.env.PUBLIC_URL}/shop-grid-standard`}>
-                                    {single}
-                                </Link>
-                            </li>
-                        ))}
-                    </ul>
-                </div>
-            ) : (
-                ''
-            )} */}
-            {/* {product.tag ? (
-                <div className="pro-details-meta">
-                    <span>Tags :</span>
-                    <ul>
-                        {product.tag.map((single:any, key:number) => (
-                            <li key={key}>
-                                <Link to={`${process.env.PUBLIC_URL}/shop-grid-standard`}>
-                                    {single}
-                                </Link>
-                            </li>
-                        ))}
-                    </ul>
-                </div>
-            ) : (
-                ''
-            )} */}
-
         </div>
+        </>
     );
 };
 
