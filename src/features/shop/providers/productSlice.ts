@@ -27,14 +27,12 @@ const productSlice = createSlice({
             state.loading = true;
         },
         fetchproductListSuccess(state, action: PayloadAction<ProductListRes>) {
-            state.loading = false;
             state.products = action.payload.products;
         },
         fetchproduct(state, action: PayloadAction<ProductId>) {
             state.loading = true;
         },
         fetchproductSuccess(state, action: PayloadAction<ProductSingleRes>) {
-            state.loading = false;
             state.product = action.payload.product;
         },
     },

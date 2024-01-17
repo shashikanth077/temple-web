@@ -1,10 +1,14 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { Loader } from 'react-bootstrap-typeahead';
+import { Toast } from 'primereact/toast';
 import { cartActions } from '../cart/cartSlice';
 
 import ProductModal from './productModal';
 import { getDiscountPrice } from 'helpers/products';
 import { useRedux, useUser } from 'hooks';
+import { clearState } from 'storeConfig/api/apiSlice';
 
 interface ProductSingleProps {
     cartItem: any;
@@ -19,6 +23,13 @@ const ProductGridListSingle = (props:ProductSingleProps) => {
     const [loggedInUser] = useUser();
     const navigate = useNavigate();
 
+    const { loading, error, successMessage } = useSelector((state:any) => state.apiState);
+    const toast = useRef<any>(null);
+
+    const showToast = (severity:any, summary:any, detail:any) => {
+        toast.current.show({ severity, summary, detail });
+    };
+
     const {
         cartItem, currency, product, index,
     } = props;
@@ -29,6 +40,18 @@ const ProductGridListSingle = (props:ProductSingleProps) => {
     const finalDiscountedPrice = +(
         (discountedPrice) || 0.0 * currency.currencyRate
     ).toFixed(2);
+
+    useEffect(() => {
+        if (successMessage) {
+            showToast('success', 'Success', successMessage);
+            dispatch(clearState());
+        }
+
+        if (error) {
+            showToast('error', 'Error', error);
+            dispatch(clearState());
+        }
+    }, [successMessage, error, dispatch]);
 
     const AddtoCartItems = (productid:number, quantity:number) => {
         if (loggedInUser?.id) {
@@ -104,6 +127,8 @@ const ProductGridListSingle = (props:ProductSingleProps) => {
     }
     return (
         <>
+            <Toast ref={toast} />
+            {loading && <Loader />}
             <div className="product-wrap mb-25">
                 <div className="product-img">
                     <Link to={`${process.env.PUBLIC_URL}/products/details/${product._id}`}>
@@ -124,11 +149,6 @@ const ProductGridListSingle = (props:ProductSingleProps) => {
                     </Link>
                     {product.discount || product.new ? (
                         <div className="product-img-badges">
-                            {/* {product.discount ? (
-                                <span className="pink">-{product.discount}%</span>
-                            ) : (
-                                ''
-                            )} */}
                             {product.new ? <span className="purple">New</span> : ''}
                         </div>
                     ) : (
@@ -136,14 +156,6 @@ const ProductGridListSingle = (props:ProductSingleProps) => {
                     )}
 
                     <div className="product-action">
-                        {/* <div className="pro-same-action pro-wishlist">
-                            <button
-                                aria-label="add to whisylist"
-                                type="button"
-                            >
-                                <i className="fas fa-heart" />
-                            </button>
-                        </div> */}
                         <div className="pro-same-action pro-cart">
                             {affiliateLink}
                             {StockElement}
@@ -163,16 +175,7 @@ const ProductGridListSingle = (props:ProductSingleProps) => {
                     </h3>
 
                     <div className="product-price">
-                        {/* {discountedPrice !== null ? (
-                            <>
-                                <span>{finalDiscountedPrice}</span>{' '}
-                                <span className="old">
-                                    { finalProductPrice}
-                                </span>
-                            </>
-                        ) : ( */}
                         <span>${finalProductPrice} </span>
-                        {/* )} */}
                     </div>
                 </div>
             </div>
@@ -197,18 +200,7 @@ const ProductGridListSingle = (props:ProductSingleProps) => {
                                         ''
                                     )} */}
                                 </Link>
-                                {product.discount || product.new ? (
-                                    <div className="product-img-badges">
-                                        {/* {product.discount ? (
-                                            <span className="pink">-{product.discount}%</span>
-                                        ) : (
-                                            ''
-                                        )} */}
-                                        {product.new ? <span className="purple">New</span> : ''}
-                                    </div>
-                                ) : (
-                                    ''
-                                )}
+
                             </div>
                         </div>
                     </div>
@@ -220,28 +212,8 @@ const ProductGridListSingle = (props:ProductSingleProps) => {
                                 </Link>
                             </h3>
                             <div className="product-list-price">
-                                {/* {discountedPrice !== null ? (
-                                    <>
-                                        <span>
-                                            {finalDiscountedPrice}
-                                        </span>{' '}
-                                        <span className="old">
-                                            {finalProductPrice}
-                                        </span>
-                                    </>
-                                ) : ( */}
                                 <span>${ finalProductPrice} </span>
-                                {/* )} */}
                             </div>
-                            {/* {product.rating && product.rating > 0 ? (
-                                <div className="rating-review">
-                                    <div className="product-list-rating">
-                                        <Rating ratingValue={product.rating} />
-                                    </div>
-                                </div>
-                            ) : (
-                                ''
-                            )} */}
                             {product.shortDescription ? (
                                 <p>{product.shortDescription}</p>
                             ) : (
@@ -254,22 +226,7 @@ const ProductGridListSingle = (props:ProductSingleProps) => {
                                     {StockElement}
                                 </div>
 
-                                <div className="shop-list-wishlist ml-10">
-                                    {/* <button
-                                        aria-label="Add to whislist"
-                                        type="button"
-                                        className={wishlistItem !== undefined ? 'active' : ''}
-                                        disabled={wishlistItem !== undefined}
-                                        title={
-                                            wishlistItem !== undefined
-                                                ? 'Added to wishlist'
-                                                : 'Add to wishlist'
-                                        }
-                                        onClick={() => dispatch(addToWishlist(product))}
-                                    >
-                                        <i className="pe-7s-like" />
-                                    </button> */}
-                                </div>
+                                <div className="shop-list-wishlist ml-10" />
                             </div>
                         </div>
                     </div>

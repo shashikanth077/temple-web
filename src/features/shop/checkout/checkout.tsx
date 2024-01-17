@@ -1,14 +1,20 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { selectCurrentCartData } from '../cart/cartSelectors';
-import { useRedux } from 'hooks';
+import { cartActions } from '../cart/cartSlice';
+import { useRedux, useUser } from 'hooks';
 // import { getDiscountPrice } from '../../helpers/product';
 
 const Checkout = () => {
-    const { appSelector } = useRedux();
+    const { dispatch, appSelector } = useRedux();
+    const [loggedInUser] = useUser();
 
-    const cartTotalPrice = 0;
-    const cartItems:any = appSelector(selectCurrentCartData);
+    useEffect(() => {
+        dispatch(cartActions.getCartDetails({ userid: loggedInUser.id }));
+    }, [dispatch]);
+
+    const cartItemList: any = appSelector(selectCurrentCartData);
+    const cartItems: any = cartItemList?.list ?? [];
 
     const currency = {
         currencyRate: 44.6,
@@ -18,7 +24,7 @@ const Checkout = () => {
 
         <div className="checkout-area pt-95 pb-100">
             <div className="container">
-                {cartItems.list && Object.keys(cartItems.list).length >= 1 ? (
+                {cartItems && cartItems?.items?.length >= 1 ? (
                     <div className="row">
                         <div className="col-lg-7">
                             <div className="billing-info-wrap">
@@ -128,13 +134,19 @@ const Checkout = () => {
                                         </div>
                                         <div className="your-order-middle">
                                             <ul>
-                                                {cartItems.list.products.map((cartItem:any, key:any) => (
+                                                {cartItems.items.map((cartItem:any, key:any) => (
                                                     <li>
                                                         <span className="order-middle-left">
-                                                            {cartItem.product_name} X {cartItem.quantity}
+                                                            {cartItem.name} X {cartItem.quantity}
                                                         </span>{' '}
                                                         <span className="order-price">
-                                                            {cartItem.subtotal}
+                                                            {currency.currencySymbol
+                                                                        + (
+                                                                            cartItem.price
+                                                                            * cartItem.quantity
+                                                                        ).toFixed(
+                                                                            2,
+                                                                        )}
                                                         </span>
                                                     </li>
                                                 ))}
@@ -151,7 +163,7 @@ const Checkout = () => {
                                                 <li className="order-total">Total</li>
                                                 <li>
                                                     {currency.currencySymbol
-                                + cartTotalPrice.toFixed(2)}
+                                + cartItems.totalPrice.toFixed(2)}
                                                 </li>
                                             </ul>
                                         </div>
