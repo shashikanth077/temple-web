@@ -19,7 +19,7 @@ function EventTopBar(props:topProps) {
                             <label className="events-search-input-control-label" htmlFor="events-bar-keyword">
                                 Enter Keyword. Search for Events by Keyword.
                             </label>
-                            <input ref={inputRef} type="text" className="search-top-input-box" name="search-top-input-box" placeholder="Search for events" />
+                            <input ref={inputRef} type="text" className="search-top-input-box" name="search-top-input-box" placeholder="Search on event names" />
                         </div>
                     </div>
                     <button onClick={(e) => getFilterSortParams('topsearch', inputRef,e)} className="events-btn-top-bar-search" type="submit" name="submit-bar">

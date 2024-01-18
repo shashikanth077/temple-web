@@ -9,7 +9,6 @@ import { Calendar } from 'primereact/calendar';
 import { Toast } from 'primereact/toast';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import moment from 'moment';
 import { adminEventActions } from './adminEventSlice';
 import { FormInput } from 'sharedComponents/inputs';
 import { useRedux } from 'hooks';
@@ -36,12 +35,6 @@ const EditEvent = () => {
     };
 
     const { event } = useSelector((state:any) => state.adminEvent);
-
-    // useEffect(() => {
-    //     console.log("use effect............");
-    //     setDateTime12h(moment(event.startDate).format('YYYY-MM-DD HH:mm'));
-    //     setDateTime12h(moment(event.endDate).format('YYYY-MM-DD HH:mm'));
-    // },[event]);
 
     /*
        form validation schema

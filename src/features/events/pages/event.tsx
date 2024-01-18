@@ -44,13 +44,13 @@ function Events() {
             SearchVal = sortVal.current?.value;
         } else if (sortTypeVal === 'monthsearch') {
             const currentDate:Date = new Date();
-            const currentMonth = currentDate.getMonth() + 1;
+            const currentMonth = (currentDate.getMonth() + 1).toLocaleString('en-US', { minimumIntegerDigits: 2 });
             const currentYear = currentDate.getFullYear();
             SearchVal = `${currentMonth}-${currentYear}`;
             setSelectedDate(currentDate);
         } else if (sortTypeVal === 'daysearch') {
             const currentDate:Date = new Date();
-            const currentMonth = currentDate.getMonth() + 1;
+            const currentMonth = (currentDate.getMonth() + 1).toLocaleString('en-US', { minimumIntegerDigits: 2 });
             const currentYear = currentDate.getFullYear();
             const currentDay = currentDate.getDate();
             SearchVal = `${currentDay}-${currentMonth}-${currentYear}`;
