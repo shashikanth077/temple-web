@@ -9,6 +9,7 @@ import CardBox from 'sharedComponents/cards/card';
 import SlickSlider from 'sharedComponents/carosel/carosel';
 import { getStaticContent } from 'utils/contentUtil';
 import { selectStaticContentServices } from 'features/content/contactSelectors';
+import Heading from 'sharedComponents/heading/heading';
 
 export default function Services() {
     const { dispatch, appSelector } = useRedux();
@@ -24,13 +25,7 @@ export default function Services() {
         <section data-test-id="6457775" className="services-home area-padding">
             <Container>
                 <Row className="justify-content-right">
-
-                    <Col lg={7}>
-                        <div className="text-right mb-3">
-                            <h2 className="">{getStaticContent(staticContent?.homeServiceheading)}</h2>
-                        </div>
-                    </Col>
-
+                    <Heading title="Our Services" />
                 </Row>
 
                 <Row>

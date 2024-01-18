@@ -8,6 +8,8 @@ export interface Service {
 
 export interface AdminService {
     _id:string;
+    occurmonth:string;
+    frequency:string;
     godId:string;
     dayahead:string;
     serviceType:string;

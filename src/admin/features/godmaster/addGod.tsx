@@ -86,7 +86,6 @@ const AddGod = () => {
                 formData.append(k, data[k]);
             }
         }
-
         dispatch(admingodActions.addgod(formData));
     });
 

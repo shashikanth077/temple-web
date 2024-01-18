@@ -4,9 +4,11 @@ import * as yup from 'yup';
 import {
     Button,
 } from 'react-bootstrap';
-import { useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 import { Toast } from 'primereact/toast';
 import { useSelector } from 'react-redux';
+import { Typeahead } from 'react-bootstrap-typeahead';
+import 'react-bootstrap-typeahead/css/Typeahead.css';
 import { admingodActions } from '../godmaster/godSlice';
 import { selectGods } from '../godmaster/godSelector';
 import { adminServiceActions } from './serviceSlice';
@@ -15,6 +17,7 @@ import { FormInput } from 'sharedComponents/inputs';
 import { useRedux } from 'hooks';
 import { AdminService } from 'models';
 import Loader from 'sharedComponents/loader/loader';
+import { Months } from 'constants/services';
 
 const ServiceTypes:any = [
     { id: 'Homam', name: 'Homam' },
@@ -27,40 +30,64 @@ const bookingTypes:any = [
     { id: 'Pre-Booking', name: 'Pre-Booking' },
 ];
 
-const numberOfDaysAhead:any = [
-    { id: '1 day', name: '1 day' },
-    { id: '2 days', name: '2 days' },
-    { id: '3 days', name: '3 days' },
-    { id: '4 days', name: '4 days' },
-    { id: '5 days', name: '5 days' },
-    { id: '6 days', name: '6 days' },
-    { id: '7 days', name: '7 days' },
-    { id: '8 days', name: '8 days' },
-    { id: '9 days', name: '9 days' },
-    { id: '10 days', name: '10 days' },
-    { id: '11 days', name: '11 days' },
-    { id: '12 days', name: '12 days' },
-    { id: '13 days', name: '13 days' },
-    { id: '14 days', name: '14 days' },
-    { id: '15 days', name: '15 days' },
+const frequency:any = [
+    { id: 'weekly', name: 'Weekly' },
+    { id: 'monthly', name: 'Monthly' },
+    { id: 'yearly', name: 'Yearly' },
 ];
+
+const numberOfDaysAhead:any = [
+    { id: '1', name: '1 day' },
+    { id: '2', name: '2 days' },
+    { id: '3', name: '3 days' },
+    { id: '4', name: '4 days' },
+    { id: '5', name: '5 days' },
+    { id: '6', name: '6 days' },
+    { id: '7', name: '7 days' },
+    { id: '8', name: '8 days' },
+    { id: '9', name: '9 days' },
+    { id: '10', name: '10 days' },
+    { id: '11', name: '11 days' },
+    { id: '12', name: '12 days' },
+    { id: '13', name: '13 days' },
+    { id: '14', name: '14 days' },
+    { id: '15', name: '15 days' },
+];
+
+interface OptionTypes {
+    value: string;
+    label:string;
+}
 
 /* eslint-disable */
 const AddService = () => {
     const { dispatch, appSelector } = useRedux();
     const { loading, error, successMessage } = useSelector((state:any) => state.apiState);
     const [image, setImage] = useState({ preview: '', data: '' })
+    const [multiSelections, setMultiSelections] = useState<OptionTypes[]>([]);
+    const [frequencyVal,setFrequency] = useState('');
 
     const toast = useRef<any>(null);
 
     useEffect(() => {
         dispatch(admingodActions.getGodDetails());
     }, [dispatch]);
-
+  
     const GodDetails:any = appSelector(selectGods);
 
     const showToast = (severity:any, summary:any, detail:any) => {
         toast.current.show({ severity, summary, detail });
+    };
+
+    const handleFrequency = (e:any) => {
+        setFrequency(e.target.value)
+    }
+
+    
+
+    const onChangeMultipleSelection = (selected: any) => {
+        console.log(selected);
+        setMultiSelections(selected);
     };
 
     /*
@@ -69,6 +96,8 @@ const AddService = () => {
     const schemaResolver = yupResolver(
         yup.object().shape({
             godId: yup.string().required('Please enter god name'),
+            frequency:yup.string().required('Please select frequency'),
+            daysahead:yup.string().required('Please select number of days ahead'),
             accountNumber: yup.string().required('Please enter service name').min(2, 'This value is too short. It should have 2 characters or more.'),
             serviceName: yup.string().required('Please enter service name').min(2, 'This value is too short. It should have 2 characters or more.'),
             price: yup.string().required('Please enter price').min(1, 'This value is too short. It should have 2 characters or more.'),
@@ -91,7 +120,6 @@ const AddService = () => {
         handleSubmit,
         register,
         control,
-        watch,
         reset,
         formState: { errors },
     } = methods;
@@ -100,10 +128,19 @@ const AddService = () => {
         handle form submission
     */
     const onSubmit = handleSubmit((data:any) => {
+        
+        let months:any = [];
+        data?.occurmonth?.forEach((month:any) => {
+            months.push(month.value)
+        })
+
         const formData = new FormData();
+        console.log(formData);
         for (const k in data) {
             if(k === 'image') {
                 formData.append('image', image.data)
+            } else if (k === 'occurmonth') { 
+                formData.append('occurmonth', JSON.stringify(months))
             } else {
                 formData.append(k, data[k]);
             }
@@ -277,7 +314,6 @@ const AddService = () => {
                                             />
                                         </div>
                                     </div>
-
                                     <div className="row">
                                         <div className="col-md-6">
                                             <div className="form-group">
@@ -298,12 +334,12 @@ const AddService = () => {
                                         </div>
                                         <div className="col-md-6">
                                             <div className="form-group">
-                                                <FormInput
+                                            <FormInput
                                                     register={register}
                                                     key="daysahead"
                                                     errors={errors}
                                                     control={control}
-                                                    label="Number of days ahead"
+                                                    label="Days ahead"
                                                     type="select"
                                                     containerClass="mb-3"
                                                     id="daysahead"
@@ -311,12 +347,59 @@ const AddService = () => {
                                                 >
                                                     <option value="">Select</option>
                                                     {numberOfDaysAhead?.map((option:any, index:any) => (
-                                                        <option  value={option.id}>{option.name} </option>
+                                                        <option  key={option.id}  value={option.id}>{option.name} </option>
+                                                    ))}
+                                                </FormInput>
+                                           </div>
+                                        </div>
+                                    </div>
+                                    <div className="row">
+                                        <div className="col-md-6">
+                                            <div className="form-group">
+                                            <FormInput
+                                                    register={register}
+                                                    key="frequency"
+                                                    errors={errors}
+                                                    onChange={(e) => handleFrequency(e)}
+                                                    control={control}
+                                                    label="Frequency"
+                                                    type="select"
+                                                    containerClass="mb-3"
+                                                    id="frequency"
+                                                    name="frequency"
+                                                >
+                                                    <option value="">Select</option>
+                                                    {frequency?.map((option:any, index:any) => (
+                                                        <option  key={option.id}  value={option.id}>{option.name} </option>
                                                     ))}
                                                 </FormInput>
                                             </div>
                                         </div>
-                                    </div>
+                                        {frequencyVal === 'yearly' ? 
+                                          <div className="col-md-6">
+                                            <div className="form-group">
+                                            <label>Select service occuring months</label>
+                                                <Controller
+                                                    key="occurmonth"
+                                                    name="occurmonth"
+                                                    control={control}
+                                                    render={({ field }) => (
+                                                        <Typeahead
+                                                            {...field}
+                                                            id="select3"
+                                                            labelKey="label"
+                                                            multiple
+                                                            onChange={onChangeMultipleSelection}
+                                                            options={Months}
+                                                            placeholder="Choose months..."
+                                                            selected={multiSelections}
+                                                        />
+                                                    )}
+                                                />
+                                            </div>
+                                        </div>
+                                        :''}
+                                   </div>
                                     <div className="row">
                                         <div className="col-md-6">
                                             <div className="form-group">

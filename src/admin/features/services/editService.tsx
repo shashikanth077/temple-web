@@ -341,6 +341,7 @@ const EditService = () => {
                                                 <FormInput
                                                     register={register}
                                                     key="daysahead"
+                                                    defaultValue={service?.daysahead}
                                                     errors={errors}
                                                     control={control}
                                                     label="Number of days ahead"
