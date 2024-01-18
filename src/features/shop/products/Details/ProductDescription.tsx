@@ -76,7 +76,14 @@ const ProductDescriptionInfo = (props:productProps) => {
         }
     }, [cartDataState,actionName,productVal]); 
 
-    let ProductCart = cartItems?.items.filter((item:any) => item.productId == product._id);
+    let ProductCart = cartItems?.items?.filter((item:any) => item.productId == product._id);
+    let ProductCartCurrentData;
+
+    if(ProductCart && ProductCart.length > 0) {
+        ProductCartCurrentData = ProductCart;
+    } else {
+        ProductCartCurrentData=[]
+    }
 
     const handleCarts = (
         e: React.MouseEvent,
@@ -183,7 +190,7 @@ const ProductDescriptionInfo = (props:productProps) => {
                             className="cart-plus-minus-box"
                             type="text"
                             value={
-                                ProductCart[0].quantity ? ProductCart[0].quantity : 0
+                                (ProductCartCurrentData[0]?.quantity) ? ProductCartCurrentData[0]?.quantity : 0
                             }
                             readOnly
                         />
@@ -208,7 +215,7 @@ const ProductDescriptionInfo = (props:productProps) => {
                             <button
                                 type="button"
                                 onClick={() => AddtoCartItems(product._id,1)}
-                                disabled={ProductCart.quantity >= productStock}
+                                disabled={ProductCartCurrentData[0]?.quantity >= productStock}
                             >
                                 {' '}
                                 Add To Cart{' '}
