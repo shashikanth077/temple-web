@@ -6,6 +6,7 @@ import { staffActions } from './staffSlice';
 import { selectStaffList } from './staffSelectors';
 import useRedux from 'hooks/useRedux';
 import Button from 'sharedComponents/button/button';
+import Heading from 'sharedComponents/heading/heading';
 
 export default function Staffs() {
     const { dispatch, appSelector } = useRedux();
@@ -20,11 +21,7 @@ export default function Staffs() {
         <section className="staffs area-padding">
             <Container>
                 <div className="justify-content-right row">
-                    <Col lg={7}>
-                        <div className="text-right mb-2">
-                            <h2 className="">Staffs</h2>
-                        </div>
-                    </Col>
+                    <Heading title="Staff" />
                 </div>
                 <Row>
                     {staffList.map((staff, index) => (

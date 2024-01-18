@@ -25,6 +25,8 @@ export default function Services() {
     const emptyService:AdminService = {
             _id:'dummy',
             godId:'',
+            frequency:'',
+            occurmonth:'',
             dayahead:'',
             serviceType:'',
             serviceName:'',
@@ -190,6 +192,7 @@ export default function Services() {
                 >
                     <Column field="godName" header="God name" sortable style={{ minWidth: '10rem' }} />
                     <Column field="serviceName" header="Service name" sortable style={{ minWidth: '8rem' }} />
+                    <Column field="daysahead" header="Days ahead" sortable style={{ minWidth: '8rem' }} />
                     <Column field="serviceType" header="Service type" sortable style={{ minWidth: '8rem' }} />
                     <Column field="bookingType" header="Booking type" sortable style={{ minWidth: '5rem' }} />
                     <Column field="price" header="Price" sortable style={{ minWidth: '10rem' }} />
