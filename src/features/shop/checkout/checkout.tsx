@@ -1,20 +1,40 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState, ChangeEvent } from 'react';
 import { Link } from 'react-router-dom';
 import { selectCurrentCartData } from '../cart/cartSelectors';
 import { cartActions } from '../cart/cartSlice';
 import { useRedux, useUser } from 'hooks';
-// import { getDiscountPrice } from '../../helpers/product';
+import { CAProvinces } from 'constants/CAProvinces';
+import { myprofileActions } from 'admin/features/myprofile/myProfileSlice';
+import { selectMyProfileDetails } from 'admin/features/myprofile/myProfileSelectors';
 
 const Checkout = () => {
     const { dispatch, appSelector } = useRedux();
     const [loggedInUser] = useUser();
 
+    const [isChecked, setIsChecked] = useState(false);
+    const [billingAddressFill, setBillingAddress] = useState<any>('');
+
     useEffect(() => {
         dispatch(cartActions.getCartDetails({ userid: loggedInUser.id }));
+        dispatch(myprofileActions.getMyProfileDetails({ userid: loggedInUser.id }));
     }, [dispatch]);
 
     const cartItemList: any = appSelector(selectCurrentCartData);
     const cartItems: any = cartItemList?.list ?? [];
+
+    const ProfileDetails:any = appSelector(selectMyProfileDetails);
+
+    React.useEffect(() => {
+        if (isChecked) {
+            setBillingAddress(ProfileDetails.homeAddress);
+        } else {
+            setBillingAddress('');
+        }
+    }, [isChecked]);
+
+    const handleBillingToggle = (e: ChangeEvent<HTMLInputElement>) => {
+        setIsChecked(!isChecked);
+    };
 
     const currency = {
         currencyRate: 44.6,
@@ -25,52 +45,35 @@ const Checkout = () => {
         <div className="checkout-area pt-95 pb-100">
             <div className="container">
                 {cartItems && cartItems?.items?.length >= 1 ? (
+
                     <div className="row">
+
                         <div className="col-lg-7">
                             <div className="billing-info-wrap">
                                 <h3>Billing Details</h3>
+
+                                <div className="form-group row">
+                                    <div className="col-sm-10">
+                                        <div className="form-check">
+                                            <input className="form-check-input" checked={isChecked} onChange={handleBillingToggle} type="checkbox" id="saveAddress" />
+                                            <label className="form-check-label d-flex align-items-center" htmlFor="saveAddress">
+                                                Save as default address
+                                                <a aria-label="profile-edit" className="btn btn-primary checkout-edit-btn" href="/myprofile/edit-profile" title="Edit">
+                                                    <i className="fas fa-edit ml-2" />
+                                                </a>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div className="row">
-                                    <div className="col-lg-6 col-md-6">
-                                        <div className="billing-info mb-20">
-                                            <label>First Name</label>
-                                            <input type="text" />
-                                        </div>
-                                    </div>
-                                    <div className="col-lg-6 col-md-6">
-                                        <div className="billing-info mb-20">
-                                            <label>Last Name</label>
-                                            <input type="text" />
-                                        </div>
-                                    </div>
-                                    {/* <div className="col-lg-12">
-                                        <div className="billing-info mb-20">
-                                            <label>Company Name</label>
-                                            <input type="text" />
-                                        </div>
-                                    </div> */}
-                                    <div className="col-lg-12">
-                                        {/* <div className="billing-select mb-20">
-                                            <label>Country</label>
-                                            <select>
-                                                <option>Select a country</option>
-                                                <option>Azerbaijan</option>
-                                                <option>Bahamas</option>
-                                                <option>Bahrain</option>
-                                                <option>Bangladesh</option>
-                                                <option>Barbados</option>
-                                            </select>
-                                        </div> */}
-                                    </div>
                                     <div className="col-lg-12">
                                         <div className="billing-info mb-20">
-                                            <label>Street Address</label>
+                                            <label>Address</label>
                                             <input
                                                 className="billing-address"
+                                                name="billingAddress"
+                                                value={billingAddressFill?.address1}
                                                 placeholder="House number and street name"
-                                                type="text"
-                                            />
-                                            <input
-                                                placeholder="Apartment, suite, unit etc."
                                                 type="text"
                                             />
                                         </div>
@@ -78,19 +81,24 @@ const Checkout = () => {
                                     <div className="col-lg-12">
                                         <div className="billing-info mb-20">
                                             <label>Town / City</label>
-                                            <input type="text" />
+                                            <input type="text" name="billingCity" value={billingAddressFill?.city} />
                                         </div>
                                     </div>
                                     <div className="col-lg-6 col-md-6">
                                         <div className="billing-info mb-20">
-                                            <label>State / County</label>
-                                            <input type="text" />
+                                            <label>State</label>
+                                            <select name="states" className="billing-selectinput mb-20">
+                                                <option value="">Select</option>
+                                                {CAProvinces?.map((option:any, index:any) => (
+                                                    <option value={option.name}>{option.name} </option>
+                                                ))}
+                                            </select>
                                         </div>
                                     </div>
                                     <div className="col-lg-6 col-md-6">
                                         <div className="billing-info mb-20">
                                             <label>Postcode / ZIP</label>
-                                            <input type="text" />
+                                            <input type="text" name="billingZipCode" value={billingAddressFill?.zipcode} />
                                         </div>
                                     </div>
                                     <div className="col-lg-6 col-md-6">
@@ -102,7 +110,7 @@ const Checkout = () => {
                                     <div className="col-lg-6 col-md-6">
                                         <div className="billing-info mb-20">
                                             <label>Email Address</label>
-                                            <input type="text" />
+                                            <input type="email" name="email" value={ProfileDetails.email} disabled />
                                         </div>
                                     </div>
                                 </div>
@@ -173,6 +181,7 @@ const Checkout = () => {
                                 <div className="place-order mt-25">
                                     <button type="button">Place Order</button>
                                 </div>
+
                             </div>
                         </div>
                     </div>

@@ -15,14 +15,15 @@ const Cart = () => {
     const [loggedInUser] = useUser();
     const { dispatch, appSelector } = useRedux();
 
-    const { loading, error, successMessage } = useSelector((state:any) => state.apiState);
+    const { loading, error, successMessage } = useSelector(
+        (state: any) => state.apiState,
+    );
 
     const toast = useRef<any>(null);
 
-    const showToast = (severity:any, summary:any, detail:any) => {
+    const showToast = (severity: any, summary: any, detail: any) => {
         toast.current.show({ severity, summary, detail });
     };
-
 
     const currency = {
         currencyRate: 45.6,
@@ -35,31 +36,21 @@ const Cart = () => {
 
     let cartItemList: any = appSelector(selectCurrentCartData);
     let cartItems: any = cartItemList?.list ?? [];
-  
+
     const [cartDataState, setCartDataState] = useState<CartData>(cartItems);
-    const [totalValue,setTotalPrice] = useState<number>(cartItems.totalPrice);
-    const [actionName,Setaction] =  useState<string>('');
-    const [productVal,setProductId] =  useState<string>('');
+    const [totalValue, setTotalPrice] = useState<number>(cartItems.totalPrice);
+    const [actionName, Setaction] = useState<string>("");
+    const [productVal, setProductId] = useState<string>("");
 
     useEffect(() => {
         let totalPrice = cartDataState?.items?.reduce((acc, curr) => {
             return acc + curr.quantity * curr.price;
         }, 0);
         setTotalPrice(totalPrice);
-        if(actionName == 'increase') {
-            dispatch(cartActions.addtoCartItems({productId:productVal,userid:loggedInUser.id,quantity:1}));
-            dispatch(cartActions.getCartDetails({userid:loggedInUser.id}))
-        }
-        if(actionName == 'decrease') {
-            dispatch(cartActions.addtoCartItems({type:"decrease",productId:productVal,userid:loggedInUser.id,quantity:1}));
-            dispatch(cartActions.getCartDetails({userid:loggedInUser.id}))
-        }
-    }, [cartDataState,actionName,productVal]); // Include cartDataState in the dependency array to run the effect when it changes
+    }, [cartDataState, actionName, productVal]); // Include cartDataState in the dependency array to run the effect when it changes
 
-    const handleDeleteCart = (payload:any) => {
-        dispatch(
-            cartActions.deleteFromCart(payload),
-        )
+    const handleDeleteCart = (payload: any) => {
+        dispatch(cartActions.deleteFromCart(payload));
         setCartDataState((prevCartData) => {
             if (
                 !prevCartData ||
@@ -67,23 +58,33 @@ const Cart = () => {
                 !Array.isArray(prevCartData.items)
             ) {
                 console.error("Invalid cart data structure");
-                return prevCartData; 
+                return prevCartData;
             }
 
-            const updatedItems = prevCartData.items.filter((item) => item.productId !== payload.productId );
-            const updatedCartData = { ...prevCartData, items: updatedItems };
-            return updatedCartData;
+            if (payload.type) {
+                const updatedCartData = { ...prevCartData, items: [] };
+                return updatedCartData;
+            } else {
+                const updatedItems = prevCartData.items.filter(
+                    (item) => item.productId !== payload.productId,
+                );
+                const updatedCartData = {
+                    ...prevCartData,
+                    items: updatedItems,
+                };
+                return updatedCartData;
+            }
         });
-    }
+    };
 
     useEffect(() => {
         if (successMessage) {
-            showToast('success', 'Success', successMessage);
+            showToast("success", "Success", successMessage);
             dispatch(clearState());
         }
 
         if (error) {
-            showToast('error', 'Error', error);
+            showToast("error", "Error", error);
             dispatch(clearState());
         }
     }, [successMessage, error, dispatch]);
@@ -103,8 +104,7 @@ const Cart = () => {
                 !prevCartData.items ||
                 !Array.isArray(prevCartData.items)
             ) {
-                console.error("Invalid cart data structure");
-                return prevCartData; 
+                return prevCartData;
             }
 
             const updatedItems = prevCartData.items.map((item) =>
@@ -120,64 +120,118 @@ const Cart = () => {
             );
 
             const updatedCartData = { ...prevCartData, items: updatedItems };
+
+            console.log("updatedCartData",updatedCartData);
+            // Check if the action is 'decrease' and the quantity is 0
+            if (
+                action === "decrease" &&
+                updatedItems.find((item) => item.productId === productId)
+                    ?.quantity === 0
+            ) {
+                const deletePayload = {
+                    userid: loggedInUser.id,
+                    productId: productId,
+                };
+
+                // Dispatch the delete action
+                dispatch(cartActions.deleteFromCart(deletePayload));
+
+                // Wait for the delete action to complete
+                //dispatch(cartActions.getCartDetails({ userid: loggedInUser.id })).then(() => {
+                // Remove the deleted item from the local state
+                setCartDataState((prev) => ({
+                    ...prev,
+                    items: prev.items.filter(
+                        (item) => item.productId !== productId,
+                    ),
+                }));
+                dispatch(
+                    cartActions.getCartDetails({ userid: loggedInUser.id }),
+                );
+                // });
+            } else {
+                // Dispatch the appropriate action based on the quantity
+                dispatch(
+                    cartActions.addtoCartItems({
+                        type: action === "increase" ? "increase" : "decrease",
+                        productId: productId,
+                        userid: loggedInUser.id,
+                        quantity: 1,
+                    }),
+                );
+
+                // Wait for the action to complete
+                //dispatch(cartActions.getCartDetails({ userid: loggedInUser.id })).then(() => {
+                // Update the local state with the new data
+                //setCartDataState(updatedCartData);
+                //});
+            }
+
             return updatedCartData;
         });
     };
 
     return (
         <>
-        <Toast ref={toast} />
-         {loading && <Loader />}
-        <div className="cart-main-area pt-90 pb-100">
-            <div className="container">
-                {cartDataState && cartDataState?.items?.length >= 1 ? (
-                    <>
-                        <h3 className="cart-page-title">Your cart items</h3>
-                        <div className="row">
-                            <div className="col-12">
-                                <div className="table-content table-responsive cart-table-content">
-                                    <table>
-                                        <thead>
-                                            <tr>
-                                                <th>Image</th>
-                                                <th>Product Name</th>
-                                                <th>Unit Price</th>
-                                                <th>Qty</th>
-                                                <th>Subtotal</th>
-                                                <th>action</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {cartDataState.items.map(
-                                                (cartItem: any, key: any) => {
-                                                    const discountedPrice =
-                                                        getDiscountPrice(
-                                                            cartItem.price,
-                                                            cartItem.discount,
-                                                        );
+            <Toast ref={toast} />
+            {loading && <Loader />}
+            <div className="cart-main-area pt-90 pb-100">
+                <div className="container">
+                    {cartDataState && cartDataState?.items?.length >= 1 ? (
+                        <>
+                            <h3 className="cart-page-title">Your cart items</h3>
+                            <div className="row">
+                                <div className="col-12">
+                                    <div className="table-content table-responsive cart-table-content">
+                                        <table>
+                                            <thead>
+                                                <tr>
+                                                    <th>Image</th>
+                                                    <th>Product Name</th>
+                                                    <th>Unit Price</th>
+                                                    <th>Qty</th>
+                                                    <th>Subtotal</th>
+                                                    <th>action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {cartDataState.items.map(
+                                                    (
+                                                        cartItem: any,
+                                                        key: any,
+                                                    ) => {
+                                                        const discountedPrice =
+                                                            getDiscountPrice(
+                                                                cartItem.price,
+                                                                cartItem.discount,
+                                                            );
 
-                                                    // const finalProductPrice = (
-                                                    //     cartItem.product_price * currency.currencyRate
-                                                    // ).toFixed(2);
-                                                    // const finalDiscountedPrice = (
-                                                    //     discountedPrice * currency.currencyRate
-                                                    // ).toFixed(2);
+                                                        // const finalProductPrice = (
+                                                        //     cartItem.product_price * currency.currencyRate
+                                                        // ).toFixed(2);
+                                                        // const finalDiscountedPrice = (
+                                                        //     discountedPrice * currency.currencyRate
+                                                        // ).toFixed(2);
 
-                                                    return (
-                                                        <tr key={cartItem.key}>
-                                                            <td
-                                                                aria-label="product-thumbail"
-                                                                className="product-thumbnail"
+                                                        return (
+                                                            <tr
+                                                                key={
+                                                                    cartItem.key
+                                                                }
                                                             >
-                                                                <img
-                                                                    className="img-fluid"
-                                                                    src={`${cartItem.image}`}
-                                                                    alt=""
-                                                                />
-                                                            </td>
+                                                                <td
+                                                                    aria-label="product-thumbail"
+                                                                    className="product-thumbnail"
+                                                                >
+                                                                    <img
+                                                                        className="img-fluid"
+                                                                        src={`${cartItem.image}`}
+                                                                        alt=""
+                                                                    />
+                                                                </td>
 
-                                                            <td className="product-name">
-                                                                {/* <Link
+                                                                <td className="product-name">
+                                                                    {/* <Link
                                                                 to={
                                                                     `${process.env.PUBLIC_URL
                                                                     }/product/${
@@ -186,11 +240,13 @@ const Cart = () => {
                                                             >
 
                                                             </Link> */}
-                                                                {cartItem.name}
-                                                            </td>
+                                                                    {
+                                                                        cartItem.name
+                                                                    }
+                                                                </td>
 
-                                                            <td className="product-price-cart">
-                                                                {/* {discountedPrice !== null ? (
+                                                                <td className="product-price-cart">
+                                                                    {/* {discountedPrice !== null ? (
                                                                 <>
                                                                     <span className="amount old">
                                                                         {currency.currencySymbol
@@ -202,196 +258,197 @@ const Cart = () => {
                                                                     </span>
                                                                 </>
                                                             ) : ( */}
-                                                                <span className="amount">
-                                                                    {currency.currencySymbol +
-                                                                        cartItem.price}
-                                                                </span>
-                                                                {/* )} */}
-                                                            </td>
+                                                                    <span className="amount">
+                                                                        {currency.currencySymbol +
+                                                                            cartItem.price}
+                                                                    </span>
+                                                                    {/* )} */}
+                                                                </td>
 
-                                                            <td className="product-quantity">
-                                                                <div className="cart-plus-minus">
-                                                                    <button
-                                                                        type="button"
-                                                                        onClick={(
-                                                                            e,
-                                                                        ) =>
-                                                                            handleIncrease(
+                                                                <td className="product-quantity">
+                                                                    <div className="cart-plus-minus">
+                                                                        <button
+                                                                            type="button"
+                                                                            onClick={(
                                                                                 e,
-                                                                                cartItem.productId,
-                                                                                "decrease",
-                                                                            )
-                                                                        }
-                                                                        className="dec qtybutton"
-                                                                    >
-                                                                        -
-                                                                    </button>
-                                                                    <input
-                                                                        className="cart-plus-minus-box"
-                                                                        type="text"
-                                                                        value={
-                                                                            cartItem.quantity
-                                                                        }
-                                                                        readOnly
-                                                                    />
-                                                                    <button
-                                                                        type="button"
-                                                                        onClick={(
-                                                                            e,
-                                                                        ) =>
-                                                                            handleIncrease(
-                                                                                e,
-                                                                                cartItem.productId,
-                                                                                "increase",
-                                                                            )
-                                                                        }
-                                                                        className="inc qtybutton"
-                                                                        disabled={
-                                                                            cartItem !==
-                                                                                undefined &&
-                                                                            cartItem.quantity >=
-                                                                                cartItemStock(
-                                                                                    cartItem,
+                                                                            ) =>
+                                                                                handleIncrease(
+                                                                                    e,
+                                                                                    cartItem.productId,
+                                                                                    "decrease",
                                                                                 )
-                                                                        }
-                                                                    >
-                                                                        +
-                                                                    </button>
-                                                                </div>
-                                                            </td>
-                                                            <td className="product-subtotal">
-                                                                {/* $
+                                                                            }
+                                                                            className="dec qtybutton"
+                                                                        >
+                                                                            -
+                                                                        </button>
+                                                                        <input
+                                                                            className="cart-plus-minus-box"
+                                                                            type="text"
+                                                                            value={
+                                                                                cartItem.quantity
+                                                                            }
+                                                                            readOnly
+                                                                        />
+                                                                        <button
+                                                                            type="button"
+                                                                            onClick={(
+                                                                                e,
+                                                                            ) =>
+                                                                                handleIncrease(
+                                                                                    e,
+                                                                                    cartItem.productId,
+                                                                                    "increase",
+                                                                                )
+                                                                            }
+                                                                            className="inc qtybutton"
+                                                                            disabled={
+                                                                                cartItem !==
+                                                                                    undefined &&
+                                                                                cartItem.quantity >=
+                                                                                    cartItemStock(
+                                                                                        cartItem,
+                                                                                    )
+                                                                            }
+                                                                        >
+                                                                            +
+                                                                        </button>
+                                                                    </div>
+                                                                </td>
+                                                                <td className="product-subtotal">
+                                                                    {/* $
                                                                 {cartItem.price}{" "}
                                                                 *{" "}
                                                                 {
                                                                     cartItem.quantity
                                                                 }
                                                                 = */}
-                                                                {
-                                                                    //  {discountedPrice !== null
-                                                                    //     ? currency.currencySymbol
-                                                                    //         + (
-                                                                    //             cartItem.finaldiscountedprice * cartItem.quantity
-                                                                    //         ).toFixed(2)
-                                                                    //     :
+                                                                    {
+                                                                        //  {discountedPrice !== null
+                                                                        //     ? currency.currencySymbol
+                                                                        //         + (
+                                                                        //             cartItem.finaldiscountedprice * cartItem.quantity
+                                                                        //         ).toFixed(2)
+                                                                        //     :
 
-                                                                    currency.currencySymbol +
-                                                                        (
-                                                                            cartItem.price *
-                                                                            cartItem.quantity
-                                                                        ).toFixed(
-                                                                            2,
-                                                                        )
-                                                                }
-                                                            </td>
+                                                                        currency.currencySymbol +
+                                                                            (
+                                                                                cartItem.price *
+                                                                                cartItem.quantity
+                                                                            ).toFixed(
+                                                                                2,
+                                                                            )
+                                                                    }
+                                                                </td>
 
-                                                            <td className="product-remove">
-                                                                <button
-                                                                    aria-label="delete cart"
-                                                                    type="button"
-                                                                    onClick={() => handleDeleteCart(
-                                                                        {
-                                                                            userid: loggedInUser.id,
-                                                                            productId:cartItem.productId,
+                                                                <td className="product-remove">
+                                                                    <button
+                                                                        aria-label="delete cart"
+                                                                        type="button"
+                                                                        onClick={() =>
+                                                                            handleDeleteCart(
+                                                                                {
+                                                                                    userid: loggedInUser.id,
+                                                                                    productId:
+                                                                                        cartItem.productId,
+                                                                                },
+                                                                            )
                                                                         }
-                                                                    ) }
-                                                                >
-                                                                    <i className="fa fa-times" />
-                                                                </button>
-                                                            </td>
-                                                        </tr>
-                                                    );
-                                                },
-                                            )}
-                                        </tbody>
-                                    </table>
+                                                                    >
+                                                                        <i className="fa fa-times" />
+                                                                    </button>
+                                                                </td>
+                                                            </tr>
+                                                        );
+                                                    },
+                                                )}
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div className="row">
-                            <div className="col-lg-12">
-                                <div className="cart-shiping-update-wrapper">
-                                    <div className="cart-shiping-update">
-                                        <Link
-                                            to={`${process.env.PUBLIC_URL}/purchase`}
-                                        >
-                                            Continue Shopping
-                                        </Link>
-                                    </div>
-                                    <div className="cart-clear">
-                                        <button
-                                            type="button"
-                                            onClick={() => handleDeleteCart(
-                                                {
-                                                    userid: loggedInUser.id,
-                                                    productId:0,
-                                                    type:"delete-all"
+                            <div className="row">
+                                <div className="col-lg-12">
+                                    <div className="cart-shiping-update-wrapper">
+                                        <div className="cart-shiping-update">
+                                            <Link
+                                                to={`${process.env.PUBLIC_URL}/purchase`}
+                                            >
+                                                Continue Shopping
+                                            </Link>
+                                        </div>
+                                        <div className="cart-clear">
+                                            <button
+                                                type="button"
+                                                onClick={() =>
+                                                    handleDeleteCart({
+                                                        userid: loggedInUser.id,
+                                                        productId: 0,
+                                                        type: "delete-all",
+                                                    })
                                                 }
-                                            ) }
-                                        >
-                                            Clear Shopping Cart
-                                        </button>
+                                            >
+                                                Clear Shopping Cart
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <div className="row">
-                           
-
-                            <div className="col-lg-4 col-md-12">
-                                <div className="grand-totall">
-                                    <div className="title-wrap">
-                                        <h4 className="cart-bottom-title mb-3 section-bg-gary-cart">
-                                            Cart Total
-                                        </h4>
-                                    </div>
-                                    {/* <h5>
+                            <div className="row">
+                                <div className="col-lg-4 col-md-12">
+                                    <div className="grand-totall">
+                                        <div className="title-wrap">
+                                            <h4 className="cart-bottom-title mb-3 section-bg-gary-cart">
+                                                Cart Total
+                                            </h4>
+                                        </div>
+                                        {/* <h5>
                                         Total products{' '}
                                         <span>
                                             {currency.currencySymbol + cartItems.list.totalProducts.toFixed(2)}
                                         </span>
                                     </h5> */}
 
-                                    <h4 className="grand-totall-title">
-                                        Grand Total{" "}
-                                        <span>
-                                            {currency.currencySymbol +
-                                                totalValue.toFixed(2)}
-                                        </span>
-                                    </h4>
-                                    <Link
-                                        to={`${process.env.PUBLIC_URL}/checkout`}
-                                    >
-                                        Proceed to Checkout
-                                    </Link>
+                                        <h4 className="grand-totall-title">
+                                            Grand Total{" "}
+                                            <span>
+                                                {currency.currencySymbol +
+                                                    totalValue.toFixed(2)}
+                                            </span>
+                                        </h4>
+                                        <Link
+                                            to={`${process.env.PUBLIC_URL}/checkout`}
+                                        >
+                                            Proceed to Checkout
+                                        </Link>
+                                    </div>
+                                </div>
+                            </div>
+                        </>
+                    ) : (
+                        <div className="row">
+                            <div className="col-lg-12">
+                                <div className="item-empty-area text-center">
+                                    <div className="item-empty-area__icon mb-30">
+                                        <i className="pe-7s-cart" />
+                                    </div>
+                                    <div className="item-empty-area__text">
+                                        No items found in cart <br />{" "}
+                                        <Link
+                                            to={`${process.env.PUBLIC_URL}/purchase`}
+                                        >
+                                            Shop Now
+                                        </Link>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </>
-                ) : (
-                    <div className="row">
-                        <div className="col-lg-12">
-                            <div className="item-empty-area text-center">
-                                <div className="item-empty-area__icon mb-30">
-                                    <i className="pe-7s-cart" />
-                                </div>
-                                <div className="item-empty-area__text">
-                                    No items found in cart <br />{" "}
-                                    <Link
-                                        to={`${process.env.PUBLIC_URL}/purchase`}
-                                    >
-                                        Shop Now
-                                    </Link>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                )}
+                    )}
+                </div>
             </div>
-        </div>
         </>
     );
 };
 
-export default Cart;
+export default React.memo(Cart);
