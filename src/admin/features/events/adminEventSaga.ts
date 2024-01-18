@@ -15,7 +15,6 @@ function* getEventByIdRow(action:any) {
         yield put(startLoading());
         const response: EventSingleRes = yield call(getEventById, action.payload);
         if (response.success) {
-            // yield put(setSuccessMessage('success'));
             yield put(adminEventActions.getEventByIdSuccess(response));
         } else {
             yield put(setError(response.errorMessage));
