@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { useParams } from 'react-router-dom'; // getting from URL
-import Select from 'react-select';
 import { Calendar } from 'primereact/calendar';
 
 import {
@@ -10,11 +9,14 @@ import {
 } from 'react-bootstrap';
 import { useForm, Controller } from 'react-hook-form';
 import { Toast } from 'primereact/toast';
+import { useSelector } from 'react-redux';
 import { myprofileActions } from '../myProfileSlice';
 import { selectFamilyById } from '../myProfileSelectors';
+import { NakshtraRasi, Relationship } from 'constants/profile';
 import { FormInput } from 'sharedComponents/inputs';
-import { useRedux } from 'hooks';
+import { useRedux, useUser } from 'hooks';
 import { FamilyData } from 'models';
+import { clearState } from 'storeConfig/api/apiSlice';
 import Loader from 'sharedComponents/loader/loader';
 
 /* eslint-disable */
@@ -23,36 +25,36 @@ const EditFamily = () => {
     const { id } = useParams<any>();
     const [date, setDate] = useState(null);
 
+    const [loggedInUser] = useUser();
+
+    const { loading, error, successMessage } = useSelector((state:any) => state.apiState);
+
     const toast = useRef<any>(null);
     const [selectedDate, setSelectedDate] = useState<Date>(new Date());
 
- 
+    const showToast = (severity:any, summary:any, detail:any) => {
+        toast.current.show({ severity, summary, detail });
+    };
+
     /*
         form validation schema
     */
     const schemaResolver = yupResolver(
         yup.object().shape({
-            firstName: yup.string().required('Please enter firstName').min(2, 'This value is too short. It should have 2 characters or more.'),
-            // lastName: yup.string().required('Please enter lastName').min(2, 'This value is too short. It should have 2 characters or more.'),
-            // dob: yup.string().required('Please enter DOB'),
-            // star: yup.string().required('Please enter Star').min(2, 'This value is too short. It should have 2 characters or more.'),
-            // gotram: yup.string().required('Please enter Gotram').min(2, 'This value is too short. It should have 2 characters or more.'),
+            firstName: yup.string().required('Please enter first name').min(2, 'This value is too short. It should have 2 characters or more.'),
+            lastName: yup.string().required('Please enter last name').min(2, 'This value is too short. It should have 2 characters or more.'),
+            dateOfBirth: yup.string().required('Please enter DOB'),
+            star: yup.string().required('Please enter Star').min(2, 'This value is too short. It should have 2 characters or more.'),
+            gotram: yup.string().required('Please enter Gotram').min(2, 'This value is too short. It should have 2 characters or more.'),
         }),
     );
-
-    const { loading,error,message} = appSelector(state => ({
-        loading: state.myprofile.loading,
-        error: state.myprofile.error,
-        message: state.myprofile.message,
-    }));
-
+    
     const methods = useForm<FamilyData>({
         resolver: schemaResolver,
     });
 
     useEffect(() => {
-        console.log('dd');
-        dispatch(myprofileActions.getFamilById({ userid: '1' ,familyId:id}));
+        dispatch(myprofileActions.getFamilById({ userid: loggedInUser?.id ,id:id}));
     }, [dispatch]);
 
     
@@ -61,6 +63,7 @@ const EditFamily = () => {
         register,
         control,
         reset,
+        setValue,
         formState: { errors },
     } = methods;
 
@@ -74,24 +77,36 @@ const EditFamily = () => {
         handle form submission
     */
     const onSubmit = handleSubmit((formData: FamilyData) => {
+        console.log(formData);
         dispatch(myprofileActions.updateFamily(formData));
-        if(error) {
-            toast.current.show({
-                    severity: 'error', summary: 'Error', detail: error, life: 3000,
-                });
-            } 
-        if(message) {
-            toast.current.show({
-                severity: 'success', summary: 'Successful', detail: message, life: 3000,
-            });
-            reset();
-            dispatch(myprofileActions.resetProfile());
-        }
     });
  
+    useEffect(() => {
+        if (successMessage) {
+            showToast('success', 'Success', successMessage);
+            dispatch(clearState());
+            reset();
+        }
+
+        if (error) {
+            showToast('error', 'Error', error);
+            dispatch(clearState());
+        }
+    }, [successMessage, error, dispatch]);
 
     let Family = appSelector(selectFamilyById);
-    console.log("family",Family);
+
+    useEffect(() => {
+        setValue('firstName', Family?.firstName);
+        setValue('lastName', Family?.lastName);
+        setValue('star', Family?.star);
+        setValue('gotram', Family?.gotram);
+        setValue('dateOfBirth', new Date(Family?.dateOfBirth));
+        setValue('relationship', Family?.relationship);
+        setValue('id', Family?._id);
+        setValue('userid', loggedInUser?.id);
+    }, [setValue, Family]);
+   
     return (
         <>
             <Toast ref={toast} />
@@ -110,13 +125,31 @@ const EditFamily = () => {
                             <div className="card-body">
                             
                             <form name="family-form" id="family-form" onSubmit={onSubmit}>
-                                            <div className="row">
+                            <div className="row">
                                                 <div className="col-md-6">
                                                     <div className="form-group">
                                                         <FormInput
+                                                            type="hidden"
+                                                            name="id"
+                                                            defaultValue={Family._id}
+                                                            register={register}
+                                                            key="id"
+                                                            errors={errors}
+                                                            control={control}
+                                                        />
+                                                         <FormInput
+                                                            type="hidden"
+                                                            name="userId"
+                                                            defaultValue={loggedInUser?.id}
+                                                            register={register}
+                                                            key="userId"
+                                                            errors={errors}
+                                                            control={control}
+                                                        />
+                                                        <FormInput
                                                             type="text"
-                                                            defaultValue={Family.firstName}
                                                             name="firstName"
+                                                            defaultValue={Family.firstName}
                                                             register={register}
                                                             key="firstName"
                                                             errors={errors}
@@ -130,9 +163,9 @@ const EditFamily = () => {
                                                     <div className="form-group">
                                                         <FormInput
                                                             type="text"
+                                                            defaultValue={Family.lastName}
                                                             register={register}
                                                             key="lastName"
-                                                            defaultValue={Family.lastName}
                                                             errors={errors}
                                                             control={control}
                                                             name="lastName"
@@ -145,35 +178,47 @@ const EditFamily = () => {
 
                                             <div className="row">
                                                 <div className="col-md-6">
-                                                   <div className="form-group">
+                                                <div className="form-group">
                                                     <Controller
-                                                        name="dob"
-                                                        defaultValue={new Date()}
+                                                        name="dateOfBirth"
+                                                        key="dateOfBirth"
+                                                        defaultValue={new Date(Family.dateOfBirth)} // Convert string to Date object
+                                                        // errors={errors}
                                                         control={control}
                                                         rules={{ required: 'Date is required.' }}
-                                                        render={({ field, fieldState }) => (
+                                                        render={({ field }) => (
                                                             <>
                                                                 <label htmlFor={field.name}>Date of birth</label>
-                                                                <Calendar value={date} onChange={(e:any) => setDate(e.value)} showIcon className="events-top-bar-datepicker-button mb-3" />
+                                                                <Calendar
+                                                                    value={field.value} // Set the value from the form state
+                                                                    onChange={e => field.onChange(e.value)} // Update the form state when the value changes
+                                                                    showIcon
+                                                                    className="events-top-bar-datepicker-button mb-3"
+                                                                />
                                                             </>
                                                         )}
                                                     />
-                                                  
-                                                    </div>
+                                                </div>
                                                 </div>
                                                 <div className="col-md-6">
                                                     <div className="form-group">
-                                                        <FormInput
-                                                            type="text"
-                                                            name="star"
-                                                            defaultValue={Family.star}
-                                                            register={register}
-                                                            key="star"
-                                                            errors={errors}
-                                                            control={control}
-                                                            label="Star"
-                                                            containerClass="mb-3"
-                                                        />
+                                                    <FormInput
+                                                        register={register}
+                                                        key="star"
+                                                        defaultValue={Family.star}
+                                                        errors={errors}
+                                                        control={control}
+                                                        label="Star"
+                                                        type="select"
+                                                        containerClass="mb-3"
+                                                        id="star"
+                                                        name="star"
+                                                >
+                                                    <option value="">Select</option>
+                                                    {NakshtraRasi?.map((option:any, index:any) => (
+                                                        <option  key={option.label}  value={option.label}>{option.label} </option>
+                                                    ))}
+                                                </FormInput>
                                                     </div>
                                                 </div>
                                             </div>
@@ -183,9 +228,9 @@ const EditFamily = () => {
                                                     <div className="form-group">
                                                         <FormInput
                                                             type="text"
-                                                            name="gotram"
-                                                            label="Gotram"
                                                             defaultValue={Family.gotram}
+                                                            name="gotram"
+                                                            label="Gothram"
                                                             register={register}
                                                             key="gotram"
                                                             errors={errors}
@@ -194,32 +239,34 @@ const EditFamily = () => {
                                                         />
                                                     </div>
                                                 </div>
-                                                <div className='col-md-6'>
-                                                    <FormInput
-                                                        register={register}
-                                                        key="relationship"
-                                                        containerClass="mb-3"
-                                                        errors={errors}
-                                                        control={control}
-                                                        label="Relationship"
-                                                        type="select"
-                                                        className='form-control'
-                                                        id="relationship"
-                                                        name="relationship"
-                                                    >
-                                                        <option value="">Select</option>
-                                                        <option value="father">Father </option>
-                                                        <option value="mother">Mother </option>
-                                                        <option value="son">Son </option>
+                                                <div className="col-md-6">
+                                                        <div className="form-group">
+                                                        <FormInput
+                                                    register={register}
+                                                    key="relationship"
+                                                    errors={errors}
+                                                    defaultValue={Family.relationship}
+                                                    control={control}
+                                                    label="Relationship"
+                                                    type="select"
+                                                    containerClass="mb-3"
+                                                    id="relationship"
+                                                    name="relationship"
+                                                >
+                                                    <option value="">Select</option>
+                                                    {Relationship?.map((option:any, index:any) => (
+                                                        <option  key={option.label}  value={option.label}>{option.label} </option>
+                                                    ))}
                                                 </FormInput>
-                                                </div>
+                                                        </div>
+                                                    </div>
                                             </div>
                                             <div className="row text-center">
                                                 <div className="col-sm-12">
 
                                                     <div className="text-center d-flex mb-3 update-profile-btn">
-                                                        <Button type="submit" className='btn btn-primary submit-btn mr-5 waves-effect waves-light' disabled={loading}>
-                                                            Add
+                                                        <Button type="submit" className='btn btn-primary submit-btn mr-1 waves-effect waves-light' disabled={loading}>
+                                                            Update
                                                         </Button>
                                                         <a className="btn primary cancelbtn" href="/myprofile/profileview" id="cancel"> Cancel</a>
                                                     </div>

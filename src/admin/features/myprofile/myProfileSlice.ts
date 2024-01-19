@@ -1,15 +1,19 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import {
-    SuccesResponse, ProfileData, FamilySingleResponse, DeasedSingleResponse, DeceasedData, FamilyData,
+    SuccesResponse, ProfileData, FamilySingleResponse, DeasedSingleResponse, DeceasedData, FamilyData, FamilyResponse,
 } from 'models';
 
 export interface ProfilePayload {
     userid: string;
 }
 
+export interface FamilyReqPayload {
+    userid: string | undefined ;
+}
+
 export interface FamilyUpdatePayload {
     userid: string | undefined ;
-    familyId:string | undefined ;
+    id:string | undefined ;
 }
 export interface DeceasedUpdatePayload {
     userid: string | undefined ;
@@ -21,12 +25,14 @@ export interface myProfileState {
     deceased:any;
     error:any;
     family:any;
+    families:any;
     message:string;
 }
 
 const initialState: myProfileState = {
     loading: false,
     list: [],
+    families: [],
     deceased: {},
     family: {},
     error: undefined,
@@ -49,9 +55,16 @@ const MyProfileSlice = createSlice({
         getFamilById(state, action:PayloadAction<FamilyUpdatePayload>) {
             state.loading = false;
         },
+        getFamily(state, action:PayloadAction<FamilyReqPayload>) {
+            state.loading = false;
+        },
+        getFamilySuccess(state, action:PayloadAction<FamilyResponse>) {
+            state.loading = false;
+            state.families = action.payload.familyDetails;
+        },
         getFamilByIdSuccess(state, action:PayloadAction<FamilySingleResponse>) {
             state.loading = false;
-            state.family = action.payload.family;
+            state.family = action.payload.familyDetails;
         },
         getFamilByIdFailure(state, action:PayloadAction<string>) {
             state.loading = false;

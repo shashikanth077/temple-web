@@ -59,11 +59,14 @@ const EditProfile = () => {
             lastName: yup.string().required('Please enter last name'),
             mobileNumber: yup.string().required('Please enter mobile number'),
             homeNumber: yup.string().required('Please enter home number'),
+            address1: yup.string().required('Please enter the address'),
+            city: yup.string().required('Please enter the city'),
+            state: yup.string().required('Please enter the state'),
+            zipcode: yup.string().required('Please enter zipcode'),
         }),
     );
 
     const methods = useForm<ProfileData>({
-        defaultValues: ProfileDetails,
         resolver: schemaResolver,
     });
 
@@ -71,8 +74,28 @@ const EditProfile = () => {
         handleSubmit,
         register,
         control,
+        setValue,
         formState: { errors },
     } = methods;
+
+    useEffect(() => {
+        setValue('firstName', ProfileDetails?.firstName);
+        setValue('lastName', ProfileDetails?.lastName);
+        setValue('mobileNumber', ProfileDetails?.mobileNumber);
+        setValue('homeNumber', ProfileDetails?.homeNumber);
+        setValue('star', ProfileDetails?.star);
+        setValue('gotram', ProfileDetails?.gotram);
+        setValue('nationality', ProfileDetails?.nationality);
+        setValue('dateOfBirth', new Date(ProfileDetails?.dateOfBirth));
+        setValue('address1', ProfileDetails?.homeAddress?.address1);
+        setValue('city', ProfileDetails?.homeAddress?.city);
+        setValue('zipcode', ProfileDetails?.homeAddress?.postalCode);
+        setValue('state', ProfileDetails?.homeAddress?.province);
+        setValue('billingaddress', ProfileDetails?.billingAddress?.address1);
+        setValue('billingcity', ProfileDetails?.billingAddress?.city);
+        setValue('billingzipcode', ProfileDetails?.billingAddress?.postalCode);
+        setValue('billingstate', ProfileDetails?.billingAddress?.province);
+    }, [setValue, ProfileDetails]);
 
     /*
         handle form submission
@@ -80,9 +103,11 @@ const EditProfile = () => {
     const onSubmit = handleSubmit((formData: ProfileData) => {
         const ProfileObj:any = {};
 
-        console.log('ProfileObj', formData);
+        console.log('formData', formData);
+
         ProfileObj.firstName = formData.firstName;
         ProfileObj.lastName = formData.lastName;
+        ProfileObj.nationality = formData.nationality;
         ProfileObj.homeNumber = formData.homeNumber;
         ProfileObj.mobileNumber = formData.mobileNumber;
         ProfileObj.dateOfBirth = formData.dateOfBirth;
@@ -254,7 +279,7 @@ const EditProfile = () => {
                                                                 label="Nationalality"
                                                                 containerClass="mb-3"
                                                                 register={register}
-                                                                key="star"
+                                                                key="nationality"
                                                                 errors={errors}
                                                                 control={control}
                                                             />
@@ -266,14 +291,19 @@ const EditProfile = () => {
                                                         <div className="form-group">
                                                             <Controller
                                                                 name="dateOfBirth"
-                                                                // errors={errors}
-                                                                defaultValue={new Date()}
+                                                                key="dateOfBirth"
+                                                                defaultValue={new Date(ProfileDetails.dateOfBirth)} // Convert string to Date object
                                                                 control={control}
                                                                 rules={{ required: 'Date is required.' }}
-                                                                render={({ field, fieldState }) => (
+                                                                render={({ field }) => (
                                                                     <>
                                                                         <label htmlFor={field.name}>Date of birth</label>
-                                                                        <Calendar value={date} onChange={(e:any) => setDate(e.value)} showIcon className="events-top-bar-datepicker-button mb-3" />
+                                                                        <Calendar
+                                                                            value={field.value} // Set the value from the form state
+                                                                            onChange={e => field.onChange(e.value)} // Update the form state when the value changes
+                                                                            showIcon
+                                                                            className="events-top-bar-datepicker-button mb-3"
+                                                                        />
                                                                     </>
                                                                 )}
                                                             />
@@ -305,15 +335,15 @@ const EditProfile = () => {
                                                         <div className="form-group">
                                                             <FormInput
                                                                 register={register}
-                                                                key="State"
+                                                                key="state"
                                                                 defaultValue={ProfileDetails.homeAddress?.province}
                                                                 errors={errors}
                                                                 control={control}
                                                                 label="State"
                                                                 type="select"
                                                                 className=""
-                                                                id="State"
-                                                                name="State"
+                                                                id="state"
+                                                                name="state"
                                                             >
                                                                 <option value="">Select</option>
                                                                 {CAProvinces?.map((option:any, index:any) => (

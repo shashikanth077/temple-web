@@ -85,7 +85,26 @@
                 "shop":"Our products"
             },
             "bookings":{
-                "heading":"Bookings"
+                "heading":"Bookings",
+                "addBooking":{
+                    "heading":"Add Sevas",
+                    "formValidation" :{
+                        "formLabels":{
+                            "bookingName":"Booking name"
+                        },
+                        "formValidation":{
+                            "bookingName":"Please enter the booking name"
+                        }
+                    }
+                },
+                "editBooking":{
+                    "heading":"edit booking"
+                },
+                "listBooking":{
+                    "labels":{
+                        
+                    }
+                }
             },
             "registration":{
                 "heading":"Register",
@@ -121,7 +140,6 @@
                 "IshasAccount":"Don`t have an account?",
                 "SubmitBtn":"Login"
             }
-      
         }
     }
 }

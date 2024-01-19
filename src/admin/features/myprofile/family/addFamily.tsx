@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import {
@@ -10,13 +10,16 @@ import { Calendar } from 'primereact/calendar';
 import { useSelector } from 'react-redux';
 import { myprofileActions } from '../myProfileSlice';
 import { FormInput } from 'sharedComponents/inputs';
-import { useRedux } from 'hooks';
+import { useRedux, useUser } from 'hooks';
 import { FamilyData } from 'models';
 import Loader from 'sharedComponents/loader/loader';
+import { clearState } from 'storeConfig/api/apiSlice';
+import { NakshtraRasi, Relationship } from 'constants/profile';
 
 /* eslint-disable */
 const AddFamily = () => {
     const { dispatch } = useRedux();
+    const [loggedInUser] = useUser();
 
     const { loading, error, successMessage } = useSelector((state:any) => state.apiState);
 
@@ -24,6 +27,10 @@ const AddFamily = () => {
     const [date, setDate] = useState(null);
     const [selectedDate, setSelectedDate] = useState<Date>(new Date());
 
+    const showToast = (severity:any, summary:any, detail:any) => {
+        toast.current.show({ severity, summary, detail });
+    };
+    
     /*
        form validation schema
     */
@@ -32,7 +39,7 @@ const AddFamily = () => {
             relationship: yup.string().required('Please select relationship'),
             firstName: yup.string().required('Please enter firstname').min(2, 'This value is too short. It should have 2 characters or more.'),
             lastName: yup.string().required('Please enter lastname').min(2, 'This value is too short. It should have 2 characters or more.'),
-            dob: yup.string().required('Please enter DOB'),
+            dateOfBirth: yup.string().required('Please enter DOB'),
             star: yup.string().required('Please enter Star').min(2, 'This value is too short. It should have 2 characters or more.'),
             gotram: yup.string().required('Please enter Gotram').min(2, 'This value is too short. It should have 2 characters or more.'),
         }),
@@ -60,9 +67,22 @@ const AddFamily = () => {
         handle form submission
     */
     const onSubmit = handleSubmit((formData: FamilyData) => {
+        formData.userid = loggedInUser?.id;
         dispatch(myprofileActions.addFamily(formData));
      });
  
+     useEffect(() => {
+        if (successMessage) {
+            showToast('success', 'Success', successMessage);
+            dispatch(clearState());
+            reset();
+        }
+
+        if (error) {
+            showToast('error', 'Error', error);
+            dispatch(clearState());
+        }
+    }, [successMessage, error, dispatch]);
 
     return (
         <>
@@ -117,15 +137,24 @@ const AddFamily = () => {
                                                 <div className="col-md-6">
                                                 <div className="form-group">
                                                     <Controller
-                                                        name="dob"
+                                                        name="dateOfBirth"
+                                                        key="dateOfBirth"
+                                                        defaultValue={null}
                                                         // errors={errors}
-                                                        defaultValue={new Date()}
                                                         control={control}
                                                         rules={{ required: 'Date is required.' }}
-                                                        render={({ field, fieldState }) => (
+                                                        render={({ field }) => (
                                                             <>
                                                                 <label htmlFor={field.name}>Date of birth</label>
-                                                                <Calendar value={date} onChange={(e:any) => setDate(e.value)} showIcon className="events-top-bar-datepicker-button mb-3" />
+                                                                <Calendar
+                                                                    value={field.value}
+                                                                    onChange={(e:any) => {
+                                                                        field.onChange(e.value);
+                                                                        setDate(e.value);  // Update local state if needed
+                                                                    }}
+                                                                    showIcon
+                                                                    className="events-top-bar-datepicker-button mb-3"
+                                                                />
                                                             </>
                                                         )}
                                                     />
@@ -133,16 +162,22 @@ const AddFamily = () => {
                                                 </div>
                                                 <div className="col-md-6">
                                                     <div className="form-group">
-                                                        <FormInput
-                                                            type="text"
-                                                            name="star"
-                                                            register={register}
-                                                            key="star"
-                                                            errors={errors}
-                                                            control={control}
-                                                            label="Star"
-                                                            containerClass="mb-3"
-                                                        />
+                                                    <FormInput
+                                                    register={register}
+                                                    key="star"
+                                                    errors={errors}
+                                                    control={control}
+                                                    label="Star"
+                                                    type="select"
+                                                    containerClass="mb-3"
+                                                    id="star"
+                                                    name="star"
+                                                >
+                                                    <option value="">Select</option>
+                                                    {NakshtraRasi?.map((option:any, index:any) => (
+                                                        <option  key={option.label}  value={option.label}>{option.label} </option>
+                                                    ))}
+                                                </FormInput>
                                                     </div>
                                                 </div>
                                             </div>
@@ -153,7 +188,7 @@ const AddFamily = () => {
                                                         <FormInput
                                                             type="text"
                                                             name="gotram"
-                                                            label="Gotram"
+                                                            label="Gothram"
                                                             register={register}
                                                             key="gotram"
                                                             errors={errors}
@@ -164,23 +199,22 @@ const AddFamily = () => {
                                                 </div>
                                                 <div className="col-md-6">
                                                         <div className="form-group">
-                                                            <FormInput
-                                                                register={register}
-                                                                key="relationship"
-                                                                containerClass="mb-3"
-                                                                errors={errors}
-                                                                control={control}
-                                                                label="Relationship"
-                                                                type="select"
-                                                                className='form-control'
-                                                                id="relationship"
-                                                                name="relationship"
-                                                            >
-                                                                <option value="">Select</option>
-                                                                <option value="father">Father </option>
-                                                                <option value="mother">Mother </option>
-                                                                <option value="son">Son </option>
-                                                            </FormInput>
+                                                        <FormInput
+                                                    register={register}
+                                                    key="relationship"
+                                                    errors={errors}
+                                                    control={control}
+                                                    label="Relationship"
+                                                    type="select"
+                                                    containerClass="mb-3"
+                                                    id="relationship"
+                                                    name="relationship"
+                                                >
+                                                    <option value="">Select</option>
+                                                    {Relationship?.map((option:any, index:any) => (
+                                                        <option  key={option.label}  value={option.label}>{option.label} </option>
+                                                    ))}
+                                                </FormInput>
                                                         </div>
                                                     </div>
                                             </div>

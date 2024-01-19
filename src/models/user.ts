@@ -37,9 +37,11 @@ export interface forgotResPassword {
 
 export interface FamilyData {
   id:string;
+  userid:string;
   firstName: string;
   lastName:string;
-  dob: Date;
+  relationship:string;
+  dateOfBirth: any;
   star: string;
   gotram: string;
 }
@@ -53,10 +55,17 @@ export interface DeceasedData {
   gotram: string;
 }
 
+export interface FamilyResponse{
+  errorMessage:string;
+  success:boolean;
+  errorCode:number;
+  familyDetails:FamilyData[]
+}
+
 export interface FamilySingleResponse{
   errorMessage:string;
   errorCode:number;
-  family:FamilyData
+  familyDetails:FamilyData
 }
 
 export interface DeasedSingleResponse{
