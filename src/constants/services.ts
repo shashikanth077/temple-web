@@ -5,17 +5,17 @@ export interface MonthsTypes {
 
 const Months: MonthsTypes[] = [
     { value: 'January', label: 'January' },
-    { value: 'January', label: 'February' },
-    { value: 'January', label: 'March' },
-    { value: 'January', label: 'April' },
-    { value: 'January', label: 'May' },
-    { value: 'January', label: 'June' },
-    { value: 'January', label: 'July' },
-    { value: 'January', label: 'August' },
-    { value: 'January', label: 'September' },
-    { value: 'January', label: 'October' },
-    { value: 'January', label: 'November' },
-    { value: 'January', label: 'December' },
+    { value: 'February', label: 'February' },
+    { value: 'March', label: 'March' },
+    { value: 'April', label: 'April' },
+    { value: 'May', label: 'May' },
+    { value: 'June', label: 'June' },
+    { value: 'July', label: 'July' },
+    { value: 'August', label: 'August' },
+    { value: 'September', label: 'September' },
+    { value: 'October', label: 'October' },
+    { value: 'November', label: 'November' },
+    { value: 'December', label: 'December' },
 ];
 
 export { Months };

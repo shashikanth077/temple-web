@@ -2,13 +2,15 @@ import {
     call, put, all, fork, takeLatest,
 } from 'redux-saga/effects';
 import {
-    addDeasedRow, editDeasedRow, deleteDeceasedRow, getMyProfileDetails, updateProfiles, getDeasedIdData, addFamily, editFamily, deleteFamily, getFamilyIdData,
+    addDeasedRow, getFamilyList, editDeasedRow, deleteDeceasedRow, getMyProfileDetails, updateProfiles, getDeasedIdData, addFamily, editFamily, deleteFamily, getFamilyIdData,
 } from './myprofileApi';
 import { myprofileActions } from './myProfileSlice';
 import {
     startLoading, endLoading, setError, setSuccessMessage,
 } from 'storeConfig/api/apiSlice';
-import { DeasedSingleResponse, FamilySingleResponse, SuccesResponse } from 'models';
+import {
+    DeasedSingleResponse, FamilyResponse, FamilySingleResponse, SuccesResponse,
+} from 'models';
 
 function* getDeseasedPersonId(action:any) {
     try {
@@ -93,24 +95,45 @@ function* getFamilyId(action:any) {
     }
 }
 
-function* editFamilyMember(action:any) {
+function* getFamilyListByUserId(action:any) {
     try {
-        const response: SuccesResponse = yield call(editFamily, action.payload);
-        if (response.errorCode !== undefined) {
-            yield put(myprofileActions.updateFamilyFailure(response.errorMessage));
+        yield put(startLoading());
+        const response: FamilyResponse = yield call(getFamilyList, action.payload);
+        if (response.success) {
+            yield put(myprofileActions.getFamilySuccess(response));
         } else {
-            yield put(myprofileActions.updateFamilySuccess(response));
+            yield put(setError(response.errorMessage));
         }
     } catch (error) {
         if (error instanceof Error) {
-            console.log('Failed to addfamily', error);
-            yield put(myprofileActions.addFamilyFailure(error.message));
+            yield put(setError(error.message));
         }
+    } finally {
+        yield put(endLoading());
+    }
+}
+
+function* editFamilyMember(action:any) {
+    try {
+        yield put(startLoading());
+        const response: SuccesResponse = yield call(editFamily, action.payload);
+        if (response.success) {
+            yield put(setSuccessMessage('Family member updated'));
+        } else {
+            yield put(setError(response.errorMessage));
+        }
+    } catch (error) {
+        if (error instanceof Error) {
+            yield put(setError(error.message));
+        }
+    } finally {
+        yield put(endLoading());
     }
 }
 
 function* deleteFamilyRow(action:any) {
     try {
+        yield put(startLoading());
         const response: SuccesResponse = yield call(deleteFamily, action.payload);
         if (response.errorCode !== undefined) {
             yield put(myprofileActions.updateFamilyFailure(response.errorMessage));
@@ -122,21 +145,22 @@ function* deleteFamilyRow(action:any) {
             console.log('Failed to addfamily', error);
             yield put(myprofileActions.addFamilyFailure(error.message));
         }
+    } finally {
+        yield put(endLoading());
     }
 }
 
 function* addFamilyMember(action:any) {
     try {
         const response: SuccesResponse = yield call(addFamily, action.payload);
-        if (response.errorCode !== undefined) {
-            yield put(myprofileActions.addFamilyFailure(response.errorMessage));
+        if (response.success) {
+            yield put(setSuccessMessage('Family member added'));
         } else {
-            yield put(myprofileActions.addFamilySuccess(response));
+            yield put(setError(response.errorMessage));
         }
     } catch (error) {
         if (error instanceof Error) {
-            console.log('Failed to addfamily', error);
-            yield put(myprofileActions.addFamilyFailure(error.message));
+            yield put(setError(error.message));
         }
     }
 }
@@ -194,6 +218,9 @@ export function* watchfamilyDetailsByid() {
     yield takeLatest(myprofileActions.getFamilById.type, getFamilyId);
 }
 
+export function* watchFamilyList() {
+    yield takeLatest(myprofileActions.getFamily.type, getFamilyListByUserId);
+}
 export function* watchAddFamily() {
     yield takeLatest(myprofileActions.addFamily.type, addFamilyMember);
 }
@@ -213,7 +240,7 @@ export function* watchEditDeased() {
 }
 
 function* myProfileSaga() {
-    yield all([fork(watchDeleteFamily), fork(watchfamilyDetailsByid), fork(watchMyprofileDetails), fork(watchUpdateProfile), fork(watchAddFamily), fork(watchUpdateFamily)]);
+    yield all([fork(watchFamilyList), fork(watchDeleteFamily), fork(watchfamilyDetailsByid), fork(watchMyprofileDetails), fork(watchUpdateProfile), fork(watchAddFamily), fork(watchUpdateFamily)]);
 }
 
 export default myProfileSaga;

@@ -1,13 +1,13 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { FilterMatchMode } from 'primereact/api';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { Toast } from 'primereact/toast';
 import { useNavigate } from 'react-router-dom';
 import { Button } from 'primereact/button';
-import { selectMyProfileDetails } from '../myProfileSelectors';
+import { selectMyProfileDetails, selectFamilies } from '../myProfileSelectors';
 import { myprofileActions } from '../myProfileSlice';
-import { useRedux } from 'hooks';
+import { useRedux, useUser } from 'hooks';
 
 import DeleteDiaLog from 'sharedComponents/dialogs/dialogs';
 
@@ -61,6 +61,7 @@ function ManageFamily() {
     const toast = useRef<any>(null);
     const dt = useRef<any>(null);
     const { dispatch,  appSelector } = useRedux();
+    const [loggedInUser] = useUser();
 
     const editFamily = (EditData:any) => {
         let url = '/myprofile/editfamily/'+EditData._id;
@@ -77,7 +78,12 @@ function ManageFamily() {
         message: state.myprofile.message,
     }));
 
+    useEffect(() => {
+        dispatch(myprofileActions.getFamily({ userid: loggedInUser.id }));
+    }, [dispatch]);
+
     const ProfileDetails:any = appSelector(selectMyProfileDetails);
+    const Families:any = appSelector(selectFamilies);
 
     const actionBodyTemplate = (rowData:any) => (
         <>
@@ -92,7 +98,7 @@ function ManageFamily() {
     };
 
     const deleteFamily = () => {
-        dispatch(myprofileActions.deleteFamily({userid:'1',familyId:family._id}))
+        dispatch(myprofileActions.deleteFamily({userid:'1',id:family._id}))
         if(error) {
             toast.current.show({
                 severity: 'error', summary: 'Error', detail: error, life: 3000,
@@ -139,7 +145,7 @@ function ManageFamily() {
                 ref={dt}
                 filters={filters}
                 onFilter={(e:any) => setFilters(e.filters)}
-                value={ProfileDetails.family}
+                value={Families}
                 selection={selectedFamilys}
                 onSelectionChange={(e:any) => setSelectedFamilys(e.value)}
                 dataKey="_id"

@@ -51,7 +51,7 @@ const EditFamily = () => {
 
     useEffect(() => {
         console.log('dd');
-        dispatch(myprofileActions.getFamilById({ userid: '1' ,familyId:id}));
+        dispatch(myprofileActions.getFamilById({ userid: '1' ,id:id}));
     }, [dispatch]);
 
     
@@ -148,9 +148,7 @@ const EditFamily = () => {
                                                     <div className="form-group">
                                                       
                                                         <Controller
-                                                            
-                                                            name={"dob"}
-                                                            defaultValue={new Date()}
+                                                            name={"dateOfBirth"}
                                                             control={control}
                                                             render={({ field: { onChange, value } }) => {
                                                                 return (

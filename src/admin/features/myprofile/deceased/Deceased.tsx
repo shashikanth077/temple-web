@@ -91,7 +91,7 @@ function ManageFamily() {
     };
 
     const deleteFamily = () => {
-        dispatch(myprofileActions.deleteFamily({userid:'1',familyId:family._id}))
+        dispatch(myprofileActions.deleteFamily({userid:'1',id:family._id}))
         if(error) {
             toast.current.show({
                 severity: 'error', summary: 'Error', detail: error, life: 3000,
