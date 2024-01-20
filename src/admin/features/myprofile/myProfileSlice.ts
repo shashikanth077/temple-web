@@ -96,15 +96,6 @@ const MyProfileSlice = createSlice({
         deleteFamily(state, action:PayloadAction<FamilyUpdatePayload>) {
             state.loading = false;
         },
-        deleteFamilySuccess(state, action:PayloadAction<SuccesResponse>) {
-            state.loading = false;
-            state.message = action.payload.message;
-        },
-        deleteFamilyFailure(state, action:PayloadAction<string>) {
-            state.loading = false;
-            state.loading = false;
-            state.error = action.payload;
-        },
         getDeceasedById(state, action:PayloadAction<DeceasedUpdatePayload>) {
             state.loading = false;
         },

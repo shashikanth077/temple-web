@@ -487,7 +487,7 @@ const EditProfile = () => {
                                                             <Button type="submit" className="btn btn-primary submit-btn mr-1 waves-effect waves-light" disabled={loading}>
                                                                 Update
                                                             </Button>
-                                                            <a className="btn primary cancelbtn" href="/myprofile" id="cancel"> Cancel</a>
+                                                            <a className="btn primary cancelbtn" href="/myprofile/profileview" id="cancel"> Cancel</a>
                                                         </div>
                                                     </div>
                                                 </div>

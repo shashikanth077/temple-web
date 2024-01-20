@@ -135,15 +135,15 @@ function* deleteFamilyRow(action:any) {
     try {
         yield put(startLoading());
         const response: SuccesResponse = yield call(deleteFamily, action.payload);
-        if (response.errorCode !== undefined) {
-            yield put(myprofileActions.updateFamilyFailure(response.errorMessage));
+        console.log('delete', response);
+        if (response.success) {
+            yield put(setSuccessMessage('Family member deleted!'));
         } else {
-            yield put(myprofileActions.updateFamilySuccess(response));
+            yield put(setError(response.errorMessage));
         }
     } catch (error) {
         if (error instanceof Error) {
-            console.log('Failed to addfamily', error);
-            yield put(myprofileActions.addFamilyFailure(error.message));
+            yield put(setError(error.message));
         }
     } finally {
         yield put(endLoading());

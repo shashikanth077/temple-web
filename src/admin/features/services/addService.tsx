@@ -83,8 +83,6 @@ const AddService = () => {
         setFrequency(e.target.value)
     }
 
-    
-
     const onChangeMultipleSelection = (selected: any) => {
         console.log(selected);
         setMultiSelections(selected);
