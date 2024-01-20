@@ -47,10 +47,16 @@ export interface FamilyData {
 }
 
 export interface DeceasedData {
-  id:string;
-  firstName: string;
-  lastName:string;
-  deathDate: Date;
+  id:string | undefined;
+  userid:string;
+  personName: string;
+  tithi:string;
+  paksha:string;
+  masam:string;
+  deathPlace:string;
+  relationship:string;
+  deathDate: any;
+  deathTime: any;
   star: string;
   gotram: string;
 }
@@ -65,13 +71,22 @@ export interface FamilyResponse{
 export interface FamilySingleResponse{
   errorMessage:string;
   errorCode:number;
+  success:true,
   familyDetails:FamilyData
 }
 
 export interface DeasedSingleResponse{
   errorMessage:string;
   errorCode:number;
+  success:true,
   deceased:DeceasedData
+}
+
+export interface DeasedListResponse{
+  errorMessage:string;
+  errorCode:number;
+  success:true,
+  deceasedlist:DeceasedData[]
 }
 
 export interface ProfileData {
