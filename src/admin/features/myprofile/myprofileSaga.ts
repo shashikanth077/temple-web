@@ -2,29 +2,46 @@ import {
     call, put, all, fork, takeLatest,
 } from 'redux-saga/effects';
 import {
-    addDeasedRow, getFamilyList, editDeasedRow, deleteDeceasedRow, getMyProfileDetails, updateProfiles, getDeasedIdData, addFamily, editFamily, deleteFamily, getFamilyIdData,
+    addDeasedRow, getDeceasedList, getFamilyList, editDeasedRow, deleteDeceasedRow, getMyProfileDetails, updateProfiles, getDeasedIdData, addFamily, editFamily, deleteFamily, getFamilyIdData,
 } from './myprofileApi';
 import { myprofileActions } from './myProfileSlice';
 import {
     startLoading, endLoading, setError, setSuccessMessage,
 } from 'storeConfig/api/apiSlice';
 import {
-    DeasedSingleResponse, FamilyResponse, FamilySingleResponse, SuccesResponse,
+    DeasedSingleResponse, DeasedListResponse, FamilyResponse, FamilySingleResponse, SuccesResponse,
 } from 'models';
 
 function* getDeseasedPersonId(action:any) {
     try {
         yield put(startLoading());
         const response: DeasedSingleResponse = yield call(getDeasedIdData, action.payload);
-        if (response.errorCode !== undefined) {
-            yield put(myprofileActions.getDeceasedByIdFailure(response.errorMessage));
-        } else {
+        if (response.success) {
             yield put(myprofileActions.getDeceasedByIdSuccess(response));
+        } else {
+            yield put(setError(response.errorMessage));
         }
     } catch (error) {
         if (error instanceof Error) {
-            console.log('Failed to deceased', error);
-            yield put(myprofileActions.getDeceasedByIdFailure(error.message));
+            yield put(setError(error.message));
+        }
+    } finally {
+        yield put(endLoading());
+    }
+}
+
+function* getDeseasedlistByuserId(action:any) {
+    try {
+        yield put(startLoading());
+        const response: DeasedListResponse = yield call(getDeceasedList, action.payload);
+        if (response.success) {
+            yield put(myprofileActions.getDeceasedListByUserIdSuccess(response));
+        } else {
+            yield put(setError(response.errorMessage));
+        }
+    } catch (error) {
+        if (error instanceof Error) {
+            yield put(setError(error.message));
         }
     } finally {
         yield put(endLoading());
@@ -33,65 +50,74 @@ function* getDeseasedPersonId(action:any) {
 
 function* editDeasedPerson(action:any) {
     try {
+        yield put(startLoading());
         const response: SuccesResponse = yield call(editDeasedRow, action.payload);
-        if (response.errorCode !== undefined) {
-            yield put(myprofileActions.addDeceasedFailure(response.errorMessage));
+        if (response.success) {
+            yield put(setSuccessMessage('Updated successfully!'));
         } else {
-            yield put(myprofileActions.addDeceasedSuccess(response));
+            yield put(setError(response.errorMessage));
         }
     } catch (error) {
         if (error instanceof Error) {
-            console.log('Failed to addfamily', error);
-            yield put(myprofileActions.addFamilyFailure(error.message));
+            yield put(setError(error.message));
         }
+    } finally {
+        yield put(endLoading());
     }
 }
 
-function* deleteDeasedRow(action:any) {
+function* deleteDeasedDetails(action:any) {
     try {
+        yield put(startLoading());
         const response: SuccesResponse = yield call(deleteDeceasedRow, action.payload);
         if (response.errorCode !== undefined) {
-            yield put(myprofileActions.deleteDeceasedFailure(response.errorMessage));
+            yield put(setSuccessMessage('Deceased person deleted!'));
         } else {
-            yield put(myprofileActions.deleteDeceasedSuccess(response));
+            yield put(setError(response.errorMessage));
         }
     } catch (error) {
         if (error instanceof Error) {
-            console.log('Failed to addfamily', error);
-            yield put(myprofileActions.addFamilyFailure(error.message));
+            yield put(setError(error.message));
         }
+    } finally {
+        yield put(endLoading());
     }
 }
 
 function* addDeasedMember(action:any) {
     try {
+        yield put(startLoading());
         const response: SuccesResponse = yield call(addDeasedRow, action.payload);
-        if (response.errorCode !== undefined) {
-            yield put(myprofileActions.addDeceasedFailure(response.errorMessage));
+        if (response.success) {
+            yield put(setSuccessMessage('Deceased person added'));
         } else {
-            yield put(myprofileActions.addDeceasedSuccess(response));
+            yield put(setError(response.errorMessage));
         }
     } catch (error) {
         if (error instanceof Error) {
-            console.log('Failed to addfamily', error);
-            yield put(myprofileActions.addDeceasedFailure(error.message));
+            yield put(setError(error.message));
         }
+    } finally {
+        yield put(endLoading());
     }
 }
 
 function* getFamilyId(action:any) {
     try {
+        yield put(startLoading());
         const response: FamilySingleResponse = yield call(getFamilyIdData, action.payload);
-        if (response.errorCode !== undefined) {
-            yield put(myprofileActions.getFamilByIdFailure(response.errorMessage));
-        } else {
+        if (response.success) {
             yield put(myprofileActions.getFamilByIdSuccess(response));
+        } else {
+            yield put(setError(response.errorMessage));
         }
     } catch (error) {
         if (error instanceof Error) {
             console.log('Failed to addfamily', error);
-            yield put(myprofileActions.addFamilyFailure(error.message));
+            yield put(setError(error.message));
         }
+    } finally {
+        yield put(endLoading());
     }
 }
 
@@ -228,11 +254,19 @@ export function* watchDeleteFamily() {
     yield takeLatest(myprofileActions.deleteFamily.type, deleteFamilyRow);
 }
 
+export function* watchDeceasedPersonRow() {
+    yield takeLatest(myprofileActions.getDeceasedById.type, getDeseasedPersonId);
+}
+
+export function* watchDeceasedPersonList() {
+    yield takeLatest(myprofileActions.getDeceasedListByUserId.type, getDeseasedlistByuserId);
+}
+
 export function* watchAddDeased() {
-    yield takeLatest(myprofileActions.addDeceased.type, addDeasedRow);
+    yield takeLatest(myprofileActions.addDeceased.type, addDeasedMember);
 }
 export function* watchDeleteDeased() {
-    yield takeLatest(myprofileActions.deleteDeceased.type, deleteDeceasedRow);
+    yield takeLatest(myprofileActions.deleteDeceased.type, deleteDeasedDetails);
 }
 
 export function* watchEditDeased() {
@@ -240,7 +274,20 @@ export function* watchEditDeased() {
 }
 
 function* myProfileSaga() {
-    yield all([fork(watchFamilyList), fork(watchDeleteFamily), fork(watchfamilyDetailsByid), fork(watchMyprofileDetails), fork(watchUpdateProfile), fork(watchAddFamily), fork(watchUpdateFamily)]);
+    yield all([
+        fork(watchDeceasedPersonList),
+        fork(watchAddDeased),
+        fork(watchDeleteDeased),
+        fork(watchEditDeased),
+        fork(watchFamilyList),
+        fork(watchDeleteFamily),
+        fork(watchfamilyDetailsByid),
+        fork(watchMyprofileDetails),
+        fork(watchUpdateProfile),
+        fork(watchAddFamily),
+        fork(watchUpdateFamily),
+        fork(watchDeceasedPersonRow),
+    ]);
 }
 
 export default myProfileSaga;

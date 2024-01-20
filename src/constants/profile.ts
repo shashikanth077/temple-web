@@ -83,10 +83,6 @@ const Tithi = [
         label: 'Tritiya',
     },
     {
-        value: 'Chaturthi',
-        label: 'Chaturthi',
-    },
-    {
         value: 'Panchami',
         label: 'Panchami',
     },
@@ -99,20 +95,12 @@ const Tithi = [
         label: 'Ashtami',
     },
     {
-        value: 'Navami',
-        label: 'Navami',
-    },
-    {
         value: 'Dashmi',
         label: 'Dashmi',
     },
     {
         value: 'Dwadashi',
         label: 'Dwadashi',
-    },
-    {
-        value: 'Trayodashi',
-        label: 'Trayodashi',
     },
     {
         value: 'Chaturdashi',
@@ -131,24 +119,12 @@ const Tithi = [
         label: 'Chaturthi',
     },
     {
-        value: 'Panchami',
-        label: 'Panchami',
-    },
-    {
         value: 'Saptami',
         label: 'Saptami',
     },
     {
         value: 'Navami',
         label: 'Navami',
-    },
-    {
-        value: 'Dashmi',
-        label: 'Dashmi',
-    },
-    {
-        value: 'Dwadashi',
-        label: 'Dwadashi',
     },
     {
         value: 'Trayodashi',

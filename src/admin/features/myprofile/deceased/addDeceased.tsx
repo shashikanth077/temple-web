@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import {
@@ -7,12 +7,16 @@ import {
 import { useForm, Controller } from 'react-hook-form';
 import { Toast } from 'primereact/toast';
 import { useSelector } from 'react-redux';
+import { Calendar } from 'primereact/calendar';
 import { myprofileActions } from '../myProfileSlice';
 import { FormInput } from 'sharedComponents/inputs';
-import { useRedux } from 'hooks';
+import { useRedux, useUser } from 'hooks';
 import { DeceasedData } from 'models';
 import Loader from 'sharedComponents/loader/loader';
-import Datepicker from 'sharedComponents/datepicker/datepicker';
+import {
+    Masam, Tithi, Paksha, NakshtraRasi, Relationship,
+} from 'constants/profile';
+import { clearState } from 'storeConfig/api/apiSlice';
 
 /* eslint-disable */
 const AddFamily = () => {
@@ -20,16 +24,22 @@ const AddFamily = () => {
     const toast = useRef<any>(null);
 
     const { loading, error, successMessage } = useSelector((state:any) => state.apiState);
+    const [datetime12h, setDateTime12h] = useState<any>(null);
+    const [time, setTime] = useState<string | null>(null);
+    const [endDatetime12h, setDateTimeEnd12h] = useState(null);
+    const [selectedDate, setSelectedDate] = useState<any>(null);
+    const [loggedInUser] = useUser();
 
-    const [selectedDate, setSelectedDate] = useState<Date>(new Date());
+    const showToast = (severity:any, summary:any, detail:any) => {
+        toast.current.show({ severity, summary, detail });
+    };
 
     /*
         form validation schema
     */
     const schemaResolver = yupResolver(
         yup.object().shape({
-            firstName: yup.string().required('Please enter firstname').min(2, 'This value is too short. It should have 2 characters or more.'),
-            lastName: yup.string().required('Please enter lastname').min(2, 'This value is too short. It should have 2 characters or more.'),
+            personName: yup.string().required('Please enter firstname').min(2, 'This value is too short. It should have 2 characters or more.'),
             deathDate: yup.string().required('Please enter death date'),
             star: yup.string().required('Please enter Star').min(2, 'This value is too short. It should have 2 characters or more.'),
             gotram: yup.string().required('Please enter Gotram').min(2, 'This value is too short. It should have 2 characters or more.'),
@@ -48,16 +58,25 @@ const AddFamily = () => {
         formState: { errors },
     } = methods;
 
-    const onDateChange = (date: Date) => {
-        if (date) {
-            setSelectedDate(date);
+    useEffect(() => {
+        if (successMessage) {
+            showToast('success', 'Success', successMessage);
+            dispatch(clearState());
+            reset();
         }
-    };
+
+        if (error) {
+            showToast('error', 'Error', error);
+            dispatch(clearState());
+        }
+    }, [successMessage, error, dispatch]);
 
     /*
         handle form submission
     */
     const onSubmit = handleSubmit((formData: DeceasedData) => {
+        formData.deathTime = time ? time : null;
+        formData.userid = loggedInUser?.id;
         dispatch(myprofileActions.addDeceased(formData));
      });
  
@@ -79,79 +98,101 @@ const AddFamily = () => {
 
                             <div className="card-body">
                             
-                            <form name="family-form" id="family-form" onSubmit={onSubmit}>
+                            <form name="deceased-form" id="deceased-form" onSubmit={onSubmit}>
                                             <div className="row">
                                                 <div className="col-md-6">
                                                     <div className="form-group">
                                                         <FormInput
                                                             type="text"
-                                                            name="firstName"
+                                                            name="personName"
                                                             register={register}
-                                                            key="firstName"
+                                                            key="personName"
                                                             errors={errors}
                                                             control={control}
-                                                            label="First name"
+                                                            label="Person name"
                                                             containerClass="mb-3"
                                                         />
                                                     </div>
                                                 </div>
                                                 <div className="col-md-6">
                                                     <div className="form-group">
-                                                        <FormInput
-                                                            type="text"
-                                                            register={register}
-                                                            key="lastName"
-                                                            errors={errors}
-                                                            control={control}
-                                                            name="lastName"
-                                                            label="Last name"
-                                                            containerClass="mb-3"
-                                                        />
+                                                    <FormInput
+                                                        register={register}
+                                                        key="relationship"
+                                                        errors={errors}
+                                                        control={control}
+                                                        label="Relationship"
+                                                        type="select"
+                                                        containerClass="mb-3"
+                                                        id="relationship"
+                                                        name="relationship"
+                                                    >
+                                                    <option value="">Select</option>
+                                                    {Relationship?.map((option:any, index:any) => (
+                                                        <option  key={option.label}  value={option.label}>{option.label} </option>
+                                                    ))}
+                                                    </FormInput>
                                                     </div>
                                                 </div>
                                             </div>
 
                                             <div className="row">
                                                 <div className="col-md-6">
-                                                  DeathDate
                                                     <div className="form-group">
-                                                      
-                                                        <Controller
-                                                            
-                                                            name={"deathDate"}
-                                                            defaultValue={new Date()}
+                                                    <Controller
+                                                            name="deathDate"
+                                                            key={"deathDate"}
+                                                            // errors={errors}
+                                                            defaultValue={null}
                                                             control={control}
-                                                            render={({ field: { onChange, value } }) => {
-                                                                return (
-                                                                  <Datepicker
-                                                                    hideAddon={'input'}
-                                                                    inputClass='events-top-bar-datepicker-button'
-                                                                    value={selectedDate}
-                                                                    dateFormat={'dd/MM/yyyy'}
-                                                                    onChange={(date: Date) => {
-                                                                        onDateChange(date);
+                                                            rules={{ required: 'Date is required.' }}
+                                                            render={({ field }) => (
+                                                                <>
+                                                                    <label htmlFor={field.name}>Date date</label>
+                                                                    <Calendar
+                                                                        value={field.value}
+                                                                        onChange={(e:any) => {
+                                                                            field.onChange(e.value);
+                                                                            setSelectedDate(e.value);  // Update local state if needed
+                                                                        }}
+                                                                        showIcon
+                                                                        className="events-top-bar-datepicker-button mb-3"
+                                                                    />
+                                                                </>
+                                                            )}
+                                                        />                                                       
+                                                    </div>
+                                                </div>
+                                                <div className="col-md-6">
+                                                    <div className="form-group">
+                                                    <Controller
+                                                            name="deathTime"
+                                                            key={"deathTime"}
+                                                            // errors={errors}
+                                                            defaultValue={time}
+                                                            control={control}
+                                                            rules={{ required: 'Date is required.' }}
+                                                            render={({ field }) => (
+                                                                <>
+                                                                  <label htmlFor={field.name}>Date time</label>
+                                                                  <Calendar
+                                                                    timeOnly
+                                                                    value={field.value}
+                                                                    onChange={(e:any) => {
+                                                                        const formattedTime = e.value?.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                                                                        field.onChange(e.value);
+                                                                        setTime(formattedTime);
                                                                     }}
-                                                                  />
-                                                                );
-                                                              }}
-                                                        />
-                                                  
+                                                                    showIcon
+                                                                    icon={() => <i className="pi pi-clock" />}
+                                                                    className="events-top-bar-datepicker-button mb-3"
+                                                                    />
+                                                                </>
+                                                              )}
+                                                        />                                                       
                                                     </div>
                                                 </div>
-                                                <div className="col-md-6">
-                                                    <div className="form-group">
-                                                        <FormInput
-                                                            type="text"
-                                                            name="star"
-                                                            register={register}
-                                                            key="star"
-                                                            errors={errors}
-                                                            control={control}
-                                                            label="Star"
-                                                            containerClass="mb-3"
-                                                        />
-                                                    </div>
-                                                </div>
+                                                
                                             </div>
 
                                             <div className="row">
@@ -171,14 +212,98 @@ const AddFamily = () => {
                                                 </div>
                                                 <div className="col-md-6">
                                                     <div className="form-group">
-                                                        <FormInput
+                                                    <FormInput
+                                                        register={register}
+                                                        key="tithi"
+                                                        errors={errors}
+                                                        control={control}
+                                                        label="Tithi"
+                                                        type="select"
+                                                        containerClass="mb-3"
+                                                        id="tithi"
+                                                        name="tithi"
+                                                    >
+                                                    <option value="">Select</option>
+                                                    {Tithi?.map((option:any, index:any) => (
+                                                        <option  key={option.label}  value={option.label}>{option.label} </option>
+                                                    ))}
+                                                    </FormInput>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className="row">
+                                                <div className="col-md-6">
+                                                    <div className="form-group">
+                                                    <FormInput
+                                                        register={register}
+                                                        key="paksha"
+                                                        errors={errors}
+                                                        control={control}
+                                                        label="Paksha"
+                                                        type="select"
+                                                        containerClass="mb-3"
+                                                        id="paksha"
+                                                        name="paksha"
+                                                    >
+                                                    <option value="">Select</option>
+                                                    {Paksha?.map((option:any, index:any) => (
+                                                        <option  key={option.label}  value={option.label}>{option.label} </option>
+                                                    ))}
+                                                    </FormInput>
+                                                    </div>
+                                                </div>
+                                                <div className="col-md-6">
+                                                    <div className="form-group">
+                                                    <FormInput
+                                                        register={register}
+                                                        key="masam"
+                                                        errors={errors}
+                                                        control={control}
+                                                        label="Masam(Months)"
+                                                        type="select"
+                                                        containerClass="mb-3"
+                                                        id="masam"
+                                                        name="masam"
+                                                    >
+                                                    <option value="">Select</option>
+                                                    {Masam?.map((option:any, index:any) => (
+                                                        <option  key={option.label}  value={option.label}>{option.label} </option>
+                                                    ))}
+                                                    </FormInput>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className="row">
+                                                <div className="col-md-6">
+                                                    <div className="form-group">
+                                                    <FormInput
+                                                        register={register}
+                                                        key="star"
+                                                        errors={errors}
+                                                        control={control}
+                                                        label="Birth star and Rasi"
+                                                        type="select"
+                                                        containerClass="mb-3"
+                                                        id="star"
+                                                        name="star"
+                                                    >
+                                                    <option value="">Select</option>
+                                                    {NakshtraRasi?.map((option:any, index:any) => (
+                                                        <option  key={option.label}  value={option.label}>{option.label} </option>
+                                                    ))}
+                                                    </FormInput>
+                                                    </div>
+                                                </div>
+                                                <div className="col-md-6">
+                                                    <div className="form-group">
+                                                    <FormInput
                                                             type="text"
-                                                            name="gotram"
-                                                            label="Gotram"
+                                                            name="deathPlace"
                                                             register={register}
-                                                            key="gotram"
+                                                            key="deathPlace"
                                                             errors={errors}
                                                             control={control}
+                                                            label="Place of death"
                                                             containerClass="mb-3"
                                                         />
                                                     </div>
@@ -191,7 +316,7 @@ const AddFamily = () => {
                                                         <Button type="submit" className='btn btn-primary submit-btn mr-1 waves-effect waves-light' disabled={loading}>
                                                             Add
                                                         </Button>
-                                                        <a className="btn primary cancelbtn" href="/myprofile" id="cancel"> Cancel</a>
+                                                        <a className="btn primary cancelbtn" href="/myprofile/profileview" id="cancel"> Cancel</a>
                                                     </div>
                                                 </div>
                                             </div>
