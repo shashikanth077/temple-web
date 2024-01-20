@@ -26,8 +26,9 @@ export function editFamily(payload:any) {
 }
 
 export function deleteFamily(payload:any) {
-    const baseUrl = 'http://localhost:4000/api/deletefamily/';
+    const baseUrl = `http://localhost:8080/api/family/${payload.userid}/${payload.id}`;
     const response = APICore.delete(`${baseUrl}`);
+    console.log('delete api', response);
     return response;
 }
 

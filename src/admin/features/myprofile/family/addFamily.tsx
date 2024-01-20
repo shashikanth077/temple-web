@@ -8,6 +8,7 @@ import { useForm, Controller } from 'react-hook-form';
 import { Toast } from 'primereact/toast';
 import { Calendar } from 'primereact/calendar';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { myprofileActions } from '../myProfileSlice';
 import { FormInput } from 'sharedComponents/inputs';
 import { useRedux, useUser } from 'hooks';
@@ -20,6 +21,7 @@ import { NakshtraRasi, Relationship } from 'constants/profile';
 const AddFamily = () => {
     const { dispatch } = useRedux();
     const [loggedInUser] = useUser();
+    const navigate = useNavigate();
 
     const { loading, error, successMessage } = useSelector((state:any) => state.apiState);
 
@@ -38,9 +40,9 @@ const AddFamily = () => {
         yup.object().shape({
             relationship: yup.string().required('Please select relationship'),
             firstName: yup.string().required('Please enter firstname').min(2, 'This value is too short. It should have 2 characters or more.'),
-            lastName: yup.string().required('Please enter lastname').min(2, 'This value is too short. It should have 2 characters or more.'),
+            lastName: yup.string().required('Please enter lastname').min(1, 'This value is too short. It should have 2 characters or more.'),
             dateOfBirth: yup.string().required('Please enter DOB'),
-            star: yup.string().required('Please enter Star').min(2, 'This value is too short. It should have 2 characters or more.'),
+            star: yup.string().required('Please enter Star and Rasi').min(2, 'This value is too short. It should have 2 characters or more.'),
             gotram: yup.string().required('Please enter Gotram').min(2, 'This value is too short. It should have 2 characters or more.'),
         }),
     );
@@ -75,7 +77,7 @@ const AddFamily = () => {
         if (successMessage) {
             showToast('success', 'Success', successMessage);
             dispatch(clearState());
-            reset();
+            navigate('/myprofile/profileview');
         }
 
         if (error) {

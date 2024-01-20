@@ -5,11 +5,14 @@ import { Column } from 'primereact/column';
 import { Toast } from 'primereact/toast';
 import { useNavigate } from 'react-router-dom';
 import { Button } from 'primereact/button';
-import { selectMyProfileDetails, selectFamilies } from '../myProfileSelectors';
+import { useSelector } from 'react-redux';
+import { selectFamilies } from '../myProfileSelectors';
 import { myprofileActions } from '../myProfileSlice';
 import { useRedux, useUser } from 'hooks';
 
 import DeleteDiaLog from 'sharedComponents/dialogs/dialogs';
+import { clearState } from 'storeConfig/api/apiSlice';
+import Loader from 'sharedComponents/loader/loader';
 
 /* eslint-disable */
 interface Families{
@@ -17,33 +20,28 @@ interface Families{
     relationship:string;
     firstName: string;
     lastName: string;
-    email:string;
-    mobileNumber:string;
-    homeNumber:string;
     dateOfbirth: string;
-    nationality: string;
     star: string;
     gotram: string;
-    language: string;
 }
 
 function ManageFamily() {
 
     const navigate = useNavigate();
+    const { loading, error, successMessage } = useSelector((state:any) => state.apiState);
+
+    const showToast = (severity:any, summary:any, detail:any) => {
+        toast.current.show({ severity, summary, detail });
+    };
 
     const emptyFamily:Families = {
         _id:'',
         relationship: '',
         firstName: '',
         lastName: '',
-        email: '',
-        mobileNumber: '',
-        homeNumber: '',
         dateOfbirth: '',
-        nationality: '',
         star: '',
-        gotram: '',
-        language: '',
+        gotram: ''
     };
 
     const [filters, setFilters] = useState({
@@ -53,7 +51,6 @@ function ManageFamily() {
     const [famlies, setFamilies] = useState<any>([]);
     const [FamilyDialog, setFamilyDialog] = useState(false);
     const [deleteFamilyDialog, setDeleteFamilyDialog] = useState(false);
-    const [deleteFamilysDialog, setDeleteFamilysDialog] = useState(false);
     const [family, setFamily] = useState(emptyFamily);
     const [selectedFamilys, setSelectedFamilys] = useState<any>(null);
     const [submitted, setSubmitted] = useState(false);
@@ -72,17 +69,10 @@ function ManageFamily() {
         setDeleteFamilyDialog(true);
     };
 
-    const { loading,error,message} = appSelector(state => ({
-        loading: state.myprofile.loading,
-        error: state.myprofile.error,
-        message: state.myprofile.message,
-    }));
-
     useEffect(() => {
         dispatch(myprofileActions.getFamily({ userid: loggedInUser.id }));
     }, [dispatch]);
 
-    const ProfileDetails:any = appSelector(selectMyProfileDetails);
     const Families:any = appSelector(selectFamilies);
 
     const actionBodyTemplate = (rowData:any) => (
@@ -98,18 +88,8 @@ function ManageFamily() {
     };
 
     const deleteFamily = () => {
-        dispatch(myprofileActions.deleteFamily({userid:'1',id:family._id}))
-        if(error) {
-            toast.current.show({
-                severity: 'error', summary: 'Error', detail: error, life: 3000,
-            });
-        }
-        if(message) {
-            toast.current.show({
-                severity: 'success', summary: 'Successfull', detail: error, life: 3000,
-            });
-        }
-       
+        dispatch(myprofileActions.deleteFamily({userid:loggedInUser.id,id:family._id}));
+        setDeleteFamilyDialog(false);
     };   
 
     const openNew = () => {
@@ -118,7 +98,6 @@ function ManageFamily() {
 
     const LeftToolbarTemplate = () => (
         <div className="flex flex-wrap gap-2 mb-2">
-            {/* <Link className='btn submit-btn' to="/admin/addfamily">Add</Link> */}
             <Button label="New" className='submit-btn' icon="pi pi-plus me-1" severity="success" onClick={openNew} />
         </div>
     );
@@ -127,6 +106,18 @@ function ManageFamily() {
         setDeleteFamilyDialog(false);
     };
 
+    useEffect(() => {
+        if (successMessage) {
+            showToast('success', 'Success', successMessage);
+            dispatch(clearState());
+            //reset();
+        }
+
+        if (error) {
+            showToast('error', 'Error', error);
+            dispatch(clearState());
+        }
+    }, [successMessage, error, dispatch]);
 
     const deleteFamilyDialogFooter = (
         <>
@@ -137,8 +128,8 @@ function ManageFamily() {
 
     return (
         <>
-            <Toast ref={toast} />
-
+           <Toast ref={toast} />
+            {loading && <Loader />}
             <h5><b>Family:</b></h5>
            <LeftToolbarTemplate />
             <DataTable
