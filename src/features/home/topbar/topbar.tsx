@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect } from 'react';
 import {
     Link,
 } from 'react-router-dom';
@@ -74,14 +74,17 @@ function Topbar() {
 
                 </ul>
                 <div className="same-style cart-wrap d-none d-lg-block">
-                    <Link className="icon-cart" to={`${process.env.PUBLIC_URL}/viewcart`}>
-                        <button type="button" className="icon-cart">
-                            <i className="fas fa-shopping-cart" />
-                            <span className="count-style">
-                                {cartItems?.list?.totalQuantity !== undefined ? cartItems.list.totalQuantity : 0}
-                            </span>
-                        </button>
-                    </Link>
+                    {APICore.isUserAuthenticated()
+                        ? (
+                            <Link className="icon-cart" to={`${process.env.PUBLIC_URL}/cart/view-cart`}>
+                                <button type="button" className="icon-cart">
+                                    <i className="fas fa-shopping-cart" />
+                                    <span className="count-style">
+                                        {cartItems?.list?.totalQuantity !== undefined ? cartItems.list.totalQuantity : 0}
+                                    </span>
+                                </button>
+                            </Link>
+                        ) : '' }
                 </div>
                 <div className="user-account-section">
                     <a aria-label="Member Portal" href="/login">
