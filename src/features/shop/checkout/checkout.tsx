@@ -13,6 +13,7 @@ const Checkout = () => {
 
     const [isChecked, setIsChecked] = useState(false);
     const [billingAddressFill, setBillingAddress] = useState<any>('');
+    const [selectedState, setSelectedState] = useState('');
 
     useEffect(() => {
         dispatch(cartActions.getCartDetails({ userid: loggedInUser.id }));
@@ -40,6 +41,8 @@ const Checkout = () => {
         currencyRate: 44.6,
         currencySymbol: '$',
     };
+
+    console.log('billingAddressFill', billingAddressFill);
     return (
 
         <div className="checkout-area pt-95 pb-100">
@@ -87,7 +90,13 @@ const Checkout = () => {
                                     <div className="col-lg-6 col-md-6">
                                         <div className="billing-info mb-20">
                                             <label>State</label>
-                                            <select name="states" className="billing-selectinput mb-20">
+                                            <select
+                                                value={selectedState}
+                                                onChange={event => setSelectedState(event.target.value)}
+                                                name="state"
+                                                id="state"
+                                                className="billing-selectinput mb-20"
+                                            >
                                                 <option value="">Select</option>
                                                 {CAProvinces?.map((option:any, index:any) => (
                                                     <option value={option.name}>{option.name} </option>
@@ -98,13 +107,13 @@ const Checkout = () => {
                                     <div className="col-lg-6 col-md-6">
                                         <div className="billing-info mb-20">
                                             <label>Postcode / ZIP</label>
-                                            <input type="text" name="billingZipCode" value={billingAddressFill?.zipcode} />
+                                            <input type="text" name="billingZipCode" value={billingAddressFill?.postalCode} />
                                         </div>
                                     </div>
                                     <div className="col-lg-6 col-md-6">
                                         <div className="billing-info mb-20">
                                             <label>Phone</label>
-                                            <input type="text" />
+                                            <input type="text" name="billingMobilenumber" value="" />
                                         </div>
                                     </div>
                                     <div className="col-lg-6 col-md-6">

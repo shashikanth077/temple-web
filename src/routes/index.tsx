@@ -109,12 +109,6 @@ const otherPublicRoutes: RoutesProps[] = [
         route: Route,
     },
     {
-        path: '/viewcart',
-        name: 'Viewcart',
-        element: <ViewCart />,
-        route: Route,
-    },
-    {
         path: '/Checkout',
         name: 'Checkout',
         element: <Checkout />,
@@ -457,6 +451,19 @@ const profileRoutes: RoutesProps = {
     ],
 };
 
+const CartRoutes : RoutesProps = {
+    path: '/cart/',
+    name: 'Cart',
+    roles: ['ROLE_USER'],
+    children: [
+        {
+            path: '/cart/view-cart',
+            name: 'Cart',
+            element: <ViewCart />,
+        },
+    ],
+};
+
 const bookingsReportRoutes: RoutesProps = {
     path: '/mybookings/',
     name: 'MyBookings',
@@ -466,7 +473,6 @@ const bookingsReportRoutes: RoutesProps = {
             path: '/mybookings/lists',
             name: 'Mydonations',
             element: <MyBookings />,
-
         },
     ],
 };
@@ -550,6 +556,7 @@ const bothMemberAdminRoutes = [
     dashboardRoutes,
     logoutRoutes,
     profileRoutes,
+    CartRoutes,
 ];
 
 const noAdminProtectedRoutes = [

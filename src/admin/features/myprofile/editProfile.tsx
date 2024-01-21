@@ -16,6 +16,7 @@ import { ProfileData } from 'models';
 import { useRedux, useToggle } from 'hooks';
 import { clearState } from 'storeConfig/api/apiSlice';
 import { CAProvinces } from 'constants/CAProvinces';
+import { NakshtraRasi } from 'constants/profile';
 
 /* eslint no-underscore-dangle: 0 */
 const EditProfile = () => {
@@ -116,6 +117,24 @@ const EditProfile = () => {
         ProfileObj.classification = 'Individual';
 
         ProfileObj.userid = userArr.id || '';
+
+        if (billingAddressShow === false) {
+            ProfileObj.billingAddress = {
+                address1: formData.address1,
+                address2: '',
+                city: formData.city,
+                postalCode: formData.zipcode,
+                province: formData.state,
+            };
+        } else {
+            ProfileObj.billingAddress = {
+                address1: formData.billingaddress,
+                address2: '',
+                city: formData.billingcity,
+                postalCode: formData.billingzipcode,
+                province: formData.billingstate,
+            };
+        }
         ProfileObj.homeAddress = {
             address1: formData.address1,
             address2: '',
@@ -123,13 +142,7 @@ const EditProfile = () => {
             postalCode: formData.zipcode,
             province: formData.state,
         };
-        ProfileObj.billingAddress = {
-            address1: formData.billingaddress,
-            address2: '',
-            city: formData.billingcity,
-            postalCode: formData.billingzipcode,
-            province: formData.billingstate,
-        };
+
         dispatch(myprofileActions.updateProfile(ProfileObj));
     });
 
@@ -244,16 +257,22 @@ const EditProfile = () => {
                                                     <div className="col-md-6">
                                                         <div className="form-group">
                                                             <FormInput
-                                                                type="text"
-                                                                defaultValue={ProfileDetails.star}
-                                                                name="star"
-                                                                label="Star"
-                                                                containerClass="mb-3"
                                                                 register={register}
                                                                 key="star"
+                                                                defaultValue={ProfileDetails.star}
                                                                 errors={errors}
                                                                 control={control}
-                                                            />
+                                                                label="Star"
+                                                                type="select"
+                                                                containerClass="mb-3"
+                                                                id="star"
+                                                                name="star"
+                                                            >
+                                                                <option value="">Select</option>
+                                                                {NakshtraRasi?.map((option:any, index:any) => (
+                                                                    <option key={option.label} value={option.label}>{option.label} </option>
+                                                                ))}
+                                                            </FormInput>
                                                         </div>
                                                     </div>
                                                 </div>
