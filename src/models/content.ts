@@ -1,5 +1,6 @@
 export interface Content {
-    contentData :{
+    data: {
+        contentData :{
         content :{
             services:any;
             about:any;
@@ -9,6 +10,7 @@ export interface Content {
             home:any;
             registration:any;
         }
+     }
     }
     success:boolean;
     errorMessage:string;
