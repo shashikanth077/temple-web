@@ -21,7 +21,7 @@ export function addGods(payload:any) {
 
 export function editGods(payload:any) {
     const baseUrl =`http://localhost:8080/api/god/`+payload.get('_id');
-    const response = APICore.createWithFile(`${baseUrl}`, payload);
+    const response = APICore.createWithFileUpdate(`${baseUrl}`, payload);
     return response;
 }
 

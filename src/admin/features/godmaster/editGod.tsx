@@ -59,8 +59,8 @@ const EditGod = () => {
 
     useEffect(() => {
         let wDays:any = [];
-        god?.worshipDay?.forEach((day:any) => {
-            wDays.push({label:day})
+        god.worshipDay?.forEach((day:any) => {
+            wDays.push({label:day,value:day})
         })
         setMultiSelections(wDays);
     },[god])
@@ -115,19 +115,18 @@ const EditGod = () => {
         handle form submission
     */
     const onSubmit = handleSubmit((data: any) => {
-
-        let wDays:any = [];
-        data?.worshipDay?.forEach((worshipDay:any) => {
-            wDays.push(worshipDay.value)
-        })
+           
+        let WDays:any = [];
+        multiSelections.forEach(function(day) {
+            WDays.push(day.value);
+        });
 
         const formData:any = new FormData();
         for (const k in data) {
             if(k === 'image') {
                 formData.append('image', image.data)
             } else if (k === 'worshipDay') { 
-                console.log('worshipDay',wDays);
-                formData.append('worshipDay', JSON.stringify(wDays))
+                formData.append('worshipDay', JSON.stringify(WDays))
             } else {
                 formData.append(k, data[k]);
             }

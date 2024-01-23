@@ -17,42 +17,9 @@ import { FormInput } from 'sharedComponents/inputs';
 import { useRedux } from 'hooks';
 import { AdminService } from 'models';
 import Loader from 'sharedComponents/loader/loader';
-import { Months } from 'constants/services';
-
-const ServiceTypes:any = [
-    { id: 'Homam', name: 'Homam' },
-    { id: 'Pooja', name: 'Pooja' },
-    { id: 'Archana', name: 'Archana' },
-];
-
-const bookingTypes:any = [
-    { id: 'Regular', name: 'Regular' },
-    { id: 'Pre-Booking', name: 'Pre-Booking' },
-];
-
-const frequency:any = [
-    { id: 'weekly', name: 'Weekly' },
-    { id: 'monthly', name: 'Monthly' },
-    { id: 'yearly', name: 'Yearly' },
-];
-
-const numberOfDaysAhead:any = [
-    { id: '1', name: '1 day' },
-    { id: '2', name: '2 days' },
-    { id: '3', name: '3 days' },
-    { id: '4', name: '4 days' },
-    { id: '5', name: '5 days' },
-    { id: '6', name: '6 days' },
-    { id: '7', name: '7 days' },
-    { id: '8', name: '8 days' },
-    { id: '9', name: '9 days' },
-    { id: '10', name: '10 days' },
-    { id: '11', name: '11 days' },
-    { id: '12', name: '12 days' },
-    { id: '13', name: '13 days' },
-    { id: '14', name: '14 days' },
-    { id: '15', name: '15 days' },
-];
+import {
+    numberOfDaysAhead, ServiceTypes, bookingTypes, Months, Frequency,
+} from 'constants/services';
 
 interface OptionTypes {
     value: string;
@@ -224,7 +191,7 @@ const AddService = () => {
 
                                                     <option value="">Select</option>
                                                     {ServiceTypes?.map((option:any, index:any) => (
-                                                        <option value={option.id}>{option.name} </option>
+                                                        <option value={option.label}>{option.label} </option>
                                                     ))}
                                                 </FormInput>
                                             </div>
@@ -367,7 +334,7 @@ const AddService = () => {
                                                     name="frequency"
                                                 >
                                                     <option value="">Select</option>
-                                                    {frequency?.map((option:any, index:any) => (
+                                                    {Frequency?.map((option:any, index:any) => (
                                                         <option  key={option.id}  value={option.id}>{option.name} </option>
                                                     ))}
                                                 </FormInput>

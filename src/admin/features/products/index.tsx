@@ -9,12 +9,14 @@ import { InputText } from 'primereact/inputtext';
 import { Tag } from 'primereact/tag';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { useIntl } from 'react-intl';
 import { adminProductActions } from './adminProductSlice';
 import DeleteDiaLog from 'sharedComponents/dialogs/dialogs';
 import { useRedux } from 'hooks';
 import { selectProductsList } from 'features/shop/providers/productSelectors';
 import { productActions } from 'features/shop/providers/productSlice';
 import { clearState } from 'storeConfig/api/apiSlice';
+import { formatCurrency } from 'helpers/currency';
 
 interface Product {
     _id:string;
@@ -46,6 +48,7 @@ export default function Products() {
         global: { value: null, matchMode: FilterMatchMode.CONTAINS },
     });
 
+    const intl = useIntl();
     const [products, setProducts] = useState<any>([]);
     const [deleteProductDialog, setDeleteProductDialog] = useState(false);
     const [product, setProduct] = useState(emptyProduct);
@@ -66,9 +69,11 @@ export default function Products() {
     }, [dispatch]);
    
     const productDetails:any = appSelector(selectProductsList);
- 
-    const formatCurrency = (value:any) => value.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
 
+    useEffect(() => {
+        setProducts(productDetails);
+    },[productDetails]);
+    
     const openNew = () => {
         navigate("/admin/products/add");
     };
@@ -107,10 +112,10 @@ export default function Products() {
     }, [successMessage, error, dispatch]);
 
     const deleteProduct = () => {
-        const _products = products.filter((val:any) => val !== product._id);
-        setProducts(_products);
+        const _products = products.filter((val:any) => val._id !== product._id);
         dispatch(adminProductActions.deleteProduct({_id:product._id}))
         setDeleteProductDialog(false);
+        setProducts(_products);
         setProduct(emptyProduct);
         
     };
@@ -127,7 +132,7 @@ export default function Products() {
 
     const rightToolbarTemplate = () => <Button label="Export" icon="pi pi-upload" className="p-button-help" onClick={exportCSV} />;
     const imageBodyTemplate = (rowData:any) => <img  src={`${rowData.image}`} alt={rowData.name} className="shadow-2 border-round" style={{ width: '64px' }} />;
-    const priceBodyTemplate = (rowData:any) => formatCurrency(rowData.price);
+    const priceBodyTemplate = (rowData:any) => formatCurrency(intl,rowData.price);
     const statusBodyTemplate = (rowData:any) => <Tag value={rowData.stock} severity={getSeverity(rowData)} />;
     const actionBodyTemplate = (rowData:any) => (
         <>
@@ -175,7 +180,7 @@ export default function Products() {
                 <DataTable
                     ref={dt}
                     filters={filters} onFilter={(e:any) => setFilters(e.filters)}
-                    value={productDetails}
+                    value={products}
                     selection={selectedProducts} 
                     onSelectionChange={(e:any) => setSelectedProducts(e.value)} 
                     dataKey="_id"

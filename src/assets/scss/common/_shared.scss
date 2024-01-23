@@ -1712,6 +1712,15 @@ button:disabled {
   border-radius: 9px;
   width: 56px;
 }
+.days-list {
+  color: wheat;
+  background:$theme-color;
+  display: inline-block;
+  margin-left: 4px;
+  padding: 4px;
+  text-align: center;
+  border-radius: 9px;
+}
 .admin-annual-reports {
   margin-bottom: 5px;
 }

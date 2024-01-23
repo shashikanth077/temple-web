@@ -13,6 +13,7 @@ import { FormInput } from 'sharedComponents/inputs';
 import { useRedux } from 'hooks';
 import { Product } from 'models';
 import Loader from 'sharedComponents/loader/loader';
+import ImageComponent from 'sharedComponents/Image/image';
 
 /* eslint-disable */
 const AddProduct = () => {
@@ -200,7 +201,6 @@ const AddProduct = () => {
                                                     containerClass="mb-3"
                                                 />
                                             </div>
-                                            {/* <img src={preview} width="50" height="60" alt="s" /> */}
                                         </div>
                                     </div>
                                     <div className="row text-center">

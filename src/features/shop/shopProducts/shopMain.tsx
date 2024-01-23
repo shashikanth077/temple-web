@@ -22,7 +22,7 @@ const ShopGridStandard = () => {
     const { appSelector } = useRedux();
     const products = appSelector(selectProductsList);
 
-    const pageLimit = 4;
+    const pageLimit = 10;
     // const { pathname } = useLocation();
     const pageCount = Math.ceil(products.length / pageLimit);
 

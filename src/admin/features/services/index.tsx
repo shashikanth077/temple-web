@@ -12,7 +12,6 @@ import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { adminServiceActions } from './serviceSlice';
 import { selectServices } from './serviceSelector';
-
 import DeleteDiaLog from 'sharedComponents/dialogs/dialogs';
 import { useRedux } from 'hooks';
 import { clearState } from 'storeConfig/api/apiSlice';
@@ -27,7 +26,7 @@ export default function Services() {
             godId:'',
             frequency:'',
             occurmonth:'',
-            dayahead:'',
+            daysahead:'',
             serviceType:'',
             serviceName:'',
             description:'',

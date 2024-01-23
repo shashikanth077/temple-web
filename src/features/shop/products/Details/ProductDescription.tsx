@@ -2,12 +2,14 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { Toast } from 'primereact/toast';
+import { useIntl } from 'react-intl';
 import { cartActions } from '../../cart/cartSlice';
 import { selectCurrentCartData } from '../../cart/cartSelectors';
 import { useRedux, useUser } from 'hooks';
 import Loader from 'sharedComponents/loader/loader';
 import { clearState } from 'storeConfig/api/apiSlice';
 import { CartData } from 'models';
+import { formatCurrency } from 'helpers/currency';
 
 interface productProps{
     currency:any;
@@ -30,6 +32,7 @@ const ProductDescriptionInfo = (props:productProps) => {
     const {dispatch,appSelector} = useRedux();
     const [loggedInUser] = useUser();
     const navigate = useNavigate();
+    const intl = useIntl();
 
     const { loading, error, successMessage } = useSelector((state:any) => state.apiState);
     const toast = useRef<any>(null);
@@ -149,7 +152,7 @@ const ProductDescriptionInfo = (props:productProps) => {
                         </span>
                     </>
                 ) : (
-                    <span>{finalProductPrice} </span>
+                    <span>{formatCurrency(intl, product.price)}</span>
                 )}
             </div>
             <div className="pro-details-list">

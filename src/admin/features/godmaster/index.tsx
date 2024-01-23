@@ -122,6 +122,19 @@ export default function ManageGods() {
         </>
     );
   
+    const WorkshipDayTemplate = (rowData:any) => {
+        return (
+            <div>
+              {/* Map over the split values and apply styles */}
+              {rowData.worshipDay.map((value:any, index:number) => (
+                <span key={index} className='days-list'>
+                  {value}
+                </span>
+              ))}
+            </div>
+          );
+    };
+
     const header = () => {
         const value = filters['global'] ? filters['global'].value : '';
         return (
@@ -164,7 +177,7 @@ export default function ManageGods() {
                     header={header}
                 >
                     <Column field="name" header="Name" sortable style={{ minWidth: '1rem' }} />
-                    <Column field="worshipDay" header="Day of workship" />
+                    <Column field="worshipDay" body={WorkshipDayTemplate} header="Day of workship" />
                     <Column field="image" header="Image" body={imageBodyTemplate} />
                     <Column body={actionBodyTemplate} exportable={false} style={{ minWidth: '6rem',textAlign:'center' }} />
                 </DataTable>

@@ -3,15 +3,18 @@ import {
     Col, Container, Row,
 } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import { useIntl } from 'react-intl';
 import useRedux from 'hooks/useRedux';
 import { productActions } from 'features/shop/providers/productSlice';
 import { selectProductsList } from 'features/shop/providers/productSelectors';
 import SlickSlider from 'sharedComponents/carosel/carosel';
 import './shopSlide.scss';
+import { formatCurrency } from 'helpers/currency';
 
 /* eslint no-underscore-dangle: 0 */
 export default function Shop() {
     const { dispatch, appSelector } = useRedux();
+    const intl = useIntl();
 
     useEffect(() => {
         dispatch(productActions.fetchproductList());
@@ -41,7 +44,7 @@ export default function Shop() {
                                             <div className="content">
                                                 <a href="##">{product.name}</a>
                                                 <div className="pricing">
-                                                    <div className="regular-price">{product.price}</div>
+                                                    <div className="regular-price">{formatCurrency(intl, product.price)}</div>
                                                 </div>
                                             </div>
                                         </div>
