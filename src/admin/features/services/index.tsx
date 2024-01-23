@@ -10,6 +10,7 @@ import { InputText } from 'primereact/inputtext';
 import { Tag } from 'primereact/tag';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { useIntl } from 'react-intl';
 import { adminServiceActions } from './serviceSlice';
 import { selectServices } from './serviceSelector';
 import DeleteDiaLog from 'sharedComponents/dialogs/dialogs';
@@ -17,6 +18,7 @@ import { useRedux } from 'hooks';
 import { clearState } from 'storeConfig/api/apiSlice';
 import { AdminService } from 'models';
 import Image from 'sharedComponents/Image/image';
+import { formatCurrency } from 'helpers/currency';
 
 /* eslint-disable */
 export default function Services() {
@@ -43,6 +45,7 @@ export default function Services() {
     });
 
     const [Services, setServices] = useState<any>([]);
+    const intl = useIntl();
     const [deleteServiceDialog, setDeleteServiceDialog] = useState(false);
     const [Service, setService] = useState(emptyService);
     const [selectedServices, setSelectedServices] = useState<any>(null);
@@ -64,8 +67,6 @@ export default function Services() {
 
     console.log("ServiceDetails",ServiceDetails);
  
-    const formatCurrency = (value:any) => value.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
-
     const openNew = () => {
         navigate("/admin/services/add");
     };
@@ -128,7 +129,7 @@ export default function Services() {
 
     const rightToolbarTemplate = () => <Button label="Export" icon="pi pi-upload" className="p-button-help" onClick={exportCSV} />;
     const imageBodyTemplate = (rowData:any) => <Image  imageUrl={`${rowData?.image}`} altText={rowData.serviceName} classname="shadow-2 border-round" style={{ width: '64px' }} />;
-    const priceBodyTemplate = (rowData:any) => formatCurrency(rowData.price);
+    const priceBodyTemplate = (rowData:any) => formatCurrency(intl,rowData.price);
     const statusBodyTemplate = (rowData:any) => <Tag value={rowData.stock} severity={getSeverity(rowData)} />;
     const actionBodyTemplate = (rowData:any) => (
         <>
@@ -194,7 +195,7 @@ export default function Services() {
                     <Column field="daysahead" header="Days ahead" sortable style={{ minWidth: '8rem' }} />
                     <Column field="serviceType" header="Service type" sortable style={{ minWidth: '8rem' }} />
                     <Column field="bookingType" header="Booking type" sortable style={{ minWidth: '5rem' }} />
-                    <Column field="price" header="Price" sortable style={{ minWidth: '10rem' }} />
+                    <Column field="price" body={priceBodyTemplate} header="Price" sortable style={{ minWidth: '10rem' }} />
                     <Column field="image" header="Image" body={imageBodyTemplate} />
                     {/* <Column field="deleted" header="isActive" body={verifiedBodyTemplate} sortable style={{ minWidth: '3rem' }} /> */}
                     <Column body={actionBodyTemplate} exportable={false} style={{ minWidth: '6rem',textAlign:'center' }} />
