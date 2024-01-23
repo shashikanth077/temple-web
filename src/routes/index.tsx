@@ -55,6 +55,7 @@ const DonationTypes = React.lazy(() => import('admin/features/donations'));
 const AddDonationType = React.lazy(() => import('admin/features/donations/addDonation'));
 const EditDonationType = React.lazy(() => import('admin/features/donations/editDonation'));
 const DonationList = React.lazy(() => import('features/donations/userdonations'));
+const SiteManage = React.lazy(() => import('admin/features/sitemanager/siteManager'));
 
 export interface RoutesProps {
     path: RouteProps['path'];
@@ -200,12 +201,24 @@ const productRoutes: RoutesProps = {
     ],
 };
 
+const SiteManagerRoutes:RoutesProps = {
+    path: '/admin/site-manager',
+    name: 'Site Manager',
+    roles: ['ROLE_ADMIN'],
+    children: [
+        {
+            path: '/admin/site-manager/manage',
+            name: 'Site Manager',
+            element: <SiteManage />,
+        },
+    ],
+};
+
 const dashboardRoutes:RoutesProps = {
     path: '/dashboard',
     roles: ['ROLE_ADMIN', 'ROLE_USER'],
     name: 'dashboard',
     element: <AdminDashboard />,
-
 };
 
 const logoutRoutes:RoutesProps = {
@@ -542,6 +555,7 @@ const flattenRoutes = (routes: RoutesProps[]) => {
 
 const authProtectedRoutes = [
     productRoutes,
+    SiteManagerRoutes,
     eventsRoutes,
     groceryRoutes,
     GodsRoutes,
