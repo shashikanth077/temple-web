@@ -165,46 +165,6 @@ const AddBooking = () => {
                                         <div className="col-md-6">
                                             <div className="form-group">
                                                 <FormInput
-                                                    register={register}
-                                                    key="slots"
-                                                    errors={errors}
-                                                    control={control}
-                                                    label="Number of slot"
-                                                    type="input"
-                                                    containerClass="mb-3"
-                                                    id="slots"
-                                                    name="slots"
-                                                >
-                                            
-                                                </FormInput>
-                                            </div>
-                                        </div>
-                                        <div className="col-md-6">
-                                            <div className="form-group">
-                                                <FormInput
-                                                    register={register}
-                                                    key="avaiableTime"
-                                                    errors={errors}
-                                                    control={control}
-                                                    label="Avaible time"
-                                                    type="select"
-                                                    containerClass="mb-3"
-                                                    id="avaiableTime"
-                                                    name="avaiableTime"
-                                                >
-
-                                                    <option value="">Select</option>
-                                                    {bookingTypes?.map((option:any, index:any) => (
-                                                        <option value={option.id}>{option.name} </option>
-                                                    ))}
-                                                </FormInput>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="row">
-                                        <div className="col-md-6">
-                                            <div className="form-group">
-                                                <FormInput
                                                     type="text"
                                                     name="amount"
                                                     register={register}

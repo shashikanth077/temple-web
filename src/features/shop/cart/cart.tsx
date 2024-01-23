@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { Toast } from 'primereact/toast';
+import { useIntl } from 'react-intl';
 import { cartActions } from './cartSlice';
 import { selectCurrentCartData } from './cartSelectors';
 import { getDiscountPrice, cartItemStock } from 'helpers/products';
@@ -9,11 +10,14 @@ import { useRedux, useUser } from 'hooks';
 import { CartData } from 'models';
 import Loader from 'sharedComponents/loader/loader';
 import { clearState } from 'storeConfig/api/apiSlice';
+import { formatCurrency } from 'helpers/currency';
 
 /* eslint-disable */
 const Cart = () => {
     const [loggedInUser] = useUser();
     const { dispatch, appSelector } = useRedux();
+
+    const intl = useIntl();
 
     const { loading, error, successMessage } = useSelector(
         (state: any) => state.apiState,
@@ -259,8 +263,7 @@ const Cart = () => {
                                                                 </>
                                                             ) : ( */}
                                                                     <span className="amount">
-                                                                        {currency.currencySymbol +
-                                                                            cartItem.price}
+                                                                    {formatCurrency(intl, cartItem.price)}
                                                                     </span>
                                                                     {/* )} */}
                                                                 </td>
@@ -331,13 +334,9 @@ const Cart = () => {
                                                                         //         ).toFixed(2)
                                                                         //     :
 
-                                                                        currency.currencySymbol +
-                                                                            (
-                                                                                cartItem.price *
-                                                                                cartItem.quantity
-                                                                            ).toFixed(
-                                                                                2,
-                                                                            )
+                                                                        formatCurrency(intl, cartItem.price *
+                                                                            cartItem.quantity)  
+                                                                     
                                                                     }
                                                                 </td>
 
@@ -413,8 +412,7 @@ const Cart = () => {
                                         <h4 className="grand-totall-title">
                                             Grand Total{" "}
                                             <span>
-                                                {currency.currencySymbol +
-                                                    totalValue.toFixed(2)}
+                                                {formatCurrency(intl, totalValue)  }
                                             </span>
                                         </h4>
                                         <Link

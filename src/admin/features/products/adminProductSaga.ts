@@ -15,7 +15,6 @@ function* getProductByIdRow(action:any) {
         yield put(startLoading());
         const response: ProductSingleRes = yield call(getProductById, action.payload);
         if (response.success) {
-            yield put(setSuccessMessage('Success'));
             yield put(adminProductActions.getProductByIdSuccess(response));
         } else {
             yield put(setError(response.errorMessage));

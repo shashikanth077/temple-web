@@ -1,15 +1,18 @@
 import React, { useEffect, useState, ChangeEvent } from 'react';
 import { Link } from 'react-router-dom';
+import { useIntl } from 'react-intl';
 import { selectCurrentCartData } from '../cart/cartSelectors';
 import { cartActions } from '../cart/cartSlice';
 import { useRedux, useUser } from 'hooks';
 import { CAProvinces } from 'constants/CAProvinces';
 import { myprofileActions } from 'admin/features/myprofile/myProfileSlice';
 import { selectMyProfileDetails } from 'admin/features/myprofile/myProfileSelectors';
+import { formatCurrency } from 'helpers/currency';
 
 const Checkout = () => {
     const { dispatch, appSelector } = useRedux();
     const [loggedInUser] = useUser();
+    const intl = useIntl();
 
     const [isChecked, setIsChecked] = useState(false);
     const [billingAddressFill, setBillingAddress] = useState<any>('');
@@ -157,13 +160,9 @@ const Checkout = () => {
                                                             {cartItem.name} X {cartItem.quantity}
                                                         </span>{' '}
                                                         <span className="order-price">
-                                                            {currency.currencySymbol
-                                                                        + (
-                                                                            cartItem.price
-                                                                            * cartItem.quantity
-                                                                        ).toFixed(
-                                                                            2,
-                                                                        )}
+                                                            {formatCurrency(intl, cartItem.price
+                                                                            * cartItem.quantity) }
+
                                                         </span>
                                                     </li>
                                                 ))}

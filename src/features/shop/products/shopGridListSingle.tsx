@@ -3,8 +3,10 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { Loader } from 'react-bootstrap-typeahead';
 import { Toast } from 'primereact/toast';
+import { useIntl } from 'react-intl';
 import { cartActions } from '../cart/cartSlice';
 // import ProductModal from './productModal';
+import { formatCurrency } from 'helpers/currency';
 import { getDiscountPrice } from 'helpers/products';
 import { useRedux, useUser } from 'hooks';
 import { clearState } from 'storeConfig/api/apiSlice';
@@ -20,6 +22,7 @@ const ProductGridListSingle = (props:ProductSingleProps) => {
     const { dispatch } = useRedux();
     const [loggedInUser] = useUser();
     const navigate = useNavigate();
+    const intl = useIntl();
 
     const { loading, error, successMessage } = useSelector((state:any) => state.apiState);
     const toast = useRef<any>(null);
@@ -173,7 +176,7 @@ const ProductGridListSingle = (props:ProductSingleProps) => {
                     </h3>
 
                     <div className="product-price">
-                        <span>${finalProductPrice} </span>
+                        <span>{formatCurrency(intl, product.price)}</span>
                     </div>
                 </div>
             </div>

@@ -11,7 +11,7 @@ export interface AdminService {
     occurmonth:string;
     frequency:string;
     godId:string;
-    dayahead:string;
+    daysahead:string;
     serviceType:string;
     serviceName:string;
     description:string;

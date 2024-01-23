@@ -18,37 +18,9 @@ import { useRedux } from 'hooks';
 import { AdminService } from 'models';
 import Loader from 'sharedComponents/loader/loader';
 import ImageComponent from 'sharedComponents/Image/image';
-
-const numberOfDaysAhead:any = [
-    { id: '1 day', name: '1 day' },
-    { id: '2 days', name: '2 days' },
-    { id: '3 days', name: '3 days' },
-    { id: '4 days', name: '4 days' },
-    { id: '5 days', name: '5 days' },
-    { id: '6 days', name: '6 days' },
-    { id: '7 days', name: '7 days' },
-    { id: '8 days', name: '8 days' },
-    { id: '9 days', name: '9 days' },
-    { id: '10 days', name: '10 days' },
-    { id: '11 days', name: '11 days' },
-    { id: '12 days', name: '12 days' },
-    { id: '13 days', name: '13 days' },
-    { id: '14 days', name: '14 days' },
-    { id: '15 days', name: '15 days' },
-];
+import { numberOfDaysAhead, ServiceTypes, bookingTypes } from 'constants/services';
 
 /* eslint-disable */
-const ServiceTypes:any = [
-    { id: 'Homam', name: 'Homam' },
-    { id: 'Pooja', name: 'Pooja' },
-    { id: 'Archana', name: 'Archana' },
-];
-
-const bookingTypes:any = [
-    { id: 'Regular', name: 'Regular' },
-    { id: 'Pre-Booking', name: 'Pre-Booking' },
-];
-
 /* eslint no-underscore-dangle: 0 */
 const EditService = () => {
     const { dispatch, appSelector } = useRedux();
@@ -101,10 +73,12 @@ const EditService = () => {
         handleSubmit,
         register,
         control,
+        setValue,
         reset,
         watch,
         formState: { errors },
     } = methods;
+
 
     /*
         handle form submission
@@ -147,6 +121,13 @@ const EditService = () => {
     };
 
     const service:any = appSelector(selectService);
+    
+    useEffect(() => {
+        setValue("serviceType",service.serviceType);
+        setValue("bookingType",service.bookingType);
+        setValue("godId",service.godId);
+        setValue("daysahead",service.daysahead);
+    },[service])
 
     const SetCheckboxValue = (e:any) => {
         const { checked } = e.target;
@@ -224,7 +205,7 @@ const EditService = () => {
                                                 >
                                                     <option value="">Select</option>
                                                     {ServiceTypes?.map((option:any, index:any) => (
-                                                        <option value={option.id}>{option.name} </option>
+                                                        <option value={option.label}>{option.label} </option>
                                                     ))}
                                                 </FormInput>
                                             </div>

@@ -36,6 +36,10 @@ const EditEvent = () => {
 
     const { event } = useSelector((state:any) => state.adminEvent);
 
+    // useEffect(() => {
+    //     setValue("startDate",event.startDate)
+    // },[event])
+
     /*
        form validation schema
     */
@@ -62,6 +66,7 @@ const EditEvent = () => {
         handleSubmit,
         register,
         control,
+        setValue,
         reset,
         formState: { errors },
     } = methods;
@@ -152,13 +157,22 @@ const EditEvent = () => {
                                                       <Controller
                                                             name="startDate"
                                                             key={"startDate"}
-                                                            defaultValue={event.startDate}
+                                                            defaultValue={new Date(event.startDate)}
                                                             control={control}
                                                             rules={{ required: 'Date is required.' }}
-                                                            render={({ field, fieldState }) => (
+                                                            render={({ field }) => (
                                                                 <>
                                                                     <label htmlFor={field.name}>Start date</label>
-                                                                    <Calendar  showIcon inputId={field.name} value={datetime12h} onChange={(e:any) => setDateTime12h(e.value)} showTime hourFormat="12" dateFormat="dd/mm/yy" className='events-top-bar-datepicker-button mb-3' />
+                                                                    <Calendar  
+																		showIcon 
+																		inputId={field.name} 
+																		value={datetime12h} 
+																		onChange={(e:any) => setDateTime12h(e.value)} 
+																		showTime 
+																		hourFormat="12" 
+																		dateFormat="dd/mm/yy" 
+																		className='events-top-bar-datepicker-button mb-3' 
+																	/>
                                                                </>
                                                             )}
                                                         />

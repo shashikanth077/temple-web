@@ -14,6 +14,7 @@ import { useRedux } from 'hooks';
 import { Product } from 'models';
 import { clearState } from 'storeConfig/api/apiSlice';
 import Loader from 'sharedComponents/loader/loader';
+import ImageComponent from 'sharedComponents/Image/image';
 
 /* eslint-disable */
 const EditProduct = () => {
@@ -232,8 +233,8 @@ const EditProduct = () => {
                                                             containerClass="mb-3"
                                                         />
                                                     </div>
+                                                    <ImageComponent classname="img-thumbnail" imageUrl={product?.image} width="40" height="40" altText="s" />
                                                 </div>
-
                                             </div>
                                             <div className="row text-center">
                                                 <div className="col-sm-12">
