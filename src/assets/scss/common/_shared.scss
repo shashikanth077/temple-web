@@ -1784,3 +1784,12 @@ button:disabled {
 .event-date-start .fa-calendar-week {
   color:$theme-color !important;
 }
+.static-download-btn {
+  background-color: indianred;
+  color: white;
+  font-weight: 700;
+  &:hover {
+    background-color: indianred;
+    color: white;
+  }
+}

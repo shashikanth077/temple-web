@@ -13,6 +13,7 @@ import { FormInput } from 'sharedComponents/inputs';
 import { useRedux } from 'hooks';
 import { SiteSetting } from 'models';
 import Loader from 'sharedComponents/loader/loader';
+import DownloadJsonButton from 'sharedComponents/JsonDownloadBtn';
 
 /* eslint-disable */
 const ManageSite = () => {
@@ -126,7 +127,7 @@ const ManageSite = () => {
                         <div className="card">
                             <div className="card-header">
                                 <h3 className="card-title">
-                                    <b>Manage site</b>
+                                    <b>Manage static contents</b>
                                 </h3>
                             </div>
 
@@ -147,6 +148,7 @@ const ManageSite = () => {
                                                 containerClass="mb-3"
                                             />
                                             <p className='mb-3'> <b>Current File</b>: Download from here for update and upload</p>
+                                            <DownloadJsonButton classes="btn static-download-btn mb-2" jsonUrl="http://localhost:8080/uploads/staticfile/content.json" fileName="content.json" />
                                         </div>
                                     </div>
                                     {/* <div className="row">
@@ -213,10 +215,10 @@ const ManageSite = () => {
                                         <div className="col-sm-12">
 
                                             <div className="text-center d-flex mb-3 update-profile-btn">
-                                                <Button type="submit" className="btn btn-primary submit-btn mr-5 waves-effect waves-light" disabled={loading}>
+                                                <Button type="submit" className="btn btn-primary submit-btn mr-1 waves-effect waves-light" disabled={loading}>
                                                     Update
                                                 </Button>
-                                                <a className="btn primary cancelbtn" href="/admin/groceries/list" id="cancel"> Cancel</a>
+                                                <a className="btn primary cancelbtn" href="/dashboard" id="cancel"> Cancel</a>
                                             </div>
                                         </div>
                                     </div>
