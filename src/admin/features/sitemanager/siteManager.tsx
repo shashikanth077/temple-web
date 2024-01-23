@@ -30,36 +30,41 @@ const ManageSite = () => {
     /*
        form validation schema
     */
-    const schemaResolver = yupResolver(
+       const schemaResolver = yupResolver(
         yup.object().shape({
-            staticFile: yup
-                .mixed()
-                .test('required', 'Json file is required', (value: any) => value && value.length > 0)
-                // .test('fileSize', 'File Size is too large', (value: any) => value && value[0].size <= 5242880)
-                .test('fileType', 'Unsupported File Format', (value: any) => {
-                    if (!value || !value[0]) {
-                        return false;
-                    }
-
-                    const fileType = value[0].type;
-
-                    // Check if the file type is JSON
-                    if (!['application/json'].includes(fileType)) {
-                        return false;
-                    }
-
-                    // If the file type is JSON, additional check for valid JSON content
-                    try {
-                        const reader = new FileReader();
-                        reader.readAsText(value[0]);
-                        JSON.parse(reader.result as string);
-                        return true;
-                    } catch (errorMessage) {
-                        return false;
-                    }
-                }),
-        }),
-    );
+          staticFile: yup
+            .mixed()
+            .test('required', 'Json file is required', (value: any) => value && value.length > 0)
+            .test('fileName', 'File name should name to content.json please do not use any other name.', (value: any) => {
+              if (!value || !value[0]) {
+                return false;
+              }
+              const fileName = value[0].name;
+              return fileName === 'content.json';
+            })
+            .test('fileType', 'Unsupported File Format', (value: any) => {
+              if (!value || !value[0]) {
+                return false;
+              }
+      
+              const fileType = value[0].type;
+      
+              if (!['application/json'].includes(fileType)) {
+                return false;
+              }
+      
+              // If the file type is JSON, additional check for valid JSON content
+              try {
+                const reader = new FileReader();
+                reader.readAsText(value[0]);
+                JSON.parse(reader.result as string);
+                return true;
+              } catch (errorMessage) {
+                return false;
+              }
+            }),
+        })
+      );
 
     const methods = useForm<SiteSetting>({
         resolver: schemaResolver,

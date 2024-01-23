@@ -25,10 +25,10 @@ const contentSlice = createSlice({
             state.loading = true;
         },
         getStaticContentSuccess(state, action: PayloadAction<Content>) {
-            state.services = action.payload.contentData.content.services;
-            state.shop = action.payload.contentData.content.shop;
-            state.home = action.payload.contentData.content.home;
-            state.registration = action.payload.contentData.content.registration;
+            state.services = action.payload.data.contentData.content.services;
+            state.shop = action.payload.data.contentData.content.shop;
+            state.home = action.payload.data.contentData.content.home;
+            state.registration = action.payload.data.contentData.content.registration;
         },
     },
 });
