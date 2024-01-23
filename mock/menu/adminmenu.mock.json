@@ -65,16 +65,10 @@
             "roles":["ROLE_ADMIN"],
             "children": [
                 {
-                    "key": "menumanager",
-                    "label": "Menu Manager",
-                    "url": "/admin/site-manager/menu-manager",
-                    "parentKey": "donations"
-                },
-                {
                     "key": "staticontent",
                     "label": "Static Content Manager",
-                    "url": "/admin/site-manager/static-manager",
-                    "parentKey": "donations"
+                    "url": "/admin/site-manager/manage",
+                    "parentKey": "sitemanager"
                 }
               ]
         },
