@@ -19,8 +19,8 @@ function Home() {
     return (
         <>
             <Banner />
-            {/* <About />
-            <AboutImage /> */}
+            <About />
+            <AboutImage />
             <Services />
             <GrandprogramOne />
             <Bookings />
@@ -33,7 +33,7 @@ function Home() {
             <Dailyevents />
             <RegularSponsorsTwo />
             <Shop />
-            {/* <AboutImage /> */}
+            <AboutImage />
         </>
     );
 }

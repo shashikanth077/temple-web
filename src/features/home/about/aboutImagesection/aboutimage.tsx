@@ -1,20 +1,16 @@
 import React, { useEffect } from 'react';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
-import { selectAboutList } from 'features/home/about/aboutSelectors';
-import { AboutsActions } from 'features/home/about/aboutSlice';
+import { selectStaticAbout } from 'features/content/contactSelectors';
 import SlickSlider from 'sharedComponents/carosel/carosel';
 import useRedux from 'hooks/useRedux';
 
 /* eslint max-len: ["error", { "code": 400 }] */
 export default function AboutImage() {
-    const { dispatch, appSelector } = useRedux();
+    const { appSelector } = useRedux();
 
-    useEffect(() => {
-        dispatch(AboutsActions.fetchAboutList());
-    }, [dispatch]);
-
-    const aboutList = appSelector(selectAboutList);
+    const aboutList = appSelector(selectStaticAbout);
+    console.table(aboutList);
 
     return (
         <section className="home-about area-padding">
@@ -28,10 +24,10 @@ export default function AboutImage() {
                             autoPly
                             autoplaySpeedVal={2000}
                         >
-                            {aboutList?.aboutImages?.map((aboutImage:any, index:number) => (
+                            {aboutList?.AboutImages?.map((aboutImage:any, index:number) => (
                                 <div key={aboutImage.id}>
                                     <div className="slider-item">
-                                        <img className={index % 2 === 0 ? 'evenabout-image' : 'oddabout-image'} alt={aboutImage.caption} src={`assets/images/about/${aboutImage.about_image}`} />
+                                        <img className={index % 2 === 0 ? 'evenabout-image' : 'oddabout-image'} alt={aboutImage.caption} src={`assets/images/about/${aboutImage.Image}`} />
                                     </div>
                                 </div>
                             ))}

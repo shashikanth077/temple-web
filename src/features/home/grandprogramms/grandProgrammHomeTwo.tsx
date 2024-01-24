@@ -1,12 +1,18 @@
 import React from 'react';
 import Grandprogram from './grandprogrammCommon';
+import { selectStaticContentHome } from 'features/content/contactSelectors';
+import { useRedux } from 'hooks';
 
-const GrandprogramHomeTwo = () => (
-    <Grandprogram
-        title="Journey to enlightenment: we invite you to experience divine love and grace
-    "
-        url="#"
-    />
-);
+const GrandprogramHomeTwo = () => {
+    const { appSelector } = useRedux();
+
+    const ProgramStaticData = appSelector(selectStaticContentHome);
+    return (
+        <Grandprogram
+            title={ProgramStaticData?.donations?.donationTwoTitle}
+            url={ProgramStaticData?.donations?.link2}
+        />
+    );
+};
 
 export default GrandprogramHomeTwo;

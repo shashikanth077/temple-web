@@ -7,12 +7,28 @@ export interface ContentState {
     shop:any;
     home:any;
     registration:any;
+    about:any;
+    topbar:any;
+    staff:any;
+    header:any;
+    footer:any;
+    ads:any;
+    contactdetails:any;
+    contactform:any;
 }
 
 const initialState: ContentState = {
     loading: false,
     services: '',
+    staff: '',
+    topbar: '',
+    ads: '',
+    contactform: '',
+    contactdetails: '',
     shop: '',
+    footer: '',
+    about: '',
+    header: '',
     home: '',
     registration: '',
 };
@@ -29,6 +45,14 @@ const contentSlice = createSlice({
             state.shop = action.payload.data.contentData.content.shop;
             state.home = action.payload.data.contentData.content.home;
             state.registration = action.payload.data.contentData.content.registration;
+            state.about = action.payload.data.contentData.content.FrontEnd.About;
+            state.topbar = action.payload.data.contentData.content.FrontEnd.Topbar;
+            state.header = action.payload.data.contentData.content.FrontEnd.Header;
+            state.footer = action.payload.data.contentData.content.FrontEnd.Footer;
+            state.contactdetails = action.payload.data.contentData.content.FrontEnd.ContactDetails;
+            state.contactform = action.payload.data.contentData.content.FrontEnd.ContactUsForm;
+            state.ads = action.payload.data.contentData.content.FrontEnd.Adverstiments;
+            state.staff = action.payload.data.contentData.content.FrontEnd.Staffs;
         },
     },
 });
