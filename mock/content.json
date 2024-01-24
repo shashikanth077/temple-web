@@ -1,4 +1,5 @@
 {
+    "success": true,
     "contentData": {
         "content": {
             "home": {
@@ -47,37 +48,19 @@
                     "shop": "Our products"
                 },
                 "donations": {
+                    "btnName":"Donate now",
                     "donationOneTitle": "Journey to enlightenment: we invite you to experience divine love and grace",
-                    "Link1": "#",
-                    "Link2": "#",
+                    "link1": "#",
+                    "link2": "#",
                     "donationTwoTitle": "Journey to enlightenment: we invite you to experience divine love and grace"
                 },
-                "adverstiments": [
-                    {
-                        "ads_id": 1,
-                        "ads_image": "ads.jpg",
-                        "ads_title": "test@gmail.com",
-                        "ads_description": "333 Canada 6666 Near to chruch steert,Opposit to petrol bunk"
-                    },
-                    {
-                        "ads_id": 2,
-                        "ads_image": "ads.jpg",
-                        "ads_title": "test@gmail.com",
-                        "ads_description": "333 Canada 6666 Near to chruch steert,Opposit to petrol bunk"
-                    },
-                    {
-                        "ads_id": 3,
-                        "ads_image": "ads.jpg",
-                        "ads_title": "test@gmail.com",
-                        "ads_description": "333 Canada 6666 Near to chruch steert,Opposit to petrol bunk"
-                    },
-                    {
-                        "ads_id": 4,
-                        "ads_image": "ads.jpg",
-                        "ads_title": "test@gmail.com",
-                        "ads_description": "333 Canada 6666 Near to chruch steert,Opposit to petrol bunk"
-                    }
-                ]
+                "regularProgram": {
+                    "btnName":"Donate now",
+                    "regularProgramTitleOne": "Program name one",
+                    "link1": "#",
+                    "link2": "#",
+                    "regularProgramTitleTwo": "Program name two"
+                }
             },
             "bookings": {
                 "heading": "Bookings",
@@ -580,20 +563,246 @@
                 "IshasAccount": "Don`t have an account?",
                 "SubmitBtn": "Login"
             },
-            "publicPages":{
-                "footer":{
-                    "test":"33",
-                    "test1":"dd"
+            "FrontEnd": {
+                "ContactDetails": {
+                    "Phonenumber": "+91 812319222",
+                    "Emailaddress": "test@gmail.com",
+                    "Address": "333 Canada Near to old steert,Opposit to petrol bunk",
+                    "PhoneIcon": "fas fa-phone",
+                    "EmailIcon": "fas fa-envelope",
+                    "AddressIcon": "fas fa-map-marker-alt",
+                    "addressTitle": "Address",
+                    "phoneTitle": "Phone number",
+                    "emailTitle": "Email address",
+                    "Sociallinks": [
+                        {
+                            "iconName": "fab fa-facebook-f",
+                            "link": "#",
+                            "label": "facebook"
+                        },
+                        {
+                            "iconName": "fab fa-twitter",
+                            "link": "#",
+                            "label": "twitter"
+                        },
+                        {
+                            "iconName": "fab fa-pinterest-p",
+                            "link": "#",
+                            "label": "pinterest"
+                        },
+                        {
+                            "iconName": "fab fa-linkedin-in",
+                            "link": "#",
+                            "label": "linkedIn"
+                        }
+                    ]
                 },
-                "topbar":{
-                       
+                "Header": {
+                    "HeaderLogo": "logo.jpg"
                 },
-                
-                "contactUs":{
-
+                "Topbar": {
+                    "FollowUs": "Follow Us",
+                    "UserIconCaption": "Member portal",
+                    "UserLogoutTitle": "Logout",
+                    "UserIcon": "fas fa-user"
                 },
-                "events":{
-                    
+                "Events": {
+                    "PlaceHolderName": "Search on event names",
+                    "FindEvents": "Find Events",
+                    "List": "LIST",
+                    "Month": "MONTH",
+                    "Day": "DAY"
+                },
+                "About": {
+                    "AboutImages": [
+                        {
+                            "id": 1,
+                            "Image": "about1.jpg",
+                            "caption": "about1"
+                        },
+                        {
+                            "id": 2,
+                            "Image": "about2.jpg",
+                            "caption": "about1"
+                        },
+                        {
+                            "id": 3,
+                            "Image": "about3.jpg",
+                            "caption": "about1"
+                        },
+                        {
+                            "id": 4,
+                            "Image": "about4.jpg",
+                            "caption": "about1"
+                        },
+                        {
+                            "id": 5,
+                            "Image": "about5.jpg",
+                            "caption": "about1"
+                        },
+                        {
+                            "id": 6,
+                            "Image": "about5.jpg",
+                            "caption": "about1"
+                        }
+                    ],
+                    "HomeaboutDescription": {
+                        "image": "about.jpg",
+                        "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
+                    },
+                    "AboutMainSection": {
+                        "AboutSection": {
+                            "aboutImage": "about.jpg",
+                            "aboutDescription": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+                            "personQuote": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+                            "authorName": "Hanson Deck",
+                            "authorDesignation": "Preist"
+                        },
+                        "AboutBooking": {
+                            "aboutBookingImage": "about.jpg",
+                            "aboutBookingDescription": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
+                        },
+                        "AboutService": {
+                            "aboutserviceImage": "about.jpg",
+                            "aboutServiceDescription": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
+                        },
+                        "AboutOthers": {
+                            "contactUsImage": "about.jpg",
+                            "serviceImage": "about.jpg"
+                        }
+                    }
+                },
+                "ContactUsForm": {
+                    "GetInTouchTitle": "Get in Touch",
+                    "heading": "Lets Connect",
+                    "btnName": "Send",
+                    "SuccessMessage": "Submitted successfully",
+                    "formLabels": {
+                        "name": "Your Name",
+                        "email": "Email Adress",
+                        "subject": "Enter Subject",
+                        "message": "Enter Message"
+                    },
+                    "formValidation": {
+                        "name": "Please enter name",
+                        "email": "Please enter email",
+                        "subject": "Please enter subject",
+                        "message": "Please enter message",
+                        "validEmail": "Please enter valid Email"
+                    }
+                },
+                "Adverstiments": [
+                    {
+                        "id": 1,
+                        "image": "ads.jpg",
+                        "title": "test@gmail.com",
+                        "description": "333 Canada 6666 Near to chruch steert,Opposit to petrol bunk"
+                    },
+                    {
+                        "id": 2,
+                        "image": "ads.jpg",
+                        "title": "test@gmail.com",
+                        "description": "333 Canada 6666 Near to chruch steert,Opposit to petrol bunk"
+                    },
+                    {
+                        "id": 3,
+                        "image": "ads.jpg",
+                        "title": "test@gmail.com",
+                        "description": "333 Canada 6666 Near to chruch steert,Opposit to petrol bunk"
+                    },
+                    {
+                        "id": 4,
+                        "image": "ads.jpg",
+                        "title": "test@gmail.com",
+                        "description": "333 Canada 6666 Near to chruch steert,Opposit to petrol bunk"
+                    }
+                ],
+                "Staffs": {
+                    "heading": "Staffs",
+                    "btnName": "Connnect",
+                    "StaffList": [
+                        {
+                            "id": 1,
+                            "name": "Rama Iyer",
+                            "image": "staff2.jpg",
+                            "designation": "Temple board president",
+                            "description": "4dfgffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff.hhhhhhhhhhhhhhhhhhhhhhhh"
+                        },
+                        {
+                            "id": 2,
+                            "name": "Rama Iyer",
+                            "image": "staff2.jpg",
+                            "designation": "Temple board president",
+                            "description": "4dfgffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff.hhhhhhhhhhhhhhhhhhhhhhhh"
+                        },
+                        {
+                            "id": 3,
+                            "name": "Rama Iyer",
+                            "image": "staff2.jpg",
+                            "designation": "Temple board president",
+                            "description": "4dfgffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff.hhhhhhhhhhhhhhhhhhhhhhhh"
+                        },
+                        {
+                            "id": 4,
+                            "name": "Rama Iyer",
+                            "image": "staff2.jpg",
+                            "designation": "Temple board president",
+                            "description": "4dfgffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff.hhhhhhhhhhhhhhhhhhhhhhhh"
+                        }
+                    ]
+                },
+                "Footer": {
+                    "QuickLinks": [
+                        {
+                            "name": "About",
+                            "Url": "#"
+                        },
+                        {
+                            "name": "Services",
+                            "Url": "#"
+                        },
+                        {
+                            "name": "Bookings",
+                            "Url": "#"
+                        },
+                        {
+                            "name": "Donation",
+                            "Url": "#"
+                        },
+                        {
+                            "name": "Events",
+                            "Url": "#"
+                        },
+                        {
+                            "name": "Contact",
+                            "Url": "#"
+                        }
+                    ],
+                    "OtherUsefullLinks": [
+                        {
+                            "name": "Voluteers",
+                            "Url": "#"
+                        },
+                        {
+                            "name": "Faqs",
+                            "Url": "#"
+                        },
+                        {
+                            "name": "Resources",
+                            "Url": "#"
+                        },
+                        {
+                            "name": "Privacy policy",
+                            "Url": "#"
+                        }
+                    ],
+                    "LogoPath": "logo.jpg",
+                    "LogoCaption": "Something about temple caption",
+                    "ReadMore": "Read more",
+                    "ReadMoreUrl": "/about",
+                    "GetInTouchTitle": "Get in Touch",
+                    "RightArrowIcon": "fal fa-arrow-right",
+                    "CopyRights": "Copyright © 2023 Temple. All rights reserved."
                 }
             }
         }

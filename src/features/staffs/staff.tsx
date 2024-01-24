@@ -1,39 +1,35 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
-import { staffActions } from './staffSlice';
-import { selectStaffList } from './staffSelectors';
+import { selectStaffs } from 'features/content/contactSelectors';
 import useRedux from 'hooks/useRedux';
 import Button from 'sharedComponents/button/button';
 import Heading from 'sharedComponents/heading/heading';
+import { PublicImageURL } from 'constants/PublicUrl';
 
 export default function Staffs() {
-    const { dispatch, appSelector } = useRedux();
+    const { appSelector } = useRedux();
 
-    useEffect(() => {
-        dispatch(staffActions.fetchStaffList());
-    }, [dispatch]);
-
-    const staffList = appSelector(selectStaffList);
+    const StaffStaticContent = appSelector(selectStaffs);
 
     return (
         <section className="staffs area-padding">
             <Container>
                 <div className="justify-content-right row">
-                    <Heading title="Staff" />
+                    <Heading title={StaffStaticContent?.heading} />
                 </div>
                 <Row>
-                    {staffList.map((staff, index) => (
-                        <Col lg={3} md={6}>
+                    {StaffStaticContent?.StaffList?.map((staff:any) => (
+                        <Col key={staff.id} lg={3} md={6}>
                             <div className="staff-box mb-4">
                                 <div className="overflow-hidden rounded">
-                                    <img className="img-fluid d-block mx-auto shadow" src={`assets/images/staff/${staff.staff_image}`} alt={staff.staff_name} />;
+                                    <img className="img-fluid d-block mx-auto shadow" src={`${PublicImageURL}/staff/${staff.image}`} alt={staff.name} />;
                                     <div className="staff-content">
                                         <h3>
-                                            <span>{staff.staff_name}</span>
+                                            <span>{staff.name}</span>
                                         </h3>
-                                        <span>{staff.staff_designation}</span>
+                                        <span>{staff.designation}</span>
                                     </div>
                                 </div>
                             </div>
@@ -41,7 +37,7 @@ export default function Staffs() {
                     ))}
                 </Row>
                 <div className="staff-connect d-flex justify-content-end">
-                    <Button classnames="staff-connect-btn read-more">Connect</Button>
+                    <Button classnames="staff-connect-btn read-more">{StaffStaticContent?.btnName}</Button>
                 </div>
             </Container>
         </section>

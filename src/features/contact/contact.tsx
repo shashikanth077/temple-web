@@ -12,6 +12,7 @@ import Cardboxnew from 'sharedComponents/cards/card1';
 import { useRedux } from 'hooks';
 // import GMap from 'sharedComponents/Googlemap/googleMap';
 import Button from 'sharedComponents/button/button';
+import { selectContactformDetails, selectContactDetails } from 'features/content/contactSelectors';
 
 type LocationState = {
     from?: Location;
@@ -27,12 +28,14 @@ type ContactData = {
 function Contact() {
     const { dispatch, appSelector } = useRedux();
 
+    const ContactformStatic = appSelector(selectContactformDetails);
+
     const schemaResolver = yupResolver(
         yup.object().shape({
-            email: yup.string().required('Please enter Email').email('Please enter valid Email'),
-            name: yup.string().required('Please enter Name'),
-            message: yup.string().required('Please enter Message'),
-            subject: yup.string().required('Please enter Subject'),
+            email: yup.string().required(ContactformStatic?.formValidation?.email).email(ContactformStatic?.formValidation?.validEmail),
+            name: yup.string().required(ContactformStatic?.formValidation?.name),
+            message: yup.string().required(ContactformStatic?.formValidation?.message),
+            subject: yup.string().required(ContactformStatic?.formValidation?.subject),
         }),
     );
 
@@ -52,6 +55,7 @@ function Contact() {
         dispatch(sendcontactActions.sendContactInfo(formData));
     };
 
+    const ContactStaticDetails = appSelector(selectContactDetails);
     // const location = useLocation();
     // let redirectUrl = '/';
 
@@ -68,41 +72,41 @@ function Contact() {
                 <div className="row">
                     <div className="col-sm-8 offset-sm-2">
                         <div className="section-title text-center mb-4">
-                            <h2>Get in Touch </h2>
+                            <h2>{ContactformStatic?.GetInTouchTitle}</h2>
                         </div>
                     </div>
                 </div>
                 <Row className="contact-info-area g-4 mb-5">
                     <Col className="Col" lg={3} md={6}>
                         <Cardboxnew
-                            CardImage="fas fa-map-marker-alt"
+                            CardImage={ContactStaticDetails?.AddressIcon}
                             imageType="icon"
                             cardClass="contact-box"
                             buttonStatus={false}
-                            title="Address"
-                            description="49 Park Avenue,Newyork , NY 10016"
+                            title={ContactStaticDetails?.addressTitle}
+                            description={ContactStaticDetails?.Address}
                             imageStatus
                         />
                     </Col>
                     <Col className="Col" lg={3} md={6}>
                         <Cardboxnew
-                            CardImage="fas fa-phone-volume"
+                            CardImage={ContactStaticDetails?.PhoneIcon}
                             imageType="icon"
                             cardClass="contact-box"
                             buttonStatus={false}
-                            title="Phone number"
-                            description="+91 4838383893"
+                            title={ContactStaticDetails?.phoneTitle}
+                            description={ContactStaticDetails?.Phonenumber}
                             imageStatus
                         />
                     </Col>
                     <Col className="Col" lg={3} md={6}>
                         <Cardboxnew
-                            CardImage="fas fa-envelope"
+                            CardImage={ContactStaticDetails?.EmailIcon}
                             imageType="icon"
                             cardClass="contact-box"
                             buttonStatus={false}
-                            title="Email"
-                            description="test@gmail.com"
+                            title={ContactStaticDetails?.emailTitle}
+                            description={ContactStaticDetails?.Emailaddress}
                             imageStatus
                         />
                     </Col>
@@ -110,10 +114,10 @@ function Contact() {
                 <div className="row">
                     <div className="col-md-12">
                         <div className="contact-form">
-                            <h4>Lets Connect</h4>
+                            <h4>{ContactformStatic?.heading}</h4>
                             {!loading && data && (
                                 <Alert variant="success" className="my-2">
-                                    Submitted Successfully
+                                    {ContactformStatic?.SuccessMessage}
                                 </Alert>
                             )}
                             {error && (
@@ -129,39 +133,35 @@ function Contact() {
                                 resolver={schemaResolver}
                             >
                                 <FormInput
-                                    label="Name"
+                                    label={ContactformStatic?.formLabels?.name}
                                     type="text"
                                     name="name"
-                                    placeholder="Your Name"
                                     containerClass="mb-3"
                                 />
 
                                 <FormInput
                                     type="email"
                                     name="email"
-                                    label="Email address"
-                                    placeholder="hello@test.com"
+                                    label={ContactformStatic?.formLabels?.email}
                                     containerClass="mb-3"
                                 />
 
                                 <FormInput
-                                    label="Subject"
+                                    label={ContactformStatic?.formLabels?.subject}
                                     type="text"
                                     name="subject"
-                                    placeholder="Enter Subject"
                                     containerClass="mb-3"
                                 />
 
                                 <FormInput
-                                    label="Message"
+                                    label={ContactformStatic?.formLabels?.message}
                                     type="textarea"
                                     name="message"
-                                    placeholder="Enter Message"
                                     containerClass="mb-3"
                                 />
                                 <div className="">
                                     <Button btntype classnames="read-more contact-btn">
-                                        Send
+                                        {ContactformStatic?.btnName}
                                     </Button>
                                 </div>
                             </Form>

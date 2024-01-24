@@ -1,6 +1,9 @@
 import React, { useEffect } from 'react';
 import StickyMenu from '../../sharedComponents/stickymenu/stickyMenu';
 import Navigation from '../menu/menu';
+import { selectStaticHeader } from 'features/content/contactSelectors';
+import { useRedux } from 'hooks';
+import { PublicImageURL } from 'constants/PublicUrl';
 
 type HeaderProps = {
   action: any;
@@ -8,17 +11,20 @@ type HeaderProps = {
 
 function Header(props: HeaderProps) {
     const { action } = props;
+    const { appSelector } = useRedux();
 
     useEffect(() => {
         StickyMenu();
     });
+
+    const headerContent = appSelector(selectStaticHeader);
 
     return (
         <header className="temple-header-area temple-sticky">
             <div className="container">
                 <div className="header-nav-box justify-content-between  d-flex header-nav-4-box">
                     <a aria-label="logo" href="/">
-                        <img src="assets/images/logo/logo.jpg" width="50px" className="img-fluid" alt="" />
+                        <img src={`${window.location.origin}/${PublicImageURL}/logo/${headerContent?.HeaderLogo}`} width="50px" className="img-fluid" alt="Temple-logo" />
                     </a>
                     <div className="temple-btn-box">
                         <div aria-label="mobile-bar" className="toggle-btn ml-30 canvas_open d-lg-none d-block" tabIndex={0} onClick={e => action(e)} onKeyDown={e => action(e)} role="button">

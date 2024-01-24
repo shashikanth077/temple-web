@@ -1,32 +1,33 @@
 import Container from 'react-bootstrap/Container';
-import React, { useEffect } from 'react';
+import React from 'react';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import { selectStaticContentHome } from '../content/contactSelectors';
+import { selectAds } from 'features/content/contactSelectors';
+import { PublicImageURL } from 'constants/PublicUrl';
 
 import useRedux from 'hooks/useRedux';
 
 const Ads = () => {
     const { appSelector } = useRedux();
 
-    const adsList:any = appSelector(selectStaticContentHome);
+    const adsList:any = appSelector(selectAds);
 
     return (
         <section className="advertises area-padding">
             <Container>
                 <Row>
-                    {adsList?.adverstiments?.map((adsItem:any, index:any) => (
+                    {adsList?.map((adsItem:any, index:any) => (
                         <Col key={adsItem.ads_id} lg={3} md={6}>
                             <div className="single-ads-wrap mb-2">
                                 <div className="position-relative overflow-hidden rounded">
                                     <img
-                                        src={`assets/images/advertisments/${adsItem.ads_image}`}
+                                        src={`${PublicImageURL}/advertisments/${adsItem?.image}`}
                                         alt=""
                                         className="img-fluid d-block mx-auto shadow"
                                     />
                                     <div className="advertise-overlay">
                                         <div className="advertise-content">
-                                            <a aria-label="Eye-icon" href="/">
+                                            <a aria-label="Eye-icon" href="##">
                                                 <div className="advertise-icon">
                                                     <i>
                                                         <svg
