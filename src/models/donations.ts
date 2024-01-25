@@ -1,15 +1,15 @@
 export interface DonationTypes {
     _id:string;
-    type: string;
+    donationType: string;
     image:string;
     description: string;
     frequency:string;
-    denominations:string;
+    denominations:any;
 }
 
 export interface DonationTypesSingle {
     success:boolean;
-    donationtype:DonationTypes;
+    donationType:DonationTypes;
     errorMessage:string;
     errorCode:number;
     message:string;
@@ -17,7 +17,7 @@ export interface DonationTypesSingle {
 
 export interface DonationTypesList {
     success:boolean;
-    donationtypes:DonationTypes[];
+    donationTypeDetails:DonationTypes[];
     errorMessage:string;
     errorCode:number;
     message:string;

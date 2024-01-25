@@ -4,20 +4,17 @@ import * as yup from 'yup';
 import {
     Button,
 } from 'react-bootstrap';
-import { useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 import { Toast } from 'primereact/toast';
 import { useSelector } from 'react-redux';
+import Select from 'react-select';
 import { adminDonationTypeActions } from './donationSlice';
 import { clearState } from 'storeConfig/api/apiSlice';
 import { FormInput } from 'sharedComponents/inputs';
 import { useRedux } from 'hooks';
 import { DonationTypes } from 'models';
 import Loader from 'sharedComponents/loader/loader';
-
-const Frequency:any = [
-    { id: 'monthly', name: 'Monthly' },
-    { id: 'annually', name: 'Annually' },
-];
+import { Denominations, Frequency } from 'constants/donation';
 
 /* eslint-disable */
 const AddDonation = () => {
@@ -36,9 +33,9 @@ const AddDonation = () => {
     */
     const schemaResolver = yupResolver(
         yup.object().shape({
-            type: yup.string().required('Please enter the type'),
+            donationType: yup.string().required('Please enter the type'),
             description: yup.string().required('Please enter description').min(2, 'This value is too short. It should have 2 characters or more.'),
-            denominations: yup.string().required('Please select denominatons').min(2, 'This value is too short. It should have 2 characters or more.'),
+            //denominations: yup.string().required('Please select denominatons').min(2, 'This value is too short. It should have 2 characters or more.'),
             frequency: yup.string().required('Please select frequency').min(1, 'This value is too short. It should have 2 characters or more.'),
             image: yup
                 .mixed()
@@ -56,6 +53,7 @@ const AddDonation = () => {
         handleSubmit,
         register,
         control,
+        setValue,
         reset,
         formState: { errors },
     } = methods;
@@ -64,10 +62,18 @@ const AddDonation = () => {
         handle form submission
     */
     const onSubmit = handleSubmit((data:any) => {
+        let denomins:any = [];
+        data?.denominations?.forEach((mult:any) => {
+            denomins.push(mult.value)
+        })
+
         const formData = new FormData();
         for (const k in data) {
             if(k === 'image') {
                 formData.append('image', image.data)
+            } else if (k === 'denominations') { 
+                console.log('denominations',denomins);
+                formData.append('denominations', JSON.stringify(denomins))
             } else {
                 formData.append(k, data[k]);
             }
@@ -79,7 +85,7 @@ const AddDonation = () => {
         if (successMessage) {
             showToast('success', 'Success', successMessage);
             dispatch(clearState());
-            //reset();
+            reset();
         }
 
         if (error) {
@@ -108,7 +114,7 @@ const AddDonation = () => {
                         <div className="card">
                             <div className="card-header">
                                 <h3 className="card-title">
-                                    <b>Add Donation type</b>
+                                    <b>Add donation type</b>
                                 </h3>
                             </div>
 
@@ -121,10 +127,10 @@ const AddDonation = () => {
                                                 <FormInput
                                                     type="text"
                                                     register={register}
-                                                    key="type"
+                                                    key="donationType"
                                                     errors={errors}
                                                     control={control}
-                                                    name="type"
+                                                    name="donationType"
                                                     label="Donation type"
                                                     containerClass="mb-3"
                                                 />
@@ -172,15 +178,19 @@ const AddDonation = () => {
                                     <div className="row">
                                         <div className="col-md-6">
                                             <div className="form-group">
-                                                <FormInput
-                                                    type="text"
-                                                    register={register}
+                                                <Controller
                                                     key="denominations"
-                                                    errors={errors}
-                                                    control={control}
                                                     name="denominations"
-                                                    label="Denominations"
-                                                    containerClass="mb-3"
+                                                    control={control}
+                                                    render={({ field }) => (
+                                                        <Select
+                                                            isMulti={true}
+                                                            {...field}
+                                                            options={Denominations}
+                                                            className="multiple-select-common"
+                                                            onChange={(selectedOption:any) => setValue('denominations', selectedOption)}
+                                                        />
+                                                    )}
                                                 />
                                             </div>
                                         </div>
@@ -209,7 +219,7 @@ const AddDonation = () => {
                                                 <Button type="submit" className="btn btn-primary submit-btn mr-1 waves-effect waves-light" disabled={loading}>
                                                     Add
                                                 </Button>
-                                                <a className="btn primary cancelbtn" href="/admin/services/list" id="cancel"> Cancel</a>
+                                                <a className="btn primary cancelbtn" href="/admin/donationtypes/list" id="cancel"> Cancel</a>
                                             </div>
                                         </div>
                                     </div>

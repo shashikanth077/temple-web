@@ -10,14 +10,15 @@ import { InputText } from 'primereact/inputtext';
 import { Tag } from 'primereact/tag';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { useIntl } from 'react-intl';
 import { adminBookingActions } from './bookingSlice';
 import { selectBookings } from './bookingSelector';
-
 import DeleteDiaLog from 'sharedComponents/dialogs/dialogs';
 import { useRedux } from 'hooks';
 import { clearState } from 'storeConfig/api/apiSlice';
 import { Booking } from 'models';
 import Image from 'sharedComponents/Image/image';
+import { formatCurrency } from 'helpers/currency';
 
 /* eslint-disable */
 export default function ManageBookings() {
@@ -26,6 +27,7 @@ export default function ManageBookings() {
         _id:'dummy',
         amount:'',
         bookingType:'',
+        category:"",
         name:'',
         image:'',
         description:'',
@@ -35,6 +37,8 @@ export default function ManageBookings() {
     const [filters, setFilters] = useState({
         global: { value: null, matchMode: FilterMatchMode.CONTAINS },
     });
+
+    const intl = useIntl();
 
     const [Bookings, setBookings] = useState<any>([]);
     const [deleteBookingDialog, setDeleteBookingDialog] = useState(false);
@@ -50,15 +54,14 @@ export default function ManageBookings() {
         toast.current.show({ severity, summary, detail });
     };
 
+    let defaultPayload = {
+        sevaBookingType:"Pre-Booking"
+    }
     useEffect(() => {
-        dispatch(adminBookingActions.getBookingDetails());
+        dispatch(adminBookingActions.getBookingDetails(defaultPayload));
     }, [dispatch]);
    
     const BookingDetails:any = appSelector(selectBookings);
-
-    console.log("BookingDetails",BookingDetails);
- 
-    const formatCurrency = (value:any) => value.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
 
     const openNew = () => {
         navigate("/admin/bookingtypes/add");
@@ -122,7 +125,7 @@ export default function ManageBookings() {
 
     const rightToolbarTemplate = () => <Button label="Export" icon="pi pi-upload" className="p-button-help" onClick={exportCSV} />;
     const imageBodyTemplate = (rowData:any) => <Image  imageUrl={`${rowData?.image}`} altText={rowData.BookingName} classname="shadow-2 border-round" style={{ width: '64px' }} />;
-    const priceBodyTemplate = (rowData:any) => formatCurrency(rowData.price);
+    const priceBodyTemplate = (rowData:any) => formatCurrency(intl,rowData?.amount);
     const statusBodyTemplate = (rowData:any) => <Tag value={rowData.stock} severity={getSeverity(rowData)} />;
     const actionBodyTemplate = (rowData:any) => (
         <>
@@ -145,7 +148,7 @@ export default function ManageBookings() {
         const value = filters['global'] ? filters['global'].value : '';
         return (
             <div className="flex flex-wrap gap-2 align-items-center justify-content-between">
-            <h4 className="m-0">Manage Booking types</h4>
+            <h4 className="m-0">Manage seva types</h4>
             <span className="p-input-icon-left mb-1">
                 <i className="pi pi-search" />
                 <InputText type="search" value={value || ''} onChange={(e) => onGlobalFilterChange(e)} placeholder="Search Booking types" />
@@ -154,7 +157,6 @@ export default function ManageBookings() {
         )
     }
        
-
     const deleteBookingDialogFooter = (
         <>
             <Button label="No" icon="pi pi-times" outlined onClick={hideDeleteBookingDialog} />
@@ -183,10 +185,10 @@ export default function ManageBookings() {
                     globalFilter={globalFilter}
                     header={header}
                 >
-                    <Column field="bookingType" header="Booking type" sortable style={{ minWidth: '10rem' }} />
+                    <Column field="sevaBookingType" header="Booking type" sortable style={{ minWidth: '10rem' }} />
                     <Column field="name" header="Booking name" sortable style={{ minWidth: '8rem' }} />
-                    <Column field="category" header="Category" sortable style={{ minWidth: '8rem' }} />
-                    <Column field="amount" header="Amount" sortable style={{ minWidth: '8rem' }} />
+                    <Column field="category"  header="Category" sortable style={{ minWidth: '8rem' }} />
+                    <Column field="amount" body={priceBodyTemplate} header="Amount" sortable style={{ minWidth: '8rem' }} />
                     <Column field="image" header="Image" body={imageBodyTemplate} />
                     {/* <Column field="deleted" header="isActive" body={verifiedBodyTemplate} sortable style={{ minWidth: '3rem' }} /> */}
                     <Column body={actionBodyTemplate} exportable={false} style={{ minWidth: '6rem',textAlign:'center' }} />

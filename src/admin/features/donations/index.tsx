@@ -12,7 +12,6 @@ import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { adminDonationTypeActions } from './donationSlice';
 import { selectDonationTypes } from './donationSelector';
-
 import DeleteDiaLog from 'sharedComponents/dialogs/dialogs';
 import { useRedux } from 'hooks';
 import { clearState } from 'storeConfig/api/apiSlice';
@@ -23,12 +22,12 @@ import Image from 'sharedComponents/Image/image';
 export default function ManageDonationTypes() {
     
     const emptyDonation:DonationTypes = {
-            _id:'dummy',
-            type:'',
-            frequency:'',
-            description:'',
-            image:'',
-            denominations:'',
+        _id:'dummy',
+        donationType:'',
+        frequency:'',
+        description:'',
+        image:'',
+        denominations:'',
     }
      
     const navigate = useNavigate();
@@ -56,7 +55,9 @@ export default function ManageDonationTypes() {
    
     const DonationDetails:any = appSelector(selectDonationTypes);
 
-    console.log("DonationDetails",DonationDetails);
+    useEffect(() => {
+        setDonationTypes(DonationDetails);
+    },[DonationDetails])
  
     const formatCurrency = (value:any) => value.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
 
@@ -67,7 +68,6 @@ export default function ManageDonationTypes() {
     const hideDeleteDonationDialog = () => {
         setDeleteDonationDialog(false);
     };
-
    
     const onGlobalFilterChange = (event:any) => {
         const value = event.target.value;
@@ -98,7 +98,7 @@ export default function ManageDonationTypes() {
     }, [successMessage, error, dispatch]);
 
     const deleteDonation = () => {
-        const _DonationTypes = DonationTypes.filter((val:any) => val !== Donation._id);
+        const _DonationTypes = DonationTypes.filter((val:any) => val._id !== Donation._id);
         setDonationTypes(_DonationTypes);
         dispatch(adminDonationTypeActions.deleteDonation({_id:Donation._id}))
         setDeleteDonationDialog(false);
@@ -145,7 +145,7 @@ export default function ManageDonationTypes() {
         const value = filters['global'] ? filters['global'].value : '';
         return (
             <div className="flex flex-wrap gap-2 align-items-center justify-content-between">
-            <h4 className="m-0">Manage DonationTypes</h4>
+            <h4 className="m-0">Manage donation type</h4>
             <span className="p-input-icon-left mb-1">
                 <i className="pi pi-search" />
                 <InputText type="search" value={value || ''} onChange={(e) => onGlobalFilterChange(e)} placeholder="Search DonationTypes" />
@@ -171,7 +171,7 @@ export default function ManageDonationTypes() {
                 <DataTable
                     ref={dt}
                     filters={filters} onFilter={(e:any) => setFilters(e.filters)}
-                    value={DonationDetails}
+                    value={DonationTypes}
                     selection={selectedDonationTypes} 
                     onSelectionChange={(e:any) => setSelectedDonationTypes(e.value)} 
                     dataKey="_id"
@@ -183,9 +183,9 @@ export default function ManageDonationTypes() {
                     globalFilter={globalFilter}
                     header={header}
                 >
-                    <Column field="type" header="Donation type" sortable style={{ minWidth: '10rem' }} />
+                    <Column field="donationType" header="Donation type" sortable style={{ minWidth: '10rem' }} />
                     <Column field="frequency" header="Frequency" sortable style={{ minWidth: '8rem' }} />
-                    <Column field="denominations" header="Price" sortable style={{ minWidth: '10rem' }} />
+                    {/* <Column field="denominations" header="Price" sortable style={{ minWidth: '10rem' }} /> */}
                     <Column field="image" header="Image" body={imageBodyTemplate} />
                     {/* <Column field="deleted" header="isActive" body={verifiedBodyTemplate} sortable style={{ minWidth: '3rem' }} /> */}
                     <Column body={actionBodyTemplate} exportable={false} style={{ minWidth: '6rem',textAlign:'center' }} />
@@ -196,7 +196,7 @@ export default function ManageDonationTypes() {
                 deleteonClick={deleteDonationDialog}
                 deleteDialogFooter={deleteDonationDialogFooter}
                 hideDeleteDialog={hideDeleteDonationDialog}
-                deleteTitle={Donation.type}
+                deleteTitle={Donation.donationType}
                 dataLength={Donation}
             />
           

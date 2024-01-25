@@ -49,7 +49,7 @@ const MyBookings = React.lazy(() => import('features/bookings/reports/Reports'))
 const ProductDetails = React.lazy(() => import('features/shop/products/Details/Product'));
 const IncomeReports = React.lazy(() => import('admin/features/reports/reports'));
 const BookingTypes = React.lazy(() => import('admin/features/bookings'));
-const EditBookingTypes = React.lazy(() => import('admin/features/bookings/addBooking'));
+const EditBookingTypes = React.lazy(() => import('admin/features/bookings/editBooking'));
 const AddBookingTypes = React.lazy(() => import('admin/features/bookings/addBooking'));
 const DonationTypes = React.lazy(() => import('admin/features/donations'));
 const AddDonationType = React.lazy(() => import('admin/features/donations/addDonation'));
