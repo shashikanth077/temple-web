@@ -8,6 +8,8 @@ export interface Content {
             FrontEnd:any;
             shop:any;
             home:any;
+            FrontMenus:any;
+            adminMenus:any;
             registration:any;
         }
      }

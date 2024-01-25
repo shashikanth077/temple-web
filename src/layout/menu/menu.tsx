@@ -1,21 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-scroll';
 import { Link as PageLink } from 'react-router-dom';
-import { menuActions } from './menuSlice';
-import { selectMenuList } from './menuSelectors';
 import useRedux from 'hooks/useRedux';
+import { selectPublicMenu } from 'features/content/contactSelectors';
 
 const Navigation = () => {
     const [isActive, setActive] = useState(false);
     const [fix, setFix] = useState(false);
 
-    const { dispatch, appSelector } = useRedux();
+    const { appSelector } = useRedux();
 
-    useEffect(() => {
-        dispatch(menuActions.fetchMenuList());
-    }, [dispatch]);
-
-    const menuList = appSelector(selectMenuList);
+    const menuList:any = appSelector(selectPublicMenu);
 
     function setFixed() {
         if (window.scrollY >= 100) {
@@ -29,7 +24,7 @@ const Navigation = () => {
 
     return (
         <ul>
-            {menuList?.map((data, i) => (data?.isDropdown === true ? (
+            {menuList?.map((data:any) => (data?.isDropdown === true ? (
                 <li key={data.menuId}>
                     <Link
                         className="nav-link scroll"
@@ -39,7 +34,7 @@ const Navigation = () => {
                         <i className="fal fa-angle-down" />
                     </Link>
                     <ul className="sub-menu">
-                        {data.dropdownItem.map(item => (
+                        {data.dropdownItem.map((item:any) => (
                             <li>
                                 <PageLink to={item.link}>{item.title}</PageLink>
                             </li>

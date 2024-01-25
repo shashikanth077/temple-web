@@ -26,7 +26,7 @@
         },
         {
             "key": "bookings",
-            "label": "Bookings",
+            "label": "Sevas",
             "isTitle": false,
             "icon": "fas fa-gopuram",
             "url": "/admin/bookingtypes/list",

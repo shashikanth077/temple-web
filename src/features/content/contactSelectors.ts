@@ -12,3 +12,5 @@ export const selectContactDetails = (state: RootState) => state.staticContent.co
 export const selectContactformDetails = (state: RootState) => state.staticContent.contactform;
 export const selectAds = (state: RootState) => state.staticContent.ads;
 export const selectStaffs = (state: RootState) => state.staticContent.staff;
+export const selectAdminMenu = (state: RootState) => state.staticContent.adminmenu;
+export const selectPublicMenu = (state: RootState) => state.staticContent.publicmenu;

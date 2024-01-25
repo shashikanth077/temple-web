@@ -7,8 +7,7 @@ import 'assets/css/simple.bar.css';
 // components
 /* eslint-disable */
 import AppMenu from './MainMenu';
-import { adminmenuActions } from './menuSlice';
-import { selectadminmenuList } from './menuSelectors';
+import { selectAdminMenu } from 'features/content/contactSelectors';
 import { useRedux, useUser } from 'hooks';
 
 // images
@@ -18,12 +17,7 @@ const UserBox = () => {
 
     const {dispatch}  = useRedux();
 
-    useEffect(() => {
-        dispatch(adminmenuActions.fetchMenuList());
-    },[dispatch]);
-
-
-    // get the profilemenu
+        // get the profilemenu
     const ProfileMenus = [
         {
             label: 'My Account',
@@ -93,10 +87,10 @@ const UserBox = () => {
 /* sidebar content */
 const SideBarContent = () => {
     const {appSelector}  = useRedux();
-    const menuItems = appSelector(selectadminmenuList);
+    const menuItems = appSelector(selectAdminMenu);
     const [loggedInUser] = useUser();
 
-    const updateItems:any = menuItems?.filter((item) => {
+    const updateItems:any = menuItems?.filter((item:any) => {
         for(var i = 0; i < item.roles?.length; i++){
             return loggedInUser.roles?.includes(item.roles[i]) 
          }

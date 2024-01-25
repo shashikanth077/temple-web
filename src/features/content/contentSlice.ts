@@ -6,6 +6,8 @@ export interface ContentState {
     services:any;
     shop:any;
     home:any;
+    adminmenu:any;
+    publicmenu:any;
     registration:any;
     about:any;
     topbar:any;
@@ -20,6 +22,8 @@ export interface ContentState {
 const initialState: ContentState = {
     loading: false,
     services: '',
+    adminmenu: '',
+    publicmenu: '',
     staff: '',
     topbar: '',
     ads: '',
@@ -53,6 +57,8 @@ const contentSlice = createSlice({
             state.contactform = action.payload.data.contentData.content.FrontEnd.ContactUsForm;
             state.ads = action.payload.data.contentData.content.FrontEnd.Adverstiments;
             state.staff = action.payload.data.contentData.content.FrontEnd.Staffs;
+            state.adminmenu = action.payload.data.contentData.content.adminMenus;
+            state.publicmenu = action.payload.data.contentData.content.FrontMenus;
         },
     },
 });
