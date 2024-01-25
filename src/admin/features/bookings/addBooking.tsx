@@ -13,15 +13,7 @@ import { FormInput } from 'sharedComponents/inputs';
 import { useRedux } from 'hooks';
 import { Booking } from 'models';
 import Loader from 'sharedComponents/loader/loader';
-
-const bookingTypes:any = [
-    { id: 'Regular', name: 'Regular' },
-    { id: 'Pre-Booking', name: 'Pre-Booking' },
-];
-const category:any = [
-    { id: 'specialevent', name: 'Special event' },
-    { id: 'personalevent', name: 'Personal event' },
-];
+import { category } from 'constants/seva';
 
 /* eslint-disable */
 const AddBooking = () => {
@@ -40,9 +32,8 @@ const AddBooking = () => {
     */
     const schemaResolver = yupResolver(
         yup.object().shape({
-            bookingType: yup.string().required('Please enter booking type'),
             category: yup.string().required('Please select a category'),
-            bookingName: yup.string().required('Please enter booking name').min(2, 'This value is too short. It should have 2 characters or more.'),
+            name: yup.string().required('Please enter booking name').min(2, 'This value is too short. It should have 2 characters or more.'),
             description: yup.string().required('Please enter description').min(2, 'This value is too short. It should have 2 characters or more.'),
             amount: yup.string().required('Please enter amount').min(1, 'This value is too short. It should have 2 characters or more.'),
             image: yup
@@ -78,13 +69,16 @@ const AddBooking = () => {
                 formData.append(k, data[k]);
             }
         }
+        formData.append('sevaBookingType','Pre-Booking');
         dispatch(adminBookingActions.addBooking(formData));
     });
+    
 
     useEffect(() => {
         if (successMessage) {
             showToast('success', 'Success', successMessage);
             dispatch(clearState());
+            reset();
         }
 
         if (error) {
@@ -114,7 +108,7 @@ const AddBooking = () => {
                         <div className="card">
                             <div className="card-header">
                                 <h3 className="card-title">
-                                    <b>Add Sevas</b>
+                                    <b>Add Seva</b>
                                 </h3>
                             </div>
 
@@ -126,41 +120,20 @@ const AddBooking = () => {
                                             <div className="form-group">
                                                 <FormInput
                                                     register={register}
-                                                    key="bookingName"
+                                                    key="name"
                                                     errors={errors}
                                                     control={control}
                                                     label="Booking name"
                                                     type="input"
                                                     containerClass="mb-3"
-                                                    id="bookingName"
-                                                    name="bookingName"
+                                                    id="name"
+                                                    name="name"
                                                 >
                                             
                                                 </FormInput>
                                             </div>
                                         </div>
-                                        <div className="col-md-6">
-                                            <div className="form-group">
-                                                <FormInput
-                                                    register={register}
-                                                    key="bookingType"
-                                                    errors={errors}
-                                                    control={control}
-                                                    label="Booking type"
-                                                    type="select"
-                                                    containerClass="mb-3"
-                                                    id="bookingType"
-                                                    name="bookingType"
-                                                >
-
-                                                    <option value="">Select</option>
-                                                    {bookingTypes?.map((option:any, index:any) => (
-                                                        <option value={option.id}>{option.name} </option>
-                                                    ))}
-                                                </FormInput>
-                                            </div>
-                                        </div>
-                                    </div>
+                                   </div>
                                     <div className="row">
                                         <div className="col-md-6">
                                             <div className="form-group">

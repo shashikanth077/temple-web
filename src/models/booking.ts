@@ -1,6 +1,7 @@
 export interface Booking {
     _id:string;
     amount:string;
+    category:string;
     bookingType: string;
     name: string;
     image:string;

@@ -14,6 +14,10 @@ export interface BookingPayload {
     _id:string | undefined;
 }
 
+export interface BookingGetPayload {
+    sevaBookingType:string;
+}
+
 const initialState: BookingState = {
     loading: false,
     booking: {},
@@ -32,7 +36,7 @@ const BookingSlice = createSlice({
             state.loading = false;
             state.booking = action.payload.booking;
         },
-        getBookingDetails(state) {
+        getBookingDetails(state, action: PayloadAction<BookingGetPayload>) {
             state.loading = true;
         },
         getBookingDetailsSuccess(state, action: PayloadAction<BookingTypeList>) {

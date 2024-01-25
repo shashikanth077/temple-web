@@ -16,19 +16,9 @@ import { useRedux } from 'hooks';
 import { Booking } from 'models';
 import Loader from 'sharedComponents/loader/loader';
 import ImageComponent from 'sharedComponents/Image/image';
+import { category } from 'constants/seva';
 
 /* eslint-disable */
-const BookingTypes:any = [
-    { id: 'Homam', name: 'Homam' },
-    { id: 'Pooja', name: 'Pooja' },
-    { id: 'Archana', name: 'Archana' },
-];
-
-const bookingTypes:any = [
-    { id: 'Regular', name: 'Regular' },
-    { id: 'Pre-Booking', name: 'Pre-Booking' },
-];
-
 /* eslint no-underscore-dangle: 0 */
 const EditBooking = () => {
     const { dispatch, appSelector } = useRedux();
@@ -36,7 +26,6 @@ const EditBooking = () => {
     const [image, setImage] = useState({ preview: '', data: '' })
     const { id } = useParams<any>();
     const toast = useRef<any>(null);
-    const [checkBoxVal, SetCheckboxVal] = useState(false);
 
     useEffect(() => {
         dispatch(adminBookingActions.getBookingById({ _id: id }));
@@ -46,20 +35,20 @@ const EditBooking = () => {
         toast.current.show({ severity, summary, detail });
     };
 
+    const seva:any = appSelector(selectBooking);
     /*
        form validation schema
     */
     const schemaResolver = yupResolver(
         yup.object().shape({
-            bookingType: yup.string().required('Please enter booking type'),
-            bookingName: yup.string().required('Please enter booking name').min(2, 'This value is too short. It should have 2 characters or more.'),
+            name: yup.string().required('Please enter booking name').min(2, 'This value is too short. It should have 2 characters or more.'),
             description: yup.string().required('Please enter description').min(2, 'This value is too short. It should have 2 characters or more.'),
             amount: yup.string().required('Please enter amount').min(1, 'This value is too short. It should have 2 characters or more.'),
-            image: yup
-                .mixed()
-                .test('required', 'Booking image is required', (value:any) => value.length > 0)
-                .test('fileSize', 'File Size is too large', (value:any) => value.length && value[0].size <= 5242880)
-                .test('fileType', 'Unsupported File Format', (value:any) => value.length && ['image/jpeg', 'image/png', 'image/jpg'].includes(value[0].type)),
+            // image: yup
+            //     .mixed()
+            //     .test('required', 'Booking image is required', (value:any) => value.length > 0)
+            //     .test('fileSize', 'File Size is too large', (value:any) => value.length && value[0].size <= 5242880)
+            //     .test('fileType', 'Unsupported File Format', (value:any) => value.length && ['image/jpeg', 'image/png', 'image/jpg'].includes(value[0].type)),
         }),
     );
 
@@ -72,10 +61,15 @@ const EditBooking = () => {
         register,
         control,
         reset,
+        setValue,
         watch,
         formState: { errors },
     } = methods;
 
+
+    useEffect(() => {
+        setValue('category',seva.category);
+    },[seva])
     /*
         handle form submission
     */
@@ -106,23 +100,13 @@ const EditBooking = () => {
         }
     }, [successMessage, error, dispatch]);
 
-    const handleUploadedFile = (event:any) => {
+    const handleFileChange = (event:any) => {
         const img = {
             preview: URL.createObjectURL(event.target.files[0]),
             data: event.target.files[0],
         }
         setImage(img)
     };
-
-    const booking:any = appSelector(selectBooking);
-
-    const SetCheckboxValue = (e:any) => {
-        const { checked } = e.target;
-        SetCheckboxVal(checked);
-    };
-    useEffect(() => {
-        SetCheckboxVal(booking?.isTaxable);
-    }, [booking]);
 
     return (
         <>
@@ -137,82 +121,69 @@ const EditBooking = () => {
                         <div className="card">
                             <div className="card-header">
                                 <h3 className="card-title">
-                                    <b>Edit Sevas</b>
+                                    <b>Edit Seva</b>
                                 </h3>
                             </div>
 
                             <div className="card-body">
 
-                                <form name="Booking-form" id="Booking-form" onSubmit={onSubmit}>
-                                   
+                            <form encType="multipart/form-data" name="edit-booking-form" id="edit-booking-form" onSubmit={onSubmit}>
                                     <div className="row">
                                         <div className="col-md-6">
                                             <div className="form-group">
                                                 <FormInput
-                                                    type="text"
-                                                    name="bookingName"
-                                                    defaultValue={booking?.bookingName}
                                                     register={register}
-                                                    key="bookingName"
+                                                    key="name"
+                                                    defaultValue={seva?.name}
                                                     errors={errors}
                                                     control={control}
                                                     label="Booking name"
+                                                    type="input"
                                                     containerClass="mb-3"
-                                                />
+                                                    id="name"
+                                                    name="name"
+                                                >
+                                            
+                                                </FormInput>
                                             </div>
                                         </div>
-                                        <div className="col-md-6">
-                                            <div className="form-group">
-                                                <FormInput
-                                                    type="text"
-                                                    register={register}
-                                                    key="bookingType"
-                                                    defaultValue={booking?.bookingType}
-                                                    errors={errors}
-                                                    control={control}
-                                                    name="bookingType"
-                                                    label="Booking type"
-                                                    containerClass="mb-3"
-                                                />
-                                            </div>
-                                        </div>
-                                    </div>
-
+                                   </div>
                                     <div className="row">
                                         <div className="col-md-6">
                                             <div className="form-group">
                                                 <FormInput
+                                                    type="text"
+                                                    name="amount"
                                                     register={register}
                                                     key="amount"
+                                                    defaultValue={seva?.amount}
                                                     errors={errors}
                                                     control={control}
-                                                    defaultValue={booking?.amount}
                                                     label="Amount"
-                                                    type="select"
                                                     containerClass="mb-3"
-                                                    id="amount"
-                                                    name="amount"
-                                                >
-                                                    <option value="">Select</option>
-                                                    {bookingTypes?.map((option:any, index:any) => (
-                                                        <option value={option.id}>{option.name} </option>
-                                                    ))}
-                                                </FormInput>
-                                            </div>
+                                                />
+                                              </div>
                                         </div>
                                         <div className="col-md-6">
                                             <div className="form-group">
-                                                <FormInput
-                                                    type="text"
+                                            <FormInput
                                                     register={register}
-                                                    key="description"
+                                                    key="category"
                                                     errors={errors}
-                                                    defaultValue={booking?.accountNumber}
+                                                    defaultValue={seva?.category}
                                                     control={control}
-                                                    name="description"
-                                                    label="Description"
+                                                    label="Category"
+                                                    type="select"
                                                     containerClass="mb-3"
-                                                />
+                                                    id="category"
+                                                    name="category"
+                                                >
+
+                                                    <option value="">Select</option>
+                                                    {category?.map((option:any, index:any) => (
+                                                        <option value={option.id}>{option.name} </option>
+                                                    ))}
+                                                </FormInput>
                                             </div>
                                         </div>
                                     </div>
@@ -221,8 +192,8 @@ const EditBooking = () => {
                                         <div className="col-md-12">
                                             <FormInput
                                                 type="textarea"
+                                                defaultValue={seva?.description}
                                                 name="description"
-                                                defaultValue={booking?.description}
                                                 label="Description"
                                                 register={register}
                                                 key="description"
@@ -241,26 +212,26 @@ const EditBooking = () => {
                                                     accept="image/*"
                                                     name="image"
                                                     label="Image"
-                                                    onChange={handleUploadedFile}
+                                                    onChange={handleFileChange}
                                                     register={register}
                                                     key="image"
                                                     errors={errors}
                                                     control={control}
                                                     containerClass="mb-3"
                                                 />
+                                                
                                             </div>
-                                            <ImageComponent classname="img-thumbnail" imageUrl={booking?.image} width="40" height="40" altText="s" />
+                                            <ImageComponent  width="40" height="40"  classname="img-thumbnail" imageUrl={`${seva?.image}`} altText={seva?.name}/>
                                         </div>
                                     </div>
-                            
+
                                     <div className="row text-center">
                                         <div className="col-sm-12">
-
                                             <div className="text-center d-flex mb-3 update-profile-btn">
-                                                <Button type="submit" className="btn btn-primary submit-btn mr-5 waves-effect waves-light" disabled={loading}>
+                                                <Button type="submit" className="btn btn-primary submit-btn mr-1 waves-effect waves-light" disabled={loading}>
                                                     Update
                                                 </Button>
-                                                <a className="btn primary cancelbtn" href="/admin/Bookings/list" id="cancel"> Cancel</a>
+                                                <a className="btn primary cancelbtn" href="/admin/bookingtypes/list" id="cancel"> Cancel</a>
                                             </div>
                                         </div>
                                     </div>
