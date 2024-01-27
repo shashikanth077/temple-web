@@ -24,6 +24,13 @@ function signup(payload:any) {
     return response;
 }
 
+function AccountActivation(payload:any) {
+    const baseUrl = `http://localhost:8080/activate/${payload.token}`;
+    const response = APICore.get(`${baseUrl}`, {});
+    console.log('response', response);
+    return response;
+}
+
 function forgotPassword(payload:any) {
     const baseUrl = 'http://localhost:8080/api/auth/requestResetPassword';
     return APICore.create(`${baseUrl}`, payload);
@@ -35,5 +42,5 @@ function resetPasswordCall(payload:any) {
 }
 
 export {
-    login, logout, signup, forgotPassword, resetPasswordCall, checkProfileStatus,
+    login, logout, signup, forgotPassword, resetPasswordCall, checkProfileStatus, AccountActivation,
 };

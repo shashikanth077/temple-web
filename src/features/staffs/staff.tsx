@@ -8,7 +8,7 @@ import Button from 'sharedComponents/button/button';
 import Heading from 'sharedComponents/heading/heading';
 import { PublicImageURL } from 'constants/PublicUrl';
 
-export default function Staffs() {
+export function Staffs() {
     const { appSelector } = useRedux();
 
     const StaffStaticContent = appSelector(selectStaffs);
@@ -43,3 +43,5 @@ export default function Staffs() {
         </section>
     );
 }
+
+export default React.memo(Staffs);

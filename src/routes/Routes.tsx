@@ -106,4 +106,4 @@ const AllRoutes = (props: RoutesProps) => {
     );
 };
 
-export default AllRoutes;
+export default React.memo(AllRoutes);

@@ -35,7 +35,7 @@ const Navigation = () => {
                     </Link>
                     <ul className="sub-menu">
                         {data.dropdownItem.map((item:any) => (
-                            <li>
+                            <li key={item.link}>
                                 <PageLink to={item.link}>{item.title}</PageLink>
                             </li>
                         ))}
@@ -50,4 +50,4 @@ const Navigation = () => {
     );
 };
 
-export default Navigation;
+export default React.memo(Navigation);

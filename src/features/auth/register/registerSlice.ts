@@ -1,17 +1,19 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { User } from 'models/user';
+import { User, Activation } from 'models/user';
 import { UserSuccesResponse } from 'models';
 
 export interface RegisterState {
     loading?: boolean;
     userSignUp:boolean;
     email:string;
+    message:string;
 }
 
 const initialState: RegisterState = {
     loading: false,
     userSignUp: false,
     email: '',
+    message: '',
 };
 
 const registerSlice = createSlice({
@@ -26,6 +28,10 @@ const registerSlice = createSlice({
             state.loading = false;
             state.userSignUp = true;
             state.email = action.payload.email;
+        },
+        activation(state, action: PayloadAction<Activation>) {
+            state.loading = true;
+            state.userSignUp = false;
         },
     },
 });

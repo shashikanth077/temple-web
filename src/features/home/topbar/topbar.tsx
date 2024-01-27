@@ -37,7 +37,7 @@ function Topbar() {
                 <ul className="social-icons">
                     <li>{`${TopbarDetails?.FollowUs}`}:</li>
                     {contactDetails?.Sociallinks?.map((item:any) => (
-                        <li>
+                        <li key={item?.label}>
                             <a aria-label={`${item?.label}`} href={`${item?.link}`}>
                                 <i className={`${item?.iconName}`} />
                             </a>

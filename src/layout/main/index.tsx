@@ -11,4 +11,4 @@ const Main = () => (
     </main>
 );
 
-export default Main;
+export default React.memo(Main);

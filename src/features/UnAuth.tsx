@@ -35,4 +35,4 @@ const UnAuth = () => {
     );
 };
 
-export default UnAuth;
+export default React.memo(UnAuth);
