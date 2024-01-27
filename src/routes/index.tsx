@@ -56,6 +56,7 @@ const AddDonationType = React.lazy(() => import('admin/features/donations/addDon
 const EditDonationType = React.lazy(() => import('admin/features/donations/editDonation'));
 const DonationList = React.lazy(() => import('features/donations/userdonations'));
 const SiteManage = React.lazy(() => import('admin/features/sitemanager/siteManager'));
+const UserActivation = React.lazy(() => import('features/auth/register/activation'));
 
 export interface RoutesProps {
     path: RouteProps['path'];
@@ -170,6 +171,12 @@ const authRoutes: RoutesProps[] = [
         path: '/forget-password',
         name: 'ForgetPassword',
         element: <ForgetPassword />,
+        route: Route,
+    },
+    {
+        path: '/useractivation/:id',
+        name: 'UserActivation',
+        element: <UserActivation />,
         route: Route,
     },
 ];

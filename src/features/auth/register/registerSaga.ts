@@ -1,7 +1,7 @@
 import {
-    call, put, takeLatest,
+    call, put, takeLatest, fork, all,
 } from 'redux-saga/effects';
-import { signup } from '../authApi';
+import { signup, AccountActivation } from '../authApi';
 import { registerActions } from './registerSlice';
 import { APICore, setAuthorization } from 'helpers/api';
 import { UserSuccesResponse } from 'models';
@@ -32,6 +32,33 @@ function* UserRegistration(action:any) {
     }
 }
 
-export default function* registerSaga() {
+function* UserActivation(action:any) {
+    try {
+        yield put(startLoading());
+        const response: UserSuccesResponse = yield call(AccountActivation, action.payload);
+        if (response.success) {
+            yield put(setSuccessMessage('Email has been verified and account has activated'));
+        } else {
+            yield put(setError(response.errorMessage));
+        }
+    } catch (error) {
+        if (error instanceof Error) {
+            yield put(setError(error.message));
+        }
+    } finally {
+        yield put(endLoading());
+    }
+}
+
+export function* watchregister() {
     yield takeLatest(registerActions.register.type, UserRegistration);
 }
+export function* watchActivation() {
+    yield takeLatest(registerActions.activation.type, UserActivation);
+}
+
+function* registerSaga() {
+    yield all([fork(watchregister), fork(watchActivation)]);
+}
+
+export default registerSaga;

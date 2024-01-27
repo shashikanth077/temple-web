@@ -1,28 +1,37 @@
 import React, { Suspense, useState } from 'react';
 import { Container } from 'react-bootstrap';
-import { Outlet } from 'react-router-dom';
 import 'primereact/resources/themes/lara-light-indigo/theme.css'; // theme
 import 'primeicons/primeicons.css';
+import { RingLoader } from 'react-spinners';
 import 'primeflex/primeflex.css';
 import 'primereact/resources/primereact.css';
+import { PublicImageURL } from 'constants/PublicUrl';
 
 const Footer = React.lazy(() => import('./Footer'));
 const Topbar = React.lazy(() => import('./topBar'));
 const LeftSidebar = React.lazy(() => import('./menu'));
 
-const loading = () => <div className="" />;
+const CustomLoader = () => {
+    console.log('CustomLoader rendered');
+    return (
+        <div className="custom-loader">
+            <img src={`${window.location.origin}/${PublicImageURL}/logo/logo.jpg`} alt="Temple Logo" className="Temple-logo" />
+            <RingLoader color="#007bff" loading size={50} />
+        </div>
+    );
+};
 
 interface AuthLayoutProps {
-    children?: any;
- }
+  children?: any;
+}
 
 const VerticalLayout = (props: AuthLayoutProps) => {
     const { children } = props;
     const [isMenuOpened, setIsMenuOpened] = useState<boolean>(false);
 
     /**
-     * Open the menu when having mobile screen
-     */
+   * Open the menu when having a mobile screen
+   */
     const openMenu = () => {
         setIsMenuOpened(prevState => !prevState);
 
@@ -35,24 +44,24 @@ const VerticalLayout = (props: AuthLayoutProps) => {
         }
     };
 
-    const isCondensed:any = true;
+    const isCondensed: any = true;
 
     return (
         <div id="wrapper">
-            <Suspense fallback={loading()}>
+            <Suspense fallback={<CustomLoader />}>
                 <Topbar openLeftMenuCallBack={openMenu} />
             </Suspense>
-            <Suspense fallback={loading()}>
+            <Suspense fallback={<CustomLoader />}>
                 <LeftSidebar />
             </Suspense>
             <div className="content-page">
                 <div className="content">
                     <Container fluid>
-                        <Suspense fallback={loading()}>{children}</Suspense>
+                        <Suspense fallback={<CustomLoader />}>{children}</Suspense>
                     </Container>
                 </div>
 
-                <Suspense fallback={loading()}>
+                <Suspense fallback={<CustomLoader />}>
                     {/* <Footer /> */}
                 </Suspense>
             </div>
@@ -60,4 +69,4 @@ const VerticalLayout = (props: AuthLayoutProps) => {
     );
 };
 
-export default VerticalLayout;
+export default React.memo(VerticalLayout);

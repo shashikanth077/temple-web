@@ -44,7 +44,7 @@ axios.interceptors.response.use(
             message = 'Invalid credentials';
             break;
         case 404:
-            message = 'Sorry! the data you are looking for could not be found';
+            message = 'Something went wrong! Please try again';
             break;
         case 400:
             message = 'Sorry! There is some issue in details. Please check later';
@@ -75,8 +75,6 @@ const setAuthorization = (token: string | null) => {
 const getUserFromCookie = () => {
     const user:any = sessionStorage.getItem(AUTH_SESSION_KEY);
     if (user) {
-        const UserArr:any = JSON.parse(user);
-        console.log('user token insider', UserArr.token);
         if (user.token) {
             setAuthorization(user.token);
         }
@@ -86,24 +84,23 @@ const getUserFromCookie = () => {
 
 class APICore {
     static get(url: string, params: any) {
-        let response;
         if (params) {
             const queryString = params
                 ? Object.keys(params)
                     .map(key => `${key}=${params[key]}`)
                     .join('&')
                 : '';
-            response = axios.get(`${url}?${queryString}`, {
+            return axios.get(`${url}?${queryString}`, {
                 auth: {
                     username: 'ClientApi',
                     password: 'ClientApi',
                 },
                 params: { username },
-            });
-        } else {
-            response = axios.get(`${url}`, params);
+            }).then(res => res)
+                .catch(err => err);
         }
-        return response;
+        return axios.get(`${url}`, params).then(res => res)
+            .catch(err => err);
     }
 
     static getFile(url: string, params: any) {
@@ -231,10 +228,8 @@ class APICore {
     static isUserAuthenticated() {
         const user = APICore.getLoggedInUser();
         if ((!user && user == null) || (!user && user.length ==0)) {
-            console.log('user false',user)
             return false;
         } else {
-            console.log('user true',user);
             return true;
         }
     }

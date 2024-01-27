@@ -1,6 +1,6 @@
 import React, { useEffect, Suspense } from 'react';
+import { RingLoader } from 'react-spinners';
 import Header from './header/header';
-import Main from './main/index';
 import Drawer from './menu/mobileMenu/drawer';
 import Footer from './footer/footer';
 import BackToTop from 'sharedComponents/BacktoTop/backtotop';
@@ -8,20 +8,32 @@ import { useToggle } from 'hooks/useToggle';
 import Topbar from 'features/home/topbar/topbar';
 import { admincontentActions } from 'features/content/contentSlice';
 import { useRedux } from 'hooks';
+import { selectAds } from 'features/content/contactSelectors';
+import { PublicImageURL } from 'constants/PublicUrl';
 
 interface DefaultLayoutProps {
      children?: any;
   }
-
-const loading = () => <div className="" />;
+const CustomLoader = () => {
+    console.log('CustomLoader rendered');
+    return (
+        <div className="custom-loader">
+            {/* <img src={`${window.location.origin}/${PublicImageURL}/logo/logo.jpg`} alt="Temple Logo" className="Temple-logo" /> */}
+            <RingLoader color="#007bff" loading size={50} />
+        </div>
+    );
+};
 const Layout = (props: DefaultLayoutProps) => {
     const { children } = props;
 
     const [drawer, toggle] = useToggle(false);
-    const { dispatch } = useRedux();
+    const { dispatch, appSelector } = useRedux();
 
+    const Ads = appSelector(selectAds);
     useEffect(() => {
-        dispatch(admincontentActions.getStaticContent());
+        if (Ads?.length === 1) {
+            dispatch(admincontentActions.getStaticContent());
+        }
     }, [dispatch]);
 
     return (
@@ -30,7 +42,7 @@ const Layout = (props: DefaultLayoutProps) => {
             <Topbar />
             <Header action={toggle} />
             <main className="main">
-                <Suspense fallback={loading()}>{children}</Suspense>
+                <Suspense fallback={<CustomLoader />}>{children}</Suspense>
             </main>
             <Footer />
             <BackToTop className="bdd" />
@@ -38,4 +50,4 @@ const Layout = (props: DefaultLayoutProps) => {
     );
 };
 
-export default Layout;
+export default React.memo(Layout);

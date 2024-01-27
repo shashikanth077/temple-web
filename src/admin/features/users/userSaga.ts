@@ -67,7 +67,6 @@ function* addUsers(action:any) {
 }
 
 function* updateUsers(action:any) {
-    console.log('User edit paylod', action.payload);
     try {
         yield put(startLoading());
         const response: SuccesResponse = yield call(updateRoles, action.payload);

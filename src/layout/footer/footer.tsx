@@ -32,7 +32,7 @@ function Footer() {
                             <div className="social mt-30">
                                 <ul>
                                     {contactDetails?.Sociallinks?.map((item:any) => (
-                                        <li>
+                                        <li key={item.iconName}>
                                             <a aria-label={`${item?.label}`} href={`${item?.link}`}>
                                                 <i className={`${item?.iconName}`} />
                                             </a>
@@ -47,7 +47,7 @@ function Footer() {
                             <h4 className="title">Temple</h4>
                             <ul>
                                 {footerContent?.QuickLinks?.map((item:any) => (
-                                    <li>
+                                    <li key={item.name}>
                                         <Link to={`${item.url}`}>{item.name}</Link>
                                     </li>
                                 ))}
@@ -59,7 +59,7 @@ function Footer() {
                             <h4 className="title">Other Useful links</h4>
                             <ul>
                                 {footerContent?.OtherUsefullLinks?.map((item:any) => (
-                                    <li>
+                                    <li key={item.name}>
                                         <Link to={`${item.url}`}>{item.name}</Link>
                                     </li>
                                 ))}
@@ -103,4 +103,4 @@ function Footer() {
     );
 }
 
-export default Footer;
+export default React.memo(Footer);

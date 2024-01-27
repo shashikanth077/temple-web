@@ -64,4 +64,4 @@ const VerticalLayout = ({ children }: VerticalLayoutProps) => {
         </div>
     );
 };
-export default VerticalLayout;
+export default React.memo(VerticalLayout);

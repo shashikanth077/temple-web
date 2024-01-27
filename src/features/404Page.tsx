@@ -22,4 +22,4 @@ const Error404 = () => (
     </AuthLayout>
 );
 
-export default Error404;
+export default React.memo(Error404);

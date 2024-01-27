@@ -23,7 +23,7 @@ function Drawer(Props : DrawerProps) {
     const { dispatch, appSelector } = useRedux();
 
     useEffect(() => {
-        dispatch(menuActions.fetchMenuList());
+        // dispatch(menuActions.fetchMenuList());
     }, [dispatch]);
 
     const menuList = appSelector(selectMenuList);
@@ -77,7 +77,7 @@ function Drawer(Props : DrawerProps) {
                                                     }`}
                                                 >
                                                     {data.dropdownItem.map((item, k) => (
-                                                        <li>
+                                                        <li key={item.title}>
                                                             <Link to={item.link}>{item.title}</Link>
                                                         </li>
                                                     ))}
@@ -144,4 +144,4 @@ function Drawer(Props : DrawerProps) {
     );
 }
 
-export default Drawer;
+export default React.memo(Drawer);
