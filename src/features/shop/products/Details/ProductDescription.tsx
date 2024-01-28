@@ -42,8 +42,8 @@ const ProductDescriptionInfo = (props:productProps) => {
     };
     
     useEffect(() => {
-        dispatch(cartActions.getCartDetails({ userid: loggedInUser.id }));
-    }, [dispatch, loggedInUser.id]);
+        dispatch(cartActions.getCartDetails({ userid: loggedInUser?.id }));
+    }, [dispatch, loggedInUser?.id]);
 
     const [productStock, setProductStock] = useState(product.stock);
     let cartItemList: any = appSelector(selectCurrentCartData);

@@ -7,7 +7,7 @@ function getContacts(payload:any) {
 }
 
 function sendContact(payload:any) {
-    const baseUrl = '/api/sendEnquiry/';
+    const baseUrl = 'http://localhost:8080/api/sendEnquiry';
     const response = APICore.create(`${baseUrl}`, payload);
     return response;
 }

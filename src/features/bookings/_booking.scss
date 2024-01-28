@@ -1,18 +1,20 @@
 .booking-home {
     .next {
-        right:-14px !important;
+        right: -14px !important;
     }
-    .prev{
+
+    .prev {
         left: 7px !important;
     }
-    .slick-arrow{
-        left:auto;
+
+    .slick-arrow {
+        left: auto;
     }
 
     .slider-item {
         padding-top: 4px;
         padding-bottom: 4px;
-        
+
         .booking-box {
             transition: all 0.5s;
             margin-left: 20px;
@@ -30,5 +32,95 @@
 }
 
 .report-content {
-    margin-top:20px;
+    margin-top: 20px;
+}
+
+.seva-heading {
+    text-align: center;
+    margin-bottom: 25px;
+}
+.seva-list {
+    padding-left: 50px;
+    padding-right: 50px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+
+    .seva-box {
+        overflow: hidden;
+        border: 1px solid #bfbfbf;
+        border-radius: 12px;
+        width: 380px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        margin: 0 20px 30px;
+
+        .seva-image {
+            width: 100%;
+            height: 200px;
+            border-radius: 4px;
+            align-self: center;
+            border-top-left-radius: 16px;
+            border-top-right-radius: 16px;
+            outline: 1px solid #fff;
+            outline-offset: -8px;
+            object-fit: cover;
+        }
+
+        h4 {
+            text-align: center;
+            color: #991403;
+            font-weight: 600;
+            font-size: 19px;
+            line-height: 20px;
+            padding: 15px 18px 5px;
+        }
+
+        h6 {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 5px 18px 16px;
+            font-size: 16px;
+            font-weight: 600;
+            color: #991403;
+            margin-bottom: 0;
+            cursor: pointer;
+        }
+
+        .seva-box-bottom {
+            display: flex;
+            padding: 12px 18px;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid #bfbfbf;
+            .right-arrow{
+                margin-left: 5px;
+                margin-top: 1.5px;
+                height: 18px;
+                border-radius: 10px;
+            }
+        }
+
+        .seva-amount {
+            font-weight: 800;
+        }
+        button {
+            color: #fff;
+            background-color: #991403;
+            border: none;
+            display: flex;
+            align-self: center;
+            align-items: center;
+            border-radius: 3px;
+            justify-content: center;
+            font-size: 14px;
+            padding: 6px 13px;
+            font-weight: 600;
+            letter-spacing: .3px;
+            white-space: nowrap;
+        }
+    }
 }

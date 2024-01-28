@@ -7,6 +7,7 @@
         }
         .contact-box {
             padding:20px;
+            height: 173px;
             text-align: center;
             &:hover {
                 transform: translateY(0px);
@@ -15,6 +16,9 @@
                 -ms-box-shadow: 0px 25px 35px 0px rgba(0, 0, 0, 0.1);
                 -o-box-shadow: 0px 25px 35px 0px rgba(0, 0, 0, 0.1);
                 box-shadow: 0px 25px 35px 0px rgba(0, 0, 0, 0.1);
+            }
+            .card-title {
+                font-weight: 700;
             }
         }
         .Col {

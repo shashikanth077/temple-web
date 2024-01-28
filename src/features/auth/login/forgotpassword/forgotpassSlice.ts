@@ -29,13 +29,7 @@ const forgotpasswodSlice = createSlice({
             state.loading = true;
         },
         forgotpasswodSuccess(state, action: PayloadAction<SingleResponse<forgotResPassword>>) {
-            state.loading = false;
             state.link = action.payload;
-            state.error = false;
-        },
-        forgotpasswodFailed(state, action: PayloadAction<string>) {
-            state.loading = false;
-            state.error = action.payload;
         },
         resetPassword(state, action: PayloadAction<ResetPayload>) {
             state.loading = true;

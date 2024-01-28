@@ -15,7 +15,6 @@ function* getStaticContent(action:any) {
         yield put(startLoading());
         const response: Content = yield call(getContents, action.payload);
         if (response.success) {
-            yield put(setSuccessMessage('Success'));
             yield put(admincontentActions.getStaticContentSuccess(response));
         } else {
             yield put(setError(response.errorMessage));

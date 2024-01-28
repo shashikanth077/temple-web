@@ -29,11 +29,11 @@ const Layout = (props: DefaultLayoutProps) => {
     const [drawer, toggle] = useToggle(false);
     const { dispatch, appSelector } = useRedux();
 
-    const Ads = appSelector(selectAds);
+    // const Ads = appSelector(selectAds);
     useEffect(() => {
-        if (Ads?.length === 1) {
-            dispatch(admincontentActions.getStaticContent());
-        }
+        // if (Ads?.length === 1) {
+        dispatch(admincontentActions.getStaticContent());
+        // }
     }, [dispatch]);
 
     return (

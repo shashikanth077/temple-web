@@ -1,23 +1,22 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
-    Button, Row, Alert, Col,
+    Button, Row, Col, Alert,
 } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-
-// components
+import { useSelector } from 'react-redux';
+import Swal from 'sweetalert2'; // Import SweetAlert
 import AuthLayout from '../../AuthLayout';
 import { forgotpasswodActions } from './forgotpassSlice';
 import { Form, FormInput } from 'sharedComponents/inputs';
-
 import { useRedux } from 'hooks';
+import { clearState } from 'storeConfig/api/apiSlice';
 
 type UserData = {
-    email: string;
+  email: string;
 };
 
-/* bottom link */
 const BottomLink = () => (
     <Row className="mt-3">
         <Col className="text-center">
@@ -32,37 +31,49 @@ const BottomLink = () => (
 );
 
 const ForgetPassword = () => {
-    const { dispatch, appSelector } = useRedux();
+    const { dispatch } = useRedux();
+    const { loading, error, successMessage } = useSelector((state: any) => state.apiState);
+    const navigate = useNavigate(); // Impor
+    const initialSuccessMessageRef = useRef<string | null>(null);
+    const [showForm, setShowForm] = useState(true);
 
-    useEffect(() => {
-        dispatch(forgotpasswodActions.resetForgot());
-    }, [dispatch]);
-
-    const {
-        loading, link, error,
-    } = appSelector(state => ({
-        loading: state.forgotpassword.loading,
-        link: state.forgotpassword.link,
-        error: state.forgotpassword.error,
-    }));
-
-    /*
-     * form validation schema
-     */
     const schemaResolver = yupResolver(
         yup.object().shape({
-            email: yup.string().required('Please enter Email').email('Please enter Email'),
+            email: yup.string().required('Please enter Email').email('Please enter a valid Email'),
         }),
     );
 
-    console.log('errpr', error);
-
-    /*
-     * handle form submission
-     */
     const onSubmit = (formData: UserData) => {
         dispatch(forgotpasswodActions.forgotpasswod(formData));
+        setShowForm(false);
     };
+
+    useEffect(() => {
+        if (successMessage) {
+            Swal.fire({
+                icon: 'success',
+                text: successMessage || '',
+            }).then(() => {
+                navigate('/login');
+                dispatch(clearState());
+            });
+        }
+    }, [successMessage, navigate, dispatch]);
+
+    useEffect(() => {
+        if (error) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: error,
+            }).then(() => {
+            // Show the form again if there is an error
+                setShowForm(true);
+                // Clear error message in the Redux store
+                dispatch(clearState());
+            });
+        }
+    }, [error, dispatch]);
 
     return (
         <AuthLayout bottomLinks={<BottomLink />}>
@@ -73,30 +84,23 @@ const ForgetPassword = () => {
                 </p>
             </div>
 
-            {!error && link != null && !loading && <Alert variant="success">Link has been sent to your registered email to reset password. please check</Alert>}
+            {showForm && (
+                <Form<UserData> onSubmit={onSubmit} resolver={schemaResolver}>
+                    <FormInput
+                        label="Email address"
+                        type="email"
+                        name="email"
+                        placeholder="Enter your email"
+                        containerClass="mb-3"
+                    />
 
-            {error && !loading && (
-                <Alert variant="danger" className="my-2">
-                    {error}
-                </Alert>
+                    <div className="mb-3 d-grid text-center">
+                        <Button type="submit" disabled={loading}>
+                            Reset Password
+                        </Button>
+                    </div>
+                </Form>
             )}
-
-            <Form<UserData> onSubmit={onSubmit} resolver={schemaResolver}>
-                <FormInput
-                    label="Email address"
-                    type="email"
-                    name="email"
-                    placeholder="Enter your email"
-                    containerClass="mb-3"
-                />
-
-                <div className="mb-3 d-grid text-center">
-                    <Button type="submit" disabled={loading}>
-                        Reset Password
-                    </Button>
-                </div>
-            </Form>
-
         </AuthLayout>
     );
 };

@@ -26,7 +26,7 @@ function* fetchLoginCheck(action:any) {
             if (profileStatus.success === false) {
                 yield put(authActions.updateProfileStatus(profileStatus.success));
             }
-            yield put(setSuccessMessage('login success'));
+            yield put(setSuccessMessage('Login success'));
             yield put(authActions.loginSuccess(response));
         } else {
             APICore.setLoggedInUser(null);
