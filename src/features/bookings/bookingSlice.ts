@@ -6,6 +6,7 @@ export interface BookingState {
     booking:any;
     bookings:any;
     message:string;
+    mybookings:any;
 }
 
 interface GetBookingPayload {
@@ -15,6 +16,7 @@ const initialState: BookingState = {
     loading: false,
     booking: {},
     bookings: [],
+    mybookings: [],
     message: '',
 };
 
@@ -26,6 +28,13 @@ const BookingSlice = createSlice({
             state.loading = true;
         },
         getBookingsSuccess(state, action: PayloadAction<BookingRes>) {
+            state.loading = false;
+            state.mybookings = action.payload.bookings;
+        },
+        getSevaList(state, action: PayloadAction<any>) {
+            state.loading = true;
+        },
+        getSevaListSuccess(state, action: PayloadAction<BookingRes>) {
             state.loading = false;
             state.bookings = action.payload.bookings;
         },

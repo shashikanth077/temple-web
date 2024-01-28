@@ -1,0 +1,113 @@
+.tax-receipt-content {
+    display: flex;
+    flex-direction: row;
+}
+.tax-recp-copy {
+    text-align: center;
+}
+.temple-contact-info {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+.temple-name,.temple-body-heading {
+    text-transform: capitalize;
+    text-align: center;
+    font-size: 20px;
+    font-weight: 700;
+}
+.treasure-signature {
+    margin-top: 25px;
+}
+@media print{@page {size: portrait}}
+@media print {
+    html, body {
+      height: 100vh; /* Use 100% here to support printing more than a single page*/
+      margin: 0 !important;
+      padding: 0 !important;
+      overflow: scroll;
+    }
+  }
+
+  .cutDott {    
+    border-bottom: 1px dotted #000;
+    text-decoration: none;
+}
+
+.donation-list-section {
+    .card-donation-section {
+        overflow: hidden;
+        border: 1px solid #dcdcdc;
+        border-radius: 16px;
+        width: 350px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        margin: 10px;
+        .donation-image {
+            width: 100%;
+            height: 200px;
+            align-self: center;
+            border-top-left-radius: 16px;
+            border-top-right-radius: 16px;
+            outline: 1px solid #fff;
+            outline-offset: -8px
+        }
+        h4 {
+            text-align: center;
+            color: #991403;
+            font-weight: 600;
+            font-size: 20px;
+            line-height: 24px;
+            padding: 15px 0 5px;
+            margin: 0 18px;
+        }
+        h5 {
+            margin: 0 18px;
+            text-align: center;
+            letter-spacing: .3px;
+            font-size: 15px;
+            font-weight: 400;
+            color: #181818;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 4;
+            -webkit-box-orient: vertical;
+            line-height: 20px;
+        }
+    }
+    button {
+        margin: 10px 0 20px;
+        color: #fff;
+        border-radius: 10px;
+        background-color: #991403;
+        border: none;
+        display: flex;
+        align-self: center;
+        align-items: center;
+        justify-content: center;
+        font-size: 14px;
+        padding: 6px 13px;
+        font-weight: 600;
+        letter-spacing: .3px;
+        white-space: nowrap;
+    }
+    .right-arrow{
+        margin-left: 5px;
+        margin-top: 1.5px;
+        height: 18px;
+        border-radius: 10px;
+    }
+    .donation-btn {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 20px
+    }
+    .view-more-booking {
+        background-color: #fff;
+        color:$theme-color
+    }
+}

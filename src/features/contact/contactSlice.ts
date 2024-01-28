@@ -58,20 +58,6 @@ const sendContactInfoSlice = createSlice({
         sendContactInfo(state, action: PayloadAction<ContactData>) {
             state.loading = true;
         },
-        sendContactInfoSuccess(state, action:PayloadAction<SingleResponse<SuccessRes>>) {
-            state.loading = false;
-            state.success = action.payload.success;
-        },
-        sendContactInfoFailed(state, action: PayloadAction<string>) {
-            state.loading = false;
-            state.success = false;
-            state.error = action.payload;
-        },
-        resetContact(state) {
-            state.loading = false;
-            state.success = false;
-            state.error = null;
-        },
     },
 });
 

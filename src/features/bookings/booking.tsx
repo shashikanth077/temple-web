@@ -35,7 +35,7 @@ export default function Bookings() {
                             autoPly
                             autoplaySpeedVal={6000}
                         >
-                            {bookingList.map((bookingtypes:any, index:any) => (
+                            {bookingList?.map((bookingtypes:any, index:any) => (
                                 <div key={bookingtypes._id}>
                                     <div className="slider-item">
                                         <CardBox

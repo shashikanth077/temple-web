@@ -57,6 +57,7 @@ const EditDonationType = React.lazy(() => import('admin/features/donations/editD
 const DonationList = React.lazy(() => import('features/donations/userdonations'));
 const SiteManage = React.lazy(() => import('admin/features/sitemanager/siteManager'));
 const UserActivation = React.lazy(() => import('features/auth/register/activation'));
+const SevaTypes = React.lazy(() => import('features/bookings/bookingList'));
 
 export interface RoutesProps {
     path: RouteProps['path'];
@@ -140,6 +141,12 @@ const otherPublicRoutes: RoutesProps[] = [
         element: <ProductDetails />,
         route: Route,
     },
+    {
+        path: '/seva-types',
+        name: 'Seva types',
+        element: <SevaTypes />,
+        route: Route,
+    },
 ];
 
 const authRoutes: RoutesProps[] = [
@@ -150,7 +157,7 @@ const authRoutes: RoutesProps[] = [
         route: Route,
     },
     {
-        path: '/ResetPassword',
+        path: '/passwordReset',
         name: 'ResetPassword',
         element: <ResetPassword />,
         route: Route,

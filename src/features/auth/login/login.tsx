@@ -1,18 +1,21 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
     Button, Row, Col,
 } from 'react-bootstrap';
-import { Message } from 'primereact/message';
-import { Navigate, Link, useLocation } from 'react-router-dom';
+import {
+    Navigate, useNavigate, Link, useLocation,
+} from 'react-router-dom';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { useSelector } from 'react-redux';
+import Swal from 'sweetalert2'; // Import SweetAlert
 import AuthLayout from '../AuthLayout';
 import { authActions } from './loginSlice';
 import Loader from 'sharedComponents/loader/loader';
 import { Form, FormInput } from 'sharedComponents/inputs';
 import useRedux from 'hooks/useRedux';
 import { APICore } from 'helpers/api';
+import { clearState } from 'storeConfig/api/apiSlice';
 
 type LocationState = {
     from?: Location;
@@ -44,18 +47,12 @@ const BottomLink = () => (
 );
 
 const Login = () => {
-    const { dispatch, appSelector } = useRedux();
+    const { dispatch } = useRedux();
+    const navigate = useNavigate();
     const { loading, error, successMessage } = useSelector((state:any) => state.apiState);
 
-    const {
-        user, userLoggedIn,
-    } = appSelector(state => ({
-        user: state.login.currentUser,
-        userLoggedIn: state.login.isLoggedIn,
-    }));
-
     /*
-    form validation schema
+        form validation schema
     */
     const schemaResolver = yupResolver(
         yup.object().shape({
@@ -70,6 +67,29 @@ const Login = () => {
     const onSubmit = (formData: UserData) => {
         dispatch(authActions.login(formData));
     };
+
+    useEffect(() => {
+        if (successMessage) {
+            Swal.fire({
+                icon: 'success',
+                text: successMessage || '',
+            }).then(() => {
+                dispatch(clearState());
+            });
+        }
+    }, [successMessage, navigate, dispatch]);
+
+    useEffect(() => {
+        if (error) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: error,
+            }).then(() => {
+                dispatch(clearState());
+            });
+        }
+    }, [error, dispatch]);
 
     const location = useLocation();
     let redirectUrl = '/dashboard';
@@ -87,10 +107,6 @@ const Login = () => {
                 <div className="text-center mb-4">
                     <h4 className="text-uppercase mt-0">Sign In</h4>
                 </div>
-
-                {error && (
-                    <Message severity="error" text={error} />
-                )}
 
                 {loading && <Loader />}
 
@@ -122,7 +138,7 @@ const Login = () => {
                     />
 
                     <div className="text-center d-grid mb-3">
-                        <Button variant="primary" type="submit">
+                        <Button disabled={loading} variant="primary" type="submit">
                             Log In
                         </Button>
                     </div>
