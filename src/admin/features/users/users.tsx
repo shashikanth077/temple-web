@@ -21,6 +21,7 @@ export default function Users() {
     
     const emptyUser:User = {
         _id:'dummy',
+        TermConcent:false,
         email:'',
         firstName:'',
         phonenumber:'',

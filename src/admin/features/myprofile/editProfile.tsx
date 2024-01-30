@@ -13,7 +13,7 @@ import { selectMyProfileDetails } from './myProfileSelectors';
 import Loader from 'sharedComponents/loader/loader';
 import { FormInput } from 'sharedComponents/inputs';
 import { ProfileData } from 'models';
-import { useRedux, useToggle } from 'hooks';
+import { useRedux, useToggle, useUser } from 'hooks';
 import { clearState } from 'storeConfig/api/apiSlice';
 import { CAProvinces } from 'constants/CAProvinces';
 import { NakshtraRasi } from 'constants/profile';
@@ -26,16 +26,15 @@ const EditProfile = () => {
     const [billingAddressShow, hideBillingToggle] = useToggle(true);
     const { loading, error, successMessage } = useSelector((state:any) => state.apiState);
 
-    const userInfo:any = sessionStorage.getItem('admintemple_user');
-    const userArr = JSON.parse(userInfo);
+    const [loggedInUser] = useUser();
 
     const showToast = (severity:any, summary:any, detail:any) => {
         toast.current.show({ severity, summary, detail });
     };
 
     useEffect(() => {
-        dispatch(myprofileActions.getMyProfileDetails({ userid: userArr.id }));
-    }, [dispatch, userArr.id]);
+        dispatch(myprofileActions.getMyProfileDetails({ userid: loggedInUser?.id }));
+    }, [dispatch]);
 
     const ProfileDetails:any = appSelector(selectMyProfileDetails);
 
@@ -116,7 +115,7 @@ const EditProfile = () => {
         ProfileObj.gotram = formData.gotram;
         ProfileObj.classification = 'Individual';
 
-        ProfileObj.userid = userArr.id || '';
+        ProfileObj.userid = loggedInUser?.id || '';
 
         if (billingAddressShow === false) {
             ProfileObj.billingAddress = {
@@ -172,7 +171,7 @@ const EditProfile = () => {
                                                             <FormInput
                                                                 type="hidden"
                                                                 name="_id"
-                                                                defaultValue={userArr.id}
+                                                                defaultValue={loggedInUser?.id}
                                                                 register={register}
                                                                 key="_id"
                                                                 control={control}

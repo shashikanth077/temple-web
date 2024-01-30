@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
-    Row, Col, Alert,
+    Row, Col,
 } from 'react-bootstrap';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
@@ -8,17 +8,18 @@ import {
     useNavigate,
 } from 'react-router-dom';
 import Swal from 'sweetalert2';
-// import { Navigate, Link, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { useForm } from 'react-hook-form';
 import { sendcontactActions } from './contactSlice';
 import Loader from 'sharedComponents/loader/loader';
-import { Form, FormInput } from 'sharedComponents/inputs';
+import { FormInput } from 'sharedComponents/inputs';
 import Cardboxnew from 'sharedComponents/cards/card1';
 import { useRedux } from 'hooks';
 // import GMap from 'sharedComponents/Googlemap/googleMap';
 import { clearState } from 'storeConfig/api/apiSlice';
 import Button from 'sharedComponents/button/button';
 import { selectContactformDetails, selectContactDetails } from 'features/content/contactSelectors';
+import { EnquiryMessageLimit } from 'constants/General';
 
 type ContactData = {
     name:string;
@@ -32,6 +33,7 @@ function Contact() {
 
     const navigate = useNavigate();
     const { loading, error, successMessage } = useSelector((state:any) => state.apiState);
+    const [enquiry, setEnquiry] = useState<string>('');
 
     const ContactFormStatic:any = appSelector(selectContactformDetails);
     const Contacttatic:any = appSelector(selectContactDetails);
@@ -39,15 +41,27 @@ function Contact() {
     const schemaResolver = yupResolver(
         yup.object().shape({
             email: yup.string().required(ContactFormStatic?.email).email(ContactFormStatic?.validEmail),
-            name: yup.string().required(ContactFormStatic?.name),
-            message: yup.string().required(ContactFormStatic?.message),
-            subject: yup.string().required(ContactFormStatic?.subject),
+            name: yup.string().required(ContactFormStatic?.name).min(2, 'Enter minimum 2 letter'),
+            message: yup.string().required(ContactFormStatic?.message).max(400, 'Exceeded character limit'),
+            subject: yup.string().required(ContactFormStatic?.subject).min(10, 'Enter minimum 10 letter'),
         }),
     );
 
-    const onSubmit = (formData: ContactData) => {
-        dispatch(sendcontactActions.sendContactInfo(formData));
-    };
+    const methods = useForm<ContactData>({
+        resolver: schemaResolver,
+    });
+
+    const {
+        handleSubmit,
+        register,
+        control,
+        reset,
+        formState: { errors },
+    } = methods;
+
+    const onSubmit = handleSubmit((data:any) => {
+        dispatch(sendcontactActions.sendContactInfo(data));
+    });
 
     useEffect(() => {
         if (successMessage) {
@@ -57,6 +71,7 @@ function Contact() {
             }).then(() => {
                 dispatch(clearState());
             });
+            reset();
             navigate('/');
         }
     }, [successMessage, navigate, dispatch]);
@@ -72,6 +87,17 @@ function Contact() {
             });
         }
     }, [error, dispatch]);
+
+    const maxCharacters = EnquiryMessageLimit; // Set your desired character limit
+
+    const handleEnquiryChange = (event: any) => {
+        const inputValue = event.target.value;
+
+        // Check if the input value exceeds the character limit
+        if (inputValue.length <= maxCharacters) {
+            setEnquiry(inputValue);
+        }
+    };
 
     return (
 
@@ -127,43 +153,65 @@ function Contact() {
 
                             {loading && <Loader />}
 
-                            <Form<ContactData>
-                                onSubmit={onSubmit}
-                                resolver={schemaResolver}
-                            >
+                            <form name="contact-enquiry-form" id="contact-enquiry-form" onSubmit={onSubmit}>
                                 <FormInput
                                     label={ContactFormStatic?.formLabels?.name}
-                                    type="text"
-                                    name="name"
+                                    register={register}
+                                    key="name"
+                                    errors={errors}
+                                    control={control}
+                                    type="input"
                                     containerClass="mb-3"
+                                    id="name"
+                                    name="name"
                                 />
 
                                 <FormInput
-                                    type="email"
-                                    name="email"
                                     label={ContactFormStatic?.formLabels?.email}
+                                    register={register}
+                                    key="email"
+                                    errors={errors}
+                                    control={control}
+                                    type="input"
                                     containerClass="mb-3"
+                                    id="email"
+                                    name="email"
                                 />
 
                                 <FormInput
                                     label={ContactFormStatic?.formLabels?.subject}
-                                    type="text"
-                                    name="subject"
+                                    register={register}
+                                    key="subject"
+                                    errors={errors}
+                                    control={control}
+                                    type="input"
                                     containerClass="mb-3"
+                                    id="subject"
+                                    name="subject"
                                 />
 
                                 <FormInput
                                     label={ContactFormStatic?.formLabels?.message}
-                                    type="textarea"
-                                    name="message"
+                                    register={register}
+                                    key="message"
+                                    value={enquiry}
+                                    onChange={handleEnquiryChange}
+                                    errors={errors}
+                                    control={control}
+                                    type="input"
                                     containerClass="mb-3"
+                                    id="message"
+                                    name="message"
                                 />
+                                <p>
+                                    <b>Characters remaining: {maxCharacters - enquiry.length}</b>
+                                </p>
                                 <div className="">
                                     <Button disabled={loading} btntype classnames="read-more contact-btn">
                                         {ContactFormStatic?.btnName}
                                     </Button>
                                 </div>
-                            </Form>
+                            </form>
                         </div>
                     </div>
                     {/* <div className="col-md-4">

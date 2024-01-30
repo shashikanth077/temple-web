@@ -63,3 +63,13 @@ export interface God {
   name:string;
   worshipDay:any;
 }
+
+export interface ServiceBookData {
+  category:string;
+  NoOfPerson:number;
+  userId:string;
+  name:string;
+  amount:number;
+  comments:string;
+  bookingDate:string;
+}

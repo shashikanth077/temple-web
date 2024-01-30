@@ -21,7 +21,7 @@ function Home() {
             <Banner />
             <About />
             <AboutImage />
-            <Services />
+            {/* <Services /> */}
             <GrandprogramOne />
             <Bookings />
             <Recentevents />

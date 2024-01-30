@@ -51,7 +51,7 @@ const Register = () => {
             email: yup.string().required(RegisterContent.formValidation?.email).email(RegisterContent.formValidation?.emailValid),
             phonenumber: yup.string().required(RegisterContent.formValidation?.phonenumber),
             password: yup.string().required(RegisterContent.formValidation?.password),
-            checkboxsignup: yup.bool().oneOf([true], RegisterContent.formValidation?.checkboxsignup),
+            TermConcent: yup.bool().oneOf([true], RegisterContent.formValidation?.checkboxsignup),
         }),
     );
 
@@ -117,7 +117,7 @@ const Register = () => {
                     <FormInput
                         label={RegisterContent.formPlaceHolder?.terms}
                         type="checkbox"
-                        name="checkboxsignup"
+                        name="TermConcent"
                         containerClass="mb-3"
                     />
 

@@ -11,11 +11,12 @@ import { getStaticContent } from 'utils/contentUtil';
 import { selectStaticContentServices } from 'features/content/contactSelectors';
 import Heading from 'sharedComponents/heading/heading';
 
+/* eslint no-underscore-dangle: 0 */
 export default function Services() {
     const { dispatch, appSelector } = useRedux();
 
     useEffect(() => {
-        dispatch(serviceActions.fetchServiceList());
+        dispatch(serviceActions.getServices({ _id: '1' }));
     }, [dispatch]);
 
     const serviceList = appSelector(selectServiceList);
@@ -37,14 +38,14 @@ export default function Services() {
                             autoPly
                             autoplaySpeedVal={5000}
                         >
-                            {serviceList.map((service, index) => (
+                            {serviceList.map((service:any) => (
                                 <div key={service.id}>
                                     <div className="slider-item">
                                         <CardBox
                                             buttonStatus={false}
                                             imageStatus={false}
                                             cardClass="service-box"
-                                            description={service.service_description}
+                                            description={service.description}
                                             title="Services"
                                             buttontitle="Read More"
                                             buttonClass="read-wtbtn-more float-right"

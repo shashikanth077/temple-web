@@ -73,7 +73,7 @@ const setAuthorization = (token: string | null) => {
 };
 
 const getUserFromCookie = () => {
-    const user:any = sessionStorage.getItem(AUTH_SESSION_KEY);
+    const user:any = localStorage.getItem(AUTH_SESSION_KEY);
     if (user) {
         if (user.token) {
             setAuthorization(user.token);
@@ -235,12 +235,12 @@ class APICore {
     }
 
     static destoryUser(){
-        sessionStorage.removeItem(AUTH_SESSION_KEY);
+        localStorage.removeItem(AUTH_SESSION_KEY);
     }
     static setLoggedInUser(session: any) {
-        if (session) sessionStorage.setItem(AUTH_SESSION_KEY, JSON.stringify(session));
+        if (session) localStorage.setItem(AUTH_SESSION_KEY, JSON.stringify(session));
         else {
-            sessionStorage.removeItem(AUTH_SESSION_KEY);
+            localStorage.removeItem(AUTH_SESSION_KEY);
         }
     }
 
@@ -250,7 +250,7 @@ class APICore {
     static getLoggedInUser() { return getUserFromCookie(); }
 
     static setUserInSession(modifiedUser: any) {
-        const userInfo = sessionStorage.getItem(AUTH_SESSION_KEY);
+        const userInfo = localStorage.getItem(AUTH_SESSION_KEY);
         if (userInfo) {
             const { user } = JSON.parse(userInfo);
             console.log("setUserInSession",user);
