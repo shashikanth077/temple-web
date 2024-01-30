@@ -1,14 +1,14 @@
-import { Service, ListResponse } from '../../models';
-import axiosClient from 'utils/services';
+import { APICore } from 'helpers/api';
 
-export const servicesApi = {
-    getAll(): Promise<ListResponse<Service>> {
-        const url = 'http://localhost:4000/api/getServices';
-        return axiosClient.get(url, {
-            params: {
-                _page: 1,
-                _limit: 10,
-            },
-        });
-    },
-};
+/* eslint-disable */
+export function getServiceById(payload:any) {
+    const baseUrl = 'http://localhost:8080/api/service/'+payload._id;;
+    const response = APICore.get(`${baseUrl}`, {});
+    return response;
+}
+
+export function bookService(payload:any) {
+    const baseUrl = 'http://localhost:8080/api/booking'
+    const response = APICore.create(`${baseUrl}`,payload);
+    return response;
+}

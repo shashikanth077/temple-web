@@ -1,30 +1,46 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Service, ListResponse } from 'models';
+import { ServerList, ServiceBookData, SuccesResponse } from 'models';
 
 export interface ServiceState {
   loading: boolean;
-  list: Service[];
+  services:any;
+  message:string;
+  bookingData:any;
 }
-
+interface GetBookingPayload {
+    _id:string | undefined;
+}
 const initialState: ServiceState = {
     loading: false,
-    list: [],
+    services: [],
+    message: '',
+    bookingData: {},
 };
 
 const serviceSlice = createSlice({
-    name: 'service',
+    name: 'services',
     initialState,
     reducers: {
-        fetchServiceList(state) {
+        getServices(state, action: PayloadAction<GetBookingPayload>) {
             state.loading = true;
         },
-        fetchServiceListSuccess(state, action: PayloadAction<ListResponse<Service>>) {
+        fetchServiceListSuccess(state, action: PayloadAction<ServerList>) {
             state.loading = false;
-            state.list = action.payload.data;
+            state.services = action.payload.services;
         },
-        fetchServiceListFailed(state, action: PayloadAction<string>) {
+        bookService(state, action: PayloadAction<ServiceBookData>) {
             state.loading = false;
-            console.log(action);
+        },
+        saveBookingLocalData(state, action: PayloadAction<SuccesResponse>) {
+            state.loading = false;
+            state.bookingData = action.payload;
+        },
+        confirmPayment(state, action: PayloadAction<ServiceBookData>) {
+            state.loading = false;
+        },
+        bookServiceSuccess(state, action: PayloadAction<SuccesResponse>) {
+            state.loading = false;
+            state.message = action.payload.message;
         },
     },
 });

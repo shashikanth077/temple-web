@@ -5,21 +5,18 @@ import ManageDeseaedAns from './deceased/Deceased';
 import ManageFamily from './family/Family';
 import { myprofileActions } from './myProfileSlice';
 import { selectMyProfileDetails } from './myProfileSelectors';
-import { useRedux } from 'hooks';
+import { useRedux, useUser } from 'hooks';
 
 function Myprofile() {
     const [open, setOpen] = useState(true);
     const { dispatch, appSelector } = useRedux();
-
-    const userInfo:any = sessionStorage.getItem('admintemple_user');
-    const userArr = JSON.parse(userInfo);
+    const [loggedInUser] = useUser();
 
     useEffect(() => {
-        dispatch(myprofileActions.getMyProfileDetails({ userid: userArr.id }));
+        dispatch(myprofileActions.getMyProfileDetails({ userid: loggedInUser?.id }));
     }, [dispatch]);
 
     const ProfileDetails:any = appSelector(selectMyProfileDetails);
-    console.log('ProfileDetails', ProfileDetails);
 
     return (
         <section className="content">

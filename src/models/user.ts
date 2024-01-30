@@ -4,6 +4,7 @@ export interface User {
   password?: string;
   phonenumber: string;
   roles: any;
+  TermConcent:boolean;
   viewRoles: string[];
   firstName: string;
   lastName: string;

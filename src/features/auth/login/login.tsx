@@ -3,7 +3,7 @@ import {
     Button, Row, Col,
 } from 'react-bootstrap';
 import {
-    Navigate, useNavigate, Link, useLocation,
+    useNavigate, Link, useLocation,
 } from 'react-router-dom';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
@@ -68,6 +68,9 @@ const Login = () => {
         dispatch(authActions.login(formData));
     };
 
+    const location = useLocation();
+    let redirectUrl = '/dashboard';
+
     useEffect(() => {
         if (successMessage) {
             Swal.fire({
@@ -75,9 +78,26 @@ const Login = () => {
                 text: successMessage || '',
             }).then(() => {
                 dispatch(clearState());
+                const sessionUrl = localStorage.getItem('targetUrl');
+                if (sessionUrl) {
+                    navigate(sessionUrl);
+                    localStorage.removeItem('targetUrl');
+                } else {
+                    navigate(redirectUrl, { replace: true });
+                }
             });
         }
-    }, [successMessage, navigate, dispatch]);
+
+        if (error) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: error,
+            }).then(() => {
+                dispatch(clearState());
+            });
+        }
+    }, [successMessage, error, navigate, dispatch, redirectUrl]);
 
     useEffect(() => {
         if (error) {
@@ -91,60 +111,78 @@ const Login = () => {
         }
     }, [error, dispatch]);
 
-    const location = useLocation();
-    let redirectUrl = '/dashboard';
-
     if (location.state) {
         const { from } = location.state as LocationState;
         redirectUrl = from ? from.pathname : '/';
     }
 
+    useEffect(() => {
+        const handleRedirect = () => {
+            // Check if the user is authenticated
+            if (APICore.isUserAuthenticated()) {
+                const sessionUrl = localStorage.getItem('targetUrl');
+                console.log(sessionUrl);
+
+                // Check if there is a stored session URL
+                if (sessionUrl) {
+                    // Navigate to the stored session URL
+                    navigate(sessionUrl);
+
+                    // Remove the stored session URL after redirecting
+                    // localStorage.removeItem('targetUrl');
+                } else {
+                    // If there is no stored session URL, redirect to the default URL (e.g., /dashboard)
+                    navigate(redirectUrl, { replace: true });
+                }
+            }
+        };
+
+        // Call the handleRedirect function
+        handleRedirect();
+    }, [successMessage, navigate, dispatch]);
+
     return (
-        <>
-            { APICore.isUserAuthenticated() && <Navigate to={redirectUrl} replace />}
+        <AuthLayout bottomLinks={<BottomLink />}>
+            <div className="text-center mb-4">
+                <h4 className="text-uppercase mt-0">Sign In</h4>
+            </div>
 
-            <AuthLayout bottomLinks={<BottomLink />}>
-                <div className="text-center mb-4">
-                    <h4 className="text-uppercase mt-0">Sign In</h4>
+            {loading && <Loader />}
+
+            <Form<UserData>
+                onSubmit={onSubmit}
+                resolver={schemaResolver}
+            >
+                <FormInput
+                    type="email"
+                    name="email"
+                    label="Email address"
+                    placeholder="hello@test.com"
+                    containerClass="mb-3"
+                />
+                <FormInput
+                    label="Password"
+                    type="password"
+                    name="password"
+                    placeholder="Enter your password"
+                    containerClass="mb-3"
+                />
+
+                <FormInput
+                    type="checkbox"
+                    name="checkbox"
+                    label="Remember me"
+                    containerClass="mb-3"
+                    defaultChecked
+                />
+
+                <div className="text-center d-grid mb-3">
+                    <Button disabled={loading} variant="primary" type="submit">
+                        Log In
+                    </Button>
                 </div>
-
-                {loading && <Loader />}
-
-                <Form<UserData>
-                    onSubmit={onSubmit}
-                    resolver={schemaResolver}
-                >
-                    <FormInput
-                        type="email"
-                        name="email"
-                        label="Email address"
-                        placeholder="hello@test.com"
-                        containerClass="mb-3"
-                    />
-                    <FormInput
-                        label="Password"
-                        type="password"
-                        name="password"
-                        placeholder="Enter your password"
-                        containerClass="mb-3"
-                    />
-
-                    <FormInput
-                        type="checkbox"
-                        name="checkbox"
-                        label="Remember me"
-                        containerClass="mb-3"
-                        defaultChecked
-                    />
-
-                    <div className="text-center d-grid mb-3">
-                        <Button disabled={loading} variant="primary" type="submit">
-                            Log In
-                        </Button>
-                    </div>
-                </Form>
-            </AuthLayout>
-        </>
+            </Form>
+        </AuthLayout>
     );
 };
 

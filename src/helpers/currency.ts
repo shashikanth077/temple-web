@@ -6,11 +6,11 @@ export const formatCurrency = (intl:any, value:any, currencyCode = 'CAD') => {
         const formattedValue = intl.formatNumber(value, {
             style: 'currency',
             currency: currencyCode,
-            currencyDisplay: 'symbol',
+            currencyDisplay: 'code',
             minimumFractionDigits: 2,
         });
 
-        return formattedValue;
+        return `${formattedValue}`;
     } catch (error:any) {
         console.error(`Error formatting currency: ${error.message}`);
         return value; // Return the original value in case of an error

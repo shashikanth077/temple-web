@@ -39,6 +39,7 @@ import { adminReportsReducer } from 'admin/features/reports/reportsSlice';
 import { adminBookingReducer } from 'admin/features/bookings/bookingSlice';
 import { adminDonationTypeReducer } from 'admin/features/donations/donationSlice';
 import { adminSiteManagerReducer } from 'admin/features/sitemanager/siteManagerSlice';
+import { volunteerReducer } from 'features/volunteers/volunteersSlice';
 
 const rootReducer = combineReducers({
     contact: contactReducer,
@@ -73,6 +74,7 @@ const rootReducer = combineReducers({
     adminbookingtypes: adminBookingReducer,
     admindonationtypes: adminDonationTypeReducer,
     adminStatic: adminSiteManagerReducer,
+    volunteers: volunteerReducer,
 });
 
 const persistConfig = {

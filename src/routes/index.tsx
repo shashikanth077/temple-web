@@ -58,6 +58,12 @@ const DonationList = React.lazy(() => import('features/donations/userdonations')
 const SiteManage = React.lazy(() => import('admin/features/sitemanager/siteManager'));
 const UserActivation = React.lazy(() => import('features/auth/register/activation'));
 const SevaTypes = React.lazy(() => import('features/bookings/bookingList'));
+const UserServiceList = React.lazy(() => import('features/services/serviceList'));
+const UserServiceDetails = React.lazy(() => import('features/services/serviceDetails'));
+const ServiceBook = React.lazy(() => import('features/services/serviceBook'));
+const ServiceSuccess = React.lazy(() => import('features/services/serviceSuccess'));
+const ServiceConfirm = React.lazy(() => import('features/services/serviceConfirm'));
+const Voluteers = React.lazy(() => import('features/volunteers/volunteers'));
 
 export interface RoutesProps {
     path: RouteProps['path'];
@@ -145,6 +151,24 @@ const otherPublicRoutes: RoutesProps[] = [
         path: '/seva-types',
         name: 'Seva types',
         element: <SevaTypes />,
+        route: Route,
+    },
+    {
+        path: '/service-list',
+        name: 'Service types',
+        element: <UserServiceList />,
+        route: Route,
+    },
+    {
+        path: '/service-details/:id',
+        name: 'Service Details',
+        element: <UserServiceDetails />,
+        route: Route,
+    },
+    {
+        path: '/volunteers',
+        name: 'Voluteers',
+        element: <Voluteers />,
         route: Route,
     },
 ];
@@ -500,6 +524,21 @@ const bookingsReportRoutes: RoutesProps = {
             path: '/mybookings/lists',
             name: 'Mydonations',
             element: <MyBookings />,
+        },
+        {
+            path: '/service-book/:id',
+            name: 'ServiceBook',
+            element: <ServiceBook />,
+        },
+        {
+            path: '/confirm-booking-details',
+            name: 'ServiceBook',
+            element: <ServiceConfirm />,
+        },
+        {
+            path: '/payment-booking',
+            name: 'ServiceBook',
+            element: <ServiceSuccess />,
         },
     ],
 };
