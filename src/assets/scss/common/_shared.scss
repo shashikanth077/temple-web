@@ -1803,3 +1803,96 @@ button:disabled {
     width: 40px;
   }
 }
+
+.pi {
+  color:indianred;
+}
+
+///new style heading
+.section-title h2 {
+  text-transform: uppercase;
+}
+.section-title h2 {
+  font-size: 29px;
+  font-weight: 500;
+}
+.section-title .bar {
+  position: relative;
+  width: 20px;
+  height: 4px;
+  background: #ff2d55;
+  display: block;
+
+  &::after {
+    content: '';
+    width: 25px;
+    background: #00acee;
+    position: absolute;
+    right: -29px;
+    height: 4px; /* Add this line if height is intended */
+  }
+
+  &::before {
+    content: '';
+    background: #efa506;
+    width: 30px;
+    position: absolute;
+    right: -63px;
+    height: 4px; /* Add this line if height is intended */
+  }
+}
+
+
+//new button
+// .btn-primary {
+//   color: #fff;
+//   background: #0d1028;
+//   position: relative;
+//   z-index: 1;
+//   &::after {
+//     right: 0;
+//     content: "";
+//     position: absolute;
+//     top: 0;
+//     width: 51%;
+//     background: #ff2d55;
+//     height: 100%;
+//     z-index: -1;
+//     transition: .5s;
+//   }
+//   &::before {
+//     left: 0;
+//     content: "";
+//     position: absolute;
+//     top: 0;
+//     width: 51%;
+//     background: #ff2d55;
+//     height: 100%;
+//     z-index: -1;
+//     transition: .5s;
+//   }
+// }
+
+// .btn-primary:focus, .btn-primary:hover {
+//   background: #0d1028;
+// }
+// .btn-primary.focus, .btn-primary:focus, .btn-primary:hover {
+//   box-shadow: 0 13px 27px 0 rgba(245,78,162,.25);
+//   color: #fff;
+// }
+
+// .btn {
+//   font-weight: 600;
+//   font-size: 15px;
+//   color: #fff;
+//   box-shadow: 0 8px 6px -6px rgba(50,51,51,.4);
+//   border: none;
+//   padding: 15px 30px;
+//   border-radius: 0;
+//   transition: .5s;
+// }
+
+
+
+
+

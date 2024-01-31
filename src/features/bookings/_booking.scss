@@ -14,12 +14,11 @@
     .slider-item {
         padding-top: 4px;
         padding-bottom: 4px;
-
+       
         .booking-box {
             transition: all 0.5s;
             margin-left: 20px;
-            height: 205px;
-            padding: 8px;
+             padding: 8px;
             width: 100%;
             overflow: hidden;
             align-items: self-end;
@@ -121,4 +120,11 @@
             white-space: nowrap;
         }
     }
+}
+
+.booking-title {
+    font-weight: 600;
+    font-size: 19px;
+    margin-top: 10px;
+    color: indianred;
 }

@@ -5,36 +5,32 @@ interface ArrowProps {
     onEvent: any;
 }
 
-export function Nextarrow(props:ArrowProps) {
-    const { classes, onEvent } = props;
-    return (
-        <span
-            aria-label="Prev-Arrow"
-            className={`next slick-arrow ${classes}`}
-            style={{ display: 'block' }}
-            onClick={onEvent}
-            onKeyDown={onEvent}
-            role="button"
-            tabIndex={0}
-        >
-            <i className="fas fa-chevron-right" />
-        </span>
-    );
-}
+/* eslint-disable */
+const Prevarrow = ({ classes, onEvent }: ArrowProps) => (
+    <div
+        className={classes}
+        onClick={onEvent}
+        style={{
+            position: 'absolute', top: '50%', left: '10px', transform: 'translateY(-50%)', zIndex: 1,
+        }}
+    >
+        {/* Your arrow icon or content */}
+        <i className="pi pi-chevron-left" style={{ fontSize: '2rem' }} />
+    </div>
+);
 
-export function Prevarrow(props:ArrowProps) {
-    const { classes, onEvent } = props;
-    return (
-        <span
-            aria-label="Next-Arrow"
-            className={`prev slick-arrow ${classes}`}
-            style={{ display: 'block' }}
-            onClick={onEvent}
-            onKeyDown={onEvent}
-            role="button"
-            tabIndex={0}
-        >
-            <i className="fas fa-chevron-left" />
-        </span>
-    );
-}
+// Nextarrow component
+const Nextarrow = ({ classes, onEvent }: ArrowProps) => (
+    <div
+        className={classes}
+        onClick={onEvent}
+        style={{
+            position: 'absolute', top: '50%', right: '10px', transform: 'translateY(-50%)', zIndex: 1,
+        }}
+    >
+        {/* Your arrow icon or content */}
+        <i className="pi pi-chevron-right" style={{ fontSize: '2rem' }} />
+    </div>
+);
+
+export {Prevarrow,Nextarrow} ;

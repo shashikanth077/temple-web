@@ -10,7 +10,7 @@ interface CardProps {
     CardImage?:string;
     buttontitle?:string;
     buttonClass?:string;
-    description:string;
+    description?:string;
     buttonStatus:boolean;
 }
 
@@ -24,7 +24,7 @@ const CardBox: React.FC<CardProps> = ({
     imageStatus,
     buttonStatus,
 }) => (
-    <Card className={`${cardClass}`}>
+    <Card className={`${cardClass}`} style={{ backgroundImage: `url(${CardImage})` }}>
         <Card.Body>
             <Card.Title className="mt-0 card-title">
                 {title}
