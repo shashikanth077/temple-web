@@ -38,7 +38,7 @@ const ServiceDetails = () => {
                         <div className="col-lg-6 col-md-6">
                             <CSSTransition in appear timeout={1000} classNames="fade-left">
                                 <div className="productthumb mb-40">
-                                    <img src={`${window.location.origin}/assets/images/products/1.jpg`} alt="product-thumb" />
+                                    <img src={`${serviceDetails?.image}`} alt="service-thumb" />
                                 </div>
                             </CSSTransition>
                         </div>

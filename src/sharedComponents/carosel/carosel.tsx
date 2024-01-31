@@ -4,17 +4,18 @@ import 'slick-carousel/slick/slick.scss';
 import 'slick-carousel/slick/slick-theme.css';
 import { Prevarrow, Nextarrow } from './Arrows/arrows';
 
+/* eslint-disable */
 interface SlickProps {
-    children:any;
-    arrowClassPrev:string;
-    arrowClassNext:string;
-    NumOfSlide?:number;
-    autoPly?:boolean;
-    dotsStatus?:boolean;
-    autoplaySpeedVal?:number;
+  children: any;
+  arrowClassPrev: string;
+  arrowClassNext: string;
+  NumOfSlide?: number;
+  autoPly?: boolean;
+  dotsStatus?: boolean;
+  autoplaySpeedVal?: number;
 }
 
-function SlickSlider(props:SlickProps) {
+function SlickSlider(props: SlickProps) {
     const {
         children, arrowClassPrev, arrowClassNext, dotsStatus, autoplaySpeedVal, NumOfSlide, autoPly,
     } = props;
@@ -39,17 +40,17 @@ function SlickSlider(props:SlickProps) {
         slidesToShow: NumOfSlide,
         slidesToScroll: 1,
     };
+
     return (
-        /* eslint-disable react/jsx-props-no-spreading */
-        <>
-            {arrowClassPrev !== 'aboutimages-home-next-pr' ? <Prevarrow classes={arrowClassPrev} onEvent={sliderPrev} />
-                : ''}
-            <Slick {...settings}>
-                {children}
-            </Slick>
-            {arrowClassPrev !== 'aboutimages-home-next-pr' ? <Nextarrow classes={arrowClassNext} onEvent={sliderNext} />
-                : ''}
-        </>
+        <div style={{ position: 'relative' }}>
+      {arrowClassPrev !== 'aboutimages-home-next-pr' ? <Prevarrow classes={arrowClassPrev} onEvent={sliderPrev} />
+        : ''}
+      <Slick {...settings}>
+        {children}
+      </Slick>
+      {arrowClassPrev !== 'aboutimages-home-next-pr' ? <Nextarrow classes={arrowClassNext} onEvent={sliderNext} />
+        : ''}
+    </div>
     );
 }
 
