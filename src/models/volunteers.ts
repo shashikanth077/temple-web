@@ -8,3 +8,12 @@ export interface Voluteers {
     name:string;
     phone:string;
 }
+
+export interface VoluteersRes {
+    errorCode:any;
+    success:boolean;
+    message:string;
+    volunteers:Voluteers[];
+    error:string;
+    errorMessage:string;
+}

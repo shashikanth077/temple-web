@@ -17,6 +17,7 @@ export interface ContentState {
     ads:any;
     contactdetails:any;
     contactform:any;
+    volunteers:any;
 }
 
 const initialState: ContentState = {
@@ -33,6 +34,7 @@ const initialState: ContentState = {
     footer: '',
     about: '',
     header: '',
+    volunteers: '',
     home: '',
     registration: '',
 };
@@ -59,6 +61,7 @@ const contentSlice = createSlice({
             state.staff = action.payload.data.contentData.content.FrontEnd.Staffs;
             state.adminmenu = action.payload.data.contentData.content.adminMenus;
             state.publicmenu = action.payload.data.contentData.content.FrontMenus;
+            state.volunteers = action.payload.data.contentData.content.FrontEnd.Volunteers;
         },
     },
 });
