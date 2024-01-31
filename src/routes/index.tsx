@@ -64,6 +64,8 @@ const ServiceBook = React.lazy(() => import('features/services/serviceBook'));
 const ServiceSuccess = React.lazy(() => import('features/services/serviceSuccess'));
 const ServiceConfirm = React.lazy(() => import('features/services/serviceConfirm'));
 const Voluteers = React.lazy(() => import('features/volunteers/volunteers'));
+const AdminVolunteersList = React.lazy(() => import('admin/features/volunteers'));
+const TestTemple = React.lazy(() => import('admin/features/volunteers/cerficateContent'));
 
 export interface RoutesProps {
     path: RouteProps['path'];
@@ -85,6 +87,12 @@ const otherPublicRoutes: RoutesProps[] = [
         path: '/',
         name: 'Home',
         element: <Home />,
+        route: Route,
+    },
+    {
+        path: '/testcontent',
+        name: 'testcontent',
+        element: <TestTemple />,
         route: Route,
     },
     {
@@ -252,6 +260,19 @@ const SiteManagerRoutes:RoutesProps = {
     ],
 };
 
+const VolunteersRoutes:RoutesProps = {
+    path: '/admin/volunteers',
+    name: 'Volunteers',
+    roles: ['ROLE_ADMIN'],
+    children: [
+        {
+            path: '/admin/volunteers/list',
+            name: 'Volunteers',
+            element: <AdminVolunteersList />,
+        },
+    ],
+};
+
 const dashboardRoutes:RoutesProps = {
     path: '/dashboard',
     roles: ['ROLE_ADMIN', 'ROLE_USER'],
@@ -351,7 +372,6 @@ const GodsRoutes: RoutesProps = {
 const ServicesRoutes: RoutesProps = {
     path: '/admin/services',
     name: 'Services',
-
     roles: ['ROLE_ADMIN'],
     children: [
         {
@@ -378,7 +398,6 @@ const ServicesRoutes: RoutesProps = {
 const donationTypesRoutes: RoutesProps = {
     path: '/admin/donationtypes',
     name: 'DonationTypes',
-
     roles: ['ROLE_ADMIN'],
     children: [
         {
@@ -608,6 +627,7 @@ const flattenRoutes = (routes: RoutesProps[]) => {
 
 const authProtectedRoutes = [
     productRoutes,
+    VolunteersRoutes,
     SiteManagerRoutes,
     eventsRoutes,
     groceryRoutes,

@@ -15,10 +15,11 @@ import { useRedux } from 'hooks';
 import { Voluteers } from 'models';
 import Loader from 'sharedComponents/loader/loader';
 import Heading from 'sharedComponents/heading/heading';
+import { selectStaticVoluteers } from 'features/content/contactSelectors';
 
 /* eslint-disable */
 const AddBooking = () => {
-    const { dispatch } = useRedux();
+    const { dispatch,appSelector } = useRedux();
     const { loading, error, successMessage } = useSelector(
         (state: any) => state.apiState,
     );
@@ -30,30 +31,31 @@ const AddBooking = () => {
 
     const navigate = useNavigate();
 
+    const staticVolunteers:any = appSelector(selectStaticVoluteers);
 
     /*
        form validation schema
     */
     const schemaResolver = yupResolver(
         yup.object().shape({
-            email: yup.string().required("Please enter the email address").email("Please enter valid email address"),
+            email: yup.string().required(staticVolunteers?.formValidation.email).email(staticVolunteers?.formValidation.validEmail),
             name: yup
                 .string()
-                .required("Please enter first and last name together")
+                .required(staticVolunteers?.formValidation.name)
                 .min(
                     2,
                     "This value is too short. It should have 2 characters or more.",
                 ),
             phone: yup
             .number()
-            .required("Please enter the phone number")
+            .required(staticVolunteers?.formValidation.phone)
             .min(
                 8,
                 "This value is too short. It should have 8 characters or more.",
             ),
             description: yup
                 .string()
-                .required("Please enter description")
+                .required(staticVolunteers?.formValidation.description)
                 .min(
                     2,
                     "This value is too short. It should have 2 characters or more.",
@@ -124,9 +126,9 @@ const AddBooking = () => {
                     <div className="row">
                         <div className="col-lg-12">
                             <div className="title-box text-center">
-                                <Heading title="Volunteer" classes='text-center mt-3'/>
+                                <Heading title={staticVolunteers?.heading} classes='text-center mt-3'/>
                                 <p className="text-muted f-17 mt-3">
-                                The Sri Sathya Narayana Temple has always relied on the power of volunteer efforts to help deliver all of the amazingly successful programs for our community. Volunteering also means meeting incredible, new people who share strong, spiritual values. To join our volunteer group please fill out the form below:
+                                {staticVolunteers?.subHeading}
                                 </p>
 
                                 <img
@@ -144,7 +146,7 @@ const AddBooking = () => {
                                 <div className="animation-2"></div>
                                 <div className="animation-3"></div>
                                 <img
-                                    src="assets/images/volunteers.jpg"
+                                    src={`${window.location.origin}/assets/images/${staticVolunteers?.LeftImage}`}
                                     className="img-fluid"
                                     alt=""
                                 />
@@ -152,9 +154,8 @@ const AddBooking = () => {
                         </div>
                         <div className="col-lg-6">
                             <form
-                                encType="multipart/form-data"
-                                name="Booking-form"
-                                id="Booking-form"
+                                name="voluteer-form"
+                                id="voluteer-form"
                                 onSubmit={onSubmit}
                             >
                                 <div className="row">
@@ -165,7 +166,7 @@ const AddBooking = () => {
                                                 key="name"
                                                 errors={errors}
                                                 control={control}
-                                                label="First and last name*"
+                                                label={staticVolunteers?.formLabels.name}
                                                 type="input"
                                                 containerClass="mb-3"
                                                 id="name"
@@ -184,7 +185,7 @@ const AddBooking = () => {
                                                 key="email"
                                                 errors={errors}
                                                 control={control}
-                                                label="Email address*"
+                                                label={staticVolunteers?.formLabels.email}
                                                 containerClass="mb-3"
                                             />
                                         </div>
@@ -200,7 +201,7 @@ const AddBooking = () => {
                                                 key="phone"
                                                 errors={errors}
                                                 control={control}
-                                                label="Phone number*"
+                                                label={staticVolunteers?.formLabels.phone}
                                                 containerClass="mb-3"
                                             />
                                         </div>
@@ -211,8 +212,7 @@ const AddBooking = () => {
                                     <div className="col-lg-12">
                                         <div className="form-group">
                                             <label>
-                                                Is this number available on
-                                                Whatsapp?*
+                                            {staticVolunteers?.formLabels.iswhatsupnumber}
                                             </label>
                                             <div>
                                                 <div className="custom-control custom-radio custom-control-inline">
@@ -265,8 +265,7 @@ const AddBooking = () => {
                                     <div className="col-lg-12">
                                         <div className="form-group">
                                             <label>
-                                                Do you curretly live in
-                                                Ontario?*
+                                            {staticVolunteers?.formLabels.islive}
                                             </label>
                                             <div>
                                                 <div className="custom-control custom-radio custom-control-inline">
@@ -318,7 +317,7 @@ const AddBooking = () => {
                                     <div className="col-lg-12">
                                         <div className="form-group">
                                             <label>
-                                                Are you a vegetarian?*
+                                            {staticVolunteers?.formLabels.isveg}
                                             </label>
                                             <div>
                                                 <div className="custom-control custom-radio custom-control-inline">
@@ -369,8 +368,7 @@ const AddBooking = () => {
                                     <div className="col-lg-12">
                                         <div className="form-group">
                                             <label>
-                                                Have you previously volunteered
-                                                for this temple?*
+                                            {staticVolunteers?.formLabels.beforevolunteer}
                                             </label>
                                             <div>
                                                 <div className="custom-control custom-radio custom-control-inline">

@@ -40,6 +40,7 @@ import { adminBookingReducer } from 'admin/features/bookings/bookingSlice';
 import { adminDonationTypeReducer } from 'admin/features/donations/donationSlice';
 import { adminSiteManagerReducer } from 'admin/features/sitemanager/siteManagerSlice';
 import { volunteerReducer } from 'features/volunteers/volunteersSlice';
+import { adminVolunteersReducer } from 'admin/features/volunteers/volunteerSlice';
 
 const rootReducer = combineReducers({
     contact: contactReducer,
@@ -75,13 +76,14 @@ const rootReducer = combineReducers({
     admindonationtypes: adminDonationTypeReducer,
     adminStatic: adminSiteManagerReducer,
     volunteers: volunteerReducer,
+    adminVoltr: adminVolunteersReducer,
 });
 
 const persistConfig = {
     key: 'arora',
     version: 1.1,
     storage,
-    blacklist: ['adminuser', 'myprofile', 'apiState', 'adminproduct', 'login', 'about', 'product', 'menu', 'staff', 'events', 'contact', 'register', 'sendcontact'],
+    blacklist: ['adminVoltr', 'adminuser', 'myprofile', 'apiState', 'adminproduct', 'login', 'about', 'product', 'menu', 'staff', 'events', 'contact', 'register', 'sendcontact'],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

@@ -14,3 +14,4 @@ export const selectAds = (state: RootState) => state.staticContent.ads;
 export const selectStaffs = (state: RootState) => state.staticContent.staff;
 export const selectAdminMenu = (state: RootState) => state.staticContent.adminmenu;
 export const selectPublicMenu = (state: RootState) => state.staticContent.publicmenu;
+export const selectStaticVoluteers = (state: RootState) => state.staticContent.volunteers;

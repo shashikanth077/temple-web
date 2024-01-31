@@ -29,6 +29,7 @@ import adminBookingSaga from 'admin/features/bookings/bookingSaga';
 import adminDonationSaga from 'admin/features/donations/donationSaga';
 import adminStaticDataSaga from 'admin/features/sitemanager/siteManagerSaga';
 import VoluteersSaga from 'features/volunteers/voluteersSaga';
+import adminVolunteersSaga from 'admin/features/volunteers/volunteerSaga';
 
 export default function* rootSaga() {
     yield all(
@@ -63,6 +64,7 @@ export default function* rootSaga() {
             adminDonationSaga(),
             adminStaticDataSaga(),
             VoluteersSaga(),
+            adminVolunteersSaga(),
         ],
     );
 }
