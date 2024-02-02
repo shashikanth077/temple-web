@@ -14,16 +14,7 @@ import { FormInput } from 'sharedComponents/inputs';
 import { useRedux } from 'hooks';
 import { God } from 'models';
 import Loader from 'sharedComponents/loader/loader';
-
-const Days:any = [
-    { value: 'Monday', label: 'Monday' },
-    { value: 'Tuesday', label: 'Tuesday' },
-    { value: 'Wednesday', label: 'Wednesday' },
-    { value: 'Thursday', label: 'Thursday' },
-    { value: 'Friday', label: 'Friday' },
-    { value: 'Saturday', label: 'Saturday' },
-    { value: 'Sunday', label: 'Sunday' },
-];
+import { Days } from 'constants/services';
 
 /* eslint-disable */
 const AddGod = () => {

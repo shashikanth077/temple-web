@@ -2,6 +2,13 @@ export interface Voluteers {
     beforevolunteer:boolean;
     description:string;
     email:string;
+    address:string;
+    city:string;
+    state:string;
+    zipcode:string;
+    possibleDays:any;
+    activityList:any;
+    otheractivities:string;
     islive:boolean;
     isveg:boolean;
     iswhatsupnumber:boolean;
