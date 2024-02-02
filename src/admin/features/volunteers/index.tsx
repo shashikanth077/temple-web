@@ -50,6 +50,7 @@ export function Managevolunteers() {
 
     const [selectedVolunteer, setSelectedVolunteer] = useState<any>(null);
     const [displayConfirmation, setDisplayConfirmation] = useState(false);
+    const [viewMoreDialogVisible, setViewMoreDialogVisible] = useState(false);
 
     useEffect(() => {
         dispatch(adminVolunteersActions.getVolunteers());
@@ -78,6 +79,11 @@ export function Managevolunteers() {
         setSelectedVolunteer(null);
         setActionType("");
         setDisplayConfirmation(false);
+    };
+
+    const showViewMoreDialog = (rowData: any) => {
+        setSelectedVolunteer(rowData);
+        setViewMoreDialogVisible(true);
     };
 
     const handleAction = () => {
@@ -130,7 +136,6 @@ export function Managevolunteers() {
                 )}
             {rowData.approveStatus === "approved" && (
                 <>
-                    <Button icon="pi pi-check" className="mr-2" disabled />
                     <Button
                         icon="pi pi-print"
                         rounded
@@ -140,9 +145,12 @@ export function Managevolunteers() {
                     />
                 </>
             )}
-            {rowData.approveStatus === "rejected" && (
-                <Button icon="pi pi-times" className="mr-2" disabled />
-            )}
+            {rowData.approveStatus === "rejected" && <></>}
+            <Button
+                icon="pi pi-eye"
+                className="p-button-info"
+                onClick={() => showViewMoreDialog(rowData)}
+            />
         </>
     );
 
@@ -174,6 +182,17 @@ export function Managevolunteers() {
             ></i>
         );
     };
+
+    const viewMoreDialogFooter = (
+        <div>
+            <Button
+                label="Close"
+                icon="pi pi-times"
+                onClick={() => setViewMoreDialogVisible(false)}
+                className="p-button-secondary"
+            />
+        </div>
+    );
 
     useEffect(() => {
         if (successMessage) {
@@ -220,7 +239,28 @@ export function Managevolunteers() {
                     <Column
                         field="iswhatsupnumber"
                         header="Is WhatApp number?"
+                        style={{ width: "1rem" }}
                         body={verifiedBodyTemplate}
+                    />
+                    <Column
+                        field="approveStatus"
+                        sortable
+                        style={{ width: "2rem" }}
+                        header="Approval Status"
+                        body={(rowData: any) => (
+                            <span
+                                className={classNames({
+                                    "p-tag p-tag-success":
+                                        rowData.approveStatus === "approved",
+                                    "p-tag p-tag-danger":
+                                        rowData.approveStatus === "rejected",
+                                    "p-tag p-tag-new":
+                                        rowData.approveStatus === "new",
+                                })}
+                            >
+                                {rowData.approveStatus}
+                            </span>
+                        )}
                     />
                     <Column
                         body={actionBodyTemplate}
@@ -254,6 +294,78 @@ export function Managevolunteers() {
                         {actionType === "approve" ? "approve" : "reject"} this
                         volunteer?
                     </p>
+                </Dialog>
+
+                <Dialog
+                    visible={viewMoreDialogVisible}
+                    onHide={() => setViewMoreDialogVisible(false)}
+                    header={`Details for ${selectedVolunteer?.name}`}
+                    footer={viewMoreDialogFooter}
+                >
+                    {/* Render additional details for the selected volunteer */}
+                    {selectedVolunteer && (
+                        <div className="card p-4">
+                            <h5
+                                className="mb-4 font-weight-bold"
+                                style={{
+                                    borderBottom: "2px solid #333",
+                                    paddingBottom: "10px",
+                                }}
+                            >
+                                <strong
+                                    style={{ color: "#333", fontSize: "18px" }}
+                                >
+                                    Additional Details
+                                </strong>
+                            </h5>
+                            <div className="row">
+                                <div className="col-md-6 mb-2">
+                                    <strong>Activities:</strong>{" "}
+                                    {selectedVolunteer?.activityList.join(", ")}
+                                </div>
+                                <div className="col-md-6 mb-2">
+                                    <strong>Possible days:</strong>{" "}
+                                    {selectedVolunteer?.possibleDays.join(", ")}
+                                </div>
+                                <div className="col-md-6 mb-2">
+                                    <strong>State:</strong>{" "}
+                                    {selectedVolunteer?.state}
+                                </div>
+                                <div className="col-md-6 mb-2">
+                                    <strong>City:</strong>{" "}
+                                    {selectedVolunteer?.city}
+                                </div>
+                                <div className="col-md-6 mb-2">
+                                    <strong>Zip code:</strong>{" "}
+                                    {selectedVolunteer?.zipcode}
+                                </div>
+                                <div className="col-md-6 mb-2">
+                                    <strong>Other activities:</strong>{" "}
+                                    {selectedVolunteer?.otheractivities}
+                                </div>
+                                <div className="col-md-6 mb-2">
+                                    <strong>
+                                        Have you previously volunteered for this
+                                        temple?:
+                                    </strong>{" "}
+                                    {selectedVolunteer.beforevolunteer
+                                        ? "Yes"
+                                        : "No"}
+                                </div>
+                                <div className="col-md-6 mb-2">
+                                    <strong>Are you a vegetarian?:</strong>{" "}
+                                    {selectedVolunteer.isveg ? "Yes" : "No"}
+                                </div>
+                                <div className="col-md-6 mb-2">
+                                    <strong>
+                                        Do you currently live in Toronto?:
+                                    </strong>{" "}
+                                    {selectedVolunteer.islive ? "Yes" : "No"}
+                                </div>
+                                {/* ... (add more details as needed) */}
+                            </div>
+                        </div>
+                    )}
                 </Dialog>
             </div>
         </div>

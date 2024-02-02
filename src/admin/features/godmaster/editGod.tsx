@@ -18,21 +18,12 @@ import { God } from 'models';
 import { clearState } from 'storeConfig/api/apiSlice';
 import Loader from 'sharedComponents/loader/loader';
 import ImageComponent from 'sharedComponents/Image/image';
+import { Days } from 'constants/services';
 
 interface OptionTypes {
     value: string;
     label: string;
 }
-
-const Days: Array<OptionTypes> = [
-    { value: 'Monday', label: 'Monday' },
-    { value: 'Tuesday', label: 'Tuesday' },
-    { value: 'Wednesday', label: 'Wednesday' },
-    { value: 'Thursday', label: 'Thursday' },
-    { value: 'Friday', label: 'Friday' },
-    { value: 'Saturday', label: 'Saturday' },
-    { value: 'Sunday', label: 'Sunday' },
-];
 
 /* eslint-disable */
 const EditGod = () => {
