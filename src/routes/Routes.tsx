@@ -25,14 +25,16 @@ const AllRoutes = (props: RoutesProps) => {
 
     let RoleStatus;
     if(loggedInUser?.roles?.includes('ROLE_ADMIN')) {
-        console.log("loggedInadmin");
         RoleStatus = 'ROLE_ADMIN';
     } 
 
     if(loggedInUser?.roles?.includes('ROLE_USER') && !loggedInUser?.roles?.includes('ROLE_ADMIN')) {
-        console.log("loggeduser");
-        RoleStatus = 'ROLE_USER';
+         RoleStatus = 'ROLE_USER';
     } 
+
+    if(loggedInUser?.roles?.includes('ROLE_USER') && loggedInUser?.roles?.includes('ROLE_ADMIN')) {
+        RoleStatus = 'BOTH';
+    }
 
     return (
         <Routes>
@@ -79,23 +81,21 @@ const AllRoutes = (props: RoutesProps) => {
                     ))}
                 </Route>
              }
-
-            {RoleStatus === 'ROLE_USER' &&      
-               <Route>
-                    {noAdminProtectedFlattenRoutes.map((route, idx) => (
-                        <Route
-                            path={route.path}
-                            element={
-                                <AuthProtected>
-                                    <AuthLayout {...props}>{route.element}</AuthLayout>
-                                </AuthProtected>
-                            }
-                            key={idx}
-                        />
-                    ))}
-               </Route>
-            }
-
+             
+            <Route>
+                {noAdminProtectedFlattenRoutes.map((route, idx) => (
+                    <Route
+                        path={route.path}
+                        element={
+                            <AuthProtected>
+                                <AuthLayout {...props}>{route.element}</AuthLayout>
+                            </AuthProtected>
+                        }
+                        key={idx}
+                    />
+                ))}
+            </Route>
+            
             <Route
                 path="*"
                 element={

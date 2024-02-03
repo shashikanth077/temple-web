@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { BookingRes } from 'models';
+import { BookingRes, SevaBookData, SuccesResponse } from 'models';
 
 export interface BookingState {
     loading?: boolean;
@@ -7,6 +7,7 @@ export interface BookingState {
     bookings:any;
     message:string;
     mybookings:any;
+    sevaData:any;
 }
 
 interface GetBookingPayload {
@@ -15,6 +16,7 @@ interface GetBookingPayload {
 const initialState: BookingState = {
     loading: false,
     booking: {},
+    sevaData: {},
     bookings: [],
     mybookings: [],
     message: '',
@@ -37,6 +39,13 @@ const BookingSlice = createSlice({
         getSevaListSuccess(state, action: PayloadAction<BookingRes>) {
             state.loading = false;
             state.bookings = action.payload.bookings;
+        },
+        bookSeva(state, action: PayloadAction<SevaBookData>) {
+            state.loading = false;
+        },
+        saveSevaLocalData(state, action: PayloadAction<SuccesResponse>) {
+            state.loading = false;
+            state.sevaData = action.payload;
         },
     },
 });
