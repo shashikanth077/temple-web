@@ -14,6 +14,7 @@ import { sendcontactActions } from './contactSlice';
 import Loader from 'sharedComponents/loader/loader';
 import { FormInput } from 'sharedComponents/inputs';
 import Cardboxnew from 'sharedComponents/cards/card1';
+import Heading from 'sharedComponents/heading/heading';
 import { useRedux } from 'hooks';
 // import GMap from 'sharedComponents/Googlemap/googleMap';
 import { clearState } from 'storeConfig/api/apiSlice';
@@ -104,13 +105,12 @@ function Contact() {
         <section id="contact" className="contact-section p-80px-tb">
 
             <div className="container">
-                <div className="row">
-                    <div className="col-sm-8 offset-sm-2">
-                        <div className="section-title text-center mb-4">
-                            <h2>{ContactFormStatic?.GetInTouchTitle}</h2>
-                        </div>
-                    </div>
-                </div>
+                <Heading
+                    headingWrapClass="contactform-head-wrap"
+                    title={ContactFormStatic?.GetInTouchTitle}
+                    classes="text-center mt-3"
+                    align="text-center"
+                />
                 <Row className="contact-info-area g-4 mb-5">
                     <Col className="Col" lg={3} md={6}>
                         <Cardboxnew

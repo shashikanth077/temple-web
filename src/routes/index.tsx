@@ -66,6 +66,8 @@ const ServiceConfirm = React.lazy(() => import('features/services/serviceConfirm
 const Voluteers = React.lazy(() => import('features/volunteers/volunteers'));
 const AdminVolunteersList = React.lazy(() => import('admin/features/volunteers'));
 const TestTemple = React.lazy(() => import('admin/features/volunteers/cerficateContent'));
+const SevaDetails = React.lazy(() => import('features/bookings/bookingDetails'));
+const SevaBook = React.lazy(() => import('features/bookings/sevaBook'));
 
 export interface RoutesProps {
     path: RouteProps['path'];
@@ -177,6 +179,12 @@ const otherPublicRoutes: RoutesProps[] = [
         path: '/volunteers',
         name: 'Voluteers',
         element: <Voluteers />,
+        route: Route,
+    },
+    {
+        path: '/seva-details/:id',
+        name: 'SevaDetails',
+        element: <SevaDetails />,
         route: Route,
     },
 ];
@@ -559,6 +567,11 @@ const bookingsReportRoutes: RoutesProps = {
             name: 'ServiceBook',
             element: <ServiceSuccess />,
         },
+        {
+            path: '/seva-book/:id',
+            name: 'SevaBook',
+            element: <SevaBook />,
+        },
     ],
 };
 
@@ -571,7 +584,6 @@ const incomeReportsRoutes: RoutesProps = {
             path: '/incomereports/list',
             name: 'InComeReports',
             element: <IncomeReports />,
-
         },
     ],
 };
@@ -579,14 +591,12 @@ const incomeReportsRoutes: RoutesProps = {
 const userDonationReportsRoutes: RoutesProps = {
     path: '/mydonations/',
     name: 'DonateGrocry',
-
     roles: ['ROLE_USER'],
     children: [
         {
             path: '/mydonations/list',
             name: 'Mydonations',
             element: <MyDonations />,
-
         },
     ],
 };

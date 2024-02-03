@@ -50,3 +50,13 @@ export interface BookingRes {
     errorCode:number;
     message:string;
 }
+
+export interface SevaBookData {
+    category:string;
+    NoOfPerson:number;
+    userId:string;
+    name:string;
+    amount:number;
+    comments:string;
+    bookingDate:string;
+  }
