@@ -5,12 +5,16 @@ import './App.css';
 import { PrimeReactProvider } from 'primereact/api';
 import { PersistGate } from 'redux-persist/integration/react';
 import { IntlProvider } from 'react-intl';
+import { Elements } from '@stripe/react-stripe-js';
+import { loadStripe } from '@stripe/stripe-js';
 import { persistor, store } from './storeConfig/store';
 import './assets/scss/_main.scss';
 import Routes from 'routes/Routes';
 import ErrorBoundary from 'sharedComponents/Error/ErrorBoundary';
 
 global.Buffer = Buffer;
+
+const stripePromise = loadStripe('pk_test_kLXZAIgM9jW9flHREsbzTupH');
 
 function App() {
     return (
@@ -20,7 +24,9 @@ function App() {
                     <div className="App">
                         <ErrorBoundary>
                             <PrimeReactProvider>
-                                <Routes />
+                                <Elements stripe={stripePromise}>
+                                    <Routes />
+                                </Elements>
                             </PrimeReactProvider>
                         </ErrorBoundary>
                     </div>

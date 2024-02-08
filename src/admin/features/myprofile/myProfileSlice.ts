@@ -4,7 +4,7 @@ import {
 } from 'models';
 
 export interface ProfilePayload {
-    userid: string;
+    userid: string | undefined;
 }
 
 export interface FamilyReqPayload {

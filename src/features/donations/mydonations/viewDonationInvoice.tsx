@@ -1,127 +1,114 @@
 import React from 'react';
-import { Card, Col, Row } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
-import { uid } from 'uid';
+import moment from 'moment';
+import { useIntl } from 'react-intl';
+import { useRedux } from 'hooks';
+import { selectContactDetails } from 'features/content/contactSelectors';
+import { formatCurrency } from 'helpers/currency';
 
 type InvoiceDonation = {
     donationId:string;
     donationData:any;
 }
 /* eslint no-underscore-dangle: 0 */
-const InvoiceDonation = (props:InvoiceDonation) => {
+function InvoiceDonationComp(props:InvoiceDonation) {
     const { donationId, donationData } = props;
+    const { appSelector } = useRedux();
+    const intl = useIntl();
 
     const invoiceDetails = donationData.find((donation:any) => donationId === donation._id);
 
+    const TempleStaticData = appSelector(selectContactDetails);
+
     return (
-        <Row>
-            <Col md={12}>
-                <Card>
-                    <Card.Body>
-                        <div className="panel-body">
-                            <div className="clearfix">
-                                <div className="float-start">
-                                    <h3><b>Sri sathya narayana temple</b></h3>
-                                    <img src={`${window.location.origin}/assets/images/logo/logo.jpg`} width="80" alt="logo" />
+
+        <div id="invoice">
+            <div className="toolbar hidden-print">
+                <div className="text-right">
+                    <button type="button" id="printInvoice" className="btn btn-info"><i className="fa fa-print" /> Print</button>
+                    <button type="button" className="btn btn-info"><i className="fa fa-file-pdf-o" /> Export as PDF</button>
+                </div>
+                <hr />
+            </div>
+            <div className="invoice overflow-auto">
+                <div className="invoice-wrapper">
+                    <header>
+                        <div className="row">
+                            <div className="col">
+                                <div className="logo-container">
+                                    <img alt="logo" src={`${window.location.origin}/assets/images/logo/${TempleStaticData?.TempleLogo}`} width={60} height={60} />
                                 </div>
-                                <div className="float-end">
-                                    <h4>
-                                        Invoice # <br />
-                                        <strong>{invoiceDetails._id}</strong>
-                                    </h4>
-                                </div>
+                                <h4 className="logo-heading">{TempleStaticData?.TempleName}</h4>
                             </div>
-                            <hr />
-                            <Row>
-                                <Col md={12}>
-                                    <div className="float-start mt-3">
-                                        <address>
-                                            <strong>{invoiceDetails.address.name}</strong>
-                                            <br />
-                                            {invoiceDetails.address.address1}
-                                            <br />
-                                            {invoiceDetails.address.city}, {invoiceDetails.address.state}{' '}
-                                            {invoiceDetails.address.zip}
-                                            <br />
-                                            <abbr title="Phone">P:</abbr> {invoiceDetails.address.phone}
-                                        </address>
-                                    </div>
-                                    <div className="float-end mt-3">
-                                        <p>
-                                            <strong>Donated Date: </strong> {invoiceDetails.date}
-                                        </p>
-                                        <p className="m-t-10">
-                                            <strong>Donation Status: </strong>{' '}
-                                            <span className="label label-pink">{invoiceDetails.status}</span>
-                                        </p>
-                                        <p className="m-t-10">
-                                            <strong>Donation ID: </strong> {invoiceDetails._id}
-                                        </p>
-                                    </div>
-                                </Col>
-                            </Row>
-
-                            <Row>
-                                <Col md={12}>
-                                    <div className="table-responsive">
-                                        <table className="table mt-4">
-                                            <thead>
-                                                <tr>
-                                                    <th>#</th>
-                                                    <th>Item</th>
-                                                    <th>Description</th>
-                                                    <th>Quantity</th>
-                                                    <th>Unit Cost</th>
-                                                    <th>Total</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                {(invoiceDetails.donatedItems || []).map((item:any, idx:number) => (
-                                                    <tr key={uid()}>
-                                                        <td>{idx + 1}</td>
-                                                        <td>{item.name}</td>
-                                                        <td>{item.description}</td>
-                                                        <td>{item.quantity}</td>
-                                                        <td>{item.cost}</td>
-                                                        <td>{item.total}</td>
-                                                    </tr>
-                                                ))}
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </Col>
-                            </Row>
-                            <Row>
-                                <p className="text-end">
-                                    <b>Sub-total:</b> {invoiceDetails.sub_total}
-                                </p>
-                                <p className="text-end">VAT: {invoiceDetails.tax}%</p>
-                                <hr />
-                                <h3 className="text-end">CAD {invoiceDetails.totalAmount}</h3>
-
-                            </Row>
-                            <hr />
-                            <div className="d-print-none">
-                                <div className="float-end">
-                                    <button
-                                        type="button"
-                                        aria-label="Print"
-                                        className="btn btn-dark waves-effect waves-light me-1"
-                                        onClick={e => {
-                                            window.print();
-                                        }}
-                                    >
-                                        <i className="fa fa-print" />
-                                    </button>
-                                </div>
-                                <div className="clearfix" />
+                            <div className="col company-details">
+                                <div>{TempleStaticData?.Address}</div>
+                                <div>{TempleStaticData?.Phonenumber}</div>
+                                <div>{TempleStaticData?.Emailaddress}</div>
                             </div>
                         </div>
-                    </Card.Body>
-                </Card>
-            </Col>
-        </Row>
-    );
-};
+                    </header>
+                    <main>
+                        <div className="row contacts">
+                            <div className="col invoice-to">
+                                <div className="text-gray-light">INVOICE TO:</div>
+                                <h2 className="to">{invoiceDetails?.donorName}</h2>
+                                <div>{invoiceDetails?.billingAddress?.address1},<br />
+                                    {invoiceDetails?.billingAddress?.city},
+                                    {invoiceDetails?.billingAddress?.province}-
+                                    {invoiceDetails?.billingAddress?.postalCode}<br />
+                                </div>
+                                <div className="email">Email:<a href="mailto:john@example.com">{invoiceDetails?.donorEmail}</a></div>
+                            </div>
+                            <div className="col invoice-details">
+                                <h3 className="invoice-id">INVOICE # {invoiceDetails?.taxReceiptNo}</h3>
+                                <div className="date">Date of Invoice: {moment(invoiceDetails?.donationDate).format('YYYY-MM-DD')}</div>
+                            </div>
+                        </div>
+                        <table border={0} cellSpacing="0" cellPadding="0">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th className="text-center">DONATION TYPE</th>
+                                    <th className="text-center">FREQUENCY</th>
+                                    <th className="text-right">TOTAL</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td className="no">1</td>
+                                    <td className="text-center donationType">{invoiceDetails?.donationType}</td>
+                                    <td className="text-center qty">{invoiceDetails?.frequency}</td>
+                                    <td className="total text-right">{formatCurrency(intl, invoiceDetails?.donatedAmount)}</td> {/* Add 'text-right' class for right alignment */}
+                                </tr>
+                            </tbody>
+                            <tfoot className="sub-total-donaton">
+                                <tr>
+                                    <td aria-label="subtotal" colSpan={1} />
+                                    <td colSpan={2}>SUBTOTAL</td>
+                                    <td className="text-right">{formatCurrency(intl, invoiceDetails?.donatedAmount)}</td> {/* Add 'text-right' class for right alignment */}
+                                </tr>
+                                {/* ... (previous code) */}
+                                <tr>
+                                    <td aria-label="total" colSpan={1} />
+                                    <td colSpan={2}>GRAND TOTAL</td>
+                                    <td className="text-right">{formatCurrency(intl, invoiceDetails?.donatedAmount)}</td> {/* Add 'text-right' class for right alignment */}
+                                </tr>
+                            </tfoot>
+                        </table>
+                        {/* <div className="thanks">Thank you!</div> */}
+                        <div className="notices">
+                            <div>NOTICE:</div>
+                            <div className="notice">General notice if required.</div>
+                        </div>
+                    </main>
+                    <footer>
+                        Invoice was created on a computer and is valid without the signature and seal.
+                    </footer>
+                </div>
 
-export default InvoiceDonation;
+                <div />
+            </div>
+        </div>
+    );
+}
+
+export default InvoiceDonationComp;

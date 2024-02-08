@@ -47,3 +47,12 @@ export interface DonationRes {
     errorCode:number;
     message:string;
 }
+
+export interface DonationForm {
+    userid:string;
+    amount:number;
+    type:string;
+    frequency:string;
+    donateTypeId:string;
+    comments:string;
+}

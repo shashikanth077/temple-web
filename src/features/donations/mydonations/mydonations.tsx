@@ -13,9 +13,9 @@ import { useReactToPrint } from 'react-to-print';
 import PrintComponent from './printInvoice';
 import { mydonationsActions } from './donationSlice';
 import { selectDonationDetails } from './donationsSelectors';
-import InvoiceDonation from './viewDonationInvoice';
+import InvoiceDonationComp from './viewDonationInvoice';
 import DeleteDiaLog from 'sharedComponents/dialogs/dialogs';
-import { useRedux } from 'hooks';
+import { useRedux, useUser } from 'hooks';
 import { clearState } from 'storeConfig/api/apiSlice';
 
 interface Donations {
@@ -60,12 +60,14 @@ export default function ManageDonations() {
     const toast = useRef<any>(null);
     const dt = useRef<any>(null);
     const { dispatch, appSelector } = useRedux();
+    const [loggedInUser] = useUser();
 
     useEffect(() => {
-        dispatch(mydonationsActions.getDonations({ userid: '1' }));
+        dispatch(mydonationsActions.getDonations({ userid: loggedInUser.id }));
     }, [dispatch]);
 
     const DonationList: any = appSelector(selectDonationDetails);
+    console.log("DonationList",DonationList);
 
     const showToast = (severity: any, summary: any, detail: any) => {
         toast.current.show({ severity, summary, detail });
@@ -184,15 +186,16 @@ export default function ManageDonations() {
                     globalFilter={globalFilter}
                     header={header}
                 >
-                    <Column field="type" header="Donation type" />
-                    <Column field="date" header="Date" />
-                    <Column field="totalAmount" header="Amount" />
+                    <Column field="donationType" header="Donation type" />
+                    <Column field="donatedAmount" header="Amount" />
+                    <Column field="taxReceiptNo" header="Tax receipt no" />
+                    <Column field="transStatus" header="Tran Status" />
                     <Column body={actionBodyTemplate} exportable={false} style={{ minWidth: '6rem', textAlign: 'center' }} />
                 </DataTable>
             </div>
 
-            <Dialog visible={donationDialog} style={{ width: '60rem' }} breakpoints={{ '960px': '75vw', '641px': '90vw' }} header="Donation details" modal className="p-fluid" footer={donationDialogFooter} onHide={hideDialog}>
-                <InvoiceDonation donationId={donationId} donationData={DonationList}/>
+            <Dialog visible={donationDialog} style={{ width: '60rem' }} breakpoints={{ '960px': '75vw', '641px': '90vw' }}  modal className="p-fluid" footer={donationDialogFooter} onHide={hideDialog}>
+                 <InvoiceDonationComp donationId={donationId} donationData={DonationList}/> 
             </Dialog>
 
             <DeleteDiaLog

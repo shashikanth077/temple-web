@@ -18,6 +18,7 @@ export interface ContentState {
     contactdetails:any;
     contactform:any;
     volunteers:any;
+    taxreceipt:any;
 }
 
 const initialState: ContentState = {
@@ -28,6 +29,7 @@ const initialState: ContentState = {
     staff: '',
     topbar: '',
     ads: '',
+    taxreceipt: '',
     contactform: '',
     contactdetails: '',
     shop: '',
@@ -62,6 +64,7 @@ const contentSlice = createSlice({
             state.adminmenu = action.payload.data.contentData.content.adminMenus;
             state.publicmenu = action.payload.data.contentData.content.FrontMenus;
             state.volunteers = action.payload.data.contentData.content.FrontEnd.Volunteers;
+            state.taxreceipt = action.payload.data.contentData.content.FrontEnd.TaxReceipt;
         },
     },
 });
