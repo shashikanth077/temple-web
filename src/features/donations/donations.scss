@@ -111,3 +111,128 @@
         color:$theme-color
     }
 }
+
+.give-total-wrap  {
+    .give-donation-amount {
+        margin: 0 0 20px;
+        border: 2px solid #DED4E1;
+        display: inline-block;
+        background: #FFFFFF;
+        border-radius: 0;
+        margin: 0 0 20px;
+        display: inline-block;
+        -webkit-border-radius: 0;
+        -ms-border-radius: 0;
+        border-radius: 0;
+        .give-currency-position-before {
+            background-color: transparent;
+            padding: 0 20px;
+            margin-right: 0;
+            background-color: transparent;
+            color: #322038;
+            font-weight: 800;
+            padding: 0 20px;
+            position: relative;
+            z-index: 1;
+            border: none;
+            background-color:#FFFFFF;
+        }
+        .give-final-total-amount {
+            height: 45px;
+            line-height: 45px;
+            padding: 0 25px;
+            font-size: 17px;
+            font-weight: 700;
+            -webkit-border-radius: 0;
+            -ms-border-radius: 0;
+            border-radius: 0;
+            background: #fff;
+        }
+        .give-hidden {
+            display: none;
+        }
+        .form-row-wide {
+            padding: 8px 8px 8px 0;
+            background-color: $theme-color;
+            border: 2px solid $theme-color;
+            margin: 0 0 20px;
+            display: inline-block;
+            vertical-align: top;
+            background: $theme-color;
+            clear: both;
+            -webkit-border-radius: 0;
+            -ms-border-radius: 0;
+            border-radius: 0;
+            &::before {
+                content: " ";
+                display: table;
+            }
+            &::after {
+                clear: both;
+            }
+        }
+        .give-text-input {
+            height: 31px;
+            border: none;
+            background: white;
+            line-height: 32px;
+            color: #B5AFB8 !important;
+            padding: 0 10px !important;
+            height: 51px !important;
+            line-height: 35px !important;
+            text-align: left !important;
+            min-width: 86px !important;
+            width: 86px;
+        }
+    }
+}
+
+.give-donation-levels-wrap {
+    clear: both;
+    list-style: none;
+    margin: 0 0 15px;
+    padding: 0;
+
+    &::before {
+        content: " ";
+        display: table;
+    }
+
+    &::after {
+        clear: both;
+    }
+
+    li {
+        float: left;
+        list-style-image: none;
+        list-style-type: none;
+        margin: 0 10px 10px 0;
+    }
+
+    .give-donation-level-btn {
+        background-color: $white;
+        padding: 15px 24px;
+        font-size: 16px;
+        line-height: 22px;
+        text-transform: none;
+        padding: 10px 24px;
+        border: 2px solid #DED4E1;
+    }
+}
+
+  
+  .donat-details-list {
+
+    ul {
+        li {
+            font-size: 21px;
+            font-weight: 600;
+        }
+    }
+  }
+.give-textarea-input {
+    background-color: #fff;
+}
+.card-box {
+    padding: 16px 16px;
+}

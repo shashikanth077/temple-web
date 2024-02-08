@@ -303,3 +303,12 @@
     padding-left: 0!important;
     padding-right: 10px;
 }
+.sd-confirm-edit-button:hover {
+    border: 1px solid rgb(195, 196, 251);
+    padding: 7px 16px;
+    border-radius: 4px;
+    font-size: 18px;
+    font-weight: 500;
+    cursor: pointer;
+    color:indianred
+}

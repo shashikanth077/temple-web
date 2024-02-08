@@ -65,9 +65,13 @@ const ServiceSuccess = React.lazy(() => import('features/services/serviceSuccess
 const ServiceConfirm = React.lazy(() => import('features/services/serviceConfirm'));
 const Voluteers = React.lazy(() => import('features/volunteers/volunteers'));
 const AdminVolunteersList = React.lazy(() => import('admin/features/volunteers'));
-const TestTemple = React.lazy(() => import('admin/features/volunteers/cerficateContent'));
+const TestTemple = React.lazy(() => import('../features/donations/mydonations/viewDonationInvoice'));
 const SevaDetails = React.lazy(() => import('features/bookings/bookingDetails'));
 const SevaBook = React.lazy(() => import('features/bookings/sevaBook'));
+const DonationDetails = React.lazy(() => import('features/donations/donationDetails'));
+const DonateForm = React.lazy(() => import('features/donations/donateForm'));
+const DonateConfirm = React.lazy(() => import('features/donations/donationConfirm'));
+const DonatePaymentPage = React.lazy(() => import('features/donations/paymentPage'));
 
 export interface RoutesProps {
     path: RouteProps['path'];
@@ -91,12 +95,12 @@ const otherPublicRoutes: RoutesProps[] = [
         element: <Home />,
         route: Route,
     },
-    {
-        path: '/testcontent',
-        name: 'testcontent',
-        element: <TestTemple />,
-        route: Route,
-    },
+    // {
+    //     path: '/testcontent',
+    //     name: 'testcontent',
+    //     element: <TestTemple />,
+    //     route: Route,
+    // },
     {
         path: '/permission-access-denied',
         name: 'unAuth',
@@ -185,6 +189,12 @@ const otherPublicRoutes: RoutesProps[] = [
         path: '/seva-details/:id',
         name: 'SevaDetails',
         element: <SevaDetails />,
+        route: Route,
+    },
+    {
+        path: '/donation-details/:id',
+        name: 'DonationDetails',
+        element: <DonationDetails />,
         route: Route,
     },
 ];
@@ -597,6 +607,24 @@ const userDonationReportsRoutes: RoutesProps = {
             path: '/mydonations/list',
             name: 'Mydonations',
             element: <MyDonations />,
+        },
+        {
+            path: '/donation-confirm/:id',
+            name: 'DonationDetails',
+            element: <DonateForm />,
+            route: Route,
+        },
+        {
+            path: '/confirm-donation-details',
+            name: 'DonationDetails',
+            element: <DonateConfirm />,
+            route: Route,
+        },
+        {
+            path: '/donation-payment/:param1/:param2',
+            name: 'DonationDetails',
+            element: <DonatePaymentPage />,
+            route: Route,
         },
     ],
 };
