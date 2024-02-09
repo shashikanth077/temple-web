@@ -1,5 +1,7 @@
 import React from 'react';
 import moment from 'moment';
+import html2canvas from 'html2canvas';
+import { jsPDF } from 'jspdf';
 import { useIntl } from 'react-intl';
 import { useRedux } from 'hooks';
 import { selectContactDetails } from 'features/content/contactSelectors';
@@ -9,27 +11,65 @@ type InvoiceDonation = {
     donationId:string;
     donationData:any;
 }
+/* eslint-disable */
 /* eslint no-underscore-dangle: 0 */
 function InvoiceDonationComp(props:InvoiceDonation) {
     const { donationId, donationData } = props;
     const { appSelector } = useRedux();
+
     const intl = useIntl();
 
     const invoiceDetails = donationData.find((donation:any) => donationId === donation._id);
 
     const TempleStaticData = appSelector(selectContactDetails);
 
+
+    const handlePrint = () => {
+        const input:any = document.getElementById('invoice-wrapper-print');
+    
+        // Set A4 sheet dimensions (210mm x 297mm)
+        const pdfWidth = 210;
+        const pdfHeight = 297;
+    
+        html2canvas(input, { scale: 2 }) // Use scale to increase the resolution
+            .then(canvas => {
+                const imgData = canvas.toDataURL('image/png');
+                const pdf = new jsPDF({
+                    unit: 'mm',
+                    format: 'a4',
+                });
+    
+                // Calculate the aspect ratio for positioning on A4
+                const aspectRatio = canvas.width / canvas.height;
+    
+                // Calculate the width and height for the A4 sheet
+                const pdfHeightNew = pdfWidth / aspectRatio;
+    
+                // If the calculated height exceeds the A4 height, adjust the width
+                const pdfWidthNew = pdfHeightNew <= pdfHeight ? pdfWidth : pdfWidth * (pdfHeight / pdfHeightNew);
+    
+                // Calculate the center position for both width and height
+                const xPos = (pdfWidth - pdfWidthNew) / 2;
+    
+                // Add the image to the PDF, aligning it at the top
+                pdf.addImage(imgData, 'JPEG', xPos, 0, pdfWidthNew, pdfHeightNew);
+    
+                // Save the PDF
+                pdf.save('simple.pdf');
+            });
+    };
+    
+
     return (
 
         <div id="invoice">
             <div className="toolbar hidden-print">
                 <div className="text-right">
-                    <button type="button" id="printInvoice" className="btn btn-info"><i className="fa fa-print" /> Print</button>
-                    <button type="button" className="btn btn-info"><i className="fa fa-file-pdf-o" /> Export as PDF</button>
+                    <button type="button" onClick={handlePrint} className="btn btn-info"><i className="fa fa-file-pdf-o" />Download as PDF</button>
                 </div>
                 <hr />
             </div>
-            <div className="invoice overflow-auto">
+            <div id="invoice-wrapper-print" className="invoice overflow-auto">
                 <div className="invoice-wrapper">
                     <header>
                         <div className="row">

@@ -1,6 +1,5 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import * as DOMPurify from 'dompurify';
-
 import { ReactElement } from 'react';
 import ReactHtmlParser from 'react-html-parser';
 import { isDefined } from './valueUtil';

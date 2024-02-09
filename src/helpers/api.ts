@@ -140,7 +140,7 @@ class APICore {
      * post given data to url
      * use same format for others
      */ 
-    static create(url: string, data: any) { 
+    static create(url: string, data: any,type='general') { 
         return axios.post(url, data)
         .then(res => res)
         .catch(err => err);

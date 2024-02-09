@@ -7,13 +7,10 @@ import {
     persistReducer,
 } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-import { bannerReducer } from '../features/home/homeSlice';
-import { menuReducer } from '../layout/menu/menuSlice';
 import { serviceReducer } from '../features/services/serviceSlice';
 import { eventReducer } from '../features/events/eventsSlice';
 import { myBookingsReducer } from '../features/bookings/bookingSlice';
 import { staffReducer } from '../features/staffs/staffSlice';
-import { adsReducer } from '../features/adversitments/adversimentsSlice';
 import { cartReducer } from '../features/shop/cart/cartSlice';
 import { AboutReducer } from '../features/home/about/aboutSlice';
 import rootSaga from './rootSaga';
@@ -45,13 +42,10 @@ import { adminVolunteersReducer } from 'admin/features/volunteers/volunteerSlice
 const rootReducer = combineReducers({
     contact: contactReducer,
     sendcontact: sendcontactReducer,
-    banner: bannerReducer,
-    menu: menuReducer,
     services: serviceReducer,
     events: eventReducer,
     bookings: myBookingsReducer,
     staff: staffReducer,
-    adverstiment: adsReducer,
     cartitems: cartReducer,
     about: AboutReducer,
     login: authReducer,

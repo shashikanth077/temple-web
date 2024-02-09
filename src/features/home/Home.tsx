@@ -1,5 +1,4 @@
 import React from 'react';
-import Services from '../services/serviceHome/serviceList';
 import Bookings from '../bookings/booking';
 import Staffs from '../staffs/staff';
 import Ads from '../adversitments/adversiments';

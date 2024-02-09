@@ -1,12 +1,8 @@
 import { all } from 'redux-saga/effects';
-import menuSaga from 'layout/menu/menuSaga';
-import bannerSaga from 'features/home/homeSaga';
 import serviceSaga from 'features/services/serviceSaga';
 import aboutSaga from 'features/home/about/aboutSaga';
 import eventsSaga from 'features/events/eventsSaga';
 import bookingSaga from 'features/bookings/bookingSaga';
-import StaffSaga from 'features/staffs/staffSaga';
-import advertismentSaga from 'features/adversitments/adversimentsSaga';
 import cartSaga from 'features/shop/cart/cartSaga';
 import productsSaga from 'features/shop/providers/productSaga';
 import contactSaga from 'features/contact/contactSaga';
@@ -34,14 +30,10 @@ import adminVolunteersSaga from 'admin/features/volunteers/volunteerSaga';
 export default function* rootSaga() {
     yield all(
         [
-            StaffSaga(),
             contactSaga(),
-            bannerSaga(),
-            menuSaga(),
             serviceSaga(),
             eventsSaga(),
             bookingSaga(),
-            advertismentSaga(),
             cartSaga(),
             aboutSaga(),
             authSaga(),
