@@ -10,6 +10,7 @@ export interface DonationState {
     donationData:any;
     stripesession:any;
     message:string;
+    invoicedata:any;
 }
 
 interface GetDonationPayload {
@@ -19,6 +20,7 @@ const initialState: DonationState = {
     loading: false,
     donation: {},
     stripesession: {},
+    invoicedata: {},
     donations: [],
     donationData: [],
     message: '',
@@ -47,6 +49,9 @@ const DonationSlice = createSlice({
         },
         PayDonation(state, action: PayloadAction<any>) {
             state.loading = false;
+        },
+        SetPrintData(state, action: PayloadAction<any>) {
+            state.invoicedata = action.payload;
         },
     },
 });

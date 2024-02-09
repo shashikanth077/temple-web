@@ -43,8 +43,7 @@ const DonateForm = () => {
   */
   const schemaResolver = yupResolver(
     yup.object().shape({
-      amount: yup.string().required('Please enter an amount'),
-      comments: yup.string().required('Please mention the comments'),
+      amount: yup.string().required('Please enter an amount')
     }),
   );
 
@@ -122,7 +121,7 @@ const DonateForm = () => {
                     <div className="your-order-wrap gray-bg-4 mb-4">
                       <div className="your-order-product-info">
                         <div className="your-order-bottom mb-4 donat-details-list">
-                          <ul>
+                          <ul className='donation-details-section'>
                             <li className="your-order-shipping">
                               Donation type
                             </li>
@@ -224,7 +223,7 @@ const DonateForm = () => {
                       </div>
                       <p>{errors.amount?.message}</p>
                     </div>
-                    <div className="row">
+                    {/* <div className="row">
                       <div className="col-md-12">
                         <label htmlFor="donation-notes">Donation notes:</label>
                         <textarea
@@ -236,7 +235,7 @@ const DonateForm = () => {
                         />
                         <p>{errors.comments?.message}</p>
                       </div>
-                    </div>
+                    </div> */}
                   </div>
 
                   <div className="row text-center">

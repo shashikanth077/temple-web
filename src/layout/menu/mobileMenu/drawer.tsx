@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { menuActions } from '../menuSlice';
-import { selectMenuList } from '../menuSelectors';
+import { selectPublicMenu } from 'features/content/contactSelectors';
 import useRedux from 'hooks/useRedux';
 
 interface DrawerProps {
@@ -26,7 +25,7 @@ function Drawer(Props : DrawerProps) {
         // dispatch(menuActions.fetchMenuList());
     }, [dispatch]);
 
-    const menuList = appSelector(selectMenuList);
+    const menuList:any = appSelector(selectPublicMenu);
 
     return (
         <>
@@ -55,7 +54,7 @@ function Drawer(Props : DrawerProps) {
                                 </div>
                                 <div id="menu" className="text-left menu-toggle">
                                     <ul className="offcanvas_main_menu">
-                                        {menuList?.map((data, i) => (data?.isDropdown === true ? (
+                                        {menuList?.map((data:any) => (data?.isDropdown === true ? (
                                             <li key={data.menuId}>
                                                 <div
                                                     className="menu-item-has-children active"
@@ -76,7 +75,7 @@ function Drawer(Props : DrawerProps) {
                                                         menuExpandflag ? 'expend_menu_item' : ''
                                                     }`}
                                                 >
-                                                    {data.dropdownItem.map((item, k) => (
+                                                    {data.dropdownItem.map((item:any) => (
                                                         <li key={item.title}>
                                                             <Link to={item.link}>{item.title}</Link>
                                                         </li>

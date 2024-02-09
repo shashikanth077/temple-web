@@ -2,9 +2,6 @@ import React, { ChangeEvent, useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
 import {
     useStripe,
-    CardNumberElement,
-    CardExpiryElement,
-    CardCvcElement,
     useElements,
     CardElement,
 } from '@stripe/react-stripe-js';
@@ -13,6 +10,7 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import Swal from 'sweetalert2';
+import { BarLoader, ClockLoader, RotateLoader } from 'react-spinners';
 import {
     createPaymentIntent,
 } from './mydonations/donationApis';
@@ -25,6 +23,7 @@ import { selectMyProfileDetails } from 'admin/features/myprofile/myProfileSelect
 import { CAProvinces } from 'constants/CAProvinces';
 import { FormInput } from 'sharedComponents/inputs';
 import 'sweetalert2/dist/sweetalert2.min.css';
+import Loader from 'sharedComponents/loader/loader';
 
 /* eslint-disable */
 const DonationPayment = () => {
@@ -131,7 +130,12 @@ const DonationPayment = () => {
 
                     if (payload.error) {
                         setProcessing(false);
-                        setError(`Payment Failed: ${payload.error.message}`);
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Something went wrong!',
+                            text: `Your payment was un-successful. Error: ${payload.error.message}`,
+                        }).then(() => {
+                        });
                     } else {
                         setProcessing(false);
                         
@@ -216,6 +220,11 @@ const DonationPayment = () => {
 
     return (
 
+        <>
+        {processing &&  <div className="overlay">
+                    <RotateLoader />
+        </div>}
+        
         <div className="checkout-area pt-95 pb-100">
             <div className="container">
                 <form name="donation-payment-form" id="donation-payment-form" onSubmit={onSubmit}>
@@ -442,6 +451,7 @@ const DonationPayment = () => {
                 </form>
             </div>
         </div>
+        </>
 
     );
 };

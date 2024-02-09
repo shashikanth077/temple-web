@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { classNames } from 'primereact/utils';
 import { FilterMatchMode } from 'primereact/api';
 import { useNavigate } from 'react-router-dom';
 import { DataTable } from 'primereact/datatable';
@@ -9,8 +8,9 @@ import { Button } from 'primereact/button';
 import { Dialog } from 'primereact/dialog';
 import { InputText } from 'primereact/inputtext';
 import { useSelector } from 'react-redux';
-import { useReactToPrint } from 'react-to-print';
-import PrintComponent from './printInvoice';
+import { classNames } from 'primereact/utils';
+import { Toolbar } from 'primereact/toolbar';
+import TaxReceipt from '../taxReceipt';
 import { mydonationsActions } from './donationSlice';
 import { selectDonationDetails } from './donationsSelectors';
 import InvoiceDonationComp from './viewDonationInvoice';
@@ -33,15 +33,6 @@ export default function ManageDonations() {
         holidayOfworkshop: ''
     }
 
-    const componentRef = useRef(null);
- 
-    const handlePrint = useReactToPrint({
-        // print: async (printIframe: HTMLIFrameElement) => {
-        //   // Do whatever you want here, including asynchronous work
-        // //   await generateAndSavePDF(printIframe);
-        // },
-        content: () => componentRef.current,
-      });
 
     const navigate = useNavigate();
     const { loading, error, successMessage } = useSelector((state: any) => state.apiState);
@@ -51,7 +42,8 @@ export default function ManageDonations() {
     });
 
     const [Donations, setDonations] = useState<any>([]);
-    const [donationDialog, setDonationDialog] = useState(false)
+    const [donationDialog, setDonationDialog] = useState(false);
+    const [taxReceiptDialog, setTaxReceiptDialog] = useState(false)
     const [deleteGodDialog, setDeleteGodDialog] = useState(false);
     const [god, setGod] = useState(emptyGod);
     const [selectedDonations, setSelectedDonations] = useState<any>(null);
@@ -62,12 +54,17 @@ export default function ManageDonations() {
     const { dispatch, appSelector } = useRedux();
     const [loggedInUser] = useUser();
 
+    const handlePrint = (rowData:any) => {
+        setTaxReceiptDialog(true);
+        setDonationId(rowData._id);
+    }
+
+
     useEffect(() => {
         dispatch(mydonationsActions.getDonations({ userid: loggedInUser.id }));
     }, [dispatch]);
 
     const DonationList: any = appSelector(selectDonationDetails);
-    console.log("DonationList",DonationList);
 
     const showToast = (severity: any, summary: any, detail: any) => {
         toast.current.show({ severity, summary, detail });
@@ -119,6 +116,7 @@ export default function ManageDonations() {
 
     const hideDialog = () => {
         setDonationDialog(false);
+        setTaxReceiptDialog(false);
     };
 
     const exportCSV = () => {
@@ -141,7 +139,7 @@ export default function ManageDonations() {
     const actionBodyTemplate = (rowData: any) => (
         <>
             <Button icon="pi pi-eye" rounded outlined className="mr-2" onClick={() => viewDonation(rowData)} />
-            <Button icon="pi pi-print" rounded outlined className="mr-2" onClick={() => handlePrint()} />
+            <Button icon="pi pi-print" rounded outlined className="mr-2" onClick={() => handlePrint(rowData)} />
         </>
     );
 
@@ -167,8 +165,8 @@ export default function ManageDonations() {
 
     return (
         <div>
-            <div style={{ display: "none" }}><PrintComponent ref={componentRef} /></div>
             <Toast ref={toast} />
+            <Toolbar className="mb-4" right={rightToolbarTemplate} />
             <div className="">
 
                 <DataTable
@@ -189,7 +187,26 @@ export default function ManageDonations() {
                     <Column field="donationType" header="Donation type" />
                     <Column field="donatedAmount" header="Amount" />
                     <Column field="taxReceiptNo" header="Tax receipt no" />
-                    <Column field="transStatus" header="Tran Status" />
+                    <Column
+                        field="transStatus"
+                        sortable
+                        style={{ width: "2rem" }}
+                        header="Trans Status"
+                        body={(rowData: any) => (
+                            <span
+                                className={classNames({
+                                    "p-tag p-tag-success":
+                                        rowData.transStatus === "succeeded",
+                                    "p-tag p-tag-danger":
+                                        rowData.transStatus === "failed",
+                                    "p-tag p-tag-new":
+                                        rowData.transStatus === "new",
+                                })}
+                            >
+                                {rowData.transStatus}
+                            </span>
+                        )}
+                    />
                     <Column body={actionBodyTemplate} exportable={false} style={{ minWidth: '6rem', textAlign: 'center' }} />
                 </DataTable>
             </div>
@@ -197,6 +214,11 @@ export default function ManageDonations() {
             <Dialog visible={donationDialog} style={{ width: '60rem' }} breakpoints={{ '960px': '75vw', '641px': '90vw' }}  modal className="p-fluid" footer={donationDialogFooter} onHide={hideDialog}>
                  <InvoiceDonationComp donationId={donationId} donationData={DonationList}/> 
             </Dialog>
+
+            <Dialog visible={taxReceiptDialog} style={{ width: '60rem' }} breakpoints={{ '960px': '75vw', '641px': '90vw' }}  modal className="p-fluid" footer={donationDialogFooter} onHide={hideDialog}>
+                 <TaxReceipt donationId={donationId} donationData={DonationList}/> 
+            </Dialog>
+
 
             <DeleteDiaLog
                 deleteonClick={deleteGodDialog}

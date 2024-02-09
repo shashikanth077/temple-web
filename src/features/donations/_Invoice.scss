@@ -172,17 +172,15 @@
     }
 }
 
-.invoice-wrapper {
-    .logo-container {
-        display: flex;
-        align-items: center;
-    }
+.logo-container {
+    display: flex;
+    align-items: center;
+}
 
-    .logo-container img {
-        margin-right: 10px; /* Adjust the margin as needed */
-    }
-    .logo-heading {
-        font-weight: 800;
-        color: indianred
-    }
+.logo-container img {
+    margin-right: 10px; /* Adjust the margin as needed */
+}
+.logo-heading {
+    font-weight: 800;
+    color: indianred
 }

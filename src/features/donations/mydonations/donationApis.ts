@@ -32,4 +32,11 @@ export async function storeDonationHistory(payload:any) {
     return response;
 }
 
+export async function generatePdf(payload:any) {
+    const baseUrl = `http://localhost:8080/api/generatepdf`;
+    const response = APICore.create(`${baseUrl}`, payload,'pdfdownload');
+    return response;
+}
+
+
 
