@@ -73,6 +73,7 @@ const DonationPayment = () => {
     */
     const onSubmit = handleSubmit(async (data: any) => {
         try {
+            setProcessing(true);
             // Construct the payment intent details
             const paymentIntentDetails = {
                 donationDetails: [
@@ -111,8 +112,6 @@ const DonationPayment = () => {
             setClientSecret(clientSecret);
             setPaymentIntentId(id);
 
-            // Proceed with payment
-            setProcessing(true);
             if (stripe) {
                 const cardElement = elements.getElement(CardElement);
                 const { error, paymentMethod } = await stripe.createPaymentMethod({

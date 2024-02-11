@@ -9,7 +9,6 @@ import { formatCurrency } from 'helpers/currency';
 
 /* eslint-disable */
 /* eslint no-underscore-dangle: 0 */
-
 type InvoiceDonation = {
     rowData: any;
 }
