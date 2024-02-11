@@ -40,7 +40,7 @@ const TaxReceipt = (props:InvoiceDonation) => {
                         <Col md={9}>
                             <div className="left-receipt-content">
                                 <div className="devote-number">
-                                    <p><b>Devote No:345</b></p>
+                                    <p><b>Devote No:{rowData?.devoteeId}</b></p>
                                 </div>
                                 <p>{ReceiptContent?.ReceivedStatement} <b>{formatCurrency(intl, rowData?.donatedAmount)}</b></p>
                                 <div className="donor-address">

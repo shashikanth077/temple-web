@@ -10,25 +10,25 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import Swal from 'sweetalert2';
-import { BarLoader, ClockLoader, RotateLoader } from 'react-spinners';
+import { CircleLoader } from 'react-spinners';
 import {
     createPaymentIntent,
 } from './mydonations/donationApis';
 import { mydonationsActions } from './mydonations/donationSlice';
 import { selectSavedLocalDonatData } from './mydonations/donationsSelectors';
-import { useRedux } from 'hooks';
+import { useRedux, useUser } from 'hooks';
 import { formatCurrency } from 'helpers/currency';
 import { myprofileActions } from 'admin/features/myprofile/myProfileSlice';
 import { selectMyProfileDetails } from 'admin/features/myprofile/myProfileSelectors';
 import { CAProvinces } from 'constants/CAProvinces';
 import { FormInput } from 'sharedComponents/inputs';
 import 'sweetalert2/dist/sweetalert2.min.css';
-import Loader from 'sharedComponents/loader/loader';
 
 /* eslint-disable */
 const DonationPayment = () => {
     const { dispatch, appSelector } = useRedux();
     const intl = useIntl();
+    const [loggedInUser] = useUser();
 
     const { param1, param2 } = useParams();
 
@@ -131,18 +131,18 @@ const DonationPayment = () => {
                     if (payload.error) {
                         setProcessing(false);
                         Swal.fire({
-                            icon: 'success',
+                            icon: 'error',
                             title: 'Something went wrong!',
                             text: `Your payment was un-successful. Error: ${payload.error.message}`,
                         }).then(() => {
                         });
                     } else {
-                        setProcessing(false);
-                        
+                                               
                         //insert in  to database
                         let PaymentHistory:any = {}
 
                         PaymentHistory.userId = param2;
+                        PaymentHistory.devoteeId = loggedInUser.devoteeId;
                         PaymentHistory.donateTypeId = param1;
                         PaymentHistory.donationType = BookDetails.type;
                         PaymentHistory.donorName = ProfileDetails.firstName +' '+ProfileDetails.lastName;
@@ -158,15 +158,31 @@ const DonationPayment = () => {
                         PaymentHistory.donatedItems = [];
                         PaymentHistory.billingAddress = billingAddressFill;
 
-                        dispatch(mydonationsActions.PayDonation(PaymentHistory));//insert donation history details
+                        dispatch(mydonationsActions.PayDonation(PaymentHistory));
                         
+                        setProcessing(false);
+
                         Swal.fire({
                             icon: 'success',
                             title: 'Payment Successful!',
-                            text: `Your payment was successful. Reference Number: ${payload.paymentIntent.id}`,
+                            text: `Your payment was successful. Reference No:${payload.paymentIntent.id}`,
                         }).then(() => {
+                            document.body.style.overflow = 'auto';
+                            document.body.removeChild(overlay);
                             navigate('/mydonations/list');
                         });
+
+                        document.body.style.overflow = 'hidden';
+                        const overlay = document.createElement('div');
+                        overlay.style.position = 'fixed';
+                        overlay.style.top = '0';
+                        overlay.style.left = '0';
+                        overlay.style.width = '100%';
+                        overlay.style.height = '100%';
+                        overlay.style.background = 'rgba(255, 255, 255, 0.5)';
+                        overlay.style.backdropFilter = 'blur(8px)';
+                        overlay.style.zIndex = '1000';
+                        document.body.appendChild(overlay);
                     }
                 } else {
                     setProcessing(false);
@@ -178,7 +194,7 @@ const DonationPayment = () => {
             }
         } catch (error) {
             console.error('Error during payment:', error);
-        }
+        } 
     });
 
     useEffect(() => {
@@ -221,9 +237,12 @@ const DonationPayment = () => {
     return (
 
         <>
-        {processing &&  <div className="overlay">
-                    <RotateLoader />
-        </div>}
+        {
+            processing &&  
+            <div className="overlay">
+                <CircleLoader />
+            </div>
+        }
         
         <div className="checkout-area pt-95 pb-100">
             <div className="container">
