@@ -6,6 +6,7 @@ import { RingLoader } from 'react-spinners';
 import 'primeflex/primeflex.css';
 import 'primereact/resources/primereact.css';
 import { PublicImageURL } from 'constants/PublicUrl';
+import AutoLogout from 'features/autoLogout';
 
 const Footer = React.lazy(() => import('./Footer'));
 const Topbar = React.lazy(() => import('./topBar'));
@@ -56,9 +57,11 @@ const VerticalLayout = (props: AuthLayoutProps) => {
             </Suspense>
             <div className="content-page">
                 <div className="content">
-                    <Container fluid>
-                        <Suspense fallback={<CustomLoader />}>{children}</Suspense>
-                    </Container>
+                    <AutoLogout>
+                        <Container fluid>
+                            <Suspense fallback={<CustomLoader />}>{children}</Suspense>
+                        </Container>
+                    </AutoLogout>
                 </div>
 
                 <Suspense fallback={<CustomLoader />}>
