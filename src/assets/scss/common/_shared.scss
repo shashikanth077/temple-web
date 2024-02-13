@@ -1938,6 +1938,30 @@ button:disabled {
 .error-message {
   color:red;
 }
+.intl-tel-input {
+  width: 100%;
+  margin-bottom: 1rem !important;
+  input {
+    background-color: $white;
+  }
+  .country-list {
+    z-index: 999 !important;
+  }
+}
+/* Add some styles to position the country code and phone number horizontally */
+.code-phonenumber {
+  display: flex;
+}
 
+/* Adjust styling for the country code input */
+.country-code {
+  margin-right: 10px; /* Add spacing between the country code and phone number */
+  flex-shrink: 0; /* Prevent the country code input from shrinking */
+}
+
+/* Adjust styling for the phone number input */
+.phone-number {
+  flex-grow: 1; /* Allow the phone number input to take up remaining space */
+}
 
 

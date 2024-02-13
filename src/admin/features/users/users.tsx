@@ -26,6 +26,7 @@ export default function Users() {
         firstName:'',
         phonenumber:'',
         lastName:'',
+        countrycode:'',
         roles: [], 
         viewRoles:[],
         activated:false

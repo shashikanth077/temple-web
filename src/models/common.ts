@@ -24,9 +24,20 @@ export interface UserResponse{
   errorMessage:string;
 }
 
+export interface OTPResponse {
+  errorCode:any;
+  otp:string;
+  success:boolean;
+  message:string;
+  error:string;
+  errorMessage:string;
+}
+
 export interface UserSuccesResponse{
   errorCode:any;
+  countrycode:string;
   email:string;
+  phonenumber:string;
   success:boolean;
   message:string;
   error:string;
