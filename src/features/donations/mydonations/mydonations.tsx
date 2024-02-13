@@ -10,6 +10,7 @@ import { InputText } from 'primereact/inputtext';
 import { useSelector } from 'react-redux';
 import { classNames } from 'primereact/utils';
 import { Toolbar } from 'primereact/toolbar';
+import moment from 'moment';
 import TaxReceipt from '../taxReceipt';
 import { mydonationsActions } from './donationSlice';
 import { selectDonationDetails } from './donationsSelectors';
@@ -48,13 +49,13 @@ export default function ManageDonations() {
     const [god, setGod] = useState(emptyGod);
     const [selectedDonations, setSelectedDonations] = useState<any>(null);
     const [globalFilter, setGlobalFilter] = useState(null);
-    const [donationId,setDonationId] = useState<string>('');
+    const [donationId, setDonationId] = useState<string>('');
     const toast = useRef<any>(null);
     const dt = useRef<any>(null);
     const { dispatch, appSelector } = useRedux();
     const [loggedInUser] = useUser();
 
-    const handlePrint = (rowData:any) => {
+    const handlePrint = (rowData: any) => {
         setTaxReceiptDialog(true);
         setDonationId(rowData._id);
     }
@@ -65,6 +66,13 @@ export default function ManageDonations() {
     }, [dispatch]);
 
     const DonationList: any = appSelector(selectDonationDetails);
+
+    const [serialNumbers, setSerialNumbers] = useState<number[]>([]);
+
+    const calculateSerialNumbers = (data: any) => {
+        const newSerialNumbers = data.map((_: any, index: number) => index + 1);
+        setSerialNumbers(newSerialNumbers);
+    };
 
     const showToast = (severity: any, summary: any, detail: any) => {
         toast.current.show({ severity, summary, detail });
@@ -90,9 +98,15 @@ export default function ManageDonations() {
         setDonationDialog(true);
     };
 
-    const confirmDeleteGod = (God: any) => {
-        setGod(God);
-        setDeleteGodDialog(true);
+    useEffect(() => {
+        if (DonationList) {
+            calculateSerialNumbers(DonationList);
+        }
+    }, [DonationList]);
+
+    const serialNumberTemplate = (rowData: any, column: any) => {
+        const index = dt.current?.props.value?.indexOf(rowData) ?? 0;
+        return <span>{serialNumbers[index]}</span>;
     };
 
     const deleteGod = () => {
@@ -129,11 +143,8 @@ export default function ManageDonations() {
         </React.Fragment>
     );
 
-    const leftToolbarTemplate = () => (
-        <div className="flex flex-wrap gap-2">
-            <Button label="New" icon="pi pi-plus me-1" severity="success" onClick={openNew} />
-        </div>
-    );
+    const formatDate = (rowData: any) => moment(rowData?.donationDate).format('DD-MM-YYYY');
+
 
     const rightToolbarTemplate = () => <Button label="Export" icon="pi pi-upload" className="p-button-help" onClick={exportCSV} />;
     const actionBodyTemplate = (rowData: any) => (
@@ -184,9 +195,16 @@ export default function ManageDonations() {
                     globalFilter={globalFilter}
                     header={header}
                 >
-                    <Column field="donationType" header="Donation type" />
-                    <Column field="donatedAmount" header="Amount" />
-                    <Column field="taxReceiptNo" header="Tax receipt no" />
+                    <Column
+                        key="serialNumber"
+                        header="SI #"
+                        body={serialNumberTemplate}
+                        style={{ textAlign: 'center', width: '1rem' }}
+                    />
+                    <Column field="donationType" header="Donation type" sortable />
+                    <Column field="donatedAmount" header="Amount" sortable />
+                    <Column field="taxReceiptNo" header="Tax receipt no" sortable />
+                    <Column field="donationDate" body={formatDate} header="Date" sortable />
                     <Column
                         field="transStatus"
                         sortable
@@ -211,12 +229,12 @@ export default function ManageDonations() {
                 </DataTable>
             </div>
 
-            <Dialog visible={donationDialog} style={{ width: '60rem' }} breakpoints={{ '960px': '75vw', '641px': '90vw' }}  modal className="p-fluid" footer={donationDialogFooter} onHide={hideDialog}>
-                 <InvoiceDonationComp donationId={donationId} donationData={DonationList}/> 
+            <Dialog visible={donationDialog} style={{ width: '60rem' }} breakpoints={{ '960px': '75vw', '641px': '90vw' }} modal className="p-fluid" footer={donationDialogFooter} onHide={hideDialog}>
+                <InvoiceDonationComp donationId={donationId} donationData={DonationList} />
             </Dialog>
 
-            <Dialog visible={taxReceiptDialog} style={{ width: '60rem' }} breakpoints={{ '960px': '75vw', '641px': '90vw' }}  modal className="p-fluid" footer={donationDialogFooter} onHide={hideDialog}>
-                 <TaxReceipt donationId={donationId} donationData={DonationList}/> 
+            <Dialog visible={taxReceiptDialog} style={{ width: '60rem' }} breakpoints={{ '960px': '75vw', '641px': '90vw' }} modal className="p-fluid" footer={donationDialogFooter} onHide={hideDialog}>
+                <TaxReceipt donationId={donationId} donationData={DonationList} />
             </Dialog>
 
 

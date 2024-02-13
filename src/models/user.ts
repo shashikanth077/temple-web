@@ -5,6 +5,7 @@ export interface User {
   phonenumber: string;
   roles: any;
   TermConcent:boolean;
+  countrycode:string;
   viewRoles: string[];
   firstName: string;
   lastName: string;

@@ -41,6 +41,16 @@ function resetPasswordCall(payload:any) {
     return APICore.create(`${baseUrl}`, payload);
 }
 
+function sendOTP(payload:any) {
+    const baseUrl = 'http://localhost:8080/api/generateotp';
+    return APICore.create(`${baseUrl}`, payload);
+}
+
+function verifyOTP(payload:any) {
+    const baseUrl = 'http://localhost:8080/api/verifyotp';
+    return APICore.create(`${baseUrl}`, payload);
+}
+
 export {
-    login, logout, signup, forgotPassword, resetPasswordCall, checkProfileStatus, AccountActivation,
+    login, logout, signup, forgotPassword, resetPasswordCall, checkProfileStatus, AccountActivation, sendOTP, verifyOTP,
 };

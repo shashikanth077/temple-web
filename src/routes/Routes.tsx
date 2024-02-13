@@ -20,19 +20,19 @@ interface RoutesProps { }
 
 
 const AllRoutes = (props: RoutesProps) => {
-    
+
     const [loggedInUser] = useUser();
 
     let RoleStatus;
-    if(loggedInUser?.roles?.includes('ROLE_ADMIN')) {
+    if (loggedInUser?.roles?.includes('ROLE_ADMIN')) {
         RoleStatus = 'ROLE_ADMIN';
-    } 
+    }
 
-    if(loggedInUser?.roles?.includes('ROLE_USER') && !loggedInUser?.roles?.includes('ROLE_ADMIN')) {
-         RoleStatus = 'ROLE_USER';
-    } 
+    if (loggedInUser?.roles?.includes('ROLE_USER') && !loggedInUser?.roles?.includes('ROLE_ADMIN')) {
+        RoleStatus = 'ROLE_USER';
+    }
 
-    if(loggedInUser?.roles?.includes('ROLE_USER') && loggedInUser?.roles?.includes('ROLE_ADMIN')) {
+    if (loggedInUser?.roles?.includes('ROLE_USER') && loggedInUser?.roles?.includes('ROLE_ADMIN')) {
         RoleStatus = 'BOTH';
     }
 
@@ -52,22 +52,22 @@ const AllRoutes = (props: RoutesProps) => {
                 ))}
             </Route>
 
-             
-            <Route>
-                    {bothMemberAdminFlattenRoutes.map((route, idx) => (
-                        <Route
-                            path={route.path}
-                            element={
-                                <AuthProtected>
-                                    <AuthLayout {...props}>{route.element}</AuthLayout>
-                                </AuthProtected>
-                            }
-                            key={idx}
-                        />
-                    ))}
-                </Route>
 
-            {RoleStatus === 'ROLE_ADMIN' &&                 
+            <Route>
+                {bothMemberAdminFlattenRoutes.map((route, idx) => (
+                    <Route
+                        path={route.path}
+                        element={
+                            <AuthProtected>
+                                <AuthLayout {...props}>{route.element}</AuthLayout>
+                            </AuthProtected>
+                        }
+                        key={idx}
+                    />
+                ))}
+            </Route>
+
+            {(RoleStatus === 'ROLE_ADMIN' || RoleStatus === 'BOTH') &&
                 <Route>
                     {authProtectedFlattenRoutes.map((route, idx) => (
                         <Route
@@ -81,8 +81,8 @@ const AllRoutes = (props: RoutesProps) => {
                         />
                     ))}
                 </Route>
-             }
-             
+            }
+
             <Route>
                 {noAdminProtectedFlattenRoutes.map((route, idx) => (
                     <Route
@@ -96,11 +96,11 @@ const AllRoutes = (props: RoutesProps) => {
                     />
                 ))}
             </Route>
-            
+
             <Route
                 path="*"
                 element={
-                    <PageNotFound/>
+                    <PageNotFound />
                 }
             />
         </Routes>

@@ -72,6 +72,7 @@ const DonationDetails = React.lazy(() => import('features/donations/donationDeta
 const DonateForm = React.lazy(() => import('features/donations/donateForm'));
 const DonateConfirm = React.lazy(() => import('features/donations/donationConfirm'));
 const DonatePaymentPage = React.lazy(() => import('features/donations/paymentPage'));
+const OtpVerifY = React.lazy(() => import('features/auth/register/otpverification'));
 
 export interface RoutesProps {
     path: RouteProps['path'];
@@ -195,6 +196,12 @@ const otherPublicRoutes: RoutesProps[] = [
         path: '/donation-details/:id',
         name: 'DonationDetails',
         element: <DonationDetails />,
+        route: Route,
+    },
+    {
+        path: '/verifyOTP/:num/:code',
+        name: 'DonationDetails',
+        element: <OtpVerifY />,
         route: Route,
     },
 ];

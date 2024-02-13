@@ -58,4 +58,9 @@ const CAProvinces: ProvinceTypes[] = [
     },
 ];
 
-export { CAProvinces };
+const countryCodes = [
+    { code: 'IN', label: '+91' },
+    { code: 'CA', label: '+1' },
+];
+
+export { CAProvinces, countryCodes };
