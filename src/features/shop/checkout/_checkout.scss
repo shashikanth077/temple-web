@@ -13,7 +13,6 @@
     .billing-select {
       label {
         margin: 0 0 7px;
-  
         color: #000;
       }
       input {
@@ -262,33 +261,33 @@
         }
       }
     }
-    .place-order > a,
+
+  }
+  
+  .order-btn {
+    float: right;
+  }
+  .place-order > a,
     .place-order > button {
       font-weight: 500;
       line-height: 1;
-  
       z-index: 9;
-  
       display: block;
-  
       width: 100%;
       padding: 18px 20px;
-  
       text-align: center;
       letter-spacing: 1px;
       text-transform: uppercase;
-  
       color: #fff;
       border: none;
       border-radius: 50px;
       background: none;
       background-color: $theme-color;
       &:hover {
-        background-color: #333;
+        background-color: $theme-color;
+        color:$white;
       }
     }
-  }
-  
   .checkout-area {
     @media #{$xs-device} {
       &.pb-100 {
@@ -296,4 +295,14 @@
       }
     }
   }
+  .card-payment-details {
+    .form-control {
+      height: 51px;
+    }
+  }
   
+  .Card-Info {
+    height: 51px;
+    padding: 14px;
+    border: 1px solid #dee2e6;
+  }

@@ -10,7 +10,6 @@ import { loadStripe } from '@stripe/stripe-js';
 import { persistor, store } from './storeConfig/store';
 import './assets/scss/_main.scss';
 import Routes from 'routes/Routes';
-import 'react-intl-tel-input/dist/main.css';
 import ErrorBoundary from 'sharedComponents/Error/ErrorBoundary';
 
 global.Buffer = Buffer;

@@ -3,9 +3,11 @@ import {
 } from 'redux-saga/effects';
 import { cartActions } from './cartSlice';
 import {
-    getCartDetails, AddtoCart, deleteCart,
+    getCartDetails, AddtoCart, deleteCart, InsertShopDetails,
 } from './cartApi';
-import { Cart, AddtoCartRes, ListResponse } from 'models';
+import {
+    Cart, AddtoCartRes, ListResponse, SuccesResponse,
+} from 'models';
 import {
     startLoading, endLoading, setError, setSuccessMessage,
 } from 'storeConfig/api/apiSlice';
@@ -39,6 +41,24 @@ function* AddtoCartProduct(action:any) {
     }
 }
 
+function* AddShopDetails(action:any) {
+    try {
+        yield put(startLoading());
+        const response: SuccesResponse = yield call(InsertShopDetails, action.payload);
+        if (response.success) {
+            yield put(cartActions.AddShopDetailSuccess(response));
+        } else {
+            yield put(setError(response.errorMessage));
+        }
+    } catch (error) {
+        if (error instanceof Error) {
+            yield put(setError(error.message));
+        }
+    } finally {
+        yield put(endLoading());
+    }
+}
+
 function* deleteProductFromCart(action:any) {
     try {
         yield put(startLoading());
@@ -58,6 +78,10 @@ export function* watchGetCartDetails() {
     yield takeLatest(cartActions.getCartDetails.type, fetchecurrentcartList);
 }
 
+export function* watchAddShopDetails() {
+    yield takeLatest(cartActions.AddShopDetails.type, AddShopDetails);
+}
+
 export function* watchAddtoCart() {
     yield takeLatest(cartActions.addtoCartItems.type, AddtoCartProduct);
 }
@@ -71,6 +95,7 @@ function* cartSaga() {
         fork(watchGetCartDetails),
         fork(watchAddtoCart),
         fork(watchdeleteProductFromCart),
+        fork(watchAddShopDetails),
     ]);
 }
 
