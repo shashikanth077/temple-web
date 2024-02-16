@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import {
-    Cart,
+    Cart, SuccesResponse,
 } from 'models';
 
 interface CartInfo{
@@ -58,7 +58,12 @@ const cartSlice = createSlice({
         deleteAllFromCart(state) {
             state.cartItems = []; // need to call db for delete all
         },
-
+        AddShopDetails(state, action: PayloadAction<any>) {
+            state.loading = false;
+        },
+        AddShopDetailSuccess(state, action: PayloadAction<SuccesResponse>) {
+            state.loading = false;
+        },
     },
 });
 

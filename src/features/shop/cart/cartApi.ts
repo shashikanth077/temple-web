@@ -18,3 +18,9 @@ export function deleteCart(payload:any) {
     const response = APICore.get(`${baseUrl}`, {});
     return response;
 }
+
+export function InsertShopDetails(payload:any) {
+    const baseUrl = 'http://localhost:8080/api/checkout/addhistory';
+    const response = APICore.create(`${baseUrl}`, payload);
+    return response;
+}
