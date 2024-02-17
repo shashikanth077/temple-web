@@ -1,7 +1,7 @@
 import React, {
     useEffect, useState, ChangeEvent,
 } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useIntl } from 'react-intl';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -14,8 +14,8 @@ import {
 } from '@stripe/react-stripe-js';
 
 import { CircleLoader } from 'react-spinners';
-import { serviceActions } from './serviceSlice';
-import { selecLocalBookingData } from './serviceSelector';
+import { useSelector } from 'react-redux';
+import { eventsActions } from '../eventsSlice';
 import { useRedux, useUser } from 'hooks';
 import { CAProvinces } from 'constants/CAProvinces';
 import { myprofileActions } from 'admin/features/myprofile/myProfileSlice';
@@ -23,9 +23,10 @@ import { selectMyProfileDetails } from 'admin/features/myprofile/myProfileSelect
 import { formatCurrency } from 'helpers/currency';
 import { FormInput } from 'sharedComponents/inputs';
 import { createPaymentIntent } from 'features/donations/mydonations/donationApis';
+import { adminEventActions } from 'admin/features/events/adminEventSlice';
 
 /* eslint-disable */
-const ServiceConfimPage = () => {
+const EventPaymentPage = () => {
     const { dispatch, appSelector } = useRedux();
     const [loggedInUser] = useUser();
     const intl = useIntl();
@@ -47,16 +48,20 @@ const ServiceConfimPage = () => {
     const [selectedState, setSelectedState] = useState("");
     const [cardErrors, setCardErrors] = useState<any>("");
 
+    const { id } = useParams();
+
+    useEffect(() => {
+        dispatch(adminEventActions.getEventById({ _id: id }));
+    }, [dispatch, id]);
+
+    const { event } = useSelector((state: any) => state.adminEvent);
 
     useEffect(() => {
         dispatch(
             myprofileActions.getMyProfileDetails({ userid: loggedInUser?.id }),
         );
     }, [dispatch]);
-
-
-    const BookDetails = appSelector(selecLocalBookingData);
-    console.log(BookDetails,"BookDetails");
+    
 
     /*
        form validation schema
@@ -152,9 +157,9 @@ const ServiceConfimPage = () => {
                 devoteePhonenumber:loggedInUser?.phonenumber,
                 receipt_email: loggedInUser?.email,
                 payment_method_types:['card'],
-                amount:BookDetails?.amount,
-                bookingDetails:BookDetails?.name,
-                description: 'Booking for temple service '+BookDetails?.name,
+                amount:event?.bookingPrice,
+                bookingDetails:event?.name,
+                description: 'Booking for event '+event?.name,
                 shipping: {
                     name: `${loggedInUser?.userName}`,
                     address: {
@@ -220,15 +225,17 @@ const ServiceConfimPage = () => {
                 } else {
 
                     let requestPayload: any = {};
-                    requestPayload.userId = loggedInUser?.id;
-                    requestPayload.godName = BookDetails?.godName;
-                    requestPayload.serviceType = BookDetails?.type;
+                    requestPayload.userId  = loggedInUser?.id;
+                    requestPayload.eventId = event?._id;
+                    requestPayload.venue = event?.venue;
+                    requestPayload.eventName = event?.name;
+                    requestPayload.amount = event?.bookingPrice;
                     requestPayload.devoteeId = loggedInUser?.devoteeId;
-                    requestPayload.orderType = 'services';
-                    requestPayload.amount =  BookDetails?.amount;
-                    requestPayload.bookingDate =  BookDetails?.bookingDate;
-                    requestPayload.ServiceName = BookDetails?.name;
-                    requestPayload.NoOfPerson = BookDetails?.NoOfPerson;
+                    requestPayload.orderType = 'event';
+                    requestPayload.startDate =  event?.startDate;
+                    requestPayload.endDate =  event?.endDate;
+                    requestPayload.organizer = event?.organizer;
+                    requestPayload.organizerPhone = event?.organizerPhone;
                     requestPayload.billingAddress = billingAddressFormData;
                     requestPayload.devoteeName = ProfileDetails.firstName + '' + ProfileDetails.lastName;
                     requestPayload.devoteePhoneNumber = loggedInUser?.phonenumber;
@@ -239,7 +246,7 @@ const ServiceConfimPage = () => {
                     requestPayload.paymentMode =  payload.paymentIntent.payment_method_types;
                     requestPayload.orderNotes =  data.comments;
                  
-                    dispatch(serviceActions.confirmPayment(requestPayload)); //add booking history
+                    dispatch(eventsActions.confirmPayment(requestPayload));
                   
                     setProcessing(false);
 
@@ -286,7 +293,7 @@ const ServiceConfimPage = () => {
             }
             <div className="checkout-area pt-95 pb-100">
                 <div className="container">
-                    {BookDetails ? (
+                    {event ? (
                         <div className="row">
                             <form
                                 name="shop-payment-form"
@@ -470,47 +477,25 @@ const ServiceConfimPage = () => {
                                 <div className="row">
                                     <div className="col-lg-7 order-lg-2">
                                     <div className="your-order-area">
-                                        <h2><strong>Your service details</strong></h2>
+                                        <h2><strong>Your Event details</strong></h2>
                                         <div className="your-order-wrap gray-bg-4">
                                             <div className="your-order-product-info">
-                                                {/* <div className="your-order-top">
-                                                    <ul>
-                                                        <li>Donation </li>
-                                                        <li>Total</li>
-                                                    </ul>
-                                                </div> */}
                                                 <div className="your-order-middle">
                                                     <ul>
                                                     <li>
                                                             <span className="order-middle-left">
-                                                                God name
+                                                                Event name
                                                             </span>{' '}
                                                             <span className="order-price">
-                                                                <strong>{BookDetails.godname}</strong>
+                                                                <strong>{event.name}</strong>
                                                             </span>
                                                         </li>
                                                         <li>
                                                             <span className="order-middle-left">
-                                                                Service type
+                                                                Price
                                                             </span>{' '}
                                                             <span className="order-price">
-                                                                <strong>{BookDetails.type}</strong>
-                                                            </span>
-                                                        </li>
-                                                        <li>
-                                                            <span className="order-middle-left">
-                                                                Service name
-                                                            </span>{' '}
-                                                            <span className="order-price">
-                                                                <strong>{BookDetails.name}</strong>
-                                                            </span>
-                                                        </li>
-                                                        <li>
-                                                            <span className="order-middle-left">
-                                                                Booking date
-                                                            </span>{' '}
-                                                            <span className="order-price">
-                                                                <strong>{BookDetails.bookingDate}</strong>
+                                                                <strong>{event.bookingPrice}</strong>
                                                             </span>
                                                         </li>
                                                     </ul>
@@ -519,7 +504,7 @@ const ServiceConfimPage = () => {
                                                     <ul>
                                                         <li className="order-total">Total</li>
                                                         <li>
-                                                            {formatCurrency(intl, BookDetails.amount)}
+                                                            {formatCurrency(intl, event.bookingPrice)}
                                                         </li>
                                                     </ul>
                                                 </div>
@@ -574,7 +559,7 @@ const ServiceConfimPage = () => {
                                             disabled={processing || !stripe || !elements}
                                             className="btn btn-hover"
                                         >
-                                            {processing ? 'PROCESSING' : 'Book service'}
+                                            {processing ? 'PROCESSING' : 'Book Event'}
                                         </button>
                                     </div>
                                 </div>
@@ -600,4 +585,4 @@ const ServiceConfimPage = () => {
     );
 };
 
-export default ServiceConfimPage;
+export default EventPaymentPage;

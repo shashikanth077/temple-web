@@ -474,3 +474,12 @@ button.events-top-bar-nav-link--prev:disabled {
         color:$black;
     }
 }
+.your-order-bottom ul {
+    list-style: none;
+    padding: 0;
+}
+
+.your-order-shipping, .booking-info {
+    overflow: visible;
+    white-space: nowrap;
+}

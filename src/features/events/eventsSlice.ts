@@ -1,14 +1,16 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { EventListRes, ListResponse } from '../../models';
+import { EventListRes } from '../../models';
 
 export interface EventState {
   loading: boolean;
   events: any;
+  eventData:any;
 }
 
 const initialState: EventState = {
     loading: false,
     events: [],
+    eventData: [],
 };
 
 const eventsSlice = createSlice({
@@ -22,11 +24,12 @@ const eventsSlice = createSlice({
             state.loading = false;
             state.events = action.payload.events;
         },
+        confirmPayment(state, action: PayloadAction<any>) {
+            state.loading = false;
+        },
     },
 });
 
-// Event Actions
 export const eventsActions = eventsSlice.actions;
 
-// Event Reducer
 export const eventReducer = eventsSlice.reducer;
