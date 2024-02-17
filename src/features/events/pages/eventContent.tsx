@@ -1,7 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import moment from 'moment';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import ReactPaginate from 'react-paginate';
+import { APICore } from 'helpers';
+import { PublicImageURL } from 'constants/PublicUrl';
 
 interface EventProps{
     events:any;
@@ -14,6 +16,17 @@ function EventContent(props:EventProps) {
     const {
         events, currentEventData, pageCount, onchangclick,
     } = props;
+
+    const navigate = useNavigate();
+
+    const handleBook = (e:any, id:string) => {
+        if (!APICore?.isUserAuthenticated()) {
+            localStorage.setItem('targetUrl', `/event-book/${id}`);
+            navigate('/login');
+        } else {
+            navigate(`/event-book/${id}`);
+        }
+    };
 
     return (
 
@@ -68,9 +81,8 @@ function EventContent(props:EventProps) {
                                         <span className="events-c-small-cta-price">
                                             ${event.bookingPrice}
                                         </span>
-                                        <a href="##" className="events-common-c-btn-border-small events-c-top-bar-today-button" aria-label="Click to select today's date" title="Click to select today's date">
-                                            Book now
-                                        </a>
+                                        <button className="events-common-c-btn-border-small events-c-top-bar-today-button" aria-label="Click to select today's date" onClick={e => handleBook(e, event?._id)} type="button">Book now <img className="right-arrow" src={`${window.location.origin}/${PublicImageURL}/icons/right-arrow.svg`} alt="right-arrow" />
+                                        </button>
                                     </div>
 
                                 </div>

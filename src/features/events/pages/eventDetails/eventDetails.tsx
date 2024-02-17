@@ -1,19 +1,30 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { Row } from 'react-bootstrap';
 import moment from 'moment';
 import { useRedux } from 'hooks';
 import { selectEventsList } from 'features/events/eventSelector';
+import { APICore } from 'helpers';
+import { PublicImageURL } from 'constants/PublicUrl';
 
 /* eslint no-underscore-dangle: 0 */
 function EventDetails() {
     const { id } = useParams(); // getting from URL
     const { appSelector } = useRedux();
+    const navigate = useNavigate();
 
     const eventData = appSelector(selectEventsList);
 
     const events:any = eventData.find((event:any) => event._id.toString() === id);
-    console.log('events', eventData);
+
+    const handleBook = (e:any, eventId:string) => {
+        if (!APICore?.isUserAuthenticated()) {
+            localStorage.setItem('targetUrl', `/event-book/${eventId}`);
+            navigate('/login');
+        } else {
+            navigate(`/event-book/${eventId}`);
+        }
+    };
 
     return (
         <section className="event-details-section area-padding">
@@ -26,9 +37,8 @@ function EventDetails() {
                         <div><i className="fas fa-calendar-week" /><span className="event-date"> {moment(events?.startDate).format('MMM DD,YYYY @ h a')} -  {moment(events?.endDate).format('MMM DD,YYYY @ h a')}</span></div>
                         <div className="event-price-book">
                             <span className="event-price">${events?.bookingPrice}</span>
-                            <a href="##" className="events-common-c-btn-border-small events-c-top-bar-today-button" aria-label="Click to select today's date" title="Click to select today's date">
-                                Book now
-                            </a>
+                            <button className="events-common-c-btn-border-small events-c-top-bar-today-button" aria-label="Click to select today's date" onClick={e => handleBook(e, events?._id)} type="button">Book now <img className="right-arrow" src={`${window.location.origin}/${PublicImageURL}/icons/right-arrow.svg`} alt="right-arrow" />
+                            </button>
                         </div>
                     </div>
                 </Row>
