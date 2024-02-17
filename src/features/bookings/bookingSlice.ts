@@ -58,6 +58,9 @@ const BookingSlice = createSlice({
             state.loading = false;
             state.orders = action.payload.orders;
         },
+        confirmPayment(state, action: PayloadAction<OrderBookingHistoryRes>) {
+            state.loading = false;
+        },
     },
 });
 

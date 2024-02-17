@@ -76,7 +76,7 @@ const BookSeva = () => {
         data.bookingDate = selectedDate ? moment(selectedDate).format('DD/MM/YYYY') : null;
         data.userId = loggedInUser?.id;
         data.category = "seva-book",
-        dispatch(myBookingsActions.bookSeva(data));
+        dispatch(myBookingsActions.saveSevaLocalData(data));
         navigate('/confirm-seva-details');
     });
 

@@ -15,7 +15,7 @@ import InvoiceBooking from './invoice';
 import { useRedux, useUser } from 'hooks';
 
 /* eslint-disable */
-export default function ServiceBookings() {
+export default function SevaBookings() {
  
     const componentRef = useRef(null);
     const [loggedInUser] = useUser();
@@ -35,7 +35,7 @@ export default function ServiceBookings() {
     const { dispatch, appSelector } = useRedux();
 
     useEffect(() => {
-        dispatch(myBookingsActions.getOrders({ userId: loggedInUser?.id,type:"services"}));
+        dispatch(myBookingsActions.getOrders({ userId: loggedInUser?.id,type:"seva"}));
     }, [dispatch]);
 
     const BookingList: any = appSelector(selectOrderHistry);
@@ -108,10 +108,9 @@ export default function ServiceBookings() {
                     globalFilter={globalFilter}
                     header={header}
                 >
-                    <Column field="ServiceName" header="Service N=name" />
-                    <Column field="ServiceBookId" header="Booking id" />
-                    <Column field="serviceType" header="Service type" />
-                    <Column field="godName" header="god Name" />
+                    <Column field="sevaName" header="seva Name" />
+                    <Column field="sevaBookId" header="Booking id" />
+                    <Column field="sevaType" header="Seva type" />
                     <Column field="amount" header="amount" />
                     <Column
                         field="transStatus"
