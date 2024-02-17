@@ -28,9 +28,11 @@ const serviceConfirm = () => {
 
     const handlePayment = () => {
         let data:any = {};
-        data.name = BookDetails?.serviceName;
+        data.name = BookDetails?.name;
+        data.godName = BookDetails?.godName;
         data.NoOfPerson = BookDetails?.NoOfPerson;
-        data.amount = BookDetails?.price;
+        data.type = BookDetails?.type;
+        data.amount = BookDetails?.amount;
         data.bookingDate = BookDetails.bookingDate;
         data.userId =BookDetails.userId;
         data.category = "service-book",

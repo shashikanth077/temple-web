@@ -45,7 +45,7 @@ const GroceryList = React.lazy(() => import('features/donations/grocery/donateGr
 const GroceryCheckout = React.lazy(() => import('features/donations/grocery/groceryCheckout'));
 const MyDonations = React.lazy(() => import('features/donations/mydonations/mydonations'));
 const UnAuth = React.lazy(() => import('features/UnAuth'));
-const MyBookings = React.lazy(() => import('features/bookings/reports/Reports'));
+const MyBookings = React.lazy(() => import('features/bookings/reports'));
 const ProductDetails = React.lazy(() => import('features/shop/products/Details/Product'));
 const IncomeReports = React.lazy(() => import('admin/features/reports/reports'));
 const BookingTypes = React.lazy(() => import('admin/features/bookings'));

@@ -71,6 +71,7 @@ const BookService = () => {
     */
     const onSubmit = handleSubmit((data: any) => {
         data.name = serviceDetails?.serviceName;
+        data.godName = serviceDetails?.godName;
         data.type = serviceDetails?.serviceType;
         data.amount = serviceDetails?.price;
         data.bookingDate = selectedDate ? moment(selectedDate).format('DD/MM/YYYY') : null;

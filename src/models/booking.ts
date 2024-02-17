@@ -60,3 +60,17 @@ export interface SevaBookData {
     comments:string;
     bookingDate:string;
   }
+
+export interface OrderBookingHistoryRes {
+    _id:string;
+    orders:any;
+    message:string;
+    success:boolean;
+    errorMessage:string;
+    errorCode:number;
+  }
+
+export interface orderRequest {
+    type:string;
+    userId:string;
+}
