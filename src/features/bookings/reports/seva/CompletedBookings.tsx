@@ -6,9 +6,9 @@ import { Button } from 'primereact/button';
 import { Dialog } from 'primereact/dialog';
 import { InputText } from 'primereact/inputtext';
 import { useReactToPrint } from 'react-to-print';
-import { myBookingsActions } from '../bookingSlice';
-import { selectBookingsList } from '../bookingSelector';
-import InvoiceBooking from './printBookInvoice';
+import { myBookingsActions } from '../../bookingSlice';
+import { selectBookingsList } from '../../bookingSelector';
+import InvoiceBooking from '../printBookInvoice';
 import { useRedux } from 'hooks';
 
 /* eslint-disable */

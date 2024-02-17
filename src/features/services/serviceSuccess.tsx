@@ -1,27 +1,603 @@
-import React from 'react';
+import React, {
+    useEffect, useState, ChangeEvent,
+} from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useIntl } from 'react-intl';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
+import Swal from 'sweetalert2';
+import {
+    useStripe,
+    useElements,
+    CardElement,
+} from '@stripe/react-stripe-js';
+
+import { CircleLoader } from 'react-spinners';
+import { serviceActions } from './serviceSlice';
+import { selecLocalBookingData } from './serviceSelector';
+import { useRedux, useUser } from 'hooks';
+import { CAProvinces } from 'constants/CAProvinces';
+import { myprofileActions } from 'admin/features/myprofile/myProfileSlice';
+import { selectMyProfileDetails } from 'admin/features/myprofile/myProfileSelectors';
+import { formatCurrency } from 'helpers/currency';
+import { FormInput } from 'sharedComponents/inputs';
+import { createPaymentIntent } from 'features/donations/mydonations/donationApis';
 
 /* eslint-disable */
-const ServiceSuccess = () =>(
-    <div className="col-xs-12 col-sm-12 col-md-9 col-lg-9 sd-dashboard">
-        <div className="sd-profile sd-seva-form">
-            <h2 className="sd-side-heading fw400">
-                <span className="fw700">Payment </span>Page
-            </h2>
-            <div className="sd-success">
-                <div className="sd-success-top sd-green">
-                    <img src="data:image/png;base64,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" alt="success" />
-                    <p>Success</p>
+const ServiceConfimPage = () => {
+    const { dispatch, appSelector } = useRedux();
+    const [loggedInUser] = useUser();
+    const intl = useIntl();
+    const navigate = useNavigate();
+    const [currentClientSecret, setCurrentClientSecret] = useState<any>('');
+
+    const stripe: any = useStripe();
+    const elements: any = useElements();
+
+    const [billingAddressFormData, setBillingAddressFormData] = useState({
+        billingAddress: "",
+        billingCity: "",
+        billingZipcode: "",
+        state: "",
+    });
+
+    const [processing, setProcessing] = useState(false);
+    const [isChecked, setIsChecked] = useState(false);
+    const [selectedState, setSelectedState] = useState("");
+    const [cardErrors, setCardErrors] = useState<any>("");
+
+
+    useEffect(() => {
+        dispatch(
+            myprofileActions.getMyProfileDetails({ userid: loggedInUser?.id }),
+        );
+    }, [dispatch]);
+
+
+    const BookDetails = appSelector(selecLocalBookingData);
+    console.log(BookDetails,"BookDetails");
+
+    /*
+       form validation schema
+    */
+    const schemaResolver = yupResolver(
+        yup.object().shape({
+            billingZipcode: yup.string().required("Please enter the zipcode"),
+            billingCity: yup.string().required("Please enter the city"),
+            billingAddress: yup.string().required("Please enter the address"),
+            state: yup.string().required("Please select the province"),
+            cardholdername: yup.string().required('Please enter the card holder name as per card'),
+            comments: yup
+                .string()
+                .required("Please add some notes for  your order")
+                .min(
+                    10,
+                    "This value is too short. It should have 10 characters or more.",
+                ),
+        }),
+    );
+
+    const methods: any = useForm<any>({
+        resolver: schemaResolver,
+    });
+
+    const {
+        handleSubmit,
+        register,
+        control,
+        setValue,
+        reset,
+        formState: { errors },
+    } = methods;
+
+    const ProfileDetails: any = appSelector(selectMyProfileDetails);
+
+    React.useEffect(() => {
+        if (isChecked) {
+            setSelectedState(ProfileDetails?.homeAddress.province);
+            setBillingAddressFormData({
+                billingAddress: ProfileDetails?.homeAddress.address1,
+                billingCity: ProfileDetails?.homeAddress.city,
+                billingZipcode: ProfileDetails?.homeAddress.postalCode,
+                state: ProfileDetails?.homeAddress.province,
+            });
+        } else if (ProfileDetails?.billingAddress) {
+            setSelectedState(ProfileDetails?.billingAddress.province);
+            setBillingAddressFormData({
+                billingAddress: ProfileDetails?.billingAddress.address1,
+                billingCity: ProfileDetails?.billingAddress.city,
+                billingZipcode: ProfileDetails?.billingAddress.postalCode,
+                state: ProfileDetails?.billingAddress.province,
+            });
+        } else {
+            setBillingAddressFormData({
+                billingAddress: "",
+                billingCity: "",
+                billingZipcode: "",
+                state: "",
+            });
+        }
+    }, [isChecked, ProfileDetails]);
+
+    const handleBillingToggle = (e: ChangeEvent<HTMLInputElement>) => {
+        setIsChecked(!isChecked);
+    };
+
+    useEffect(() => {
+        setValue("email", ProfileDetails?.email);
+        setValue("billingAddress", billingAddressFormData?.billingAddress);
+        setValue("billingCity", billingAddressFormData?.billingCity);
+        setValue("billingZipcode", billingAddressFormData?.billingZipcode);
+        setValue("state", billingAddressFormData?.state);
+    }, [setValue, billingAddressFormData]);
+
+    /*
+        handle form submission
+    */
+    const onSubmit = handleSubmit(async (data: any) => {
+
+        setProcessing(true);
+
+        if (!stripe || !elements) {
+            setProcessing(false);
+            setCardErrors('Something went wrong!');
+            return;
+        }
+
+        if (stripe) {
+        
+            const paymentIntentDetails = {
+                currency: 'cad',
+                devoteePhonenumber:loggedInUser?.phonenumber,
+                receipt_email: loggedInUser?.email,
+                payment_method_types:['card'],
+                amount:BookDetails?.amount,
+                bookingDetails:BookDetails?.name,
+                description: 'Booking for temple service '+BookDetails?.name,
+                shipping: {
+                    name: `${loggedInUser?.userName}`,
+                    address: {
+                        line1: billingAddressFormData?.billingAddress,
+                        city: billingAddressFormData?.billingCity,
+                        state: billingAddressFormData?.state,
+                        postal_code: billingAddressFormData?.billingZipcode,
+                        country: 'CA', // You may need to adjust the country code
+                    },
+                },
+            };
+
+            // Create the payment intent and get the client secret
+            const response = await createPaymentIntent(paymentIntentDetails);
+
+            if(!response.clientSecret) {
+                setCardErrors("Something went wrong!");
+                setProcessing(false);
+                return;
+            }
+            setCurrentClientSecret(response.clientSecret);
+
+            const cardElement = elements.getElement(CardElement);
+
+            if (!cardElement) {
+                setCardErrors("Please enter card details as mentioned above");
+                setProcessing(false);
+                return;
+            }
+
+            const { error, paymentMethod } = await stripe.createPaymentMethod({
+                type: 'card',
+                card: cardElement,
+                billing_details: {
+                    name: data?.cardholdername,
+                },
+            });
+
+            if (error) {
+                setProcessing(false);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Something went wrong!',
+                    text: `Your payment was un-successful. Error: ${error.message}`,
+                }).then(() => {
+                });
+            }
+            if (!error) {
+                setCardErrors('');
+                console.log('payment start');
+                const payload = await stripe.confirmCardPayment(response.clientSecret, {
+                    payment_method: paymentMethod?.id,
+                });
+
+                if (payload.error) {
+                    setProcessing(false);
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Something went wrong!',
+                        text: `Your payment was un-successful. Error: ${payload.error.message}`,
+                    }).then(() => {
+                    });
+                } else {
+
+                    let requestPayload: any = {};
+                    requestPayload.userId = loggedInUser?.id;
+                    requestPayload.godName = BookDetails?.godName;
+                    requestPayload.serviceType = BookDetails?.type;
+                    requestPayload.devoteeId = loggedInUser?.devoteeId;
+                    requestPayload.orderType = 'services';
+                    requestPayload.amount =  BookDetails?.amount;
+                    requestPayload.bookingDate =  BookDetails?.bookingDate;
+                    requestPayload.ServiceName = BookDetails?.name;
+                    requestPayload.NoOfPerson = BookDetails?.NoOfPerson;
+                    requestPayload.billingAddress = billingAddressFormData;
+                    requestPayload.devoteeName = ProfileDetails.firstName + '' + ProfileDetails.lastName;
+                    requestPayload.devoteePhoneNumber = loggedInUser?.phonenumber;
+                    requestPayload.devoteeEmail = loggedInUser?.email;
+                    requestPayload.paymentMethod = payload.paymentIntent.payment_method;
+                    requestPayload.transStatus = payload.paymentIntent.status;
+                    requestPayload.stripeReferenceId = payload.paymentIntent.id;
+                    requestPayload.paymentMode =  payload.paymentIntent.payment_method_types;
+                    requestPayload.orderNotes =  data.comments;
+                 
+                    dispatch(serviceActions.confirmPayment(requestPayload)); //add booking history
+                  
+                    setProcessing(false);
+
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Payment Successful!',
+                        text: `Your payment was successful. Reference No:${payload.paymentIntent.id}`,
+                    }).then(() => {
+                        document.body.style.overflow = 'auto';
+                        document.body.removeChild(overlay);
+                        navigate('/mybookings/lists'); 
+                    });
+
+                    document.body.style.overflow = 'hidden';
+                    const overlay = document.createElement('div');
+                    overlay.style.position = 'fixed';
+                    overlay.style.top = '0';
+                    overlay.style.left = '0';
+                    overlay.style.width = '100%';
+                    overlay.style.height = '100%';
+                    overlay.style.background = 'rgba(255, 255, 255, 0.5)';
+                    overlay.style.backdropFilter = 'blur(8px)';
+                    overlay.style.zIndex = '1000';
+                    document.body.appendChild(overlay);
+                }
+            } else {
+                setProcessing(false);
+                setCardErrors(error?.message);
+            }
+        } else {
+            setProcessing(false);
+            setCardErrors('Stripe is null');
+        }
+
+    });
+
+    return (
+        <>
+            {
+                processing &&
+                <div className="overlay">
+                    <CircleLoader />
                 </div>
-                <div className="sd-success-bottom">
-                    <p>Confirmed! Your booking with ID: (141-290124190843-vm44To) for <b>Service name</b> - Rs. <b>30 </b>has been made successfully. Looking forward to meeting you on a journey towards spirituality. </p>
-                    <div className="sd-success-bottom-down">
-                        <p className="sd-border-right">Booking History</p>
-                        <p>Go to Home</p>
-                    </div>
+            }
+            <div className="checkout-area pt-95 pb-100">
+                <div className="container">
+                    {BookDetails ? (
+                        <div className="row">
+                            <form
+                                name="shop-payment-form"
+                                id="shop-payment-form"
+                                onSubmit={onSubmit}
+                            >
+                                <div className="col-lg-12 mb-4">
+                                    <div className="billing-info-wrap">
+                                        <h3>Billing Details</h3>
+
+                                        <div className="form-group row">
+                                            <div className="col-sm-10">
+                                                <div className="form-check">
+                                                    <input
+                                                        className="form-check-input"
+                                                        checked={isChecked}
+                                                        onChange={
+                                                            handleBillingToggle
+                                                        }
+                                                        type="checkbox"
+                                                        id="saveAddress"
+                                                    />
+                                                    <label
+                                                        className="form-check-label d-flex align-items-center"
+                                                        htmlFor="saveAddress"
+                                                    >
+                                                        Save as default address
+                                                        <a
+                                                            aria-label="profile-edit"
+                                                            className="btn btn-primary checkout-edit-btn"
+                                                            href="/myprofile/edit-profile"
+                                                            title="Edit"
+                                                        >
+                                                            <i className="fas fa-edit ml-2" />
+                                                        </a>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="row">
+                                            <div className="col-lg-12">
+                                                <div className="billing-info mb-20">
+                                                    <FormInput
+                                                        type="text"
+                                                        register={register}
+                                                        key="billingAddress"
+                                                        errors={errors}
+                                                        label="House number,address"
+                                                        control={control}
+                                                        name="billingAddress"
+                                                        defaultValue={
+                                                            billingAddressFormData.billingAddress
+                                                        }
+                                                        onChange={(e) =>
+                                                            setBillingAddressFormData({
+                                                                ...billingAddressFormData,
+                                                                billingAddress: e.target.value,
+                                                            })
+                                                        }
+                                                    />
+                                                </div>
+                                            </div>
+                                            <div className="col-lg-12">
+                                                <div className="billing-info mb-20">
+                                                    <FormInput
+                                                        type="text"
+                                                        register={register}
+                                                        key="billingCity"
+                                                        errors={errors}
+                                                        label="City"
+                                                        control={control}
+                                                        name="billingCity"
+                                                        defaultValue={
+                                                            billingAddressFormData.billingCity
+                                                        }
+                                                        onChange={(e) =>
+                                                            setBillingAddressFormData({
+                                                                ...billingAddressFormData,
+                                                                billingCity: e.target.value,
+                                                            })
+                                                        }
+                                                    />
+                                                </div>
+                                            </div>
+                                            <div className="col-lg-6 col-md-6">
+                                                <div className="billing-info mb-20">
+                                                    <FormInput
+                                                        type="select"
+                                                        label="State"
+                                                        value={selectedState}
+                                                        onChange={(e) =>
+                                                            setBillingAddressFormData({
+                                                                ...billingAddressFormData,
+                                                                state: e.target.value,
+                                                            })
+                                                        }
+                                                        name="state"
+                                                        id="state"
+                                                        className="billing-selectinput"
+                                                    >
+                                                        <option value="">
+                                                            Select
+                                                        </option>
+                                                        {CAProvinces?.map(
+                                                            (
+                                                                option: any,
+                                                                index: any,
+                                                            ) => (
+                                                                <option
+                                                                    value={
+                                                                        option.name
+                                                                    }
+                                                                >
+                                                                    {option.name}{" "}
+                                                                </option>
+                                                            ),
+                                                        )}
+                                                    </FormInput>
+                                                </div>
+                                            </div>
+                                            <div className="col-lg-6 col-md-6">
+                                                <div className="billing-info mb-20">
+                                                    <FormInput
+                                                        type="text"
+                                                        register={register}
+                                                        key="billingZipcode"
+                                                        errors={errors}
+                                                        label="Postal code/Zip"
+                                                        control={control}
+                                                        name="billingZipcode"
+                                                        defaultValue={
+                                                            billingAddressFormData.billingZipcode
+                                                        }
+                                                        onChange={(e) =>
+                                                            setBillingAddressFormData({
+                                                                ...billingAddressFormData,
+                                                                billingZipcode: e.target.value,
+                                                            })
+                                                        }
+                                                    />
+                                                </div>
+                                            </div>
+                                            <div className="col-lg-6 col-md-6">
+                                                <div className="billing-info mb-20">
+                                                    <FormInput
+                                                        type="email"
+                                                        register={register}
+                                                        key="email"
+                                                        errors={errors}
+                                                        label="Email"
+                                                        control={control}
+                                                        name="email"
+                                                        defaultValue={
+                                                            ProfileDetails.email
+                                                        }
+                                                        disabled
+                                                    />
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div className="additional-info-wrap">
+                                            <h4>Additional information</h4>
+                                            <div className="additional-info">
+                                                <FormInput
+                                                    register={register}
+                                                    key="comments"
+                                                    errors={errors}
+                                                    label="Notes"
+                                                    control={control}
+                                                    name="comments"
+                                                    type="textarea"
+                                                    placeholder="Notes about your shopping, e.g. special notes for order. "
+                                                    defaultValue=""
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="row">
+                                    <div className="col-lg-7 order-lg-2">
+                                    <div className="your-order-area">
+                                        <h2><strong>Your service details</strong></h2>
+                                        <div className="your-order-wrap gray-bg-4">
+                                            <div className="your-order-product-info">
+                                                {/* <div className="your-order-top">
+                                                    <ul>
+                                                        <li>Donation </li>
+                                                        <li>Total</li>
+                                                    </ul>
+                                                </div> */}
+                                                <div className="your-order-middle">
+                                                    <ul>
+                                                    <li>
+                                                            <span className="order-middle-left">
+                                                                God name
+                                                            </span>{' '}
+                                                            <span className="order-price">
+                                                                <strong>{BookDetails.godname}</strong>
+                                                            </span>
+                                                        </li>
+                                                        <li>
+                                                            <span className="order-middle-left">
+                                                                Service type
+                                                            </span>{' '}
+                                                            <span className="order-price">
+                                                                <strong>{BookDetails.type}</strong>
+                                                            </span>
+                                                        </li>
+                                                        <li>
+                                                            <span className="order-middle-left">
+                                                                Service name
+                                                            </span>{' '}
+                                                            <span className="order-price">
+                                                                <strong>{BookDetails.name}</strong>
+                                                            </span>
+                                                        </li>
+                                                        <li>
+                                                            <span className="order-middle-left">
+                                                                Booking date
+                                                            </span>{' '}
+                                                            <span className="order-price">
+                                                                <strong>{BookDetails.bookingDate}</strong>
+                                                            </span>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <div className="your-order-total">
+                                                    <ul>
+                                                        <li className="order-total">Total</li>
+                                                        <li>
+                                                            {formatCurrency(intl, BookDetails.amount)}
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div className="payment-method" />
+                                        </div>
+                                    </div>
+                                    </div>
+
+                                    {/* Order Details on Right Side */}
+                                    <div className="col-lg-5 order-lg-1">
+                                        <div className="your-order-area card-payment-details">
+                                            <h4>Enter Payment Details</h4>
+                                            <div className="billing-info mb-20">
+                                                <FormInput
+                                                    type="text"
+                                                    register={register}
+                                                    key="cardholdername"
+                                                    errors={errors}
+                                                    label="Card holder name"
+                                                    control={control}
+                                                    name="cardholdername"
+                                                />
+                                            </div>
+                                            <div className="Card-Info mb-20">
+                                                <CardElement
+                                                    className='card-details'
+                                                    id="card"
+                                                    options={{
+                                                        style: {
+                                                            base: {
+                                                                fontSize: '16px',
+                                                                color: '#32325d',
+                                                                fontFamily: 'Arial, sans-serif',
+                                                            },
+                                                        }
+                                                    }}
+                                                />
+                                            </div>
+                                            {cardErrors && <p className="error-message">{cardErrors}</p>}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div
+                                    className="col-lg-3 order-btn"
+                                    style={{ textAlign: "right" }}
+                                >
+                                    {/* Place Order Button */}
+                                    <div className="place-order mt-25">
+                                        <button
+                                            type="submit"
+                                            disabled={processing || !stripe || !elements}
+                                            className="btn btn-hover"
+                                        >
+                                            {processing ? 'PROCESSING' : 'Place order'}
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    ) : (
+                        <div className="row">
+                            <div className="col-lg-12">
+                                <div className="item-empty-area text-center">
+                                    <div className="item-empty-area__icon mb-30">
+                                        <i className="pe-7s-cash" />
+                                    </div>
+                                    <div className="item-empty-area__text">
+                                        Something went wrong <br />{" "}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    )}
                 </div>
             </div>
-        </div>
-    </div>
-)
+        </>
+    );
+};
 
-export default ServiceSuccess;
+export default ServiceConfimPage;

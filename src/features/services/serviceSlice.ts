@@ -38,10 +38,6 @@ const serviceSlice = createSlice({
         confirmPayment(state, action: PayloadAction<ServiceBookData>) {
             state.loading = false;
         },
-        bookServiceSuccess(state, action: PayloadAction<SuccesResponse>) {
-            state.loading = false;
-            state.message = action.payload.message;
-        },
     },
 });
 

@@ -252,7 +252,7 @@ const Checkout = () => {
                     }).then(() => {
                         document.body.style.overflow = 'auto';
                         document.body.removeChild(overlay);
-                        navigate('/mydonations/list'); //later will change to my booking page
+                        navigate('/mybookings/lists'); 
                     });
 
                     document.body.style.overflow = 'hidden';

@@ -88,6 +88,13 @@ const Frequency = [
     { id: 'yearly', name: 'Yearly' },
 ];
 
+const Types = [
+    { value: 'shopOrders', label: 'Shopping orders' },
+    { value: 'Services', label: 'Services' },
+    { value: 'Seva', label: 'Sevas' },
+    { value: 'Events', label: 'Events' },
+];
+
 export {
-    Months, ServiceTypes, numberOfDaysAhead, bookingTypes, Days, Frequency,
+    Months, ServiceTypes, numberOfDaysAhead, bookingTypes, Days, Frequency, Types,
 };

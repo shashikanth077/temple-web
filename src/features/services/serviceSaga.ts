@@ -32,7 +32,6 @@ function* StoreService(action:any) {
         const response: SuccesResponse = yield call(bookService, action.payload);
         if (response.success) {
             yield put(setSuccessMessage('Service has booked successfully'));
-            yield put(serviceActions.bookServiceSuccess(response));
         } else {
             yield put(setError(response.errorMessage));
         }
@@ -50,7 +49,7 @@ export function* watchServiceDetails() {
 }
 
 export function* watchBookService() {
-    yield takeLatest(serviceActions.bookService.type, StoreService);
+    yield takeLatest(serviceActions.confirmPayment.type, StoreService);
 }
 
 function* ServiceSaga() {
