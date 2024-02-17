@@ -2,6 +2,7 @@ import {
     call, put, all, fork, takeLatest,
 } from 'redux-saga/effects';
 import {
+    bookSeva,
     getBookingList, getSevaTypes, getShoppingOrders,
 } from './bookingApi';
 import { myBookingsActions } from './bookingSlice';
@@ -46,6 +47,24 @@ function* getSevaList(action:any) {
     }
 }
 
+function* StoreSevaDetails(action:any) {
+    try {
+        yield put(startLoading());
+        const response: BookingRes = yield call(bookSeva, action.payload);
+        if (response.success) {
+            // yield put(myBookingsActions.getSevaListSuccess(response));
+        } else {
+            yield put(setError(response.errorMessage));
+        }
+    } catch (error) {
+        if (error instanceof Error) {
+            yield put(setError(error.message));
+        }
+    } finally {
+        yield put(endLoading());
+    }
+}
+
 function* getOrderList(action:any) {
     try {
         yield put(startLoading());
@@ -68,6 +87,10 @@ export function* watchBookingDetails() {
     yield takeLatest(myBookingsActions.getBookings.type, getBookingDetails);
 }
 
+export function* watchStoreSevaDetails() {
+    yield takeLatest(myBookingsActions.confirmPayment.type, StoreSevaDetails);
+}
+
 export function* watchSevaList() {
     yield takeLatest(myBookingsActions.getSevaList.type, getSevaList);
 }
@@ -77,7 +100,7 @@ export function* watchOrderList() {
 }
 
 function* BookingsSaga() {
-    yield all([fork(watchBookingDetails), fork(watchSevaList), fork(watchOrderList)]);
+    yield all([fork(watchBookingDetails), fork(watchSevaList), fork(watchOrderList), fork(watchStoreSevaDetails)]);
 }
 
 export default BookingsSaga;

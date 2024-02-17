@@ -90,7 +90,7 @@ function InvoiceDonationComp(props:InvoiceDonation) {
                                 <div className="email">Email:<a>{invoiceDetails?.devoteeEmail}</a></div>
                             </div>
                             <div className="col invoice-details">
-                                <h3 className="invoice-id">INVOICE # {invoiceDetails?.sevaBookId}</h3>
+                                <h3 className="invoice-id">INVOICE # {invoiceDetails?.ServiceBookId}</h3>
                                 <div className="date">Date of Invoice: {moment(invoiceDetails?.createdAt).format('YYYY-MM-DD')}</div>
                             </div>
                         </div>
@@ -98,8 +98,9 @@ function InvoiceDonationComp(props:InvoiceDonation) {
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th className="text-center">Seva name</th>
-                                    <th className="text-center">Seva type</th>
+                                    <th className="text-center">God name</th>
+                                    <th className="text-center">Service name</th>
+                                    <th className="text-center">service type</th>
                                     <th className="text-center">Price</th>
                                 </tr>
                             </thead>
@@ -107,21 +108,22 @@ function InvoiceDonationComp(props:InvoiceDonation) {
                             
                                     <tr>
                                         <td className="no">1</td>
-                                        <td className="text-center donationType">{invoiceDetails?.sevaName}</td>
-                                        <td className="text-center donationType">{invoiceDetails?.sevaType}</td>
-                                       <td className="text-center price">{formatCurrency(intl, invoiceDetails?.amount)}</td>
+                                        <td className="text-center donationType">{invoiceDetails?.godName}</td>
+                                        <td className="text-center donationType">{invoiceDetails?.ServiceName}</td>
+                                        <td className="text-center qty">{invoiceDetails?.serviceType}</td>
+                                        <td className="text-center price">{formatCurrency(intl, invoiceDetails?.amount)}</td>
                                     </tr>
                                
                             </tbody>
                             <tfoot className="sub-total-donaton">
                                 <tr>
-                                    <td aria-label="subtotal" colSpan={1} />
+                                    <td aria-label="subtotal" colSpan={2} />
                                     <td colSpan={2}>SUBTOTAL</td>
                                     <td className="text-right">{formatCurrency(intl, invoiceDetails?.amount)}</td> {/* Add 'text-right' class for right alignment */}
                                 </tr>
                                 {/* ... (previous code) */}
                                 <tr>
-                                    <td aria-label="total" colSpan={1} />
+                                    <td aria-label="total" colSpan={2} />
                                     <td colSpan={2}>GRAND TOTAL</td>
                                     <td className="text-right">{formatCurrency(intl, invoiceDetails?.amount)}</td> {/* Add 'text-right' class for right alignment */}
                                 </tr>

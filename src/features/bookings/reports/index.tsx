@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import ShopOrders from './shopOrders';
-import ServiceBookings from './seva';
+import ServiceBookings from './services';
+import SevaBookings from './seva';
 import { Types } from 'constants/services';
 
 const Orders: React.FC = () => {
@@ -36,6 +37,7 @@ const Orders: React.FC = () => {
 
             {type === 'shopOrders' && <ShopOrders />}
             {type === 'Services' && <ServiceBookings />}
+            {type === 'Seva' && <SevaBookings />}
         </>
     );
 };

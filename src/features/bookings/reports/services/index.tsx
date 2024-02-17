@@ -1,27 +1,29 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { FilterMatchMode } from 'primereact/api';
+import { useNavigate } from 'react-router-dom';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { Button } from 'primereact/button';
 import { Dialog } from 'primereact/dialog';
 import { InputText } from 'primereact/inputtext';
-import { useReactToPrint } from 'react-to-print';
+import { useSelector } from 'react-redux';
+import { classNames } from 'primereact/utils';
+import moment from 'moment';
 import { myBookingsActions } from '../../bookingSlice';
-import { selectBookingsList } from '../../bookingSelector';
-import InvoiceBooking from '../printBookInvoice';
-import { useRedux } from 'hooks';
+import { selectOrderHistry } from '../../bookingSelector';
+import InvoiceBooking from './invoice';
+import { useRedux, useUser } from 'hooks';
 
 /* eslint-disable */
-export default function CompletedBookings() {
+export default function ServiceBookings() {
  
-
     const componentRef = useRef(null);
- 
-    const handlePrint = useReactToPrint({
-        content: () => componentRef.current,
-      });
+    const [loggedInUser] = useUser();
+    const [orderId, setOrderId] = useState<string>('');
 
-    
+    const navigate = useNavigate();
+    const { loading, error } = useSelector((state: any) => state.apiState);
+
     const [filters, setFilters] = useState({
         global: { value: null, matchMode: FilterMatchMode.CONTAINS },
     });
@@ -29,16 +31,15 @@ export default function CompletedBookings() {
     const [BookingDialog, setBookingDialog] = useState(false)
     const [selectedBookings, setSelectedBookings] = useState<any>(null);
     const [globalFilter, setGlobalFilter] = useState(null);
-    const [BookingId,setBookingId] = useState<string>('');
     const dt = useRef<any>(null);
     const { dispatch, appSelector } = useRedux();
 
     useEffect(() => {
-        dispatch(myBookingsActions.getBookings({ userid: '1' }));
+        dispatch(myBookingsActions.getOrders({ userId: loggedInUser?.id,type:"services"}));
     }, [dispatch]);
 
-    const BookingList: any = appSelector(selectBookingsList);
-
+    const BookingList: any = appSelector(selectOrderHistry);
+    
     const onGlobalFilterChange = (event: any) => {
         const value = event.target.value;
         let _filters = { ...filters };
@@ -47,10 +48,9 @@ export default function CompletedBookings() {
     };
 
     const viewBooking = (data: any) => {
-        setBookingId(data._id);
+        setOrderId(data._id);
         setBookingDialog(true);
     };
-
 
     const hideDialog = () => {
         setBookingDialog(false);
@@ -66,11 +66,12 @@ export default function CompletedBookings() {
         </React.Fragment>
     );
 
+    const formatDate = (rowData: any) => moment(rowData).format('DD-MM-YYYY');
+
     const rightToolbarTemplate = () => <Button label="Export" icon="pi pi-upload" className="p-button-help" onClick={exportCSV} />;
     const actionBodyTemplate = (rowData: any) => (
         <>
             <Button icon="pi pi-eye" rounded outlined className="mr-2" onClick={() => viewBooking(rowData)} />
-            {/* <Button icon="pi pi-print" rounded outlined className="mr-2" onClick={() => handlePrint()} /> */}
         </>
     );
 
@@ -78,7 +79,7 @@ export default function CompletedBookings() {
         const value = filters['global'] ? filters['global'].value : '';
         return (
             <div className="flex flex-wrap gap-2 align-items-center justify-content-between">
-                <h4 className="m-0">Completed bookings</h4>
+                <h4 className="m-0">Orders</h4>
                 <span className="p-input-icon-left mb-1">
                     <i className="pi pi-search" />
                     <InputText type="search" value={value || ''} onChange={(e) => onGlobalFilterChange(e)} placeholder="Search Bookings" />
@@ -87,11 +88,9 @@ export default function CompletedBookings() {
         )
     }
 
-
     return (
         <div>
-            {/* <div style={{ display: "none" }}><PrintComponent ref={componentRef} /></div> */}
-            {/* <Toast ref={toast} /> */}
+           
             <div className="">
 
                 <DataTable
@@ -105,21 +104,43 @@ export default function CompletedBookings() {
                     rows={10}
                     rowsPerPageOptions={[5, 10, 25]}
                     paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-                    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Upcoming bookings"
+                    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Bookings"
                     globalFilter={globalFilter}
                     header={header}
                 >
-                    <Column field="type" header="Booking type" />
-                    <Column field="orderdate" header="Date" />
-                    <Column field="totalAmount" header="Amount" />
-                    <Column field="orderStatus" header="Order Status" />
-                    <Column field="programDate" header="Program date" />
+                    <Column field="ServiceName" header="Service N=name" />
+                    <Column field="ServiceBookId" header="Booking id" />
+                    <Column field="serviceType" header="Service type" />
+                    <Column field="godName" header="god Name" />
+                    <Column field="amount" header="amount" />
+                    <Column
+                        field="transStatus"
+                        sortable
+                        style={{ width: "2rem" }}
+                        header="Transaction Status"
+                        body={(rowData: any) => (
+                            <span
+                                className={classNames({
+                                    "p-tag p-tag-success":
+                                        rowData.transStatus === "succeeded",
+                                    "p-tag p-tag-danger":
+                                        rowData.transStatus === "failed",
+                                    "p-tag p-tag-new":
+                                        rowData.transStatus === "new",
+                                })}
+                            >
+                                {rowData.transStatus}
+                            </span>
+                        )}
+                    />
+                    <Column field="OrderDate" sortable header="Order date" body={(rowData) => formatDate(rowData.OrderDate)} />
                     <Column body={actionBodyTemplate} exportable={false} style={{ minWidth: '6rem', textAlign: 'center' }} />
                 </DataTable>
             </div>
 
+
             <Dialog visible={BookingDialog} style={{ width: '60rem' }} breakpoints={{ '960px': '75vw', '641px': '90vw' }} header="Booking details" modal className="p-fluid" footer={BookingDialogFooter} onHide={hideDialog}>
-                <InvoiceBooking BookingId={BookingId} BookingData={BookingList}/>
+                <InvoiceBooking orderid={orderId} orderData={BookingList} />
             </Dialog>
 
 
