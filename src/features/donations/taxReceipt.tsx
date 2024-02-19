@@ -88,9 +88,9 @@ const TaxReceipt = (props: InvoiceDonation) => {
                                     <div className="devote-number">
                                         <p><b>Devote No:{rowData?.devoteeId}</b></p>
                                     </div>
-                                    <p>{ReceiptContent?.ReceivedStatement} <b>{formatCurrency(intl, rowData?.donatedAmount)}</b></p>
+                                    <p>{ReceiptContent?.ReceivedStatement} <b>{formatCurrency(intl, rowData?.amount)}</b></p>
                                     <div className="donor-address">
-                                        <p><b>{rowData?.donorName}</b></p>
+                                        <p><b>{rowData?.devoteeName}</b></p>
                                         <p>{rowData?.billingAddress.address1}<br />
                                             {rowData?.billingAddress.city}, {rowData?.billingAddress.province}<br />
                                             {rowData?.billingAddress.postalCode}

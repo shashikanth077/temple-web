@@ -3,44 +3,46 @@ import { FilterMatchMode } from 'primereact/api';
 import { useNavigate } from 'react-router-dom';
 import { Column } from 'primereact/column';
 import { Button } from 'primereact/button';
-import { Tooltip } from 'primereact/tooltip';
 import { DataTable } from 'primereact/datatable';
 import { Toast } from 'primereact/toast';
 import { InputText } from 'primereact/inputtext';
 import { useSelector } from 'react-redux';
+import moment from 'moment';
+import { classNames } from 'primereact/utils';
 import { adminReportsActions } from './reportsSlice';
 import { selectInComeReportDetails } from './reportsSelectors';
 import ReportFilter from './reportFilter';
+import ExportPdf from './generatePdf';
 import { useRedux } from 'hooks';
 import { clearState } from 'storeConfig/api/apiSlice';
 
 /* eslint-disable */
 export default function ManageReports() {
 
-    const initialFilters = 
-        {
-            postalCode: '',
-            tickerId: '',
-            phoneNumber: '',
-            mobileNumber: '',
-            devoteeName: '',
-            devoteeId: '',
-          }
-      
+    const initialFilters =
+    {
+        postalCode: '',
+        tickerId: '',
+        phoneNumber: '',
+        mobileNumber: '',
+        devoteeName: '',
+        devoteeId: '',
+    }
+
 
     const [seachFilter, setSeachFilters] = useState<any>(initialFilters);
 
-    const handleInputChange = (e:any) => {
+    const handleInputChange = (e: any) => {
         const { name, value } = e.target;
         setSeachFilters({ ...seachFilter, [name]: value });
     };
 
-    const ClearHandler = (e:any) => {
+    const ClearHandler = (e: any) => {
         setSeachFilters(initialFilters); //clean 
     }
 
     const SearchHandler = () => {
-        if(seachFilter.length > 0) {
+        if (seachFilter.length > 0) {
             dispatch(adminReportsActions.getReports(seachFilter))
         }
     }
@@ -61,22 +63,22 @@ export default function ManageReports() {
     const { dispatch, appSelector } = useRedux();
 
     useEffect(() => {
-        dispatch(adminReportsActions.getReports({ userid: '1' }));
+        dispatch(adminReportsActions.getReports({}));
     }, [dispatch]);
 
     const ReportList: any = appSelector(selectInComeReportDetails);
-    console.log("ReportList",ReportList);
 
     const showToast = (severity: any, summary: any, detail: any) => {
         toast.current.show({ severity, summary, detail });
     };
 
+
     const cols = [
-        { field: 'tickerId', header: 'TicketID' },
-        { field: 'did', header: 'DID' },
-        { field: 'firstName', header: 'FirstName' },
+        { field: 'ticketId', header: 'TicketID' },
+        { field: 'devoteeId', header: 'DID' },
+        { field: 'devoteeName', header: 'FirstName' },
+        { field: 'devoteePhoneNumber', header: 'Phone number' },
         { field: 'serviceName', header: 'ServiceName' },
-        { field: 'NoOfTickets', header: 'NoOfTickets' },
         { field: 'cost', header: 'Cost' },
         { field: 'totalAmount', header: 'TotalAmount' },
         { field: 'paymentType', header: 'PaymentType' }
@@ -104,76 +106,40 @@ export default function ManageReports() {
     }, [successMessage, error, dispatch]);
 
 
-    const exportCSV = (selectionOnly:any) => {
+    const exportCSV = (selectionOnly: any) => {
         dt.current.exportCSV({ selectionOnly });
     };
 
-    const exportPdf = () => {
-        import('jspdf').then((jsPDF) => {
-            import('jspdf-autotable').then(() => {
-                const doc:any = new jsPDF.default("landscape", "em");
-                doc.autoTable(exportColumns, ReportList);
-                doc.save('incomereport.pdf');
-            });
-        });
-    };
 
-    const exportExcel = () => {
-        import('xlsx').then((xlsx) => {
-            const worksheet = xlsx.utils.json_to_sheet(ReportList);
-            const workbook = { Sheets: { data: worksheet }, SheetNames: ['data'] };
-            const excelBuffer = xlsx.write(workbook, {
-                bookType: 'xlsx',
-                type: 'array'
-            });
+    const formatDate = (rowData: any) => moment(rowData).format('DD-MM-YYYY');
 
-            saveAsExcelFile(excelBuffer, 'products');
-        });
-    };
-
-
-    const saveAsExcelFile = (buffer:any, fileName:string) => {
-        import('file-saver').then((module) => {
-            if (module && module.default) {
-                let EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
-                let EXCEL_EXTENSION = '.xlsx';
-                const data = new Blob([buffer], {
-                    type: EXCEL_TYPE
-                });
-
-                module.default.saveAs(data, fileName + '_export_' + new Date().getTime() + EXCEL_EXTENSION);
-            }
-        });
-    };
-
-       const header = () => {
+    const header = () => {
         const value = filters['global'] ? filters['global'].value : '';
         return (
             <>
-            <div className="flex admin-annual-reports align-items-center justify-content-end gap-2">
-                <Button type="button" icon="pi pi-file" rounded onClick={() => exportCSV(false)} data-pr-tooltip="CSV" />
-                <Button type="button" icon="pi pi-file-excel" severity="success" rounded onClick={exportExcel} data-pr-tooltip="XLS" />
-                <Button type="button" icon="pi pi-file-pdf" severity="warning" rounded onClick={exportPdf} data-pr-tooltip="PDF" />
-            </div>
-            <div className="flex flex-wrap gap-2 align-items-center justify-content-between">
-               
-                <h4 className="m-0"><b>Income report</b></h4>
-                <span className="p-input-icon-left mb-1">
-                    <i className="pi pi-search" />
-                    <InputText type="search" value={value || ''} onChange={(e) => onGlobalFilterChange(e)} placeholder="Search in report list" />
-                </span>
-            </div>
+                <div className="flex admin-annual-reports align-items-center justify-content-end gap-2">
+                    <Button type="button" icon="pi pi-file" rounded onClick={() => exportCSV(false)} data-pr-tooltip="CSV" />
+                    <ExportPdf reportList={ReportList}/>
+                </div>
+                <div className="flex flex-wrap gap-2 align-items-center justify-content-between">
+
+                    <h4 className="m-0"><b>Income report</b></h4>
+                    <span className="p-input-icon-left mb-1">
+                        <i className="pi pi-search" />
+                        <InputText type="search" value={value || ''} onChange={(e) => onGlobalFilterChange(e)} placeholder="Search in report list" />
+                    </span>
+                </div>
             </>
         )
     }
 
     return (
         <div>
+          
+            <ReportFilter seachFilter={seachFilter} ClearHandler={ClearHandler} handleInputChange={handleInputChange} SearchHandler={SearchHandler} />
 
-            <ReportFilter seachFilter={seachFilter} ClearHandler={ClearHandler} handleInputChange={handleInputChange} SearchHandler={SearchHandler}/>
-            
             <Toast ref={toast} />
-            <div className="">
+            <div className="admin-income-report">
                 <DataTable
                     ref={dt}
                     filters={filters} onFilter={(e: any) => setFilters(e.filters)}
@@ -189,15 +155,36 @@ export default function ManageReports() {
                     globalFilter={globalFilter}
                     header={header}
                 >
-                    <Column field="tickerId" header="TicketID" />
-                    <Column field="did" header="DID" />
-                    <Column field="firstName" header="Name" />
+                    <Column field="ticketId" header="TicketID" />
+                    <Column field="devoteeId" header="DevoteeID" />
+                    <Column field="devoteeName" header="Deveotee name" />
+                    <Column field="devoteePhoneNumber" header="Phone number" />
+                    <Column field="devoteeEmail" header="Email Id" />
                     <Column field="serviceName" header="Service name" />
-                    <Column field="NoOfTickets" header="No of tickets" />
-                    <Column field="manualTicket" header="Manual tickets" />
-                    <Column field="cost" header="Cost" />
-                    <Column field="totalAmount" header="Total amount" />
-                    <Column field="paymentType" header="Payment type" />
+                    <Column
+                        field="transStatus"
+                        sortable
+                        style={{ width: "2rem" }}
+                        header="TransStatus"
+                        body={(rowData: any) => (
+                            <span
+                                className={classNames({
+                                    "p-tag p-tag-success":
+                                        rowData.transStatus === "succeeded",
+                                    "p-tag p-tag-danger":
+                                        rowData.transStatus === "failed",
+                                    "p-tag p-tag-new":
+                                        rowData.transStatus === "new",
+                                })}
+                            >
+                                {rowData.transStatus}
+                            </span>
+                        )}
+                    />
+                    <Column field="orderNotes" header="Devotee notes" />
+                    <Column field="paymentMode" header="Payment Mode" />
+                    <Column field="amount" header="Amount" />
+                    <Column field="createdAt" sortable header="Booked date" body={(rowData) => formatDate(rowData.createdAt)} />
                 </DataTable>
             </div>
         </div>

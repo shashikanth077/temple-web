@@ -30,6 +30,13 @@ const DonationPayment = () => {
     const intl = useIntl();
     const [loggedInUser] = useUser();
 
+    const [billingAddressFormData, setBillingAddressFormData] = useState({
+        billingAddress: "",
+        billingCity: "",
+        billingZipcode: "",
+        state: "",
+    });
+
     const { param1, param2 } = useParams();
 
     const stripe = useStripe(); // Move useStripe inside handlePayment
@@ -48,8 +55,18 @@ const DonationPayment = () => {
     */
     const schemaResolver = yupResolver(
         yup.object().shape({
+            billingZipcode: yup.string().required("Please enter the zipcode"),
+            billingCity: yup.string().required("Please enter the city"),
+            billingAddress: yup.string().required("Please enter the address"),
+            state: yup.string().required("Please select the province"),
             cardholdername: yup.string().required('Please enter the card holder name as per card'),
-            comments: yup.string().required('Please add some notes for donation').min(2, 'This value is too short. It should have 2 characters or more.')
+            comments: yup
+                .string()
+                .required("Please add some notes for  your order")
+                .min(
+                    10,
+                    "This value is too short. It should have 10 characters or more.",
+                ),
         }),
     );
 
@@ -90,11 +107,11 @@ const DonationPayment = () => {
                     name: ProfileDetails?.firstName +' '+ProfileDetails?.lastName,
                     phone: ProfileDetails?.mobileNumber,
                     address: {
-                        line1: billingAddressFill.address1,
-                        city: billingAddressFill.city,
-                        country: 'Canada',
-                        postal_code: billingAddressFill?.postalCode,
-                        state: billingAddressFill?.province
+                        line1: billingAddressFormData?.billingAddress,
+                        city: billingAddressFormData?.billingCity,
+                        state: billingAddressFormData?.state,
+                        postal_code: billingAddressFormData?.billingZipcode,
+                        country: 'CA', // You may need to adjust the country code
                     },
                 },
             };
@@ -155,7 +172,7 @@ const DonationPayment = () => {
                         PaymentHistory.paymentMethod = payload.paymentIntent.payment_method;
                         PaymentHistory.paymentMode = payload.paymentIntent.payment_method_types;
                         PaymentHistory.donatedItems = [];
-                        PaymentHistory.billingAddress = billingAddressFill;
+                        PaymentHistory.billingAddress = billingAddressFormData;
 
                         dispatch(mydonationsActions.PayDonation(PaymentHistory));
                         
@@ -206,28 +223,42 @@ const DonationPayment = () => {
 
     const ProfileDetails: any = appSelector(selectMyProfileDetails);
 
-    const [billingAddressFill, setBillingAddress] = useState<any>(ProfileDetails?.billingAddress || '');
     const [selectedState, setSelectedState] = useState<string>(''); // Initialize with an empty string
 
     React.useEffect(() => {
         if (isChecked) {
             setSelectedState(ProfileDetails?.homeAddress.province);
-            setBillingAddress(ProfileDetails?.homeAddress);
+            setBillingAddressFormData({
+                billingAddress: ProfileDetails?.homeAddress.address1,
+                billingCity: ProfileDetails?.homeAddress.city,
+                billingZipcode: ProfileDetails?.homeAddress.postalCode,
+                state: ProfileDetails?.homeAddress.province,
+            });
         } else if (ProfileDetails?.billingAddress) {
             setSelectedState(ProfileDetails?.billingAddress.province);
-            setBillingAddress(ProfileDetails?.billingAddress);
+            setBillingAddressFormData({
+                billingAddress: ProfileDetails?.billingAddress.address1,
+                billingCity: ProfileDetails?.billingAddress.city,
+                billingZipcode: ProfileDetails?.billingAddress.postalCode,
+                state: ProfileDetails?.billingAddress.province,
+            });
         } else {
-            setBillingAddress('');
+            setBillingAddressFormData({
+                billingAddress: "",
+                billingCity: "",
+                billingZipcode: "",
+                state: "",
+            });
         }
     }, [isChecked, ProfileDetails]);
 
     useEffect(() => {
-        setValue('mobileNumber', ProfileDetails?.mobileNumber);
-        setValue('billingAddress', billingAddressFill?.address1);
-        setValue('billingCity', billingAddressFill?.city);
-        setValue('billingZipcode', billingAddressFill?.postalCode);
-        setValue('state', billingAddressFill?.province);
-    }, [setValue, billingAddressFill]);
+        setValue("email", ProfileDetails?.email);
+        setValue("billingAddress", billingAddressFormData?.billingAddress);
+        setValue("billingCity", billingAddressFormData?.billingCity);
+        setValue("billingZipcode", billingAddressFormData?.billingZipcode);
+        setValue("state", billingAddressFormData?.state);
+    }, [setValue, billingAddressFormData]);
 
     const handleBillingToggle = (e: ChangeEvent<HTMLInputElement>) => {
         setIsChecked(!isChecked);
@@ -275,7 +306,7 @@ const DonationPayment = () => {
                                                         control={control}
                                                         label="Address"
                                                         name="billingAddress"
-                                                        defaultValue={billingAddressFill?.address1 || ''}
+                                                        defaultValue={billingAddressFormData?.billingAddress || ''}
                                                     />
                                                 </div>
                                             </div>
@@ -289,7 +320,7 @@ const DonationPayment = () => {
                                                         control={control}
                                                         label="City"
                                                         name="billingCity"
-                                                        defaultValue={billingAddressFill?.city || ''} />
+                                                        defaultValue={billingAddressFormData?.billingCity || ''} />
                                                 </div>
                                             </div>
                                             <div className="col-lg-6 col-md-6">
@@ -327,7 +358,7 @@ const DonationPayment = () => {
                                                         control={control}
                                                         type="text"
                                                         name="postalCode"
-                                                        defaultValue={billingAddressFill?.postalCode || ''} />
+                                                        defaultValue={billingAddressFormData?.billingZipcode || ''} />
                                                 </div>
                                             </div>
                                             <div className="col-lg-6 col-md-6">
