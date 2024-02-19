@@ -90,13 +90,13 @@ function InvoiceDonationComp(props:InvoiceDonation) {
                         <div className="row contacts">
                             <div className="col invoice-to">
                                 <div className="text-gray-light">INVOICE TO:</div>
-                                <h2 className="to">{invoiceDetails?.donorName}</h2>
+                                <h2 className="to">{invoiceDetails?.devoteeName}</h2>
                                 <div>{invoiceDetails?.billingAddress?.address1},<br />
                                     {invoiceDetails?.billingAddress?.city},
                                     {invoiceDetails?.billingAddress?.province}-
                                     {invoiceDetails?.billingAddress?.postalCode}<br />
                                 </div>
-                                <div className="email">Email:<a href="mailto:john@example.com">{invoiceDetails?.donorEmail}</a></div>
+                                <div className="email">Email:<a href="mailto:john@example.com">{invoiceDetails?.devoteeEmail}</a></div>
                             </div>
                             <div className="col invoice-details">
                                 <h3 className="invoice-id">INVOICE # {invoiceDetails?.taxReceiptNo}</h3>
@@ -117,20 +117,20 @@ function InvoiceDonationComp(props:InvoiceDonation) {
                                     <td className="no">1</td>
                                     <td className="text-center donationType">{invoiceDetails?.donationType}</td>
                                     <td className="text-center qty">{invoiceDetails?.frequency}</td>
-                                    <td className="total text-right">{formatCurrency(intl, invoiceDetails?.donatedAmount)}</td> {/* Add 'text-right' class for right alignment */}
+                                    <td className="total text-right">{formatCurrency(intl, invoiceDetails?.amount)}</td> {/* Add 'text-right' class for right alignment */}
                                 </tr>
                             </tbody>
                             <tfoot className="sub-total-donaton">
                                 <tr>
                                     <td aria-label="subtotal" colSpan={1} />
                                     <td colSpan={2}>SUBTOTAL</td>
-                                    <td className="text-right">{formatCurrency(intl, invoiceDetails?.donatedAmount)}</td> {/* Add 'text-right' class for right alignment */}
+                                    <td className="text-right">{formatCurrency(intl, invoiceDetails?.amount)}</td> {/* Add 'text-right' class for right alignment */}
                                 </tr>
                                 {/* ... (previous code) */}
                                 <tr>
                                     <td aria-label="total" colSpan={1} />
                                     <td colSpan={2}>GRAND TOTAL</td>
-                                    <td className="text-right">{formatCurrency(intl, invoiceDetails?.donatedAmount)}</td> {/* Add 'text-right' class for right alignment */}
+                                    <td className="text-right">{formatCurrency(intl, invoiceDetails?.amount)}</td> {/* Add 'text-right' class for right alignment */}
                                 </tr>
                             </tfoot>
                         </table>

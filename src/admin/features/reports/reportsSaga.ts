@@ -13,7 +13,7 @@ import { ReportsRes } from 'models';
 function* getReportsDetails(action:any) {
     try {
         yield put(startLoading());
-        const response: ReportsRes = yield call(getReportList, action.payload);
+        const response: ReportsRes = yield call(getReportList, {});
         if (response.success) {
             yield put(adminReportsActions.getReportsSuccess(response));
         } else {

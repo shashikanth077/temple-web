@@ -202,7 +202,7 @@ export default function ManageDonations() {
                         style={{ textAlign: 'center', width: '1rem' }}
                     />
                     <Column field="donationType" header="Donation type" sortable />
-                    <Column field="donatedAmount" header="Amount" sortable />
+                    <Column field="amount" header="Amount" sortable />
                     <Column field="taxReceiptNo" header="Tax receipt no" sortable />
                     <Column field="donationDate" body={formatDate} header="Date" sortable />
                     <Column
@@ -237,7 +237,6 @@ export default function ManageDonations() {
                 <TaxReceipt donationId={donationId} donationData={DonationList} />
             </Dialog>
 
-
             <DeleteDiaLog
                 deleteonClick={deleteGodDialog}
                 deleteDialogFooter={deleteGodDialogFooter}
@@ -245,7 +244,6 @@ export default function ManageDonations() {
                 deleteTitle={god.name}
                 dataLength={god}
             />
-
 
         </div>
     );
