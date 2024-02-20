@@ -17,6 +17,7 @@ import { Booking } from 'models';
 import Loader from 'sharedComponents/loader/loader';
 import ImageComponent from 'sharedComponents/Image/image';
 import { category } from 'constants/seva';
+import { selectStaticBookings } from 'features/content/contactSelectors';
 
 /* eslint-disable */
 /* eslint no-underscore-dangle: 0 */
@@ -36,19 +37,17 @@ const EditBooking = () => {
     };
 
     const seva:any = appSelector(selectBooking);
+    const BookingStaticContent:any = appSelector(selectStaticBookings);
+
     /*
        form validation schema
     */
     const schemaResolver = yupResolver(
         yup.object().shape({
-            name: yup.string().required('Please enter booking name').min(2, 'This value is too short. It should have 2 characters or more.'),
-            description: yup.string().required('Please enter description').min(2, 'This value is too short. It should have 2 characters or more.'),
-            amount: yup.string().required('Please enter amount').min(1, 'This value is too short. It should have 2 characters or more.'),
-            // image: yup
-            //     .mixed()
-            //     .test('required', 'Booking image is required', (value:any) => value.length > 0)
-            //     .test('fileSize', 'File Size is too large', (value:any) => value.length && value[0].size <= 5242880)
-            //     .test('fileType', 'Unsupported File Format', (value:any) => value.length && ['image/jpeg', 'image/png', 'image/jpg'].includes(value[0].type)),
+            category: yup.string().required(BookingStaticContent?.addBooking?.formValidation?.category),
+            name: yup.string().required(BookingStaticContent?.addBooking?.formValidation?.bookingName).min(2, 'This value is too short. It should have 2 characters or more.'),
+            description: yup.string().required(BookingStaticContent?.addBooking?.formValidation?.description).min(2, 'This value is too short. It should have 2 characters or more.'),
+            amount: yup.string().required(BookingStaticContent?.addBooking?.formValidation?.amount).min(1, 'This value is too short. It should have 2 characters or more.'),
         }),
     );
 
@@ -121,7 +120,7 @@ const EditBooking = () => {
                         <div className="card">
                             <div className="card-header">
                                 <h3 className="card-title">
-                                    <b>Edit Seva</b>
+                                    <b>{BookingStaticContent?.editBooking?.heading}</b>
                                 </h3>
                             </div>
 
@@ -137,7 +136,7 @@ const EditBooking = () => {
                                                     defaultValue={seva?.name}
                                                     errors={errors}
                                                     control={control}
-                                                    label="Booking name"
+                                                    label={BookingStaticContent?.addBooking?.formLabels?.bookingName}
                                                     type="input"
                                                     containerClass="mb-3"
                                                     id="name"
@@ -159,7 +158,7 @@ const EditBooking = () => {
                                                     defaultValue={seva?.amount}
                                                     errors={errors}
                                                     control={control}
-                                                    label="Amount"
+                                                    label={BookingStaticContent?.addBooking?.formLabels?.amount}
                                                     containerClass="mb-3"
                                                 />
                                               </div>
@@ -172,7 +171,7 @@ const EditBooking = () => {
                                                     errors={errors}
                                                     defaultValue={seva?.category}
                                                     control={control}
-                                                    label="Category"
+                                                    label={BookingStaticContent?.addBooking?.formLabels?.category}
                                                     type="select"
                                                     containerClass="mb-3"
                                                     id="category"
@@ -194,7 +193,7 @@ const EditBooking = () => {
                                                 type="textarea"
                                                 defaultValue={seva?.description}
                                                 name="description"
-                                                label="Description"
+                                                label={BookingStaticContent?.addBooking?.formLabels?.description}
                                                 register={register}
                                                 key="description"
                                                 errors={errors}
@@ -211,7 +210,7 @@ const EditBooking = () => {
                                                     type="file"
                                                     accept="image/*"
                                                     name="image"
-                                                    label="Image"
+                                                    label={BookingStaticContent?.addBooking?.formLabels?.image}
                                                     onChange={handleFileChange}
                                                     register={register}
                                                     key="image"

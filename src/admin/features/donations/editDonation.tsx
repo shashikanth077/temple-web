@@ -19,6 +19,7 @@ import { DonationTypes } from 'models';
 import { clearState } from 'storeConfig/api/apiSlice';
 import Loader from 'sharedComponents/loader/loader';
 import ImageComponent from 'sharedComponents/Image/image';
+import { selectStaticDonation } from 'features/content/contactSelectors';
 
 interface OptionTypes {
     value: string;
@@ -47,7 +48,8 @@ const EditDonation = () => {
     }, []);
 
     let donation: any = appSelector(selectDonationType);
-   
+    const StaticDonationContent:any = appSelector(selectStaticDonation);
+    
     useEffect(() => {
         if (successMessage) {
             showToast('success', 'Success', successMessage);
@@ -65,15 +67,10 @@ const EditDonation = () => {
     */
     const schemaResolver = yupResolver(
         yup.object().shape({
-            donationType: yup.string().required('Please enter the type'),
-            description: yup.string().required('Please enter description').min(2, 'This value is too short. It should have 2 characters or more.'),
-            //denominations: yup.string().required('Please select denominatons').min(2, 'This value is too short. It should have 2 characters or more.'),
-            frequency: yup.string().required('Please select frequency').min(1, 'This value is too short. It should have 2 characters or more.'),
-            // image: yup
-            //     .mixed()
-            //     .test('required', 'Donation image is required', (value:any) => value.length > 0)
-            //     .test('fileSize', 'File Size is too large', (value:any) => value.length && value[0].size <= 5242880)
-            //     .test('fileType', 'Unsupported File Format', (value:any) => value.length && ['image/jpeg', 'image/png', 'image/jpg'].includes(value[0].type)),
+            donationType: yup.string().required(StaticDonationContent?.addDonation?.formValidation?.type),
+            description: yup.string().required(StaticDonationContent?.addDonation?.formValidation?.description).min(2, 'This value is too short. It should have 2 characters or more.'),
+            //denominations: yup.string().required(addDonation?.formValidation?.denominations).min(2, 'This value is too short. It should have 2 characters or more.'),
+            frequency: yup.string().required(StaticDonationContent?.addDonation?.formValidation?.frequency).min(1, 'This value is too short. It should have 2 characters or more.'),
         }),
     );
 
@@ -144,7 +141,7 @@ const EditDonation = () => {
                         <div className="card">
                             <div className="card-header">
                                 <h3 className="card-title">
-                                    <b>Edit donation type</b>
+                                    <b>{StaticDonationContent?.editDonation?.heading}</b>
                                 </h3>
                             </div>
 
@@ -170,7 +167,7 @@ const EditDonation = () => {
                                                     defaultValue={donation?.donationType}
                                                     control={control}
                                                     name="donationType"
-                                                    label="Donation type"
+                                                    label={StaticDonationContent?.addDonation?.formLabels?.type}
                                                     containerClass="mb-3"
                                                 />
                                             </div>
@@ -204,7 +201,7 @@ const EditDonation = () => {
                                                 <FormInput
                                                     type="file"
                                                     name="image"
-                                                    label="image"
+                                                    label={StaticDonationContent?.addDonation?.formLabels?.image}
                                                     onChange={handleUploadedFile}
                                                     register={register}
                                                     key="image"
@@ -223,7 +220,7 @@ const EditDonation = () => {
                                                     defaultValue={donation.frequency}
                                                     errors={errors}
                                                     control={control}
-                                                    label="Frequency"
+                                                    label={StaticDonationContent?.addDonation?.formLabels?.frequency}
                                                     type="select"
                                                     containerClass="mb-3"
                                                     id="frequency"
@@ -249,7 +246,7 @@ const EditDonation = () => {
                                                     key="description"
                                                     errors={errors}
                                                     control={control}
-                                                    label="Description"
+                                                    label={StaticDonationContent?.addDonation?.formLabels?.description}
                                                     containerClass="mb-3"
                                                 />
                                             </div>

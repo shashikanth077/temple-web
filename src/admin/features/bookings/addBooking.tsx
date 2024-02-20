@@ -14,10 +14,11 @@ import { useRedux } from 'hooks';
 import { Booking } from 'models';
 import Loader from 'sharedComponents/loader/loader';
 import { category } from 'constants/seva';
+import { selectStaticBookings } from 'features/content/contactSelectors';
 
 /* eslint-disable */
 const AddBooking = () => {
-    const { dispatch } = useRedux();
+    const { dispatch,appSelector} = useRedux();
     const { loading, error, successMessage } = useSelector((state:any) => state.apiState);
     const [image, setImage] = useState({ preview: '', data: '' })
 
@@ -27,15 +28,17 @@ const AddBooking = () => {
         toast.current.show({ severity, summary, detail });
     };
 
+    const BookingStaticContent:any = appSelector(selectStaticBookings);
+
     /*
        form validation schema
     */
     const schemaResolver = yupResolver(
         yup.object().shape({
-            category: yup.string().required('Please select a category'),
-            name: yup.string().required('Please enter booking name').min(2, 'This value is too short. It should have 2 characters or more.'),
-            description: yup.string().required('Please enter description').min(2, 'This value is too short. It should have 2 characters or more.'),
-            amount: yup.string().required('Please enter amount').min(1, 'This value is too short. It should have 2 characters or more.'),
+            category: yup.string().required(BookingStaticContent?.addBooking?.formValidation?.category),
+            name: yup.string().required(BookingStaticContent?.addBooking?.formValidation?.bookingName).min(2, 'This value is too short. It should have 2 characters or more.'),
+            description: yup.string().required(BookingStaticContent?.addBooking?.formValidation?.description).min(2, 'This value is too short. It should have 2 characters or more.'),
+            amount: yup.string().required(BookingStaticContent?.addBooking?.formValidation?.amount).min(1, 'This value is too short. It should have 2 characters or more.'),
             image: yup
                 .mixed()
                 .test('required', 'Booking type image is required', (value:any) => value.length > 0)
@@ -108,7 +111,7 @@ const AddBooking = () => {
                         <div className="card">
                             <div className="card-header">
                                 <h3 className="card-title">
-                                    <b>Add Seva</b>
+                                    <b>{BookingStaticContent?.addBooking?.heading}</b>
                                 </h3>
                             </div>
 
@@ -123,7 +126,7 @@ const AddBooking = () => {
                                                     key="name"
                                                     errors={errors}
                                                     control={control}
-                                                    label="Booking name"
+                                                    label={BookingStaticContent?.addBooking?.formLabels?.bookingName}
                                                     type="input"
                                                     containerClass="mb-3"
                                                     id="name"
@@ -144,7 +147,7 @@ const AddBooking = () => {
                                                     key="amount"
                                                     errors={errors}
                                                     control={control}
-                                                    label="Amount"
+                                                    label={BookingStaticContent?.addBooking?.formLabels?.amount}
                                                     containerClass="mb-3"
                                                 />
                                               </div>
@@ -156,7 +159,7 @@ const AddBooking = () => {
                                                     key="category"
                                                     errors={errors}
                                                     control={control}
-                                                    label="Category"
+                                                    label={BookingStaticContent?.addBooking?.formLabels?.category}
                                                     type="select"
                                                     containerClass="mb-3"
                                                     id="category"
@@ -177,7 +180,7 @@ const AddBooking = () => {
                                             <FormInput
                                                 type="textarea"
                                                 name="description"
-                                                label="Description"
+                                                label={BookingStaticContent?.addBooking?.formLabels?.description}
                                                 register={register}
                                                 key="description"
                                                 errors={errors}
@@ -194,7 +197,7 @@ const AddBooking = () => {
                                                     type="file"
                                                     accept="image/*"
                                                     name="image"
-                                                    label="Image"
+                                                    label={BookingStaticContent?.addBooking?.formLabels?.image}
                                                     onChange={handleFileChange}
                                                     register={register}
                                                     key="image"

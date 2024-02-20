@@ -7,10 +7,12 @@ export interface Content {
             contact:any;
             FrontEnd:any;
             shop:any;
+            bookings:any;
             home:any;
             FrontMenus:any;
             adminMenus:any;
             registration:any;
+            donations:any;
         }
      }
     }

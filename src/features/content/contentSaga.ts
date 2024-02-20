@@ -6,7 +6,7 @@ import {
 } from './contentApi';
 import { admincontentActions } from './contentSlice';
 import {
-    startLoading, endLoading, setError, setSuccessMessage,
+    startLoading, endLoading, setError,
 } from 'storeConfig/api/apiSlice';
 import { Content } from 'models';
 
