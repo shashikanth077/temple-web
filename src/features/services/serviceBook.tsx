@@ -1,4 +1,6 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, {
+    useCallback, useEffect, useRef, useState,
+} from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { Button } from 'react-bootstrap';
@@ -21,6 +23,7 @@ import { formatCurrency } from 'helpers/currency';
 /* eslint-disable */
 const BookService = () => {
     const { dispatch, appSelector } = useRedux();
+    
     const { loading, error, successMessage } = useSelector(
         (state: any) => state.apiState,
     );
@@ -31,13 +34,22 @@ const BookService = () => {
 
     const intl = useIntl();
     const toast = useRef<any>(null);
+    const isMounted = useRef(true);
 
-    const showToast = (severity: any, summary: any, detail: any) => {
+    const showToast = useCallback((severity: any, summary: any, detail: any) => {
         toast.current.show({ severity, summary, detail });
-    };
+    }, []);
 
+    console.log(successMessage);
     useEffect(() => {
-        dispatch(adminServiceActions.getServiceById({ _id: id }));
+        if (isMounted.current) {
+          dispatch(adminServiceActions.getServiceById({ _id: id }));
+        }
+    
+        // Set isMounted to false when the component is unmounted
+        return () => {
+          isMounted.current = false;
+        };
     }, [dispatch, id]);
 
     const serviceDetails = appSelector(selectService);
@@ -48,7 +60,6 @@ const BookService = () => {
     const schemaResolver = yupResolver(
         yup.object().shape({
             bookingDate: yup.string().required("Please select a date"),
-            comments:yup.string().required("Please select a date"),
             NoOfPerson:yup.number().required("Please select number of person"),
         }),
     );
@@ -80,19 +91,19 @@ const BookService = () => {
         dispatch(serviceActions.saveBookingLocalData(data));
         navigate('/confirm-booking-details');
     });
-
+    
     useEffect(() => {
-        if (successMessage) {
+        if (successMessage && !localStorage.getItem('targetUrl')) {
             showToast("success", "Success", successMessage);
             dispatch(clearState());
             reset();
         }
-
+    
         if (error) {
             showToast("error", "Error", error);
             dispatch(clearState());
         }
-    }, [successMessage, error, dispatch]);
+    }, [successMessage, error, dispatch, reset, showToast]);
 
     return (
         <>
@@ -203,22 +214,7 @@ const BookService = () => {
                                             </div>
                                         </div>
                                     </div>
-                                    <div className='row'>
-                                    <div className="col-md-12">
-                                            <div className="form-group">
-                                                <FormInput
-                                                    type="textarea"
-                                                    name="comments"
-                                                    register={register}
-                                                    key="comments"
-                                                    errors={errors}
-                                                    control={control}
-                                                    label="Booking notes"
-                                                    containerClass="mb-3"
-                                                />
-                                            </div>
-                                        </div>
-                                    </div>
+                                    
                                     <div className="row text-center">
                                         <div className="col-sm-12">
                                             <div className="text-center d-flex mb-3 update-profile-btn">

@@ -77,14 +77,15 @@ const Login = () => {
                 icon: 'success',
                 text: successMessage || '',
             }).then(() => {
-                dispatch(clearState());
                 const sessionUrl = localStorage.getItem('targetUrl');
                 if (sessionUrl) {
                     navigate(sessionUrl);
-                    localStorage.removeItem('targetUrl');
                 } else {
                     navigate(redirectUrl, { replace: true });
                 }
+
+                dispatch(clearState());
+                localStorage.removeItem('targetUrl');
             });
         }
 
@@ -121,8 +122,6 @@ const Login = () => {
             // Check if the user is authenticated
             if (APICore.isUserAuthenticated()) {
                 const sessionUrl = localStorage.getItem('targetUrl');
-                console.log(sessionUrl);
-
                 // Check if there is a stored session URL
                 if (sessionUrl) {
                     // Navigate to the stored session URL

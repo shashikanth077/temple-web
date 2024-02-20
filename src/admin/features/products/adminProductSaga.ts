@@ -47,7 +47,6 @@ function* addProduct(action:any) {
 }
 
 function* updateProduct(action:any) {
-    console.log('product edit paylod', action.payload);
     try {
         yield put(startLoading());
         const response: SuccesResponse = yield call(updateProducts, action.payload);

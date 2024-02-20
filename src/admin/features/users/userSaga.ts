@@ -34,7 +34,6 @@ function* getUserByIdRow(action:any) {
         const response: userSingleResponse = yield call(getUserById, action.payload);
 
         if (response.success) {
-            yield put(setSuccessMessage('Success'));
             yield put(adminUserActions.getUserByIdSuccess(response));
         } else {
             yield put(setError(response.errorMessage));

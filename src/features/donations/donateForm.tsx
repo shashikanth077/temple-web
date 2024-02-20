@@ -87,7 +87,7 @@ const DonateForm = () => {
   }, [donationAmount, setValue]);
 
   useEffect(() => {
-    if (successMessage) {
+    if (successMessage && !localStorage.getItem('targetUrl')) {
       showToast('success', 'Success', successMessage);
       dispatch(clearState());
       reset();
