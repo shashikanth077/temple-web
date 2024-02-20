@@ -613,6 +613,11 @@
                             "iconName": "fab fa-linkedin-in",
                             "link": "#",
                             "label": "linkedIn"
+                        },
+                        {
+                            "iconName": "fas fa-calendar-week",
+                            "link": "#",
+                            "label": "calender"
                         }
                     ]
                 },

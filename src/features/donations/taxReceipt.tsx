@@ -57,7 +57,7 @@ const TaxReceipt = (props: InvoiceDonation) => {
                 pdf.addImage(imgData, 'JPEG', xPos, topMargin, pdfWidthNew, pdfHeightNew);
     
                 // Save the PDF
-                pdf.save('simple.pdf');
+                pdf.save('taxreceipt.pdf');
             });
     };
     

@@ -23,6 +23,7 @@ import { selectMyProfileDetails } from 'admin/features/myprofile/myProfileSelect
 import { formatCurrency } from 'helpers/currency';
 import { FormInput } from 'sharedComponents/inputs';
 import { createPaymentIntent } from 'features/donations/mydonations/donationApis';
+import { clearState } from 'storeConfig/api/apiSlice';
 
 /* eslint-disable */
 const ServiceConfimPage = () => {
@@ -216,6 +217,7 @@ const ServiceConfimPage = () => {
                         title: 'Something went wrong!',
                         text: `Your payment was un-successful. Error: ${payload.error.message}`,
                     }).then(() => {
+                        dispatch(clearState());
                     });
                 } else {
 
@@ -248,6 +250,7 @@ const ServiceConfimPage = () => {
                         title: 'Payment Successful!',
                         text: `Your payment was successful. Reference No:${payload.paymentIntent.id}`,
                     }).then(() => {
+                        dispatch(clearState());
                         document.body.style.overflow = 'auto';
                         document.body.removeChild(overlay);
                         navigate('/mybookings/lists'); 

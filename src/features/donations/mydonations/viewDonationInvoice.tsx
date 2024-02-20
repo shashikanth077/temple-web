@@ -55,7 +55,7 @@ function InvoiceDonationComp(props:InvoiceDonation) {
                 pdf.addImage(imgData, 'JPEG', xPos, 0, pdfWidthNew, pdfHeightNew);
     
                 // Save the PDF
-                pdf.save('simple.pdf');
+                pdf.save('invoice.pdf');
             });
     };
     
