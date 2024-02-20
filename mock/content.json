@@ -124,7 +124,7 @@
                     }
                 },
                 "editDonation": {
-                    "heading": "Edit Service",
+                    "heading": "Edit donation types",
                     "formLabels": {
                         "type": "Donation type",
                         "description": "Description",

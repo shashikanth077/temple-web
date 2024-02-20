@@ -15,10 +15,11 @@ import { useRedux } from 'hooks';
 import { DonationTypes } from 'models';
 import Loader from 'sharedComponents/loader/loader';
 import { Denominations, Frequency } from 'constants/donation';
+import { selectStaticDonation } from 'features/content/contactSelectors';
 
 /* eslint-disable */
 const AddDonation = () => {
-    const { dispatch } = useRedux();
+    const { dispatch,appSelector } = useRedux();
     const { loading, error, successMessage } = useSelector((state:any) => state.apiState);
     const [image, setImage] = useState({ preview: '', data: '' })
 
@@ -28,18 +29,20 @@ const AddDonation = () => {
         toast.current.show({ severity, summary, detail });
     };
 
+    const StaticDonationContent:any = appSelector(selectStaticDonation);
+
     /*
        form validation schema
     */
     const schemaResolver = yupResolver(
         yup.object().shape({
-            donationType: yup.string().required('Please enter the type'),
-            description: yup.string().required('Please enter description').min(2, 'This value is too short. It should have 2 characters or more.'),
-            //denominations: yup.string().required('Please select denominatons').min(2, 'This value is too short. It should have 2 characters or more.'),
-            frequency: yup.string().required('Please select frequency').min(1, 'This value is too short. It should have 2 characters or more.'),
+            donationType: yup.string().required(StaticDonationContent?.addDonation?.formValidation?.type),
+            description: yup.string().required(StaticDonationContent?.addDonation?.formValidation?.description).min(2, 'This value is too short. It should have 2 characters or more.'),
+            //denominations: yup.string().required(addDonation?.formValidation?.denominations).min(2, 'This value is too short. It should have 2 characters or more.'),
+            frequency: yup.string().required(StaticDonationContent?.addDonation?.formValidation?.frequency).min(1, 'This value is too short. It should have 2 characters or more.'),
             image: yup
                 .mixed()
-                .test('required', 'Donation image is required', (value:any) => value.length > 0)
+                .test('required', StaticDonationContent?.addDonation?.formValidation?.image, (value:any) => value.length > 0)
                 .test('fileSize', 'File Size is too large', (value:any) => value.length && value[0].size <= 5242880)
                 .test('fileType', 'Unsupported File Format', (value:any) => value.length && ['image/jpeg', 'image/png', 'image/jpg'].includes(value[0].type)),
         }),
@@ -114,7 +117,7 @@ const AddDonation = () => {
                         <div className="card">
                             <div className="card-header">
                                 <h3 className="card-title">
-                                    <b>Add donation type</b>
+                                    <b>{StaticDonationContent?.addDonation?.heading}</b>
                                 </h3>
                             </div>
 
@@ -131,7 +134,7 @@ const AddDonation = () => {
                                                     errors={errors}
                                                     control={control}
                                                     name="donationType"
-                                                    label="Donation type"
+                                                    label={StaticDonationContent?.addDonation?.formLabels?.type}
                                                     containerClass="mb-3"
                                                 />
                                             </div>
@@ -143,7 +146,7 @@ const AddDonation = () => {
                                                     key="frequency"
                                                     errors={errors}
                                                     control={control}
-                                                    label="Frequency"
+                                                    label={StaticDonationContent?.addDonation?.formLabels?.frequency}
                                                     type="select"
                                                     containerClass="mb-3"
                                                     id="frequency"
@@ -168,7 +171,7 @@ const AddDonation = () => {
                                                     key="description"
                                                     errors={errors}
                                                     control={control}
-                                                    label="Description"
+                                                    label={StaticDonationContent?.addDonation?.formLabels?.description}
                                                     containerClass="mb-3"
                                                 />
                                               </div>
@@ -201,7 +204,7 @@ const AddDonation = () => {
                                                     type="file"
                                                     accept="image/*"
                                                     name="image"
-                                                    label="Upload image"
+                                                    label={StaticDonationContent?.addDonation?.formLabels?.image}
                                                     onChange={handleFileChange}
                                                     register={register}
                                                     key="image"

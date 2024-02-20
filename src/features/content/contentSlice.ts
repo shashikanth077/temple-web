@@ -12,7 +12,9 @@ export interface ContentState {
     about:any;
     topbar:any;
     staff:any;
+    donations:any;
     header:any;
+    bookings:any;
     footer:any;
     ads:any;
     contactdetails:any;
@@ -25,7 +27,9 @@ const initialState: ContentState = {
     loading: false,
     services: '',
     adminmenu: '',
+    bookings: '',
     publicmenu: '',
+    donations: '',
     staff: '',
     topbar: '',
     ads: '',
@@ -65,6 +69,8 @@ const contentSlice = createSlice({
             state.publicmenu = action.payload.data.contentData.content.FrontMenus;
             state.volunteers = action.payload.data.contentData.content.FrontEnd.Volunteers;
             state.taxreceipt = action.payload.data.contentData.content.FrontEnd.TaxReceipt;
+            state.bookings = action.payload.data.contentData.content.bookings;
+            state.donations = action.payload.data.contentData.content.donations;
         },
     },
 });
