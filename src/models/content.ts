@@ -13,6 +13,10 @@ export interface Content {
             adminMenus:any;
             registration:any;
             donations:any;
+            godmaster:any;
+            users:any;
+            volunteers:any;
+            sitemanage:any;
         }
      }
     }

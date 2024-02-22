@@ -14,12 +14,15 @@ import { useRedux } from 'hooks';
 import { Event } from 'models';
 import Loader from 'sharedComponents/loader/loader';
 import { clearState } from 'storeConfig/api/apiSlice';
+import { selectStaticEvents } from 'features/content/contactSelectors';
 
 /* eslint-disable */
 const AddEvent = () => {
-    const { dispatch } = useRedux();
+    const { dispatch,appSelector } = useRedux();
     const { loading, error, successMessage } = useSelector((state:any) => state.apiState);
     const [image, setImage] = useState({ preview: '', data: '' })
+
+    const staticEventContent = appSelector(selectStaticEvents);
 
     const toast = useRef<any>(null);
     const [datetime12h, setDateTime12h] = useState(null);
@@ -32,17 +35,22 @@ const AddEvent = () => {
     /*
        form validation schema
     */
-    const schemaResolver = yupResolver(
+       const schemaResolver = yupResolver(
         yup.object().shape({
-            description: yup.string().required('Please enter add description').min(20, 'This value is too short. It should have 2 characters or more.'),
-            organizer: yup.string().required('Please enter organizer').min(2, 'This value is too short. It should have 2 characters or more.'),
-            image: yup.string().required('Please upload image'),
-            name: yup.string().required('Please enter event name').min(2, 'This value is too short. It should have 2 characters or more.'),
-            bookingPrice: yup.number().required('Please enter price'),
-            organizerPhone: yup.string().required('Please enter organizer phone').min(2, 'This value is too short. It should have 2 characters or more.'),
-            startDate: yup.string().required('Please enter startDate').min(2, 'This value is too short. It should have 2 characters or more.'),
-            endDate: yup.string().required('Please enter endDate').min(2, 'This value is too short. It should have 2 characters or more.'),
-            venue: yup.string().required('Please enter venue').min(2, 'This value is too short. It should have 2 characters or more.'),
+            description: yup.string().required(staticEventContent?.addEvent?.formValidation?.description).min(20, 'This value is too short. It should have 2 characters or more.'),
+            organizer: yup.string().required(staticEventContent?.addEvent?.formValidation?.organizer).min(2, 'This value is too short. It should have 2 characters or more.'),
+            name: yup.string().required(staticEventContent?.addEvent?.formValidation?.name).min(2, 'This value is too short. It should have 2 characters or more.'),
+            bookingPrice: yup.number().required(staticEventContent?.addEvent?.formValidation?.bookingPrice),
+            organizerPhone: yup.string().required(staticEventContent?.addEvent?.formValidation?.organizerPhone).min(2, 'This value is too short. It should have 2 characters or more.'),
+            organizerEmail: yup.string().required(staticEventContent?.addEvent?.formValidation?.organizerEmail).email(staticEventContent?.addEvent?.formValidation?.validEmail),
+            startDate: yup.string().required(staticEventContent?.addEvent?.formValidation?.startDate).min(2, 'This value is too short. It should have 2 characters or more.'),
+            endDate: yup.string().required(staticEventContent?.addEvent?.formValidation?.endDate).min(2, 'This value is too short. It should have 2 characters or more.'),
+            venue: yup.string().required(staticEventContent?.addEvent?.formValidation?.venue).min(2, 'This value is too short. It should have 2 characters or more.'),
+            image: yup
+            .mixed()
+            .test('required', staticEventContent?.addEvent?.formValidation?.venue, (value:any) => value.length > 0)
+            .test('fileSize', 'File Size is too large', (value:any) => value.length && value[0].size <= 5242880)
+            .test('fileType', 'Unsupported File Format', (value:any) => value.length && ['image/jpeg', 'image/png', 'image/jpg'].includes(value[0].type)),
         }),
     );
 
@@ -71,10 +79,6 @@ const AddEvent = () => {
                 formData.append(k, data[k]);
             }
         }
-
-        //  let formationData:any = {
-        //     events: [formData]
-        // }
 
         dispatch(adminEventActions.addEvent(formData));
     });
@@ -112,7 +116,7 @@ const AddEvent = () => {
                         <div className="card">
                             <div className="card-header">
                                 <h3 className="card-title">
-                                    <b>Add Event</b>
+                                    <b>{staticEventContent?.addEvent?.heading}</b>
                                 </h3>
                             </div>
 
@@ -129,7 +133,7 @@ const AddEvent = () => {
                                                             key="name"
                                                             errors={errors}
                                                             control={control}
-                                                            label="Event name"
+                                                            label={staticEventContent?.addEvent?.formLabels?.name}
                                                             containerClass="mb-3"
                                                         />
                                                     </div>
@@ -143,7 +147,7 @@ const AddEvent = () => {
                                                             errors={errors}
                                                             control={control}
                                                             name="bookingPrice"
-                                                            label="Booking price"
+                                                            label={staticEventContent?.addEvent?.formLabels?.bookingPrice}
                                                             containerClass="mb-3"
                                                         />
                                                     </div>
@@ -161,7 +165,7 @@ const AddEvent = () => {
                                                             rules={{ required: 'Date is required.' }}
                                                             render={({ field, fieldState }) => (
                                                                 <>
-                                                                    <label htmlFor={field.name}>Start date</label>
+                                                                    <label htmlFor={field.name}>{staticEventContent?.addEvent?.formLabels?.startDate}</label>
                                                                     <Calendar showIcon inputId={field.name} value={datetime12h} onChange={(e:any) => setDateTime12h(e.value)} showTime hourFormat="12" dateFormat="dd/mm/yy" className='events-top-bar-datepicker-button mb-3' />
                                                                </>
                                                             )}
@@ -178,7 +182,7 @@ const AddEvent = () => {
                                                             rules={{ required: 'Date is required.' }}
                                                             render={({ field, fieldState }) => (
                                                                 <>
-                                                                    <label htmlFor={field.name}>End date</label>
+                                                                    <label htmlFor={field.name}>{staticEventContent?.addEvent?.formLabels?.endDate}</label>
                                                                     <Calendar showIcon inputId={field.name} value={endDatetime12h} onChange={(e:any) => setDateTimeEnd12h(e.value)} showTime hourFormat="12" dateFormat="dd/mm/yy" className='events-top-bar-datepicker-button mb-3' />
                                                                </>
                                                             )}
@@ -194,7 +198,7 @@ const AddEvent = () => {
                                                         <FormInput
                                                             type="textarea"
                                                             name="description"
-                                                            label="Description"
+                                                            label={staticEventContent?.addEvent?.formLabels?.description}
                                                             register={register}
                                                             key="description"
                                                             errors={errors}
@@ -211,7 +215,7 @@ const AddEvent = () => {
                                                         <FormInput
                                                             type="text"
                                                             name="organizer"
-                                                            label="Organizer"
+                                                            label={staticEventContent?.addEvent?.formLabels?.organizer}
                                                             register={register}
                                                             key="organizer"
                                                             errors={errors}
@@ -225,7 +229,7 @@ const AddEvent = () => {
                                                         <FormInput
                                                             type="text"
                                                             name="organizerPhone"
-                                                            label="Organizer phone"
+                                                            label={staticEventContent?.addEvent?.formLabels?.organizerPhone}
                                                             register={register}
                                                             key="organizerPhone"
                                                             errors={errors}
@@ -241,7 +245,7 @@ const AddEvent = () => {
                                                     <FormInput
                                                         type="text"
                                                         name="venue"
-                                                        label="Venue"
+                                                        label={staticEventContent?.addEvent?.formLabels?.venue}
                                                         register={register}
                                                         key="venue"
                                                         errors={errors}
@@ -254,7 +258,7 @@ const AddEvent = () => {
                                                         type="file"
                                                         accept="image/*"
                                                         name="image"
-                                                        label="Image"
+                                                        label={staticEventContent?.addEvent?.formLabels?.image}
                                                         onChange={handleUploadedFile}
                                                         register={register}
                                                         key="image"

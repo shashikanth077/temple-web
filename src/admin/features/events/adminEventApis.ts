@@ -15,12 +15,12 @@ export function addEvent(payload:any) {
 
 export function updateEvent(payload:any) {
     const baseUrl = `http://localhost:8080/api/event/${payload._id}`;
-    const response = APICore.update(`${baseUrl}`, payload);
+    const response = APICore.createWithFileUpdate(`${baseUrl}`, payload);
     return response;
 }
 
 export function deleteEvent(payload:any) {
     const baseUrl = `http://localhost:8080/api/event/delete/${payload._id}`;
-    const response = APICore.delete(`${baseUrl}`);
+    const response = APICore.create(`${baseUrl}`, {});
     return response;
 }

@@ -19,6 +19,7 @@ import { clearState } from 'storeConfig/api/apiSlice';
 import Loader from 'sharedComponents/loader/loader';
 import ImageComponent from 'sharedComponents/Image/image';
 import { Days } from 'constants/services';
+import { selectStaticGods } from 'features/content/contactSelectors';
 
 interface OptionTypes {
     value: string;
@@ -41,6 +42,8 @@ const EditGod = () => {
     const onChangeMultipleSelection = (selected: any) => {
         setMultiSelections(selected);
     };
+
+    const staticGodContent = appSelector(selectStaticGods);
 
     useEffect(() => {
         dispatch(admingodActions.getGodById({_id:id}))
@@ -68,18 +71,13 @@ const EditGod = () => {
         }
     }, [successMessage, error, dispatch]);
 
-    /*
+   /*
        form validation schema
     */
-    const schemaResolver = yupResolver(
+       const schemaResolver = yupResolver(
         yup.object().shape({
-            name: yup.string().required('Please enter god name').min(2, 'This value is too short. It should have 2 characters or more.'),
-            //worshipDay: yup.string().required('Please enter day of workship').min(4, 'This value is too short. It should have 2 characters or more.'),
-            // image: yup
-            //     .mixed()
-            //     .test('required', 'photo is required', (value:any) => value.length > 0)
-            //     .test('fileSize', 'File Size is too large', (value:any) => value.length && value[0].size <= 5242880)
-            //     .test('fileType', 'Unsupported File Format', (value:any) => value.length && ['image/jpeg', 'image/png', 'image/jpg'].includes(value[0].type)),
+            name: yup.string().required(staticGodContent?.addGod?.formValidation?.name).min(2, 'This value is too short. It should have 2 characters or more.'),
+           // worshipDay: yup.string().required(staticGodContent?.addGod?.formValidation?.worshipDay).min(4, 'This value is too short. It should have 2 characters or more.'),
         }),
     );
     
@@ -138,7 +136,7 @@ const EditGod = () => {
                         <div className="card">
                             <div className="card-header">
                                 <h3 className="card-title">
-                                    <b>Edit God</b>
+                                    <b>{staticGodContent?.editHeading}</b>
                                 </h3>
                             </div>
 
@@ -150,7 +148,7 @@ const EditGod = () => {
                                                     <div className="form-group">
                                                         <FormInput 
                                                             type="hidden"
-                                                            defaultValue={god._id}
+                                                            defaultValue={god?._id}
                                                             name="_id"
                                                             register={register}
                                                             key="_id"
@@ -158,20 +156,20 @@ const EditGod = () => {
                                                         />
                                                         <FormInput
                                                             type="text"
-                                                            defaultValue={god.name}
+                                                            defaultValue={god?.name}
                                                             name="name"
                                                             register={register}
                                                             key="name"
                                                             errors={errors}
                                                             control={control}
-                                                            label="God name"
+                                                            label={staticGodContent?.addGod?.formLabels?.name}
                                                             containerClass="mb-3"
                                                         />
                                                     </div>
                                                 </div>
                                                 <div className="col-md-6">
                                                     <div className="form-group">
-                                                        <label>Select day of workship</label>
+                                                        <label>{staticGodContent?.addGod?.formLabels?.worshipDay}</label>
                                                         <Controller
                                                             key="worshipDay"
                                                             name="worshipDay"
@@ -199,7 +197,7 @@ const EditGod = () => {
                                                         <FormInput
                                                             type="file"
                                                             name="image"
-                                                            label="image"
+                                                            label={staticGodContent?.addGod?.formLabels?.image}
                                                             onChange={handleUploadedFile}
                                                             register={register}
                                                             key="image"

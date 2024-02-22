@@ -15,10 +15,11 @@ import { useRedux } from 'hooks';
 import { God } from 'models';
 import Loader from 'sharedComponents/loader/loader';
 import { Days } from 'constants/services';
+import { selectStaticGods } from 'features/content/contactSelectors';
 
 /* eslint-disable */
 const AddGod = () => {
-    const { dispatch } = useRedux();
+    const { dispatch,appSelector } = useRedux();
     const { loading, error, successMessage } = useSelector((state:any) => state.apiState);
     const [image, setImage] = useState({ preview: '', data: '' })
 
@@ -28,16 +29,18 @@ const AddGod = () => {
         toast.current.show({ severity, summary, detail });
     };
 
+    const staticGodContent = appSelector(selectStaticGods);
+
     /*
        form validation schema
     */
     const schemaResolver = yupResolver(
         yup.object().shape({
-            name: yup.string().required('Please enter god name').min(2, 'This value is too short. It should have 2 characters or more.'),
-           // worshipDay: yup.string().required('Please enter day of workship').min(4, 'This value is too short. It should have 2 characters or more.'),
+            name: yup.string().required(staticGodContent?.addGod?.formValidation?.name).min(2, 'This value is too short. It should have 2 characters or more.'),
+           // worshipDay: yup.string().required(staticGodContent?.addGod?.formValidation?.worshipDay).min(4, 'This value is too short. It should have 2 characters or more.'),
             image: yup
                 .mixed()
-                .test('required', 'God image is required', (value:any) => value.length > 0)
+                .test('required', staticGodContent?.addGod?.formValidation?.image, (value:any) => value.length > 0)
                 .test('fileSize', 'File Size is too large', (value:any) => value.length && value[0].size <= 5242880)
                 .test('fileType', 'Unsupported File Format', (value:any) => value.length && ['image/jpeg', 'image/png', 'image/jpg'].includes(value[0].type)),
         }),
@@ -114,7 +117,7 @@ const AddGod = () => {
                         <div className="card">
                             <div className="card-header">
                                 <h3 className="card-title">
-                                    <b>Add God</b>
+                                    <b>{staticGodContent?.addGod?.heading}</b>
                                 </h3>
                             </div>
 
@@ -131,14 +134,14 @@ const AddGod = () => {
                                                     key="name"
                                                     errors={errors}
                                                     control={control}
-                                                    label="God name"
+                                                    label={staticGodContent?.addGod?.formLabels?.name}
                                                     containerClass="mb-3"
                                                 />
                                             </div>
                                         </div>
                                         <div className="col-md-6">
                                             <div className="form-group">
-                                                <label>Select day of workship</label>
+                                                <label>{staticGodContent?.addGod?.formLabels?.worshipDay}</label>
                                                 <Controller
                                                     key="worshipDay"
                                                     name="worshipDay"
@@ -164,7 +167,7 @@ const AddGod = () => {
                                                     type="file"
                                                     accept="image/*"
                                                     name="image"
-                                                    label="Image"
+                                                    label={staticGodContent?.addGod?.formLabels?.image}
                                                     onChange={handleUploadedFile}
                                                     register={register}
                                                     key="image"
@@ -173,7 +176,6 @@ const AddGod = () => {
                                                     containerClass="mb-3"
                                                 />
                                             </div>
-                                            {/* <img src={preview} width="50" height="60" alt="s" /> */}
                                         </div>
                                     </div>
                                     <div className="row text-center">

@@ -20,6 +20,7 @@ import Loader from 'sharedComponents/loader/loader';
 import {
     numberOfDaysAhead, ServiceTypes, bookingTypes, Months, Frequency,
 } from 'constants/services';
+import { selectStaticContentServices } from 'features/content/contactSelectors';
 
 interface OptionTypes {
     value: string;
@@ -35,6 +36,7 @@ const AddService = () => {
     const [frequencyVal,setFrequency] = useState('');
 
     const toast = useRef<any>(null);
+    const staticContent = appSelector(selectStaticContentServices);
 
     useEffect(() => {
         dispatch(admingodActions.getGodDetails());
@@ -51,7 +53,6 @@ const AddService = () => {
     }
 
     const onChangeMultipleSelection = (selected: any) => {
-        console.log(selected);
         setMultiSelections(selected);
     };
 
@@ -60,18 +61,18 @@ const AddService = () => {
     */
     const schemaResolver = yupResolver(
         yup.object().shape({
-            godId: yup.string().required('Please enter god name'),
-            frequency:yup.string().required('Please select frequency'),
-            daysahead:yup.string().required('Please select number of days ahead'),
-            accountNumber: yup.string().required('Please enter service name').min(2, 'This value is too short. It should have 2 characters or more.'),
-            serviceName: yup.string().required('Please enter service name').min(2, 'This value is too short. It should have 2 characters or more.'),
-            price: yup.string().required('Please enter price').min(1, 'This value is too short. It should have 2 characters or more.'),
-            serviceType: yup.string().required('Please select service type'),
-            bookingType: yup.string().required('Please select booking type'),
-            description: yup.string().required('Please enter description').min(10, 'This value is too short. It should have 10 characters or more.'),
+            godId: yup.string().required(staticContent?.addService?.formValidation?.godId),
+            frequency:yup.string().required(staticContent?.addService?.formValidation?.frequency),
+            daysahead:yup.string().required(staticContent?.addService?.formValidation?.daysahead),
+            accountNumber: yup.string().required(staticContent?.addService?.formValidation?.accountNumber).min(2, 'This value is too short. It should have 2 characters or more.'),
+            serviceName: yup.string().required(staticContent?.addService?.formValidation?.serviceName).min(2, 'This value is too short. It should have 2 characters or more.'),
+            price: yup.string().required(staticContent?.addService?.formValidation?.price).min(1, 'This value is too short. It should have 2 characters or more.'),
+            serviceType: yup.string().required(staticContent?.addService?.formValidation?.serviceType),
+            bookingType: yup.string().required(staticContent?.addService?.formValidation?.bookingType),
+            description: yup.string().required(staticContent?.addService?.formValidation?.description).min(10, 'This value is too short. It should have 10 characters or more.'),
             image: yup
                 .mixed()
-                .test('required', 'Service image is required', (value:any) => value.length > 0)
+                .test('required', staticContent?.addService?.formValidation?.image, (value:any) => value.length > 0)
                 .test('fileSize', 'File Size is too large', (value:any) => value.length && value[0].size <= 5242880)
                 .test('fileType', 'Unsupported File Format', (value:any) => value.length && ['image/jpeg', 'image/png', 'image/jpg'].includes(value[0].type)),
         }),
@@ -162,7 +163,7 @@ const AddService = () => {
                                                     key="godId"
                                                     errors={errors}
                                                     control={control}
-                                                    label="God name"
+                                                    label={staticContent?.addService?.formLabels?.godId}
                                                     type="select"
                                                     containerClass="mb-3"
                                                     id="godId"
@@ -182,7 +183,7 @@ const AddService = () => {
                                                     key="serviceType"
                                                     errors={errors}
                                                     control={control}
-                                                    label="Service type"
+                                                    label={staticContent?.addService?.formLabels?.serviceType}
                                                     type="select"
                                                     containerClass="mb-3"
                                                     id="serviceType"
@@ -207,7 +208,7 @@ const AddService = () => {
                                                     key="serviceName"
                                                     errors={errors}
                                                     control={control}
-                                                    label="Service name"
+                                                    label={staticContent?.addService?.formLabels?.serviceName}
                                                     containerClass="mb-3"
                                                 />
                                               </div>
@@ -221,7 +222,7 @@ const AddService = () => {
                                                     errors={errors}
                                                     control={control}
                                                     name="price"
-                                                    label="Price"
+                                                    label={staticContent?.addService?.formLabels?.price}
                                                     containerClass="mb-3"
                                                 />
                                             </div>
@@ -236,7 +237,7 @@ const AddService = () => {
                                                     key="bookingType"
                                                     errors={errors}
                                                     control={control}
-                                                    label="Booking type"
+                                                    label={staticContent?.addService?.formLabels?.bookingType}
                                                     type="select"
                                                     containerClass="mb-3"
                                                     id="bookingType"
@@ -258,7 +259,7 @@ const AddService = () => {
                                                     errors={errors}
                                                     control={control}
                                                     name="accountNumber"
-                                                    label="AccountNumber"
+                                                    label={staticContent?.addService?.formLabels?.accountNumber}
                                                     containerClass="mb-3"
                                                 />
                                             </div>
@@ -270,7 +271,7 @@ const AddService = () => {
                                             <FormInput
                                                 type="textarea"
                                                 name="description"
-                                                label="Description"
+                                                label={staticContent?.addService?.formLabels?.description}
                                                 register={register}
                                                 key="description"
                                                 errors={errors}
@@ -286,7 +287,7 @@ const AddService = () => {
                                                     type="file"
                                                     accept="image/*"
                                                     name="image"
-                                                    label="Image"
+                                                    label={staticContent?.addService?.formLabels?.image}
                                                     onChange={handleFileChange}
                                                     register={register}
                                                     key="image"
@@ -304,7 +305,7 @@ const AddService = () => {
                                                     key="daysahead"
                                                     errors={errors}
                                                     control={control}
-                                                    label="Days ahead"
+                                                    label={staticContent?.addService?.formLabels?.daysahead}
                                                     type="select"
                                                     containerClass="mb-3"
                                                     id="daysahead"
@@ -343,7 +344,7 @@ const AddService = () => {
                                         {frequencyVal === 'yearly' ? 
                                           <div className="col-md-6">
                                             <div className="form-group">
-                                            <label>Select service occuring months</label>
+                                            <label>{staticContent?.addService?.formLabels?.occurmonth}</label>
                                                 <Controller
                                                     key="occurmonth"
                                                     name="occurmonth"
@@ -371,7 +372,7 @@ const AddService = () => {
                                                 <FormInput
                                                     type="checkbox"
                                                     name="isTaxable"
-                                                    label="Is Taxable"
+                                                    label={staticContent?.addService?.formLabels?.isTaxable}
                                                     register={register}
                                                     key="isTaxable"
                                                     errors={errors}

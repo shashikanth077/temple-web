@@ -18,3 +18,8 @@ export const selectStaticVoluteers = (state: RootState) => state.staticContent.v
 export const selectStaticTaxReceipt = (state: RootState) => state.staticContent.taxreceipt;
 export const selectStaticBookings = (state: RootState) => state.staticContent.bookings;
 export const selectStaticDonation = (state: RootState) => state.staticContent.donations;
+export const selectStaticEvents = (state: RootState) => state.staticContent.events;
+export const selectStaticGods = (state: RootState) => state.staticContent.godmaster;
+export const selectStaticUsers = (state: RootState) => state.staticContent.users;
+export const selectStaticAdminvolunteers = (state:RootState) => state.staticContent.adminvolunteers;
+export const selectStaticSiteManage = (state:RootState) => state.staticContent.sitestaticdata;

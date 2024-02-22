@@ -19,6 +19,7 @@ import { AdminService } from 'models';
 import Loader from 'sharedComponents/loader/loader';
 import ImageComponent from 'sharedComponents/Image/image';
 import { numberOfDaysAhead, ServiceTypes, bookingTypes } from 'constants/services';
+import { selectStaticContentServices } from 'features/content/contactSelectors';
 
 /* eslint-disable */
 /* eslint no-underscore-dangle: 0 */
@@ -44,24 +45,22 @@ const EditService = () => {
         toast.current.show({ severity, summary, detail });
     };
 
+    const staticContent = appSelector(selectStaticContentServices);
+
     /*
        form validation schema
     */
     const schemaResolver = yupResolver(
         yup.object().shape({
-            godId: yup.string().required('Please enter god name'),
-            accountNumber: yup.string().required('Please enter account number').min(2, 'This value is too short. It should have 2 characters or more.'),
-            // isTaxable: yup.string().required('Please mark the taxable checkbox').min(2, 'This value is too short. It should have 2 characters or more.'),
-            serviceName: yup.string().required('Please enter service name').min(2, 'This value is too short. It should have 2 characters or more.'),
-            price: yup.string().required('Please enter price').min(1, 'This value is too short. It should have 2 characters or more.'),
-            serviceType: yup.string().required('Please select service type'),
-            bookingType: yup.string().required('Please select booking type'),
-            description: yup.string().required('Please enter description').min(10, 'This value is too short. It should have 10 characters or more.'),
-            // image: yup
-            //     .mixed()
-            //     .test('required', 'Service image is required', (value:any) => value.length > 0)
-            //     .test('fileSize', 'File Size is too large', (value:any) => value.length && value[0].size <= 5242880)
-            //     .test('fileType', 'Unsupported File Format', (value:any) => value.length && ['image/jpeg', 'image/png', 'image/jpg'].includes(value[0].type)),
+            godId: yup.string().required(staticContent?.addService?.formValidation?.godId),
+            frequency:yup.string().required(staticContent?.addService?.formValidation?.frequency),
+            daysahead:yup.string().required(staticContent?.addService?.formValidation?.daysahead),
+            accountNumber: yup.string().required(staticContent?.addService?.formValidation?.accountNumber).min(2, 'This value is too short. It should have 2 characters or more.'),
+            serviceName: yup.string().required(staticContent?.addService?.formValidation?.serviceName).min(2, 'This value is too short. It should have 2 characters or more.'),
+            price: yup.string().required(staticContent?.addService?.formValidation?.price).min(1, 'This value is too short. It should have 2 characters or more.'),
+            serviceType: yup.string().required(staticContent?.addService?.formValidation?.serviceType),
+            bookingType: yup.string().required(staticContent?.addService?.formValidation?.bookingType),
+            description: yup.string().required(staticContent?.addService?.formValidation?.description).min(10, 'This value is too short. It should have 10 characters or more.'),
         }),
     );
 
@@ -176,7 +175,7 @@ const EditService = () => {
                                                     defaultValue={service?.godId}
                                                     errors={errors}
                                                     control={control}
-                                                    label="God name"
+                                                    label={staticContent?.addService?.formLabels?.godId}
                                                     type="select"
                                                     containerClass="mb-3"
                                                     id="godId"
@@ -197,7 +196,7 @@ const EditService = () => {
                                                     errors={errors}
                                                     control={control}
                                                     defaultValue={service?.serviceType}
-                                                    label="Service type"
+                                                    label={staticContent?.addService?.formLabels?.serviceType}
                                                     type="select"
                                                     containerClass="mb-3"
                                                     id="serviceType"
@@ -222,7 +221,7 @@ const EditService = () => {
                                                     key="serviceName"
                                                     errors={errors}
                                                     control={control}
-                                                    label="Service name"
+                                                    label={staticContent?.addService?.formLabels?.serviceName}
                                                     containerClass="mb-3"
                                                 />
                                             </div>
@@ -237,7 +236,7 @@ const EditService = () => {
                                                     errors={errors}
                                                     control={control}
                                                     name="price"
-                                                    label="Price"
+                                                    label={staticContent?.addService?.formLabels?.price}
                                                     containerClass="mb-3"
                                                 />
                                             </div>
@@ -253,7 +252,7 @@ const EditService = () => {
                                                     errors={errors}
                                                     control={control}
                                                     defaultValue={service?.bookingType}
-                                                    label="Booking type"
+                                                    label={staticContent?.addService?.formLabels?.bookingType}
                                                     type="select"
                                                     containerClass="mb-3"
                                                     id="bookingType"
@@ -276,7 +275,7 @@ const EditService = () => {
                                                     defaultValue={service?.accountNumber}
                                                     control={control}
                                                     name="accountNumber"
-                                                    label="AccountNumber"
+                                                    label={staticContent?.addService?.formLabels?.accountNumber}
                                                     containerClass="mb-3"
                                                 />
                                             </div>
@@ -289,7 +288,7 @@ const EditService = () => {
                                                 type="textarea"
                                                 name="description"
                                                 defaultValue={service?.description}
-                                                label="Description"
+                                                label={staticContent?.addService?.formLabels?.description}
                                                 register={register}
                                                 key="description"
                                                 errors={errors}
@@ -306,7 +305,7 @@ const EditService = () => {
                                                     type="file"
                                                     accept="image/*"
                                                     name="image"
-                                                    label="Image"
+                                                    label={staticContent?.addService?.formLabels?.image}
                                                     onChange={handleUploadedFile}
                                                     register={register}
                                                     key="image"
@@ -325,7 +324,7 @@ const EditService = () => {
                                                     defaultValue={service?.daysahead}
                                                     errors={errors}
                                                     control={control}
-                                                    label="Number of days ahead"
+                                                    label={staticContent?.addService?.formLabels?.daysahead}
                                                     type="select"
                                                     containerClass="mb-3"
                                                     id="daysahead"
@@ -347,7 +346,7 @@ const EditService = () => {
                                                     defaultValue={service?.isTaxable}
                                                     name="isTaxable"
                                                     checked={checkBoxVal}
-                                                    label="Is Taxable"
+                                                    label={staticContent?.addService?.formLabels?.isTaxable}
                                                     onChange={e => SetCheckboxValue(e)}
                                                     register={register}
                                                     key="isTaxable"
