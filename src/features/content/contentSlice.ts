@@ -5,6 +5,7 @@ export interface ContentState {
     loading?: boolean;
     services:any;
     shop:any;
+    godmaster:any;
     home:any;
     adminmenu:any;
     publicmenu:any;
@@ -14,6 +15,7 @@ export interface ContentState {
     staff:any;
     donations:any;
     header:any;
+    users:any;
     bookings:any;
     footer:any;
     ads:any;
@@ -21,22 +23,30 @@ export interface ContentState {
     contactform:any;
     volunteers:any;
     taxreceipt:any;
+    adminvolunteers:any;
+    events:any;
+    sitestaticdata:any;
 }
 
 const initialState: ContentState = {
     loading: false,
     services: '',
     adminmenu: '',
+    godmaster: '',
     bookings: '',
+    events: '',
+    sitestaticdata: '',
     publicmenu: '',
     donations: '',
     staff: '',
+    users: '',
     topbar: '',
     ads: '',
     taxreceipt: '',
     contactform: '',
     contactdetails: '',
     shop: '',
+    adminvolunteers: '',
     footer: '',
     about: '',
     header: '',
@@ -71,6 +81,11 @@ const contentSlice = createSlice({
             state.taxreceipt = action.payload.data.contentData.content.FrontEnd.TaxReceipt;
             state.bookings = action.payload.data.contentData.content.bookings;
             state.donations = action.payload.data.contentData.content.donations;
+            state.events = action.payload.data.contentData.content.events;
+            state.godmaster = action.payload.data.contentData.content.godmaster;
+            state.users = action.payload.data.contentData.content.users;
+            state.adminvolunteers = action.payload.data.contentData.content.volunteers;
+            state.sitestaticdata = action.payload.data.contentData.content.sitemanage;
         },
     },
 });

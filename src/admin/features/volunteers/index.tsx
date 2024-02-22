@@ -11,18 +11,18 @@ import { classNames } from 'primereact/utils';
 import { Toolbar } from 'primereact/toolbar';
 import { Dialog } from 'primereact/dialog';
 import { useReactToPrint } from 'react-to-print';
-import jsPDF from 'jspdf';
-import { saveAs } from 'file-saver';
 import PrintComponent from './PrintCertificate';
 import { selectVolunters } from './volunteerSelector';
 import { adminVolunteersActions } from './volunteerSlice';
 import { useRedux } from 'hooks';
 import { clearState } from 'storeConfig/api/apiSlice';
+import { selectStaticAdminvolunteers } from 'features/content/contactSelectors';
 
 /* eslint-disable */
-
 export function Managevolunteers() {
+
     const navigate = useNavigate();
+
     const { loading, error, successMessage } = useSelector(
         (state: any) => state.apiState,
     );
@@ -57,6 +57,7 @@ export function Managevolunteers() {
     }, [dispatch]);
 
     const volunteersDetails: any = appSelector(selectVolunters);
+    const staticVolunteerContent = appSelector(selectStaticAdminvolunteers);
 
     const onGlobalFilterChange = (event: any) => {
         const value = event.target.value;
@@ -158,7 +159,7 @@ export function Managevolunteers() {
         const value = filters["global"] ? filters["global"].value : "";
         return (
             <div className="flex flex-wrap gap-2 align-items-center justify-content-between">
-                <h4 className="m-0">Manage volunteer section</h4>
+                <h4 className="m-0">{staticVolunteerContent?.heading}</h4>
                 <span className="p-input-icon-left mb-1">
                     <i className="pi pi-search" />
                     <InputText
@@ -315,50 +316,49 @@ export function Managevolunteers() {
                                 <strong
                                     style={{ color: "#333", fontSize: "18px" }}
                                 >
-                                    Additional Details
+                                   {staticVolunteerContent?.additionaDetails?.heading}
                                 </strong>
                             </h5>
                             <div className="row">
                                 <div className="col-md-6 mb-2">
-                                    <strong>Activities:</strong>{" "}
+                                    <strong>{staticVolunteerContent?.additionaDetails?.activities}:</strong>{" "}
                                     {selectedVolunteer?.activityList.join(", ")}
                                 </div>
                                 <div className="col-md-6 mb-2">
-                                    <strong>Possible days:</strong>{" "}
+                                    <strong>{staticVolunteerContent?.additionaDetails?.possibledays}:</strong>{" "}
                                     {selectedVolunteer?.possibleDays.join(", ")}
                                 </div>
                                 <div className="col-md-6 mb-2">
-                                    <strong>State:</strong>{" "}
+                                    <strong>{staticVolunteerContent?.additionaDetails?.state}:</strong>{" "}
                                     {selectedVolunteer?.state}
                                 </div>
                                 <div className="col-md-6 mb-2">
-                                    <strong>City:</strong>{" "}
+                                    <strong>{staticVolunteerContent?.additionaDetails?.city}:</strong>{" "}
                                     {selectedVolunteer?.city}
                                 </div>
                                 <div className="col-md-6 mb-2">
-                                    <strong>Zip code:</strong>{" "}
+                                    <strong>{staticVolunteerContent?.additionaDetails?.zipCode}:</strong>{" "}
                                     {selectedVolunteer?.zipcode}
                                 </div>
                                 <div className="col-md-6 mb-2">
-                                    <strong>Other activities:</strong>{" "}
+                                    <strong>{staticVolunteerContent?.additionaDetails?.otherActivities}:</strong>{" "}
                                     {selectedVolunteer?.otheractivities}
                                 </div>
                                 <div className="col-md-6 mb-2">
                                     <strong>
-                                        Have you previously volunteered for this
-                                        temple?:
+                                    {staticVolunteerContent?.additionaDetails?.beforevolunteer}:
                                     </strong>{" "}
                                     {selectedVolunteer.beforevolunteer
                                         ? "Yes"
                                         : "No"}
                                 </div>
                                 <div className="col-md-6 mb-2">
-                                    <strong>Are you a vegetarian?:</strong>{" "}
+                                    <strong>{staticVolunteerContent?.additionaDetails?.IsVeg}:</strong>{" "}
                                     {selectedVolunteer.isveg ? "Yes" : "No"}
                                 </div>
                                 <div className="col-md-6 mb-2">
                                     <strong>
-                                        Do you currently live in Toronto?:
+                                    {staticVolunteerContent?.additionaDetails?.IsLive}:
                                     </strong>{" "}
                                     {selectedVolunteer.islive ? "Yes" : "No"}
                                 </div>

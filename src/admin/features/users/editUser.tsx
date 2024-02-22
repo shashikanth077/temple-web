@@ -16,6 +16,7 @@ import { FormInput } from 'sharedComponents/inputs';
 import { useRedux } from 'hooks';
 import { User } from 'models';
 import Loader from 'sharedComponents/loader/loader';
+import { selectStaticUsers } from 'features/content/contactSelectors';
 
 /* eslint-disable */
 
@@ -30,10 +31,11 @@ const UserRoles: Array<OptionTypes> = [
 ];
 
 const Edituser = () => {
-    const { dispatch } = useRedux();
+    const { dispatch,appSelector } = useRedux();
     const { loading, error, successMessage } = useSelector((state:any) => state.apiState);
     const { id } = useParams<any>();
     const [multiSelections, setMultiSelections] = useState<OptionTypes[]>([]);
+    const staticContentUsers = appSelector(selectStaticUsers);
 
     const toast = useRef<any>(null);
 
@@ -62,10 +64,14 @@ const Edituser = () => {
     /*
        form validation schema
     */
-    const schemaResolver = yupResolver(
+       const schemaResolver = yupResolver(
         yup.object().shape({
-            //roles: yup.string().required('Please enter select the role'),
-          }),
+            role: yup.string().required(staticContentUsers?.addUser?.formValidation?.role),
+            firstName: yup.string().required(staticContentUsers?.addUser?.formValidation?.firstName).min(2, 'This value is too short. It should have 2 characters or more.'),
+            lastName: yup.string().required(staticContentUsers?.addUser?.formValidation?.lastName).min(2, 'This value is too short. It should have 2 characters or more.'),
+            phonenumber: yup.string().required(staticContentUsers?.addUser?.formValidation?.phonenumber).min(2, 'This value is too short. It should have 2 characters or more.'),
+            email: yup.string().required(staticContentUsers?.addUser?.formValidation?.email).email(staticContentUsers?.addUser?.formValidation?.isValidEmail),
+        }),
     );
 
     const methods = useForm<User>({
@@ -138,7 +144,7 @@ const Edituser = () => {
                                     <div className="row">
                                         <div className="col-md-6">
                                             <div className="form-group">
-                                                <label>Select roles</label>
+                                                <label>{staticContentUsers?.addUser?.formValidation?.role}</label>
                                                 <Controller
                                                     key="roles"
                                                     name="roles"
@@ -171,7 +177,7 @@ const Edituser = () => {
                                                     disabled
                                                     errors={errors}
                                                     control={control}
-                                                    label="First name"
+                                                    label={staticContentUsers?.addUser?.formValidation?.firstName}
                                                     containerClass="mb-3"
                                                 />
                                             </div>

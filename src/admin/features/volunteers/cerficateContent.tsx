@@ -1,8 +1,15 @@
 import React from 'react';
+import { selectStaticAdminvolunteers } from 'features/content/contactSelectors';
+import { useRedux } from 'hooks';
 
 /* eslint-disable */
-const CertificateContent = (volunteer:any) => (
+const CertificateContent = () => {
 
+  const {dispatch,appSelector} = useRedux();
+
+  const staticContentCertificate = appSelector(selectStaticAdminvolunteers);
+
+  return (
   <div className="container pm-certificate-container">
     <div className="outer-border"></div>
     <div className="inner-border"></div>
@@ -10,9 +17,9 @@ const CertificateContent = (volunteer:any) => (
     <div className="pm-certificate-border col-xs-12">
       <div className="row pm-certificate-header">
         <div className="pm-certificate-title cursive col-xs-12 text-center">
-          <h2>Certificate of Recognition</h2>
+          <h2>{staticContentCertificate?.certificate?.heading}</h2>
           <img src={`${window.location.origin}/assets/images/logo/logo.jpg`} width={60} height={60}/>
-          <p>In gratitude, we present this certificate of recognition to</p>
+          <p>{staticContentCertificate?.certificate?.subHeading}</p>
         </div>
       </div>
 
@@ -61,13 +68,13 @@ const CertificateContent = (volunteer:any) => (
           <div className="row">
             <div className="pm-certificate-footer">
                 <div className="col-xs-4 pm-certified col-xs-4 text-center">
-                  <span className="pm-credits-text block sans">Signature:________________</span>
+                  <span className="pm-credits-text block sans">{staticContentCertificate?.certificate?.signature}:________________</span>
                 </div>
                 <div className="col-xs-4">
                   
                 </div>
                 <div className="col-xs-4 pm-certified col-xs-4 text-center">
-                  <span className="pm-credits-text block sans">Date Completed:_______________</span>
+                  <span className="pm-credits-text block sans">{staticContentCertificate?.certificate?.dateCompleted}:_______________</span>
                </div>
             </div>
            
@@ -78,7 +85,8 @@ const CertificateContent = (volunteer:any) => (
 
     </div>
   </div>
+  )
 
-);
+}
 
 export default CertificateContent;

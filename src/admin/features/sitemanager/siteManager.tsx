@@ -14,15 +14,17 @@ import { useRedux } from 'hooks';
 import { SiteSetting } from 'models';
 import Loader from 'sharedComponents/loader/loader';
 import DownloadJsonButton from 'sharedComponents/JsonDownloadBtn';
+import { selectStaticSiteManage } from 'features/content/contactSelectors';
 
 /* eslint-disable */
 const ManageSite = () => {
-    const { dispatch } = useRedux();
+    const { dispatch,appSelector } = useRedux();
     const { loading, error, successMessage } = useSelector((state:any) => state.apiState);
-    const [preview, setPreview] = useState();
     const [image, setImage] = useState({ preview: '', data: '' })
 
     const toast = useRef<any>(null);
+
+    const staticContent = appSelector(selectStaticSiteManage);
 
     const showToast = (severity:any, summary:any, detail:any) => {
         toast.current.show({ severity, summary, detail });
@@ -36,7 +38,7 @@ const ManageSite = () => {
           staticFile: yup
             .mixed()
             .test('required', 'Json file is required', (value: any) => value && value.length > 0)
-            .test('fileName', 'File name should name to content.json please do not use any other name.', (value: any) => {
+            .test('fileName', staticContent?.addStaticJson?.formValidation?.staticFile, (value: any) => {
               if (!value || !value[0]) {
                 return false;
               }
@@ -127,7 +129,7 @@ const ManageSite = () => {
                         <div className="card">
                             <div className="card-header">
                                 <h3 className="card-title">
-                                    <b>Manage static contents</b>
+                                    <b>{staticContent?.heading}</b>
                                 </h3>
                             </div>
 
@@ -139,7 +141,7 @@ const ManageSite = () => {
                                             <FormInput
                                                 type="file"
                                                 name="staticFile"
-                                                label="Upload static JSON file"
+                                                label={staticContent?.addStaticJson?.formLabels?.staticFile}
                                                 onChange={handleUploadedFile}
                                                 register={register}
                                                 key="staticFile"
@@ -147,70 +149,10 @@ const ManageSite = () => {
                                                 control={control}
                                                 containerClass="mb-3"
                                             />
-                                            <p className='mb-3'> <b>Current File</b>: Download from here for update and upload</p>
+                                            <p className='mb-3'> <b>Current File</b>: {staticContent?.downloadTitle}</p>
                                             <DownloadJsonButton classes="btn static-download-btn mb-2" jsonUrl="http://localhost:8080/uploads/staticfile/content.json" fileName="content.json" />
                                         </div>
                                     </div>
-                                    {/* <div className="row">
-                                        <div className="col-md-6">
-                                            <FormInput
-                                                type="file"
-                                                accept="json/*"
-                                                name="tresSignature"
-                                                label="Upload treasurer signature"
-                                                onChange={handleUploadedFile}
-                                                register={register}
-                                                key="tresSignature"
-                                                errors={errors}
-                                                control={control}
-                                                containerClass="mb-3"
-                                            />
-                                        </div>
-                                        <div className="col-md-6">
-                                            <div className="form-group">
-                                                <FormInput
-                                                    type="text"
-                                                    name="templeName"
-                                                    label="Temple name"
-                                                    register={register}
-                                                    key="templeName"
-                                                    errors={errors}
-                                                    control={control}
-                                                    containerClass="mb-3"
-                                                />
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="row">
-                                        <div className="col-md-6">
-                                            <FormInput
-                                                type="file"
-                                                accept="json/*"
-                                                name="tresSignature"
-                                                label="Upload treasurer signature"
-                                                onChange={handleUploadedFile}
-                                                register={register}
-                                                key="tresSignature"
-                                                errors={errors}
-                                                control={control}
-                                                containerClass="mb-3"
-                                            />
-                                        </div>
-                                        <div className="col-md-6">
-                                            <div className="form-group">
-                                                <FormInput
-                                                    type="text"
-                                                    name="treasurerName"
-                                                    label="Treasurer name"
-                                                    register={register}
-                                                    key="treasurerName"
-                                                    errors={errors}
-                                                    control={control}
-                                                    containerClass="mb-3"
-                                                />
-                                            </div>
-                                        </div>
-                                    </div> */}
                                     <div className="row text-center">
                                         <div className="col-sm-12">
 

@@ -13,9 +13,10 @@ import { FormInput } from 'sharedComponents/inputs';
 import { useRedux } from 'hooks';
 import { User } from 'models';
 import Loader from 'sharedComponents/loader/loader';
+import { selectStaticUsers } from 'features/content/contactSelectors';
 
 const AddProduct = () => {
-    const { dispatch } = useRedux();
+    const { dispatch, appSelector } = useRedux();
     const { loading, error, successMessage } = useSelector((state:any) => state.apiState);
 
     const toast = useRef<any>(null);
@@ -24,16 +25,18 @@ const AddProduct = () => {
         toast.current.show({ severity, summary, detail });
     };
 
+    const staticContentUsers = appSelector(selectStaticUsers);
+
     /*
        form validation schema
     */
     const schemaResolver = yupResolver(
         yup.object().shape({
-            role: yup.string().required('Please enter select the role'),
-            firstName: yup.string().required('Please enter first name').min(2, 'This value is too short. It should have 2 characters or more.'),
-            lastName: yup.string().required('Please enter last name').min(2, 'This value is too short. It should have 2 characters or more.'),
-            phonenumber: yup.string().required('Please enter phone number').min(2, 'This value is too short. It should have 2 characters or more.'),
-            email: yup.string().required('Please enter email address').email('please enter valid email id'),
+            role: yup.string().required(staticContentUsers?.addUser?.formValidation?.role),
+            firstName: yup.string().required(staticContentUsers?.addUser?.formValidation?.firstName).min(2, 'This value is too short. It should have 2 characters or more.'),
+            lastName: yup.string().required(staticContentUsers?.addUser?.formValidation?.lastName).min(2, 'This value is too short. It should have 2 characters or more.'),
+            phonenumber: yup.string().required(staticContentUsers?.addUser?.formValidation?.phonenumber).min(2, 'This value is too short. It should have 2 characters or more.'),
+            email: yup.string().required(staticContentUsers?.addUser?.formValidation?.email).email(staticContentUsers?.addUser?.formValidation?.isValidEmail),
         }),
     );
 
@@ -82,7 +85,7 @@ const AddProduct = () => {
                         <div className="card">
                             <div className="card-header">
                                 <h3 className="card-title">
-                                    <b>Add new user</b>
+                                    <b>{staticContentUsers?.addUser?.heading}</b>
                                 </h3>
                             </div>
 
@@ -97,7 +100,7 @@ const AddProduct = () => {
                                                     key="role"
                                                     errors={errors}
                                                     control={control}
-                                                    label="Role"
+                                                    label={staticContentUsers?.addUser?.formLabels?.role}
                                                     containerClass="mb-3"
                                                     type="select"
                                                     className=""
@@ -105,8 +108,8 @@ const AddProduct = () => {
                                                     name="role"
                                                 >
                                                     <option value="">Select</option>
-                                                    <option value="Alabama">Admin </option>
-                                                    <option value="Alaska">User </option>
+                                                    <option value="admin">Admin </option>
+                                                    <option value="user">User </option>
                                                 </FormInput>
                                             </div>
                                         </div>
@@ -121,7 +124,7 @@ const AddProduct = () => {
                                                     key="firstName"
                                                     errors={errors}
                                                     control={control}
-                                                    label="First name"
+                                                    label={staticContentUsers?.addUser?.formLabels?.firstName}
                                                     containerClass="mb-3"
                                                 />
                                             </div>
@@ -135,7 +138,7 @@ const AddProduct = () => {
                                                     errors={errors}
                                                     control={control}
                                                     name="lastName"
-                                                    label="Last name"
+                                                    label={staticContentUsers?.addUser?.formLabels?.lastName}
                                                     containerClass="mb-3"
                                                 />
                                             </div>
@@ -147,7 +150,7 @@ const AddProduct = () => {
                                             <FormInput
                                                 type="text"
                                                 name="phonenumber"
-                                                label="Phone number"
+                                                label={staticContentUsers?.addUser?.formLabels?.phonenumber}
                                                 register={register}
                                                 key="phonenumber"
                                                 errors={errors}
@@ -164,7 +167,7 @@ const AddProduct = () => {
                                                     key="email"
                                                     errors={errors}
                                                     control={control}
-                                                    label="Email address"
+                                                    label={staticContentUsers?.addUser?.formLabels?.email}
                                                     containerClass="mb-3"
                                                 />
                                             </div>
