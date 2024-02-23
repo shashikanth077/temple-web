@@ -6,18 +6,18 @@ import {
 } from './reportsApis';
 import { adminReportsActions } from './reportsSlice';
 import {
-    startLoading, endLoading, setError, setSuccessMessage,
+    startLoading, endLoading, setError,
 } from 'storeConfig/api/apiSlice';
 import { ReportsRes } from 'models';
 
 function* getReportsDetails(action:any) {
     try {
         yield put(startLoading());
-        const response: ReportsRes = yield call(getReportList, {});
+        const response: ReportsRes = yield call(getReportList, action.payload);
         if (response.success) {
             yield put(adminReportsActions.getReportsSuccess(response));
         } else {
-            yield put(setError(response.errorMessage));
+            yield put(adminReportsActions.getReportsSuccess(response));
         }
     } catch (error) {
         if (error instanceof Error) {

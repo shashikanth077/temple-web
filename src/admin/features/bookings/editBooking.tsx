@@ -68,13 +68,13 @@ const EditBooking = () => {
 
     useEffect(() => {
         setValue('category',seva.category);
-    },[seva])
+    },[seva]);
+
     /*
         handle form submission
     */
     const onSubmit = handleSubmit((data:any) => {
         const formData:any = new FormData();
-
         for (const k in data) {
             if (k === 'image') {
                 formData.append('image', image.data);
@@ -83,7 +83,6 @@ const EditBooking = () => {
             }
         }
         formData.append('_id', id);
-
         dispatch(adminBookingActions.updateBooking(formData));
     });
 
@@ -111,7 +110,6 @@ const EditBooking = () => {
         <>
 
             <Toast ref={toast} />
-
             {loading && <Loader />}
 
             <div className="container-fluid">
@@ -179,7 +177,7 @@ const EditBooking = () => {
                                                 >
 
                                                     <option value="">Select</option>
-                                                    {category?.map((option:any, index:any) => (
+                                                    {category?.map((option:any) => (
                                                         <option value={option.id}>{option.name} </option>
                                                     ))}
                                                 </FormInput>

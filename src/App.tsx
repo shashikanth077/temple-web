@@ -9,6 +9,7 @@ import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 import { persistor, store } from './storeConfig/store';
 import './assets/scss/_main.scss';
+import { ThemeProvider } from 'context/useThemeContext';
 import Routes from 'routes/Routes';
 import ErrorBoundary from 'sharedComponents/Error/ErrorBoundary';
 
@@ -25,7 +26,9 @@ function App() {
                         <ErrorBoundary>
                             <PrimeReactProvider>
                                 <Elements stripe={stripePromise}>
-                                    <Routes />
+                                    <ThemeProvider>
+                                        <Routes />
+                                    </ThemeProvider>
                                 </Elements>
                             </PrimeReactProvider>
                         </ErrorBoundary>
