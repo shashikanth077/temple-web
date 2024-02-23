@@ -206,7 +206,6 @@ const AddBooking = () => {
                                                     containerClass="mb-3"
                                                 />
                                             </div>
-                                            {/* <img src={preview} width="50" height="60" alt="s" /> */}
                                         </div>
                                     </div>
 

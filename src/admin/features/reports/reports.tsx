@@ -9,6 +9,8 @@ import { InputText } from 'primereact/inputtext';
 import { useSelector } from 'react-redux';
 import moment from 'moment';
 import { classNames } from 'primereact/utils';
+import { Message } from 'primereact/message';
+import { ProgressSpinner } from 'primereact/progressspinner';
 import { adminReportsActions } from './reportsSlice';
 import { selectInComeReportDetails } from './reportsSelectors';
 import ReportFilter from './reportFilter';
@@ -19,32 +21,61 @@ import { clearState } from 'storeConfig/api/apiSlice';
 /* eslint-disable */
 export default function ManageReports() {
 
-    const initialFilters =
-    {
-        postalCode: '',
-        tickerId: '',
-        phoneNumber: '',
-        mobileNumber: '',
+    const initialFilters = {
+        devoteePhoneNumber: '',
+        ticketId: '',
+        devoteeId:'',
+        serviceName: '',
         devoteeName: '',
-        devoteeId: '',
+        createdAt: '',
     }
+    
+    const showToast = (severity: any, summary: any, detail: any) => {
+        toast.current.show({ severity, summary, detail });
+    };
+    
+    const [seachFilter, setSeachFilters] = useState(initialFilters);
+    const [filterSubmitted, setFilterSubmitted] = useState(false);
+    const [searchError,setSearchError] = useState('');
+    const [seachParams,SetsearchParams] = useState({});
 
+    const handleInputChange = (name:string, value:any) => {
+        if (name === 'createdAt' && moment(value, moment.ISO_8601, true).isValid()) {
+            value = moment(value).format('YYYY-MM-DD');
+        }
 
-    const [seachFilter, setSeachFilters] = useState<any>(initialFilters);
-
-    const handleInputChange = (e: any) => {
-        const { name, value } = e.target;
         setSeachFilters({ ...seachFilter, [name]: value });
     };
 
     const ClearHandler = (e: any) => {
-        setSeachFilters(initialFilters); //clean 
+        setSeachFilters(initialFilters);
+        setFilterSubmitted(false);
     }
 
+    const handleGoBack = () => {
+        setFilterSubmitted(false);
+    }
+
+    const isSearchValid = () => {
+        return Object.values(seachFilter).some(value => value !== '');
+    }
+
+   
     const SearchHandler = () => {
-        if (seachFilter.length > 0) {
-            dispatch(adminReportsActions.getReports(seachFilter))
+        // if (!isSearchValid()) {
+        //     // Display an error message or handle invalid search
+        //     setSearchError('Please fill in at least one search field.');
+        //     return;
+        // }
+
+        if (!isSearchValid()) {
+            SetsearchParams({});
+        } else {
+            SetsearchParams(seachFilter)
         }
+   
+        setFilterSubmitted(true);
+      
     }
 
     const componentRef = useRef(null);
@@ -62,16 +93,7 @@ export default function ManageReports() {
     const dt = useRef<any>(null);
     const { dispatch, appSelector } = useRedux();
 
-    useEffect(() => {
-        dispatch(adminReportsActions.getReports({}));
-    }, [dispatch]);
-
     const ReportList: any = appSelector(selectInComeReportDetails);
-
-    const showToast = (severity: any, summary: any, detail: any) => {
-        toast.current.show({ severity, summary, detail });
-    };
-
 
     const cols = [
         { field: 'ticketId', header: 'TicketID' },
@@ -94,6 +116,13 @@ export default function ManageReports() {
     };
 
     useEffect(() => {
+        if (filterSubmitted) {
+          dispatch(adminReportsActions.getReports(seachParams));
+        }
+      }, [filterSubmitted, seachParams, dispatch]);
+      
+
+    useEffect(() => {
         if (successMessage) {
             showToast('success', 'Success', successMessage);
             dispatch(clearState());
@@ -105,12 +134,17 @@ export default function ManageReports() {
         }
     }, [successMessage, error, dispatch]);
 
+    useEffect(() => {
+        setSearchError('');
+    }, [seachFilter]);
+
 
     const exportCSV = (selectionOnly: any) => {
         dt.current.exportCSV({ selectionOnly });
     };
 
 
+    console.log(searchError);
     const formatDate = (rowData: any) => moment(rowData).format('DD-MM-YYYY');
 
     const header = () => {
@@ -134,12 +168,30 @@ export default function ManageReports() {
     }
 
     return (
-        <div>
-          
-            <ReportFilter seachFilter={seachFilter} ClearHandler={ClearHandler} handleInputChange={handleInputChange} SearchHandler={SearchHandler} />
+        <div className='admin-report-list-section'>
 
+            {loading && (
+                <div className="p-d-flex p-jc-center">
+                    <ProgressSpinner />
+                </div>
+            )}
+
+            {searchError && (
+                <Message severity="error" text={searchError} style={{ marginBottom: '1rem', width: '100%', maxWidth: '400px' }} />
+            )}
+
+            {(!filterSubmitted) && (
+                <ReportFilter seachFilter={seachFilter} ClearHandler={ClearHandler} handleInputChange={handleInputChange} SearchHandler={SearchHandler} />
+            )}
+            
+            
             <Toast ref={toast} />
+            {filterSubmitted && !loading && !error ? (
+                
             <div className="admin-income-report">
+           <Button label="Go Back to Search Form" onClick={handleGoBack} className="p-button-secondary mb-3" />
+
+               
                 <DataTable
                     ref={dt}
                     filters={filters} onFilter={(e: any) => setFilters(e.filters)}
@@ -187,6 +239,10 @@ export default function ManageReports() {
                     <Column field="createdAt" sortable header="Booked date" body={(rowData) => formatDate(rowData.createdAt)} />
                 </DataTable>
             </div>
+           
+) : searchError ? (
+    <Message severity="error" text={error} style={{ marginBottom: '1rem', width: '100%', maxWidth: '400px' }} />
+) : null}
         </div>
     );
 }

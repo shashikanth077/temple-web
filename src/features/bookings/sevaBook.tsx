@@ -48,7 +48,6 @@ const BookSeva = () => {
     const schemaResolver = yupResolver(
         yup.object().shape({
             bookingDate: yup.string().required("Please select a date"),
-            comments:yup.string().required("Please select a date"),
             NoOfPerson:yup.number().required("Please select number of person"),
         }),
     );
@@ -205,22 +204,6 @@ const BookSeva = () => {
                                                     errors={errors}
                                                     control={control}
                                                     label="Number of persons"
-                                                    containerClass="mb-3"
-                                                />
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className='row'>
-                                    <div className="col-md-12">
-                                            <div className="form-group">
-                                                <FormInput
-                                                    type="textarea"
-                                                    name="comments"
-                                                    register={register}
-                                                    key="comments"
-                                                    errors={errors}
-                                                    control={control}
-                                                    label="Booking notes"
                                                     containerClass="mb-3"
                                                 />
                                             </div>
