@@ -4,10 +4,11 @@ import * as yup from 'yup';
 import {
     Button,
 } from 'react-bootstrap';
-import { useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 import { Toast } from 'primereact/toast';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
+import { Typeahead } from 'react-bootstrap-typeahead';
 import { admingodActions } from '../godmaster/godSlice';
 import { selectGods } from '../godmaster/godSelector';
 import { adminServiceActions } from './serviceSlice';
@@ -17,9 +18,17 @@ import { FormInput } from 'sharedComponents/inputs';
 import { useRedux } from 'hooks';
 import { AdminService } from 'models';
 import Loader from 'sharedComponents/loader/loader';
+import 'react-bootstrap-typeahead/css/Typeahead.css';
 import ImageComponent from 'sharedComponents/Image/image';
-import { numberOfDaysAhead, ServiceTypes, bookingTypes } from 'constants/services';
+import {
+    numberOfDaysAhead, ServiceTypes, bookingTypes, Months, Frequency,
+} from 'constants/services';
 import { selectStaticContentServices } from 'features/content/contactSelectors';
+
+interface OptionTypes {
+    value: string;
+    label:string;
+}
 
 /* eslint-disable */
 /* eslint no-underscore-dangle: 0 */
@@ -30,6 +39,10 @@ const EditService = () => {
     const { id } = useParams<any>();
     const toast = useRef<any>(null);
     const [checkBoxVal, SetCheckboxVal] = useState(false);
+
+    const [multiSelections, setMultiSelections] = useState<OptionTypes[]>([]);
+    const [frequencyVal,setFrequency] = useState('');
+
 
     useEffect(() => {
         dispatch(admingodActions.getGodDetails());
@@ -43,6 +56,14 @@ const EditService = () => {
 
     const showToast = (severity:any, summary:any, detail:any) => {
         toast.current.show({ severity, summary, detail });
+    };
+
+    const handleFrequency = (e:any) => {
+        setFrequency(e.target.value)
+    }
+ 
+    const onChangeMultipleSelection = (selected: any) => {
+        setMultiSelections(selected);
     };
 
     const staticContent = appSelector(selectStaticContentServices);
@@ -85,9 +106,16 @@ const EditService = () => {
     const onSubmit = handleSubmit((data:any) => {
         const formData:any = new FormData();
 
+        let months:any = [];
+        multiSelections?.forEach((month:any) => {
+            months.push(month.value)
+        })
+
         for (const k in data) {
             if (k === 'image') {
                 formData.append('image', image.data);
+            } else if (k === 'occurmonth') { 
+                formData.append('occurmonth', JSON.stringify(months))
             } else if(k === 'isTaxable') {
                 formData.append('isTaxable', checkBoxVal);
             } else {
@@ -120,12 +148,27 @@ const EditService = () => {
     };
 
     const service:any = appSelector(selectService);
+
+    useEffect(() => {
+        if (Array.isArray(service?.occurmonth)) {
+            let wDays: { label: string; value: any }[] = [];
+            service?.occurmonth.forEach((day:string) => {
+                wDays.push({ label: day, value: day });
+            });
+            setMultiSelections(wDays);
+        } else {
+            // Handle the case when service?.occurmonth is not an array
+            console.error('service?.occurmonth is not an array:', service?.occurmonth);
+        }
+        setFrequency(service?.frequency);
+    },[service])
     
     useEffect(() => {
         setValue("serviceType",service.serviceType);
         setValue("bookingType",service.bookingType);
         setValue("godId",service.godId);
         setValue("daysahead",service.daysahead);
+        setValue("frequency",service.frequency);
     },[service])
 
     const SetCheckboxValue = (e:any) => {
@@ -357,6 +400,54 @@ const EditService = () => {
                                             </div>
                                         </div>
                                     </div>
+                                    <div className="row">
+                                        <div className="col-md-6">
+                                            <div className="form-group">
+                                            <FormInput
+                                                    register={register}
+                                                    key="frequency"
+                                                    defaultValue={service?.frequency}
+                                                    errors={errors}
+                                                    onChange={(e) => handleFrequency(e)}
+                                                    control={control}
+                                                    label="Frequency"
+                                                    type="select"
+                                                    containerClass="mb-3"
+                                                    id="frequency"
+                                                    name="frequency"
+                                                >
+                                                    <option value="">Select</option>
+                                                    {Frequency?.map((option:any, index:any) => (
+                                                        <option  key={option.id}  value={option.id}>{option.name} </option>
+                                                    ))}
+                                                </FormInput>
+                                            </div>
+                                        </div>
+                                        {frequencyVal === 'yearly' ? 
+                                          <div className="col-md-6">
+                                            <div className="form-group">
+                                            <label>{staticContent?.addService?.formLabels?.occurmonth}</label>
+                                                <Controller
+                                                    key="occurmonth"
+                                                    name="occurmonth"
+                                                    control={control}
+                                                    render={({ field }) => (
+                                                        <Typeahead
+                                                            {...field}
+                                                            id="select3"
+                                                            labelKey="label"
+                                                            multiple
+                                                            onChange={onChangeMultipleSelection}
+                                                            options={Months}
+                                                            placeholder="Choose months..."
+                                                            selected={multiSelections}
+                                                        />
+                                                    )}
+                                                />
+                                            </div>
+                                        </div>
+                                        :''}
+                                   </div>
                                     <div className="row text-center">
                                         <div className="col-sm-12">
 

@@ -45,27 +45,27 @@ function Myprofile() {
                                 <Collapse in={open}>
                                     <div className="row invoice-info">
                                         <div className="col-sm-4 invoice-col">
-                                            <p>{ProfileDetails.firstName}</p>
-                                            <p>{ProfileDetails.email}</p>
-                                            <p>{ProfileDetails.mobileNumber}</p>
-                                            <p>{ProfileDetails.homeNumber}</p>
-                                            <p>{ProfileDetails.nationality}</p>
+                                            <p>{ProfileDetails?.firstName}</p>
+                                            <p>{ProfileDetails?.email}</p>
+                                            <p>{ProfileDetails?.mobileNumber}</p>
+                                            <p>{ProfileDetails?.homeNumber}</p>
+                                            <p>{ProfileDetails?.nationality}</p>
                                         </div>
 
                                         <div className="col-sm-4 invoice-col">
                                             <h5 className="text-danger">Home Address</h5>
-                                            <p>{ProfileDetails.homeAddress?.address1}</p>
-                                            <p>{ProfileDetails.homeAddress?.city}</p>
-                                            <p>{ProfileDetails.homeAddress?.postalCode}</p>
-                                            <p>{ProfileDetails.homeAddress?.province}</p>
+                                            <p>{ProfileDetails?.homeAddress?.address1}</p>
+                                            <p>{ProfileDetails?.homeAddress?.city}</p>
+                                            <p>{ProfileDetails?.homeAddress?.postalCode}</p>
+                                            <p>{ProfileDetails?.homeAddress?.province}</p>
                                         </div>
 
                                         <div className="col-sm-4 invoice-col">
                                             <h5 className="text-danger">Billing Address</h5>
-                                            <p>{ProfileDetails.billingAddress?.address1}</p>
-                                            <p>{ProfileDetails.billingAddress?.city}</p>
-                                            <p>{ProfileDetails.billingAddress?.postalCode}</p>
-                                            <p>{ProfileDetails.billingAddress?.province}</p>
+                                            <p>{ProfileDetails?.billingAddress?.address1}</p>
+                                            <p>{ProfileDetails?.billingAddress?.city}</p>
+                                            <p>{ProfileDetails?.billingAddress?.postalCode}</p>
+                                            <p>{ProfileDetails?.billingAddress?.province}</p>
                                         </div>
 
                                     </div>

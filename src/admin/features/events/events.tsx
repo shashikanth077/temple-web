@@ -143,6 +143,10 @@ export default function Events() {
         return moment(rowData.startDate).format('YYYY-MM-DD HH:mm');
     }
 
+    const dateFormatEndBody = (rowData:any) => {
+        return moment(rowData.endDate).format('YYYY-MM-DD HH:mm');
+    }
+
     const deleteEventDialogFooter = (
         <>
             <Button label="No" icon="pi pi-times" outlined onClick={hideDeleteEventDialog} />
@@ -181,7 +185,7 @@ export default function Events() {
                     <Column field="organizer" header="Organizer" sortable style={{ minWidth: '10rem' }} />
                     <Column field="bookingPrice" body={priceBodyTemplate} header="Booking price" sortable style={{ minWidth: '10rem' }} />
                     <Column field="startDate"  body={dateFormatBody} header="Start date" sortable style={{ minWidth: '10rem' }} />
-                    <Column field="endDate" body={dateFormatBody} header="End date" sortable style={{ minWidth: '10rem' }} />
+                    <Column field="endDate" body={dateFormatEndBody} header="End date" sortable style={{ minWidth: '10rem' }} />
                     <Column field="image" header="Image" body={imageBodyTemplate} />
                     <Column body={actionBodyTemplate} exportable={false} style={{ minWidth: '6rem',textAlign:'center' }} />
                 </DataTable>

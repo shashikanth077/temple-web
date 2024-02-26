@@ -104,6 +104,7 @@ export interface ProfileData {
   mobileNumber: string;
   homeNumber: string;
   address1: string;
+  email:string;
   address2: string;
   city: string;
   state: string;

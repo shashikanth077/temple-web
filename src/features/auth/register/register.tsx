@@ -18,8 +18,6 @@ import useRedux from 'hooks/useRedux';
 import Loader from 'sharedComponents/loader/loader';
 import { countryCodes } from 'constants/CAProvinces';
 import { FormInput } from 'sharedComponents/inputs';
-
-import 'react-intl-tel-input/dist/main.css';
 import { clearState } from 'storeConfig/api/apiSlice';
 
 /* bottom links */

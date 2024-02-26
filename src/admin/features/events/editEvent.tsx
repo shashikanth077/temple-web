@@ -25,7 +25,8 @@ const EditEvent = () => {
     const { loading, error, successMessage } = useSelector((state:any) => state.apiState);
     const toast = useRef<any>(null);
     const [datetime12h, setDateTime12h] = useState<any>(null);
-    const [endDatetime12h, setDateTimeEnd12h] = useState(null);
+    const [endDatetime12h, setDateTimeEnd12h] = useState<any>(null);
+    
 
     const [image, setImage] = useState({ preview: '', data: '' })
     const staticEventContent = appSelector(selectStaticEvents);
@@ -70,6 +71,35 @@ const EditEvent = () => {
         reset,
         formState: { errors },
     } = methods;
+
+    useEffect(() => {
+        setValue('name', event.name);
+        setValue('bookingPrice', event.bookingPrice);
+
+        if(datetime12h){
+            setValue('startDate', new Date(`${datetime12h} UTC`));
+        } else {
+            setValue('startDate', new Date(`${event.startDate} UTC`));
+        }
+       
+        if(endDatetime12h){
+            setValue('endDate', new Date(`${endDatetime12h} UTC`));
+        } else {
+            setValue('endDate', new Date(`${event.endDate} UTC`));
+        }
+       
+        setValue('description', event.description);
+        setValue('organizerPhone', event.organizerPhone);
+        setValue('organizerEmail', event.organizerEmail);
+        setValue('venue', event.venue);
+        setValue('organizer', event.organizer);
+    
+    },[event,datetime12h,endDatetime12h])
+
+    useEffect(() => {
+        setDateTime12h(new Date(`${event.startDate} UTC`));
+        setDateTimeEnd12h(new Date(`${event.endDate} UTC`));
+    },[event]);
 
     const handleUploadedFile = (event:any) => {
         const img = {
@@ -173,7 +203,7 @@ const EditEvent = () => {
                                                       <Controller
                                                             name="startDate"
                                                             key={"startDate"}
-                                                            defaultValue={new Date(event.startDate)}
+                                                            defaultValue={new Date(`${event.startDate} UTC`)}
                                                             control={control}
                                                             rules={{ required: 'Date is required.' }}
                                                             render={({ field }) => (
@@ -200,13 +230,22 @@ const EditEvent = () => {
                                                             name="endDate"
                                                             key={"endDate"}
                                                             // errors={errors}
-                                                            defaultValue={event.endDate}
+                                                            defaultValue={new Date(`${event.endDate} UTC`)}
                                                             control={control}
                                                             rules={{ required: 'Date is required.' }}
                                                             render={({ field, fieldState }) => (
                                                                 <>
                                                                     <label htmlFor={field.name}>{staticEventContent?.addEvent?.formLabels?.endDate}</label>
-                                                                    <Calendar showIcon inputId={field.name} value={endDatetime12h} onChange={(e:any) => setDateTimeEnd12h(e.value)} showTime hourFormat="12" dateFormat="dd/mm/yy" className='events-top-bar-datepicker-button mb-3' />
+                                                                    <Calendar 
+                                                                        showIcon
+                                                                        inputId={field.name} 
+                                                                        value={endDatetime12h} 
+                                                                        onChange={(e:any) => setDateTimeEnd12h(e.value)} 
+                                                                        showTime 
+                                                                        hourFormat="12" 
+                                                                        dateFormat="dd/mm/yy" 
+                                                                        className='events-top-bar-datepicker-button mb-3' 
+                                                                    />
                                                                </>
                                                             )}
                                                         />

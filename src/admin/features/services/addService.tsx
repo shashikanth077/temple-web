@@ -96,7 +96,7 @@ const AddService = () => {
     const onSubmit = handleSubmit((data:any) => {
         
         let months:any = [];
-        data?.occurmonth?.forEach((month:any) => {
+        multiSelections?.forEach((month:any) => {
             months.push(month.value)
         })
 

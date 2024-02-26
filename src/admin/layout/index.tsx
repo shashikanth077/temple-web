@@ -1,17 +1,34 @@
 import React, { Suspense, useEffect } from 'react';
 import { Container } from 'react-bootstrap';
+import { RingLoader } from 'react-spinners';
 import { changeHTMLAttribute } from 'utils/layout';
 import { ThemeSettings, useThemeContext } from 'context/useThemeContext';
 import useViewport from 'hooks/useViewPort';
 import Preloader from 'sharedComponents/loader/loader';
+import 'primereact/resources/themes/lara-light-indigo/theme.css'; // theme
+import 'primeicons/primeicons.css';
+import 'primeflex/primeflex.css';
+import 'primereact/resources/primereact.css';
+import { PublicImageURL } from 'constants/PublicUrl';
+import AutoLogout from 'features/autoLogout';
 
 const Topbar = React.lazy(() => import('./topBar/index'));
 const LeftSidebar = React.lazy(() => import('./menu/leftSidemenu'));
 const RightSidebar = React.lazy(() => import('./rightBar'));
 const Footer = React.lazy(() => import('./Footer'));
 
+const CustomLoader = () => {
+    console.log('CustomLoader rendered');
+    return (
+        <div className="custom-loader">
+            <img src={`${window.location.origin}/${PublicImageURL}/logo/logo.jpg`} alt="Temple Logo" className="Temple-logo" />
+            <RingLoader color="#007bff" loading size={50} />
+        </div>
+    );
+};
+
 interface VerticalLayoutProps {
-children?: any
+    children?: any
 }
 const VerticalLayout = ({ children }: VerticalLayoutProps) => {
     const { settings, updateSidebar } = useThemeContext();
@@ -65,9 +82,11 @@ const VerticalLayout = ({ children }: VerticalLayoutProps) => {
                 <div className="content-page">
                     <div className="content">
                         <Suspense fallback={<div />}>
-                            <Container fluid>
-                                <Suspense fallback={<Preloader />}>{children}</Suspense>
-                            </Container>
+                            <AutoLogout>
+                                <Container fluid>
+                                    <Suspense fallback={<CustomLoader />}>{children}</Suspense>
+                                </Container>
+                            </AutoLogout>
                         </Suspense>
                     </div>
                     <Suspense fallback={<div />}>

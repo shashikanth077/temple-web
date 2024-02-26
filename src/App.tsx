@@ -25,11 +25,11 @@ function App() {
                     <div className="App">
                         <ErrorBoundary>
                             <PrimeReactProvider>
-                                <ThemeProvider>
-                                    <Elements stripe={stripePromise}>
+                                <Elements stripe={stripePromise}>
+                                    <ThemeProvider>
                                         <Routes />
-                                    </Elements>
-                                </ThemeProvider>
+                                    </ThemeProvider>
+                                </Elements>
                             </PrimeReactProvider>
                         </ErrorBoundary>
                     </div>
