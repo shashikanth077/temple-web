@@ -12,7 +12,7 @@ import { useSelector } from 'react-redux';
 import { adminUserActions } from './userSlice';
 import { selectUsers } from './userSelector';
 import DeleteDiaLog from 'sharedComponents/dialogs/dialogs';
-import { useRedux } from 'hooks';
+import { useRedux, useUser } from 'hooks';
 import { clearState } from 'storeConfig/api/apiSlice';
 import { User } from 'models';
 
@@ -46,6 +46,7 @@ export default function Users() {
     const [globalFilter, setGlobalFilter] = useState(null);
     const toast = useRef<any>(null);
     const dt = useRef<any>(null);
+    const [loggedInUser] = useUser();
     const { dispatch, appSelector } = useRedux();
     const { loading, error, successMessage } = useSelector((state:any) => state.apiState);
 
@@ -189,21 +190,25 @@ export default function Users() {
         </>
     );
 
+    console.log("loggedInUser",loggedInUser);
     const userDetails:any = appSelector(selectUsers);
+    let filteredUsers;
+    if(userDetails.length > 0) {
+         filteredUsers = userDetails?.filter((user: any) => user._id !== user.id);
+    }
         
     return (
         <div>
-            {userDetails && userDetails.length > 0 &&
-            <>
             <Toast ref={toast} />
-           
+            {filteredUsers && filteredUsers.length > 0 &&
+            <>
             <div className="">
                 <Toolbar className="mb-4" left={leftToolbarTemplate} right={rightToolbarTemplate} />
 
                 <DataTable
                     ref={dt}
                     filters={filters} onFilter={(e:any) => setFilters(e.filters)}
-                    value={userDetails}
+                    value={filteredUsers}
                     selection={selectedusers} 
                     onSelectionChange={(e:any) => setSelectedusers(e.value)} 
                     dataKey="_id"

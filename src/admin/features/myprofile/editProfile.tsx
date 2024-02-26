@@ -79,10 +79,11 @@ const EditProfile = () => {
     } = methods;
 
     useEffect(() => {
-        setValue('firstName', ProfileDetails?.firstName);
-        setValue('lastName', ProfileDetails?.lastName);
-        setValue('mobileNumber', ProfileDetails?.mobileNumber);
+        setValue('firstName', loggedInUser?.firstName);
+        setValue('lastName', loggedInUser?.lastName);
+        setValue('mobileNumber', loggedInUser?.phonenumber);
         setValue('homeNumber', ProfileDetails?.homeNumber);
+        setValue('email', loggedInUser?.email);
         setValue('star', ProfileDetails?.star);
         setValue('gotram', ProfileDetails?.gotram);
         setValue('nationality', ProfileDetails?.nationality);
@@ -150,374 +151,372 @@ const EditProfile = () => {
             <Toast ref={toast} />
             {loading && <Loader />}
 
-            {ProfileDetails
-            && (
-                <div className="container-fluid">
-                    <div className="row">
-                        <div className="col-md-12">
-                            <div className="card">
-                                <div className="card-header">
-                                    <h3 className="card-title">
-                                        <b>Edit Profile</b>
-                                    </h3>
-                                </div>
-                                <div className="card-body">
-                                    <div className="">
-                                        <form name="edit-profile-form" id="edit-profile-form" onSubmit={onSubmit}>
-                                            <div className="my-profile">
-                                                <div className="row">
-                                                    <div className="col-md-6">
-                                                        <div className="form-group">
-                                                            <FormInput
-                                                                type="hidden"
-                                                                name="_id"
-                                                                defaultValue={loggedInUser?.id}
-                                                                register={register}
-                                                                key="_id"
-                                                                control={control}
-                                                            />
-                                                            <FormInput
-                                                                type="text"
-                                                                name="firstName"
-                                                                defaultValue={ProfileDetails.firstName}
-                                                                register={register}
-                                                                key="firstName"
-                                                                errors={errors}
-                                                                control={control}
-                                                                label="First name"
-                                                                containerClass="mb-3"
-                                                            />
-                                                        </div>
-                                                    </div>
-                                                    <div className="col-md-6">
-                                                        <div className="form-group">
-                                                            <FormInput
-                                                                type="text"
-                                                                name="lastName"
-                                                                defaultValue={ProfileDetails.lastName}
-                                                                label="Last name"
-                                                                containerClass="mb-3"
-                                                                register={register}
-                                                                key="lastName"
-                                                                errors={errors}
-                                                                control={control}
-                                                            />
-                                                        </div>
+            <div className="container-fluid">
+                <div className="row">
+                    <div className="col-md-12">
+                        <div className="card">
+                            <div className="card-header">
+                                <h3 className="card-title">
+                                    <b>Edit Profile</b>
+                                </h3>
+                            </div>
+                            <div className="card-body">
+                                <div className="">
+                                    <form name="edit-profile-form" id="edit-profile-form" onSubmit={onSubmit}>
+                                        <div className="my-profile">
+                                            <div className="row">
+                                                <div className="col-md-6">
+                                                    <div className="form-group">
+                                                        <FormInput
+                                                            type="hidden"
+                                                            name="_id"
+                                                            defaultValue={loggedInUser?.id}
+                                                            register={register}
+                                                            key="_id"
+                                                            control={control}
+                                                        />
+                                                        <FormInput
+                                                            type="text"
+                                                            name="firstName"
+                                                            defaultValue={loggedInUser?.firstName}
+                                                            register={register}
+                                                            key="firstName"
+                                                            errors={errors}
+                                                            control={control}
+                                                            label="First name"
+                                                            containerClass="mb-3"
+                                                        />
                                                     </div>
                                                 </div>
-                                                <div className="row">
-                                                    <div className="col-md-6">
-                                                        <div className="form-group">
-                                                            <FormInput
-                                                                type="text"
-                                                                defaultValue={ProfileDetails.mobileNumber}
-                                                                name="mobileNumber"
-                                                                label="Phone number"
-                                                                containerClass="mb-3"
-                                                                register={register}
-                                                                key="mobileNumber"
-                                                                errors={errors}
-                                                                control={control}
-                                                            />
-                                                        </div>
-                                                    </div>
-                                                    <div className="col-md-6">
-                                                        <div className="form-group">
-                                                            <FormInput
-                                                                type="text"
-                                                                defaultValue={ProfileDetails.homeNumber}
-                                                                name="homeNumber"
-                                                                label="Home number"
-                                                                containerClass="mb-3"
-                                                                register={register}
-                                                                key="homeNumber"
-                                                                errors={errors}
-                                                                control={control}
-                                                            />
-                                                        </div>
+                                                <div className="col-md-6">
+                                                    <div className="form-group">
+                                                        <FormInput
+                                                            type="text"
+                                                            name="lastName"
+                                                            defaultValue={loggedInUser?.lastName}
+                                                            label="Last name"
+                                                            containerClass="mb-3"
+                                                            register={register}
+                                                            key="lastName"
+                                                            errors={errors}
+                                                            control={control}
+                                                        />
                                                     </div>
                                                 </div>
-                                                <div className="row">
-                                                    <div className="col-md-6">
-                                                        <div className="form-group">
-                                                            <FormInput
-                                                                type="text"
-                                                                defaultValue={ProfileDetails.gotram}
-                                                                name="gotram"
-                                                                label="Gotram"
-                                                                containerClass="mb-3"
-                                                                register={register}
-                                                                key="gotram"
-                                                                errors={errors}
-                                                                control={control}
-                                                            />
-                                                        </div>
-                                                    </div>
-                                                    <div className="col-md-6">
-                                                        <div className="form-group">
-                                                            <FormInput
-                                                                register={register}
-                                                                key="star"
-                                                                defaultValue={ProfileDetails.star}
-                                                                errors={errors}
-                                                                control={control}
-                                                                label="Star"
-                                                                type="select"
-                                                                containerClass="mb-3"
-                                                                id="star"
-                                                                name="star"
-                                                            >
-                                                                <option value="">Select</option>
-                                                                {NakshtraRasi?.map((option:any, index:any) => (
-                                                                    <option key={option.label} value={option.label}>{option.label} </option>
-                                                                ))}
-                                                            </FormInput>
-                                                        </div>
+                                            </div>
+                                            <div className="row">
+                                                <div className="col-md-6">
+                                                    <div className="form-group">
+                                                        <FormInput
+                                                            type="text"
+                                                            defaultValue={loggedInUser?.phonenumber}
+                                                            name="mobileNumber"
+                                                            label="Phone number"
+                                                            containerClass="mb-3"
+                                                            register={register}
+                                                            key="mobileNumber"
+                                                            errors={errors}
+                                                            control={control}
+                                                        />
                                                     </div>
                                                 </div>
-                                                <div className="row">
-                                                    <div className="col-md-6">
-                                                        <div className="form-group">
-                                                            <FormInput
-                                                                type="text"
-                                                                defaultValue={ProfileDetails.email}
-                                                                name="email"
-                                                                disabled
-                                                                label="Email address"
-                                                                containerClass="mb-3"
-                                                            />
-                                                        </div>
-                                                    </div>
-                                                    <div className="col-md-6">
-                                                        <div className="form-group">
-                                                            <FormInput
-                                                                type="text"
-                                                                defaultValue={ProfileDetails.nationality}
-                                                                name="nationality"
-                                                                label="Nationalality"
-                                                                containerClass="mb-3"
-                                                                register={register}
-                                                                key="nationality"
-                                                                errors={errors}
-                                                                control={control}
-                                                            />
-                                                        </div>
+                                                <div className="col-md-6">
+                                                    <div className="form-group">
+                                                        <FormInput
+                                                            type="text"
+                                                            defaultValue={ProfileDetails?.homeNumber}
+                                                            name="homeNumber"
+                                                            label="Home number"
+                                                            containerClass="mb-3"
+                                                            register={register}
+                                                            key="homeNumber"
+                                                            errors={errors}
+                                                            control={control}
+                                                        />
                                                     </div>
                                                 </div>
-                                                <div className="row">
-                                                    <div className="col-md-6">
-                                                        <div className="form-group">
-                                                            <Controller
-                                                                name="dateOfBirth"
-                                                                key="dateOfBirth"
-                                                                defaultValue={new Date(ProfileDetails.dateOfBirth)} // Convert string to Date object
-                                                                control={control}
-                                                                rules={{ required: 'Date is required.' }}
-                                                                render={({ field }) => (
-                                                                    <>
-                                                                        <label htmlFor={field.name}>Date of birth</label>
-                                                                        <Calendar
-                                                                            value={field.value} // Set the value from the form state
-                                                                            onChange={e => field.onChange(e.value)} // Update the form state when the value changes
-                                                                            showIcon
-                                                                            className="events-top-bar-datepicker-button mb-3"
-                                                                        />
-                                                                    </>
-                                                                )}
-                                                            />
-                                                        </div>
+                                            </div>
+                                            <div className="row">
+                                                <div className="col-md-6">
+                                                    <div className="form-group">
+                                                        <FormInput
+                                                            type="text"
+                                                            defaultValue={ProfileDetails?.gotram}
+                                                            name="gotram"
+                                                            label="Gotram"
+                                                            containerClass="mb-3"
+                                                            register={register}
+                                                            key="gotram"
+                                                            errors={errors}
+                                                            control={control}
+                                                        />
                                                     </div>
+                                                </div>
+                                                <div className="col-md-6">
+                                                    <div className="form-group">
+                                                        <FormInput
+                                                            register={register}
+                                                            key="star"
+                                                            defaultValue={ProfileDetails?.star}
+                                                            errors={errors}
+                                                            control={control}
+                                                            label="Star"
+                                                            type="select"
+                                                            containerClass="mb-3"
+                                                            id="star"
+                                                            name="star"
+                                                        >
+                                                            <option value="">Select</option>
+                                                            {NakshtraRasi?.map((option:any, index:any) => (
+                                                                <option key={option.label} value={option.label}>{option.label} </option>
+                                                            ))}
+                                                        </FormInput>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className="row">
+                                                <div className="col-md-6">
+                                                    <div className="form-group">
+                                                        <FormInput
+                                                            type="text"
+                                                            defaultValue={loggedInUser?.email}
+                                                            name="email"
+                                                            disabled
+                                                            label="Email address"
+                                                            containerClass="mb-3"
+                                                        />
+                                                    </div>
+                                                </div>
+                                                <div className="col-md-6">
+                                                    <div className="form-group">
+                                                        <FormInput
+                                                            type="text"
+                                                            defaultValue={ProfileDetails?.nationality}
+                                                            name="nationality"
+                                                            label="Nationalality"
+                                                            containerClass="mb-3"
+                                                            register={register}
+                                                            key="nationality"
+                                                            errors={errors}
+                                                            control={control}
+                                                        />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className="row">
+                                                <div className="col-md-6">
+                                                    <div className="form-group">
+                                                        <Controller
+                                                            name="dateOfBirth"
+                                                            key="dateOfBirth"
+                                                            defaultValue={new Date(ProfileDetails?.dateOfBirth)} // Convert string to Date object
+                                                            control={control}
+                                                            rules={{ required: 'Date is required.' }}
+                                                            render={({ field }) => (
+                                                                <>
+                                                                    <label htmlFor={field.name}>Date of birth</label>
+                                                                    <Calendar
+                                                                        value={field.value} // Set the value from the form state
+                                                                        onChange={e => field.onChange(e.value)} // Update the form state when the value changes
+                                                                        showIcon
+                                                                        className="events-top-bar-datepicker-button mb-3"
+                                                                    />
+                                                                </>
+                                                            )}
+                                                        />
+                                                    </div>
+                                                </div>
 
-                                                </div>
-                                                <br />
-                                                <h4>Home Address</h4>
-                                                <div className="row">
+                                            </div>
+                                            <br />
+                                            <h4>Home Address</h4>
+                                            <div className="row">
 
-                                                    <div className="col-md-5">
-                                                        <div className="form-group">
+                                                <div className="col-md-5">
+                                                    <div className="form-group">
+                                                        <FormInput
+                                                            type="text"
+                                                            defaultValue={ProfileDetails?.homeAddress?.address1}
+                                                            name="address1"
+                                                            label="Address 1"
+                                                            containerClass="mb-3"
+                                                            register={register}
+                                                            key="address1"
+                                                            errors={errors}
+                                                            control={control}
+                                                        />
+                                                    </div>
+                                                </div>
+
+                                                <div className="col-md-5">
+                                                    <div className="form-group">
+                                                        <FormInput
+                                                            register={register}
+                                                            key="state"
+                                                            defaultValue={ProfileDetails?.homeAddress?.province}
+                                                            errors={errors}
+                                                            control={control}
+                                                            label="State"
+                                                            type="select"
+                                                            className=""
+                                                            id="state"
+                                                            name="state"
+                                                        >
+                                                            <option value="">Select</option>
+                                                            {CAProvinces?.map((option:any, index:any) => (
+                                                                <option value={option.name}>{option.name} </option>
+                                                            ))}
+                                                        </FormInput>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <div className="row">
+                                                <div className="col-md-5">
+                                                    <div className="form-group">
+                                                        <FormInput
+                                                            type="text"
+                                                            defaultValue={ProfileDetails?.homeAddress?.city}
+                                                            register={register}
+                                                            key="city"
+                                                            errors={errors}
+                                                            control={control}
+                                                            name="city"
+                                                            label="City"
+                                                            containerClass="mb-3"
+                                                        />
+                                                    </div>
+                                                </div>
+                                                <div className="col-md-5">
+                                                    <div className="form-group">
+                                                        <FormInput
+                                                            type="text"
+                                                            register={register}
+                                                            key="zipcode"
+                                                            defaultValue={ProfileDetails?.homeAddress?.postalCode}
+                                                            errors={errors}
+                                                            control={control}
+                                                            name="zipcode"
+                                                            label="zipcode"
+                                                            containerClass="mb-3"
+                                                        />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <br />
+                                            <div className="row">
+                                                <div className="col-sm-12">
+                                                    <div className="form-group">
+                                                        <div className="d-inline">
                                                             <FormInput
-                                                                type="text"
-                                                                defaultValue={ProfileDetails.homeAddress?.address1}
-                                                                name="address1"
-                                                                label="Address 1"
-                                                                containerClass="mb-3"
-                                                                register={register}
-                                                                key="address1"
+                                                                onClick={hideBillingToggle}
+                                                                type="checkbox"
+                                                                key="samebillingaddress"
                                                                 errors={errors}
                                                                 control={control}
+                                                                register={register}
+                                                                name="samebillingaddress"
+                                                                label="Same as Home Address"
+                                                                containerClass="mb-3"
                                                             />
                                                         </div>
                                                     </div>
-
-                                                    <div className="col-md-5">
-                                                        <div className="form-group">
-                                                            <FormInput
-                                                                register={register}
-                                                                key="state"
-                                                                defaultValue={ProfileDetails.homeAddress?.province}
-                                                                errors={errors}
-                                                                control={control}
-                                                                label="State"
-                                                                type="select"
-                                                                className=""
-                                                                id="state"
-                                                                name="state"
-                                                            >
-                                                                <option value="">Select</option>
-                                                                {CAProvinces?.map((option:any, index:any) => (
-                                                                    <option value={option.name}>{option.name} </option>
-                                                                ))}
-                                                            </FormInput>
-                                                        </div>
-                                                    </div>
-
                                                 </div>
-                                                <div className="row">
-                                                    <div className="col-md-5">
-                                                        <div className="form-group">
-                                                            <FormInput
-                                                                type="text"
-                                                                defaultValue={ProfileDetails.homeAddress?.city}
-                                                                register={register}
-                                                                key="city"
-                                                                errors={errors}
-                                                                control={control}
-                                                                name="city"
-                                                                label="City"
-                                                                containerClass="mb-3"
-                                                            />
-                                                        </div>
-                                                    </div>
-                                                    <div className="col-md-5">
-                                                        <div className="form-group">
-                                                            <FormInput
-                                                                type="text"
-                                                                register={register}
-                                                                key="zipcode"
-                                                                defaultValue={ProfileDetails.homeAddress?.postalCode}
-                                                                errors={errors}
-                                                                control={control}
-                                                                name="zipcode"
-                                                                label="zipcode"
-                                                                containerClass="mb-3"
-                                                            />
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <br />
-                                                <div className="row">
-                                                    <div className="col-sm-12">
-                                                        <div className="form-group">
-                                                            <div className="d-inline">
+                                            </div>
+                                            {billingAddressShow === true ? (
+                                                <>
+                                                    <h4>Billing Address</h4>
+                                                    <div className="row">
+                                                        <div className="col-md-5">
+                                                            <div className="form-group">
                                                                 <FormInput
-                                                                    onClick={hideBillingToggle}
-                                                                    type="checkbox"
-                                                                    key="samebillingaddress"
+                                                                    type="text"
+                                                                    defaultValue={ProfileDetails?.billingAddress?.address1}
+                                                                    name="billingaddress"
+                                                                    key="billingaddress"
+                                                                    label="Address"
                                                                     errors={errors}
                                                                     control={control}
                                                                     register={register}
-                                                                    name="samebillingaddress"
-                                                                    label="Same as Home Address"
+                                                                    containerClass="mb-3"
+                                                                />
+                                                            </div>
+                                                        </div>
+                                                        <div className="col-md-5">
+                                                            <div className="form-group">
+                                                                <FormInput
+                                                                    label="State"
+                                                                    errors={errors}
+                                                                    control={control}
+                                                                    register={register}
+                                                                    defaultValue={ProfileDetails?.billingAddress?.province}
+                                                                    type="select"
+                                                                    key="billingstate"
+                                                                    className="billingstate"
+                                                                    id="billingstate"
+                                                                    name="billingstate"
+                                                                >
+                                                                    <option value="">Select</option>
+                                                                    {CAProvinces?.map((option:any, index:any) => (
+                                                                        <option value={option.name}>{option.name} </option>
+                                                                    ))}
+                                                                </FormInput>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div className="row">
+                                                        <div className="col-md-5">
+                                                            <div className="form-group">
+                                                                <FormInput
+                                                                    errors={errors}
+                                                                    control={control}
+                                                                    register={register}
+                                                                    type="text"
+                                                                    key="billingcity"
+                                                                    defaultValue={ProfileDetails?.billingAddress?.city}
+                                                                    name="billingcity"
+                                                                    label="City"
+                                                                    containerClass="mb-3"
+                                                                />
+                                                            </div>
+                                                        </div>
+                                                        <div className="col-md-5">
+                                                            <div className="form-group">
+                                                                <FormInput
+                                                                    errors={errors}
+                                                                    control={control}
+                                                                    register={register}
+                                                                    type="text"
+                                                                    defaultValue={ProfileDetails?.billingAddress?.postalCode}
+                                                                    name="billingzipcode"
+                                                                    key="billingzipcode"
+                                                                    label="Zip code"
                                                                     containerClass="mb-3"
                                                                 />
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                                {billingAddressShow === true ? (
-                                                    <>
-                                                        <h4>Billing Address</h4>
-                                                        <div className="row">
-                                                            <div className="col-md-5">
-                                                                <div className="form-group">
-                                                                    <FormInput
-                                                                        type="text"
-                                                                        defaultValue={ProfileDetails.billingAddress?.address1}
-                                                                        name="billingaddress"
-                                                                        key="billingaddress"
-                                                                        label="Address"
-                                                                        errors={errors}
-                                                                        control={control}
-                                                                        register={register}
-                                                                        containerClass="mb-3"
-                                                                    />
-                                                                </div>
-                                                            </div>
-                                                            <div className="col-md-5">
-                                                                <div className="form-group">
-                                                                    <FormInput
-                                                                        label="State"
-                                                                        errors={errors}
-                                                                        control={control}
-                                                                        register={register}
-                                                                        defaultValue={ProfileDetails.billingAddress?.province}
-                                                                        type="select"
-                                                                        key="billingstate"
-                                                                        className="billingstate"
-                                                                        id="billingstate"
-                                                                        name="billingstate"
-                                                                    >
-                                                                        <option value="">Select</option>
-                                                                        {CAProvinces?.map((option:any, index:any) => (
-                                                                            <option value={option.name}>{option.name} </option>
-                                                                        ))}
-                                                                    </FormInput>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div className="row">
-                                                            <div className="col-md-5">
-                                                                <div className="form-group">
-                                                                    <FormInput
-                                                                        errors={errors}
-                                                                        control={control}
-                                                                        register={register}
-                                                                        type="text"
-                                                                        key="billingcity"
-                                                                        defaultValue={ProfileDetails.billingAddress?.city}
-                                                                        name="billingcity"
-                                                                        label="City"
-                                                                        containerClass="mb-3"
-                                                                    />
-                                                                </div>
-                                                            </div>
-                                                            <div className="col-md-5">
-                                                                <div className="form-group">
-                                                                    <FormInput
-                                                                        errors={errors}
-                                                                        control={control}
-                                                                        register={register}
-                                                                        type="text"
-                                                                        defaultValue={ProfileDetails.billingAddress?.postalCode}
-                                                                        name="billingzipcode"
-                                                                        key="billingzipcode"
-                                                                        label="Zip code"
-                                                                        containerClass="mb-3"
-                                                                    />
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </>
-                                                ) : null}
-                                                <div className="row text-center">
-                                                    <div className="col-sm-12">
-                                                        <div className="text-center d-flex mb-3 update-profile-btn">
-                                                            <Button type="submit" className="btn btn-primary submit-btn mr-1 waves-effect waves-light" disabled={loading}>
-                                                                Update
-                                                            </Button>
-                                                            <a className="btn primary cancelbtn" href="/myprofile/profileview" id="cancel"> Cancel</a>
-                                                        </div>
+                                                </>
+                                            ) : null}
+                                            <div className="row text-center">
+                                                <div className="col-sm-12">
+                                                    <div className="text-center d-flex mb-3 update-profile-btn">
+                                                        <Button type="submit" className="btn btn-primary submit-btn mr-1 waves-effect waves-light" disabled={loading}>
+                                                            Update
+                                                        </Button>
+                                                        <a className="btn primary cancelbtn" href="/myprofile/profileview" id="cancel"> Cancel</a>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </form>
-                                    </div>
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            ) }
+            </div>
+
         </>
     );
 };

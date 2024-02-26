@@ -57,11 +57,6 @@ const EditProduct = () => {
             stock: yup.number().required('Please enter stock'),
             shortDescription: yup.string().required('Please enter short description').min(10, 'This value is too short. It should have 10 characters or more.'),
             fullDescription: yup.string().required('Please enter full description').min(10, 'This value is too short. It should have 10 characters or more.'),
-            // productimage: yup
-            //     .mixed()
-            //     .test('required', 'product image is required', (value:any) => value.length > 0)
-            //     .test('fileSize', 'File Size is too large', (value:any) => value.length && value[0].size <= 5242880)
-            //     .test('fileType', 'Unsupported File Format', (value:any) => value.length && ['image/jpeg', 'image/png', 'image/jpg'].includes(value[0].type)),
         }),
     );
     

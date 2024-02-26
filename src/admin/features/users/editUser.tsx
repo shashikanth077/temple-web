@@ -66,9 +66,8 @@ const Edituser = () => {
     */
        const schemaResolver = yupResolver(
         yup.object().shape({
-            role: yup.string().required(staticContentUsers?.addUser?.formValidation?.role),
             firstName: yup.string().required(staticContentUsers?.addUser?.formValidation?.firstName).min(2, 'This value is too short. It should have 2 characters or more.'),
-            lastName: yup.string().required(staticContentUsers?.addUser?.formValidation?.lastName).min(2, 'This value is too short. It should have 2 characters or more.'),
+            lastName: yup.string().required(staticContentUsers?.addUser?.formValidation?.lastName),
             phonenumber: yup.string().required(staticContentUsers?.addUser?.formValidation?.phonenumber).min(2, 'This value is too short. It should have 2 characters or more.'),
             email: yup.string().required(staticContentUsers?.addUser?.formValidation?.email).email(staticContentUsers?.addUser?.formValidation?.isValidEmail),
         }),
@@ -81,6 +80,7 @@ const Edituser = () => {
     const {
         handleSubmit,
         register,
+        setValue,
         control,
         reset,
         formState: { errors },
@@ -94,8 +94,6 @@ const Edituser = () => {
       
         formData._id = id;
 
-        console.log("multiSelections",multiSelections);
-
         let Roles:any = [];
         multiSelections?.forEach((role:any) => {
             Roles.push(role.label)
@@ -107,6 +105,13 @@ const Edituser = () => {
         
         dispatch(adminUserActions.updateUser(Obj));
     });
+
+    useEffect(() => {
+        setValue('firstName', user.firstName);
+        setValue('lastName', user.lastName);
+        setValue('phonenumber', user.phonenumber);
+        setValue('email', user.email);
+     },[user,setValue])
 
     useEffect(() => {
         if (successMessage) {
@@ -206,7 +211,7 @@ const Edituser = () => {
                                                 type="text"
                                                 name="phonenumber"
                                                 disabled
-                                                defaultValue={user?.mobileNumber}
+                                                defaultValue={user?.phonenumber}
                                                 label="Phone number"
                                                 register={register}
                                                 key="phonenumber"
