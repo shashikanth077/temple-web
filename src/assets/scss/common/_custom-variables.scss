@@ -1,6 +1,38 @@
-//
-// custom-variables.scss
-//
+:root {
+    --#{$prefix}logo-lg-height:           18px;
+    --#{$prefix}logo-sm-height:           22px;
+    --#{$prefix}boxed-layout-bg:        $theme-color;
+    --#{$prefix}leftbar-width:            240px;
+    --#{$prefix}leftbar-width-md:         160px;
+    --#{$prefix}leftbar-width-sm:         70px;
+    --#{$prefix}leftbar-condensed-height: 1500px;
+    --#{$prefix}topbar-height:             70px;
+    --#{$prefix}menu-item-icon-size:       1.1rem;
+    --#{$prefix}menu-item-icon-width:      40px;
+    --#{$prefix}menu-item-font-size:       0.925rem;
+    --#{$prefix}menu-item-padding-x:       10px;
+    --#{$prefix}menu-item-padding-y:       10px;
+
+    --#{$prefix}topbar-bg:                         #ffffff;
+    --#{$prefix}topbar-item-color:                 'grey';
+    --#{$prefix}topbar-item-hover-color:           #ffff;
+    --#{$prefix}topbar-search-bg:                  'green';
+
+    // Footer Height
+    --#{$prefix}footer-height:             60px;
+
+    // Card Border Width
+    --#{$prefix}theme-card-border-width:   0px;
+}
+
+html[data-menu-color="light"] {
+    --#{$prefix}menu-bg:                             #ffffff;
+    --#{$prefix}menu-item-color:                       #{$gray-700};
+    --#{$prefix}menu-item-hover-color:                 #{$primary};
+    --#{$prefix}menu-item-active-color:                #{$primary};
+    --#{$prefix}menu-item-active-bg:                   #{rgba($primary, 0.07)};
+    --#{$prefix}menu-condensed-link-bg:                #313a46;
+}
 
 //Background left-sidebar
 $bg-leftbar-dark: var(--#{$variable-prefix}bg-leftbar-dark);
@@ -102,5 +134,43 @@ $font-weight-semibold: 600;
 
 // Email
 $email-msg-container-bg: var(--#{$variable-prefix}email-msg-container-bg);
+
+$logo-lg-height:                    var(--#{$prefix}logo-lg-height);
+$logo-sm-height:                    var(--#{$prefix}logo-sm-height);
+
+// Menu
+$menu-bg:                                 indianred;
+$menu-item-color:                         var(--#{$prefix}menu-item-color);
+$menu-item-hover-color:                   var(--#{$prefix}menu-item-hover-color);
+$menu-item-active-color:                  var(--#{$prefix}menu-item-active-color);
+$menu-item-active-bg:                     var(--#{$prefix}menu-item-active-bg);
+
+
+// Left Sidebar
+$leftbar-width:                     var(--#{$prefix}leftbar-width);
+$leftbar-width-md:                  var(--#{$prefix}leftbar-width-md);
+$leftbar-width-sm:                  var(--#{$prefix}leftbar-width-sm);
+$leftbar-condensed-height:          var(--#{$prefix}leftbar-condensed-height);
+
+$menu-item-icon-size:               var(--#{$prefix}menu-item-icon-size);
+$menu-item-icon-width:              var(--#{$prefix}menu-item-icon-width);
+$menu-item-font-size:               var(--#{$prefix}menu-item-font-size);
+$menu-item-padding-x:               var(--#{$prefix}menu-item-padding-x);
+$menu-item-padding-y:               var(--#{$prefix}menu-item-padding-y);
+
+// Boxed Layout
+$boxed-layout-width:                1300px;
+$boxed-layout-bg:                   var(--#{$prefix}tertiary-bg);
+
+
+// Footer
+$footer-height:                     var(--#{$prefix}footer-height);
+
+
+// Background left-sidebar
+$menu-condensed-link-bg:            var(--#{$prefix}menu-condensed-link-bg);
+
+
+
 
 

@@ -24,13 +24,13 @@ function App() {
                 <PersistGate loading={null} persistor={persistor}>
                     <div className="App">
                         <ErrorBoundary>
-                            <PrimeReactProvider>
-                                <Elements stripe={stripePromise}>
-                                    <ThemeProvider>
+                            <ThemeProvider>
+                                <PrimeReactProvider>
+                                    <Elements stripe={stripePromise}>
                                         <Routes />
-                                    </ThemeProvider>
-                                </Elements>
-                            </PrimeReactProvider>
+                                    </Elements>
+                                </PrimeReactProvider>
+                            </ThemeProvider>
                         </ErrorBoundary>
                     </div>
                 </PersistGate>

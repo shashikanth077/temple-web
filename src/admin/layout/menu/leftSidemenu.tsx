@@ -1,156 +1,56 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { Dropdown } from 'react-bootstrap';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import SimpleBar from 'simplebar-react';
-import 'assets/css/simple.bar.css';
-
-// components
-/* eslint-disable */
-import AppMenu from './MainMenu';
-import { selectAdminMenu } from 'features/content/contactSelectors';
-import { useRedux, useUser } from 'hooks';
 
 // images
-/* eslint-disable */
-/* user box */
-const UserBox = () => {
+import SimpleBar from 'simplebar-react';
+import AppMenu from './MainMenu';
+import { selectAdminMenu } from 'features/content/contactSelectors';
+import { useRedux } from 'hooks';
 
-    const {dispatch}  = useRedux();
-
-        // get the profilemenu
-    const ProfileMenus = [
-        {
-            label: 'My Account',
-            icon: 'user',
-            redirectTo: '/pages/profile',
-        },
-        {
-            label: 'Logout',
-            icon: 'log-out',
-            redirectTo: '/auth/logout',
-        },
-    ];
-
-    const [dropdownOpen, setDropdownOpen] = useState<boolean>(false);
-
-    /*
-   * toggle dropdown
-   */
-    const toggleDropdown = () => {
-        setDropdownOpen(!dropdownOpen);
-    };
-
-    return (
-        <div className="user-box text-center">
-            <img
-                src="assets/images/logo.jpg"
-                alt=""
-                title="Mat Helme"
-                className="rounded-circle avatar-md"
-            />
-            <Dropdown show={dropdownOpen} onToggle={toggleDropdown}>
-                <Dropdown.Toggle
-                    id="dropdown-notification"
-                    as="a"
-                    onClick={toggleDropdown}
-                    className="cursor-pointer text-dark h5 mt-2 mb-1 d-block"
-                >
-                    Shashi
-                </Dropdown.Toggle>
-                <Dropdown.Menu className="user-pro-dropdown m-0">
-                    {/* <div onClick={toggleDropdown}> */}
-                    {(ProfileMenus || []).map((item, index) => (
-                        <React.Fragment key={`${index}-profile-menu`}>
-                            {index === ProfileMenus.length - 1 && (
-                                <div className="dropdown-divider" />
-                            )}
-                            <Link
-                                to={item.redirectTo}
-                                className="dropdown-item notify-item"
-                            >
-                                <i
-                                    className={item.icon}
-                                 />
-                                <span>{item.label}</span>
-                            </Link>
-                        </React.Fragment>
-                    ))}
-                    {/* </div> */}
-                </Dropdown.Menu>
-            </Dropdown>
-            <p className="text-muted">Admin Head</p>
-        </div>
-    );
-};
-
-
-/* sidebar content */
+/* Sidebar content */
 const SideBarContent = () => {
-    const {appSelector}  = useRedux();
-    const menuItems = appSelector(selectAdminMenu);
-    const [loggedInUser] = useUser();
+    const { appSelector } = useRedux();
 
-    const updateItems:any = menuItems?.filter((item:any) => {
-        for(var i = 0; i < item.roles?.length; i++){
-            return loggedInUser.roles?.includes(item.roles[i]) 
-         }
-    });
-  
+    const Menus = appSelector(selectAdminMenu);
+
     return (
         <>
-            <UserBox />
-            
-            <SimpleBar style={{ maxHeight: '700px' }}>
-                <div id="sidebar-menu">
-                    <AppMenu menuItems={updateItems} />
-                </div>
-            </SimpleBar>
+            <AppMenu menuItems={Menus} />
             <div className="clearfix" />
         </>
-    )
-}
-
-interface LeftSidebarProps {
-  isCondensed: boolean;
-}
-
-const LeftSidebar = ({ isCondensed }: LeftSidebarProps) => {
-    const menuNodeRef: any = useRef(null);
-
-    /**
-   * Handle the click anywhere in doc
-   */
-    const handleOtherClick = (e: any) => {
-        if (
-            menuNodeRef
-            && menuNodeRef.current
-            && menuNodeRef.current.contains(e.target)
-        ) { return; }
-        // else hide the menubar
-        if (document.body) {
-            document.body.classList.remove('sidebar-enable');
-        }
-    };
-
-    useEffect(() => {
-        document.addEventListener('mousedown', handleOtherClick, false);
-        return () => {
-            document.removeEventListener('mousedown', handleOtherClick, false);
-        };
-    }, []);
-
-    return (
-        <div className="left-side-menu" ref={menuNodeRef}>
-            {!isCondensed && (
-                <SideBarContent />
-            )}
-            {isCondensed && <SideBarContent />}
-        </div>
     );
 };
 
-LeftSidebar.defaultProps = {
-    isCondensed: false,
-};
+const LeftSidebar = () => (
+    <div className="leftside-menu">
+        <Link to="/" className="logo logo-light">
+            <span className="logo-lg">
+                <img src={`${window.location.origin}/assets/images/logo/logo.jpg`} alt="logo" />
+            </span>
+            <span className="logo-sm">
+                <img src={`${window.location.origin}/assets/images/logo/logo.jpg`} alt="small logo" />
+            </span>
+        </Link>
+        <a href="/" className="logo logo-dark">
+            <span className="logo-lg">
+                <img src={`${window.location.origin}/assets/images/logo/logo.jpg`} alt="dark logo" />
+            </span>
+            <span className="logo-sm">
+                <img src={`${window.location.origin}/assets/images/logo/logo.jpg`} alt="small logo" />
+            </span>
+        </a>
+        {/* Sidebar -left */}
+        <SimpleBar
+            className="h-100"
+            id="leftside-menu-container"
+            data-simplebar=""
+        >
+            {/* - Sidemenu */}
+            <SideBarContent />
+            {/* - End Sidemenu */}
+            <div className="clearfix" />
+        </SimpleBar>
+    </div>
+);
 
 export default LeftSidebar;

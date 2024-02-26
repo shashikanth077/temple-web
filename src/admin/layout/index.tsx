@@ -1,75 +1,85 @@
-import React, { Suspense, useState } from 'react';
+import React, { Suspense, useEffect } from 'react';
 import { Container } from 'react-bootstrap';
-import 'primereact/resources/themes/lara-light-indigo/theme.css'; // theme
-import 'primeicons/primeicons.css';
-import { RingLoader } from 'react-spinners';
-import 'primeflex/primeflex.css';
-import 'primereact/resources/primereact.css';
-import { PublicImageURL } from 'constants/PublicUrl';
-import AutoLogout from 'features/autoLogout';
+import { changeHTMLAttribute } from 'utils/layout';
+import { ThemeSettings, useThemeContext } from 'context/useThemeContext';
+import useViewport from 'hooks/useViewPort';
+import Preloader from 'sharedComponents/loader/loader';
 
+const Topbar = React.lazy(() => import('./topBar/index'));
+const LeftSidebar = React.lazy(() => import('./menu/leftSidemenu'));
+const RightSidebar = React.lazy(() => import('./rightBar'));
 const Footer = React.lazy(() => import('./Footer'));
-const Topbar = React.lazy(() => import('./topBar'));
-const LeftSidebar = React.lazy(() => import('./menu'));
 
-const CustomLoader = () => {
-    console.log('CustomLoader rendered');
-    return (
-        <div className="custom-loader">
-            <img src={`${window.location.origin}/${PublicImageURL}/logo/logo.jpg`} alt="Temple Logo" className="Temple-logo" />
-            <RingLoader color="#007bff" loading size={50} />
-        </div>
-    );
-};
-
-interface AuthLayoutProps {
-  children?: any;
+interface VerticalLayoutProps {
+children?: any
 }
+const VerticalLayout = ({ children }: VerticalLayoutProps) => {
+    const { settings, updateSidebar } = useThemeContext();
+    const { width } = useViewport();
 
-const VerticalLayout = (props: AuthLayoutProps) => {
-    const { children } = props;
-    const [isMenuOpened, setIsMenuOpened] = useState<boolean>(false);
+    useEffect(() => {
+        changeHTMLAttribute('data-bs-theme', settings?.theme);
+    }, [settings?.theme]);
 
-    /**
-   * Open the menu when having a mobile screen
-   */
-    const openMenu = () => {
-        setIsMenuOpened(prevState => !prevState);
+    useEffect(() => {
+        changeHTMLAttribute('data-layout-mode', settings.layout.mode);
+    }, [settings?.layout.mode]);
 
-        if (document.body) {
-            if (isMenuOpened) {
-                document.body.classList.remove('sidebar-enable');
-            } else {
-                document.body.classList.add('sidebar-enable');
-            }
+    useEffect(() => {
+        changeHTMLAttribute('data-topbar-color', settings?.topbar.theme);
+    }, [settings?.topbar.theme]);
+
+    useEffect(() => {
+        changeHTMLAttribute('data-menu-color', settings?.sidebar.theme);
+    }, [settings?.sidebar.theme]);
+
+    useEffect(() => {
+        changeHTMLAttribute('data-sidenav-size', settings.sidebar.size);
+    }, [settings?.sidebar.size]);
+
+    useEffect(() => {
+        changeHTMLAttribute('data-layout-position', settings?.layout.menuPosition);
+    }, [settings?.layout.menuPosition]);
+
+    useEffect(() => {
+        if (width < 768) {
+            updateSidebar({ size: ThemeSettings.sidebar.size.full });
+        } else if (width < 1140) {
+            updateSidebar({ size: ThemeSettings.sidebar.size.condensed });
+        } else if (width >= 1140) {
+            updateSidebar({ size: ThemeSettings.sidebar.size.default });
         }
-    };
-
-    const isCondensed: any = true;
+    }, [width]);
 
     return (
-        <div id="wrapper">
-            <Suspense fallback={<CustomLoader />}>
-                <Topbar openLeftMenuCallBack={openMenu} />
-            </Suspense>
-            <Suspense fallback={<CustomLoader />}>
-                <LeftSidebar />
-            </Suspense>
-            <div className="content-page">
-                <div className="content">
-                    <AutoLogout>
-                        <Container fluid>
-                            <Suspense fallback={<CustomLoader />}>{children}</Suspense>
-                        </Container>
-                    </AutoLogout>
+        <Suspense fallback={<div />}>
+            <div className="wrapper">
+                <Suspense fallback={<div />}>
+                    <Topbar />
+                </Suspense>
+
+                <Suspense fallback={<div />}>
+                    <LeftSidebar />
+                </Suspense>
+
+                <div className="content-page">
+                    <div className="content">
+                        <Suspense fallback={<div />}>
+                            <Container fluid>
+                                <Suspense fallback={<Preloader />}>{children}</Suspense>
+                            </Container>
+                        </Suspense>
+                    </div>
+                    <Suspense fallback={<div />}>
+                        <Footer />
+                    </Suspense>
                 </div>
 
-                <Suspense fallback={<CustomLoader />}>
-                    {/* <Footer /> */}
+                <Suspense fallback={<div />}>
+                    <RightSidebar />
                 </Suspense>
             </div>
-        </div>
+        </Suspense>
     );
 };
-
-export default React.memo(VerticalLayout);
+export default VerticalLayout;

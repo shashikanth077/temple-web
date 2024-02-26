@@ -4,6 +4,7 @@
 @import "./common/mixins.scss";
 @import "./common/dark-modes.scss";
 @import "./common/shared.scss";
+@import "./components/simplebar.scss";
 @import "../../sharedComponents/carosel/slider.scss";
 @import "../../features/home//topbar/topbar.scss";
 @import "../../features/home/banner/banner.scss";
@@ -34,7 +35,6 @@
 @import "../../admin/layout/menu/adminmenu.scss";
 @import "../../admin/layout/layout.scss";
 @import "../../admin/layout/topBar/topbar.scss";
-@import "../../admin//layout/adminfooter.scss";
 @import "../../sharedComponents/BacktoTop/backtotop.scss";
 @import "../../sharedComponents/datatable/datatable.scss";
 @import "../../admin/features/products/adminProduct.scss";

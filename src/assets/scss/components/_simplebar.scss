@@ -1,3 +1,7 @@
+//
+// simplebar.scss
+//
+
 [data-simplebar] {
     position: relative;
     flex-direction: column;
@@ -50,10 +54,8 @@
     position: relative;
     display: block;
     height: 100%;
-    outline: none;
     /* Required for horizontal native scrollbar to not appear if parent is taller than natural height */
     width: auto;
-    visibility: visible;
     overflow: auto;
     /* Scroll on this element otherwise element can't have a padding applied properly */
     max-width: 100%;
@@ -70,7 +72,7 @@
 
 .simplebar-content:before,
 .simplebar-content:after {
-    content: ' ';
+    content: " ";
     display: table;
 }
 
@@ -127,7 +129,6 @@
 [data-simplebar].simplebar-dragging .simplebar-content {
     pointer-events: none;
     user-select: none;
-    -webkit-user-select: none;
 }
 
 [data-simplebar].simplebar-dragging .simplebar-track {
@@ -139,17 +140,17 @@
     right: 2px;
     width: 5px;
     min-height: 10px;
-}
 
-.simplebar-scrollbar:before {
-    position: absolute;
-    content: '';
-    background: #a2adb7;
-    border-radius: 7px;
-    left: 0;
-    right: 0;
-    opacity: 0;
-    transition: opacity 0.2s linear;
+    &:before {
+        position: absolute;
+        content: "";
+        background: #a2adb7;
+        border-radius: 7px;
+        left: 0;
+        right: 0;
+        opacity: 0;
+        transition: opacity 0.2s linear;
+    }
 }
 
 .simplebar-scrollbar.simplebar-visible:before {
@@ -161,36 +162,38 @@
 .simplebar-track.simplebar-vertical {
     top: 0;
     width: 11px;
-}
 
-.simplebar-track.simplebar-vertical .simplebar-scrollbar:before {
-    top: 2px;
-    bottom: 2px;
+    .simplebar-scrollbar {
+        &:before {
+            top: 2px;
+            bottom: 2px;
+        }
+    }
 }
 
 .simplebar-track.simplebar-horizontal {
     left: 0;
     height: 11px;
-}
 
-.simplebar-track.simplebar-horizontal .simplebar-scrollbar:before {
-    height: 100%;
-    left: 2px;
-    right: 2px;
-}
+    .simplebar-scrollbar {
+        right: auto;
+        left: 0;
+        top: 2px;
+        height: 7px;
+        min-height: 0;
+        min-width: 10px;
+        width: auto;
 
-.simplebar-track.simplebar-horizontal .simplebar-scrollbar {
-    right: auto;
-    left: 0;
-    top: 2px;
-    height: 7px;
-    min-height: 0;
-    min-width: 10px;
-    width: auto;
+        &:before {
+            height: 100%;
+            left: 2px;
+            right: 2px;
+        }
+    }
 }
 
 /* Rtl support */
-[data-simplebar-direction='rtl'] .simplebar-track.simplebar-vertical {
+[data-simplebar-direction="rtl"] .simplebar-track.simplebar-vertical {
     right: auto;
     left: 0;
 }
@@ -216,4 +219,20 @@
 
 .custom-scroll {
     height: 100%;
+}
+
+// Scroll Size
+[data-simplebar-lg] {
+    .simplebar-scrollbar {
+        right: 1px;
+        width: 10px;
+    }
+}
+
+[data-simplebar-primary] {
+    .simplebar-scrollbar {
+        &:before {
+            background: var(--#{$prefix}primary);
+        }
+    }
 }
