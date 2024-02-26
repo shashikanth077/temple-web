@@ -6,7 +6,7 @@ const Footer = () => (
         <Container fluid>
             <Row className="row">
                 <div className="col-12 text-center">
-                    {new Date().getFullYear()} © Velonic - Theme by <b>Techzaa</b>
+                    {new Date().getFullYear()} © Sri Sathya narayana temple - developed by <b>NorthGaze.com</b>
                 </div>
             </Row>
         </Container>

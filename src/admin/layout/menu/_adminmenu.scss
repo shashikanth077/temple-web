@@ -21,7 +21,7 @@
     top: 0;
     position: sticky;
     text-align: center;
-    line-height: $topbar-height;
+    line-height: $admintopbar-height;
     padding: 0 calc($leftbar-width-sm * 0.5 - $logo-sm-height * 0.7);
     transition: $transition-base;
 
@@ -67,7 +67,7 @@ html[data-bs-theme="dark"] {
 .content-page {
     position: relative;
     margin-left: $leftbar-width;
-    min-height: calc(100vh - $topbar-height - 2px);
+    min-height: calc(100vh - $admintopbar-height - 2px);
     padding: 0 calc($spacer * 0.5) $footer-height;
     transition: $transition-base;
 }
@@ -377,7 +377,7 @@ html[data-sidenav-size="condensed"]:not([data-layout="topnav"]) {
                         .side-nav-link {
                             position: relative;
                             color: $white;
-                            background: $menu-condensed-link-bg;
+                            background: $theme-color;
                             width: $leftbar-width;
 
                             span {
@@ -538,7 +538,7 @@ html[data-sidenav-size="full"]:not([data-layout="topnav"]) {
     .navbar-custom {
         margin-left: 0;
 
-        .logo-topbar {
+        .logo-admintopbar {
             display: inline-block;
         }
     }
@@ -598,7 +598,7 @@ html[data-sidenav-size="full"]:not([data-layout="topnav"]) {
                 }
 
                 #leftside-menu-container {
-                    height: calc(100% - #{$topbar-height}) !important;
+                    height: calc(100% - #{$admintopbar-height}) !important;
                 }
             }
         }

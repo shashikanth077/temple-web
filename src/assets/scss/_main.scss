@@ -6,7 +6,7 @@
 @import "./common/shared.scss";
 @import "./components/simplebar.scss";
 @import "../../sharedComponents/carosel/slider.scss";
-@import "../../features/home//topbar/topbar.scss";
+@import "../../features/home/topbar/topbar.scss";
 @import "../../features/home/banner/banner.scss";
 @import "../../features/home/about/about.scss";
 @import "../../layout/header/header.scss";
@@ -22,6 +22,7 @@
 @import "../../features/adversitments/adversiments.scss";
 @import "../../features/about/about.scss";
 @import "../../layout/footer/footer.scss";
+@import "../../admin/layout/footer.scss";
 @import "../../sharedComponents/inputs/form.scss";
 @import "../../features/contact/contact.scss";
 @import "../../features/shop/shopProducts/shop.scss";
@@ -34,9 +35,9 @@
 @import "../../admin/layout/menu/TwoColMenu.scss";
 @import "../../admin/layout/menu/adminmenu.scss";
 @import "../../admin/layout/layout.scss";
-@import "../../admin/layout/topBar/topbar.scss";
 @import "../../sharedComponents/BacktoTop/backtotop.scss";
 @import "../../sharedComponents/datatable/datatable.scss";
+@import "../../admin/layout/topBar/topbar.scss";
 @import "../../admin/features/products/adminProduct.scss";
 @import "../../admin/features/myprofile/myprofile.scss";
 @import "../../features/donations/donations.scss";

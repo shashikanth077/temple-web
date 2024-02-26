@@ -1,52 +1,54 @@
 //
-// topbar.scss
+// admintopbar.scss
 //
 
 .navbar-custom {
-    background: indianred;
+    background: grey;
     box-shadow: var(--#{$prefix}box-shadow);
-    min-height: $topbar-height;
+    min-height: $admintopbar-height;
     margin-left: $leftbar-width;
+    margin-bottom: 20px;
     position: sticky;
     top: 0;
     transition: $transition-base;
     z-index: 1000;    
 
-    .topbar {
+    .admintopbar {
+        background-color: grey;
         display: flex;
         justify-content: space-between;
         align-items: center;
         margin: 0 auto;
 
-        // Topbar Search from
+        // admintopbar Search from
         .app-search {
             form {
-                height: $topbar-height;
+                height: $admintopbar-height;
                 max-width: 320px;
 
                 .form-control {
-                    color: $topbar-item-color;
-                    background-color: $topbar-search-bg;
+                    color: $admintopbar-item-color;
+                    background-color: $admintopbar-search-bg;
                 }
 
                 span.search-icon {
-                    color: $topbar-item-color;
+                    color: $admintopbar-item-color;
                 }
             }
         }
     }
 
-    .topbar-menu {
+    .admintopbar-menu {
         position: relative;
         list-style-type: none;
         margin-bottom: 0;
 
         li {
-            max-height: $topbar-height;
+            max-height: $admintopbar-height;
 
             .nav-link {
                 &.show {
-                    color: $topbar-item-hover-color;
+                    color: $admintopbar-item-hover-color;
                 }
             }
         }
@@ -54,24 +56,24 @@
         .nav-link {
             padding: 0;
             position: relative;
-            color: $topbar-item-color;
+            color: $admintopbar-item-color;
             display: flex;
             align-items: center;
-            height: $topbar-height;
+            height: $admintopbar-height;
             cursor: pointer;
 
             &:hover {
-                color: $topbar-item-hover-color;
+                color: $admintopbar-item-hover-color;
             }
         }
     }
 }
 
-// Topbar Logo
-.logo-topbar {
+// admintopbar Logo
+.logo-admintopbar {
     float: left;
     display: none;
-    line-height: $topbar-height;
+    line-height: $admintopbar-height;
     padding: 0 $spacer * 0.5;
 
     .logo-sm {
@@ -87,10 +89,10 @@
     }
 }
 
-html[data-topbar-color="brand"],
-html[data-topbar-color="dark"],
+html[data-admintopbar-color="brand"],
+html[data-admintopbar-color="dark"],
 html[data-bs-theme="dark"] {
-    .logo-topbar {
+    .logo-admintopbar {
         .logo-light {
             display: block;
         }
@@ -101,7 +103,7 @@ html[data-bs-theme="dark"] {
     }
 }
 
-// Topbar light/Dark Mode icon 
+// admintopbar light/Dark Mode icon 
 html[data-bs-theme="dark"] {
     #light-dark-mode {
         .ri-moon-line {
@@ -112,10 +114,10 @@ html[data-bs-theme="dark"] {
     }
 }
 
-//  Topbar Menu Toggle button
+//  admintopbar Menu Toggle button
 .button-toggle-menu {
     border: none;
-    color: $topbar-item-color;
+    color: $admintopbar-item-color;
     width: 60px;
     background-color: transparent;
     font-size: 24px;
@@ -124,7 +126,7 @@ html[data-bs-theme="dark"] {
     position: relative;
 }
 
-// Topbar Search from
+// admintopbar Search from
 .app-search {
     position: static;
     overflow-y: hidden;
@@ -254,7 +256,7 @@ html[data-bs-theme="dark"] {
     display: flex;
     align-items: center;
     gap: 10px;
-    min-height: $topbar-height;
+    min-height: $admintopbar-height;
     transition: none;
 }
 
@@ -274,14 +276,14 @@ html[data-bs-theme="dark"] {
         }
     }
 
-    .logo-topbar {
+    .logo-admintopbar {
         display: none !important;
     }
 }
 
 @include media-breakpoint-down(sm) {
     .navbar-custom {
-        .topbar-menu {
+        .admintopbar-menu {
             position: initial;
         }
 
@@ -301,7 +303,7 @@ html[data-bs-theme="dark"] {
         padding: 0 $spacer * 0.5;
     }
 
-    .logo-topbar {
+    .logo-admintopbar {
         display: block;
 
         span.logo-lg {
