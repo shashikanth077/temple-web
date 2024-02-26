@@ -248,7 +248,10 @@ $grid-row-columns:            6;
 
 // Container padding
 $container-padding-x: $grid-gutter-width * .5;
-
+$admintopbar-height:50px;
+$admintopbar-search-bg:"white";
+$admintopbar-item-hover-color:"white";
+$admintopbar-item-color:"black";
 
 //inputs
 $input-btn-padding-y:         .45rem;

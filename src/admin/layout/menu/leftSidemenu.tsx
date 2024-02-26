@@ -5,17 +5,28 @@ import { Link } from 'react-router-dom';
 import SimpleBar from 'simplebar-react';
 import AppMenu from './MainMenu';
 import { selectAdminMenu } from 'features/content/contactSelectors';
-import { useRedux } from 'hooks';
+import { useRedux, useUser } from 'hooks';
 
 /* Sidebar content */
+/* eslint-disable */
 const SideBarContent = () => {
     const { appSelector } = useRedux();
+    const loggedInUser:any = useUser();
 
     const Menus = appSelector(selectAdminMenu);
 
+    //separate admin and user
+    const updateItems:any = Menus?.filter((item:any) => {
+        for (let i = 0; i < item.roles?.length; i++) {
+            return loggedInUser[0].roles?.includes(item.roles[i]);
+        }
+    });
+
+    console.log(loggedInUser);
+
     return (
         <>
-            <AppMenu menuItems={Menus} />
+            <AppMenu menuItems={updateItems} />
             <div className="clearfix" />
         </>
     );
@@ -25,7 +36,7 @@ const LeftSidebar = () => (
     <div className="leftside-menu">
         <Link to="/" className="logo logo-light">
             <span className="logo-lg">
-                <img src={`${window.location.origin}/assets/images/logo/logo.jpg`} alt="logo" />
+                <img height="40px" width="200px" src={`${window.location.origin}/assets/images/logo/logo.jpg`} alt="logo" />
             </span>
             <span className="logo-sm">
                 <img src={`${window.location.origin}/assets/images/logo/logo.jpg`} alt="small logo" />

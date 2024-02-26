@@ -26,22 +26,7 @@ const profileMenus: ProfileOption[] = [
     {
         label: 'My Account',
         icon: 'ri-account-circle-line',
-        redirectTo: '/pages/profile',
-    },
-    {
-        label: 'Settings',
-        icon: 'ri-settings-4-line',
-        redirectTo: '/pages/profile',
-    },
-    {
-        label: 'Support',
-        icon: 'ri-customer-service-2-line',
-        redirectTo: '/pages/faq',
-    },
-    {
-        label: 'Lock Screen',
-        icon: 'ri-lock-password-line',
-        redirectTo: '/auth/lock-screen',
+        redirectTo: '/myprofile/profileview',
     },
     {
         label: 'Logout',
@@ -126,11 +111,11 @@ const Topbar = ({ toggleMenu, navOpen }: TopbarProps) => {
     };
     return (
         <div className="navbar-custom">
-            <div className="topbar container-fluid">
+            <div className="admintopbar container-fluid">
                 <div className="d-flex align-items-center gap-1">
                     {/* Topbar Brand Logo */}
-                    <div className="logo-topbar">
-                        {/* Logo light */}
+                    {/* <div className="logo-topbar">
+                    
                         <Link to="/" className="logo-light">
                             <span className="logo-lg">
                                 <Image src={`${window.location.origin}/${PublicImageURL}/logo/logo.jpg`} alt="logo" />
@@ -139,7 +124,7 @@ const Topbar = ({ toggleMenu, navOpen }: TopbarProps) => {
                                 <Image src={`${window.location.origin}/${PublicImageURL}/logo/logo.jpg`} alt="small logo" />
                             </span>
                         </Link>
-                        {/* Logo Dark */}
+                      
                         <Link to="/" className="logo-dark">
                             <span className="logo-lg">
                                 <img src={`${window.location.origin}/${PublicImageURL}/logo/logo.jpg`} alt="dark logo" />
@@ -148,8 +133,8 @@ const Topbar = ({ toggleMenu, navOpen }: TopbarProps) => {
                                 <img src={`${window.location.origin}/${PublicImageURL}/logo/logo.jpg`} alt="small logo" />
                             </span>
                         </Link>
-                    </div>
-                    {/* Sidebar Menu Toggle Button */}
+                    </div> */}
+                    
                     <button
                         className="button-toggle-menu"
                         onClick={handleLeftMenuCallBack}

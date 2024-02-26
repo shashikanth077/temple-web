@@ -1,6 +1,6 @@
 :root {
-    --#{$prefix}logo-lg-height:           18px;
-    --#{$prefix}logo-sm-height:           22px;
+    --#{$prefix}logo-lg-height:           40px;
+    --#{$prefix}logo-sm-height:           30px;
     --#{$prefix}boxed-layout-bg:        $theme-color;
     --#{$prefix}leftbar-width:            240px;
     --#{$prefix}leftbar-width-md:         160px;
@@ -136,7 +136,9 @@ $font-weight-semibold: 600;
 $email-msg-container-bg: var(--#{$variable-prefix}email-msg-container-bg);
 
 $logo-lg-height:                    var(--#{$prefix}logo-lg-height);
+$logo-lg-width:                    200px;
 $logo-sm-height:                    var(--#{$prefix}logo-sm-height);
+$logo-sm-width:                    60px;
 
 // Menu
 $menu-bg:                                 indianred;
