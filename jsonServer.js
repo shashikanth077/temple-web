@@ -1,5 +1,4 @@
 const express = require("express");
-const jsonServer = require("json-server");
 var cors = require('cors');
 
 const menuitems = require('./mock/menu/menu.mock.json');

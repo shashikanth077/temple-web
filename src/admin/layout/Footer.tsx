@@ -1,28 +1,16 @@
 import React from 'react';
-import { Row, Col } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Container, Row } from 'react-bootstrap';
 
-const Footer = () => {
-    const currentYear = new Date().getFullYear();
-
-    return (
-        <footer className="footer">
-            <div className="container-fluid">
-                <Row>
-                    <Col sm={6}>
-                        {currentYear} &copy;Temple  by <Link to="##">Temple</Link>
-                    </Col>
-
-                    <Col sm={6}>
-                        <div className="text-sm-end footer-links d-none d-sm-block">
-                            <Link to="/about">About Us</Link>
-                            <Link to="/contactus">Contact Us</Link>
-                        </div>
-                    </Col>
-                </Row>
-            </div>
-        </footer>
-    );
-};
+const Footer = () => (
+    <footer className="footer">
+        <Container fluid>
+            <Row className="row">
+                <div className="col-12 text-center">
+                    {new Date().getFullYear()} © Velonic - Theme by <b>Techzaa</b>
+                </div>
+            </Row>
+        </Container>
+    </footer>
+);
 
 export default Footer;

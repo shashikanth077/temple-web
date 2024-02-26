@@ -1,3 +1,4 @@
+
 /*
 * Colors
 */
@@ -100,7 +101,7 @@ $youtube: #FE0000;
 $blackSoft: #222222;
 
 $variable-prefix:  'ct-';
-
+$prefix:                      $variable-prefix;
 
 //font style variables
 $about-font-family:'serif';
@@ -212,6 +213,12 @@ $adminbg-topbar-dark:grey;
 $bg-topbar-light: darkgray;
 $bg-topbar-dark: var(--#{$variable-prefix}bg-topbar-dark);
 $logo-box-background:lightslategrey;
+
+$topbar-height:                     var(--#{$prefix}topbar-height);
+$topbar-bg:                         var(--#{$prefix}topbar-bg);
+$topbar-item-color:                 var(--#{$prefix}topbar-item-color);
+$topbar-item-hover-color:           var(--#{$prefix}topbar-item-hover-color);
+$topbar-search-bg:                  var(--#{$prefix}topbar-search-bg);
 
 $page-title-color: var(--#{$variable-prefix}page-title-color);
 
@@ -554,6 +561,17 @@ $navbar-light-brand-color:                $navbar-light-active-color;
 $navbar-light-brand-hover-color:          $navbar-light-active-color;
 $navbar-dark-brand-color:                 $navbar-dark-active-color;
 $navbar-dark-brand-hover-color:           $navbar-dark-active-color;
+
+$transition-base:             all .25s ease-in-out;
+$transition-fade:             opacity .15s linear;
+// scss-docs-start collapse-transition
+$transition-collapse:         height .35s ease;
+$transition-collapse-width:   width .35s ease;
+// scss-docs-end collapse-transition
+
+$topbar-item-color : $black;
+
+
 
 //password view icon code
 $password-eye-hexa-code: "\f06e";

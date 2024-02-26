@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import classNames from 'classnames';
+import SimpleBar from 'simplebar-react';
+import 'assets/css/simple.bar.css';
 
 /* eslint-disable */
 /**
@@ -50,6 +52,12 @@ const IconMenu = ({ menuItems, toggleMenu, activeMenuItems }: AppMenuProps) => {
                         <img src="assets/images/logo/logo.png" alt="" height="28" />
                     </span>
                 </Link>
+                
+                <SimpleBar
+					className="h-100"
+					id="leftside-menu-container"
+					data-simplebar=""
+				>
                 <nav className="nav flex-column" id="two-col-sidenav-main">
                     {(menuItems || []).map((item, index) => {
                         const activeParent = activeMenuItems
@@ -74,7 +82,7 @@ const IconMenu = ({ menuItems, toggleMenu, activeMenuItems }: AppMenuProps) => {
                         );
                     })}
                 </nav>
-            
+                </SimpleBar>
         </div>
     );
 };

@@ -2,6 +2,15 @@
 // layouts.scss
 //
 
+html {
+    position: relative;
+    min-height: 100%;
+}
+.wrapper {
+    height: 100%;
+    width: 100%;
+}
+
 body[data-layout-size="boxed"] {
     .wrapper {
         max-width: $boxed-layout-width;
@@ -70,11 +79,16 @@ body[data-layout-size="boxed"] {
     }
 }
 .footer {
-    position: fixed;
-    left: 0;
+    position: absolute;
+    right: 0;
     bottom: 0;
-    width: 100%;
-    background-color: #6c757d;
-    color: white;
-    text-align: center;
+    left: 0;
+    height: 60px;
+    background-color: red;
+    display: flex;
+    align-items: center;
+    padding: 0 1.5rem;
+    color: #6c757d;
+    transition: all .25s ease-in-out;
+    border-top: 1px solid #dee2e6;
 }

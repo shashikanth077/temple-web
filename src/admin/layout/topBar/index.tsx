@@ -1,162 +1,189 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { Image } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
-import classNames from 'classnames';
-
-// components
-import { selectleftSideBarType } from '../layoutSelectors';
-import { adminlayoutActions } from '../layoutSlice';
+import useThemeCustomizer from '../../../ThemeCustomizer/useThemeCustomizer';
 import ProfileDropdown from './profileDropdown/profile';
-import { useRedux } from 'hooks';
+import { ThemeSettings, useThemeContext } from 'context/useThemeContext';
+import useViewport from 'hooks/useViewPort';
+import { PublicImageURL } from 'constants/PublicUrl';
 
-export interface NotificationItem {
-  id: number;
-  text: string;
-  subText: string;
-  icon?: string;
-  avatar?: string;
-  bgColor?: string;
+/* eslint-disable */
+/**
+ * for subtraction minutes
+ */
+function subtractHours(date: Date, minutes: number) {
+    date.setMinutes(date.getMinutes() - minutes);
+    return date;
 }
 
-// get the profilemenu
-const ProfileMenus = [
+export interface ProfileOption {
+    label: string
+    icon: string
+    redirectTo: string
+}
+
+const profileMenus: ProfileOption[] = [
     {
         label: 'My Account',
-        icon: 'user',
-        redirectTo: '/myprofile/profileview',
+        icon: 'ri-account-circle-line',
+        redirectTo: '/pages/profile',
+    },
+    {
+        label: 'Settings',
+        icon: 'ri-settings-4-line',
+        redirectTo: '/pages/profile',
+    },
+    {
+        label: 'Support',
+        icon: 'ri-customer-service-2-line',
+        redirectTo: '/pages/faq',
+    },
+    {
+        label: 'Lock Screen',
+        icon: 'ri-lock-password-line',
+        redirectTo: '/auth/lock-screen',
     },
     {
         label: 'Logout',
-        icon: 'log-out',
+        icon: 'ri-logout-box-line',
         redirectTo: '/auth/logout',
     },
 ];
 
-interface TopbarProps {
-  hideLogo?: boolean;
-  navCssClasses?: string;
-  openLeftMenuCallBack?: () => void;
-  topbarDark?: boolean;
+type TopbarProps = {
+topbarDark?: boolean
+toggleMenu?: () => void
+navOpen?: boolean
 }
-
-const Topbar = ({
-    hideLogo,
-    navCssClasses,
-    openLeftMenuCallBack,
-    topbarDark,
-}: TopbarProps) => {
-    const [isopen, setIsopen] = useState<boolean>(false);
-    const { dispatch, appSelector } = useRedux();
-
-    const navbarCssClasses: string = navCssClasses || '';
-    const containerCssClasses: string = !hideLogo ? 'container-fluid' : '';
+const Topbar = ({ toggleMenu, navOpen }: TopbarProps) => {
+    const { sideBarType } = useThemeCustomizer();
+    const { width } = useViewport();
 
     /**
-   * Toggle the leftmenu when having mobile screen
-   */
+	 * Toggle the leftmenu when having mobile screen
+	 */
+
     const handleLeftMenuCallBack = () => {
-        setIsopen(!isopen);
-        if (openLeftMenuCallBack) openLeftMenuCallBack();
-    };
-
-    const leftSideBarType = appSelector(selectleftSideBarType);
-    console.log('leftSideBarType', leftSideBarType);
-
-    /**
-   * Toggles the left sidebar width
-   */
-    const toggleLeftSidebarWidth = () => {
-        if (leftSideBarType === 'default') {
-            dispatch(adminlayoutActions.changeSideBarType({ leftSideBarType: 'condensed' }));
-        } else if (leftSideBarType === 'condensed') {
-            dispatch(adminlayoutActions.changeSideBarType({ leftSideBarType: 'default' }));
+        if (width < 768) {
+            if (sideBarType === 'full') {
+                showLeftSideBarBackdrop();
+                document.getElementsByTagName('html')[0].classList.add('sidebar-enable');
+            } else {
+                updateSidebar({ size: ThemeSettings?.sidebar.size.full });
+            }
+        } else if (sideBarType === 'condensed') {
+            updateSidebar({ size: ThemeSettings?.sidebar.size.default });
+        } else if (sideBarType === 'full') {
+            showLeftSideBarBackdrop();
+            document.getElementsByTagName('html')[0].classList.add('sidebar-enable');
+        } else if (sideBarType === 'fullscreen') {
+            updateSidebar({ size: ThemeSettings?.sidebar.size.default });
+            document.getElementsByTagName('html')[0].classList.add('sidebar-enable');
         } else {
-            dispatch(adminlayoutActions.changeSideBarType({ leftSideBarType: 'default' }));
+            updateSidebar({ size: ThemeSettings?.sidebar.size.condensed });
         }
     };
 
+    /**
+	 * creates backdrop for leftsidebar
+	 */
+    function showLeftSideBarBackdrop() {
+        const backdrop = document.createElement('div');
+        backdrop.id = 'custom-backdrop';
+        backdrop.className = 'offcanvas-backdrop fade show';
+        document.body.appendChild(backdrop);
+
+        backdrop.addEventListener('click', () => {
+            document
+                .getElementsByTagName('html')[0]
+                .classList.remove('sidebar-enable');
+            hideLeftSideBarBackdrop();
+        });
+    }
+
+    function hideLeftSideBarBackdrop() {
+        const backdrop = document.getElementById('custom-backdrop');
+        if (backdrop) {
+            document.body.removeChild(backdrop);
+            document.body.style.removeProperty('overflow');
+        }
+    }
+    const { settings, updateSettings, updateSidebar } = useThemeContext();
+
+    /**
+	 * Toggle Dark Mode
+	 */
+    const toggleDarkMode = () => {
+        if (settings.theme === 'dark') {
+            updateSettings({ theme: ThemeSettings?.theme.light });
+        } else {
+            updateSettings({ theme: ThemeSettings.theme.dark });
+        }
+    };
+
+    const handleRightSideBar = () => {
+        updateSettings({ rightSidebar: ThemeSettings?.rightSidebar.show });
+    };
     return (
-        <div className={`navbar-custom ${navbarCssClasses}`}>
-            <div className={containerCssClasses}>
-                {!hideLogo && (
-                    <div className="logo-box">
-                        <Link to="/" className="logo logo-dark">
-                            <span className="logo-sm">
-                                <img src={`${window.location.origin}/assets/images/logo/logo.jpg`} alt="" height="24" />
-                            </span>
+        <div className="navbar-custom">
+            <div className="topbar container-fluid">
+                <div className="d-flex align-items-center gap-1">
+                    {/* Topbar Brand Logo */}
+                    <div className="logo-topbar">
+                        {/* Logo light */}
+                        <Link to="/" className="logo-light">
                             <span className="logo-lg">
-                                <img src={`${window.location.origin}/assets/images/logo/logo.jpg`} alt="" height="70" />
+                                <Image src={`${window.location.origin}/${PublicImageURL}/logo/logo.jpg`} alt="logo" />
+                            </span>
+                            <span className="logo-sm">
+                                <Image src={`${window.location.origin}/${PublicImageURL}/logo/logo.jpg`} alt="small logo" />
                             </span>
                         </Link>
-                        <Link to="/" className="logo logo-conde-light logo-light">
-                            <span className="logo-sm">
-                                <img src={`${window.location.origin}/assets/images/logo/logo.jpg`} alt="Logo" />
-                            </span>
+                        {/* Logo Dark */}
+                        <Link to="/" className="logo-dark">
                             <span className="logo-lg">
-                                <img src={`${window.location.origin}/assets/images/logo/logo.jpg`} alt="" height="70" />
+                                <img src={`${window.location.origin}/${PublicImageURL}/logo/logo.jpg`} alt="dark logo" />
+                            </span>
+                            <span className="logo-sm">
+                                <img src={`${window.location.origin}/${PublicImageURL}/logo/logo.jpg`} alt="small logo" />
                             </span>
                         </Link>
                     </div>
-                )}
-
-                <ul className="list-unstyled topnav-menu float-end mb-0">
-
-                    <li className="dropdown notification-list topbar-dropdown">
+                    {/* Sidebar Menu Toggle Button */}
+                    <button
+                        className="button-toggle-menu"
+                        onClick={handleLeftMenuCallBack}
+                    >
+                        <i className="fas fa-bars"></i>
+                    </button>
+                </div>
+                <ul className="topbar-menu d-flex align-items-center gap-3">
+                   
+                    <li className="d-none d-sm-inline-block">
+                        <button className="nav-link" onClick={handleRightSideBar}>
+                            <i className="ri-settings-3-line fs-22" />
+                        </button>
+                    </li>
+                    <li className="d-none d-sm-inline-block">
+                        <div
+                            className="nav-link"
+                            id="light-dark-mode"
+                            onClick={toggleDarkMode}
+                        >
+                            <i className="ri-moon-line fs-22" />
+                        </div>
+                    </li>
+                    <li className="dropdown">
                         <ProfileDropdown
-                            userImage={`${window.location.origin}/assets/images/logo/logo.jpg`}
-                            menuItems={ProfileMenus}
-                            username="Shashi"
+                            menuItems={profileMenus}
+                            userImage={`${window.location.origin}/${PublicImageURL}/logo/logo.jpg`}
+                            username="User"
                         />
                     </li>
-
-                </ul>
-
-                <ul className="list-unstyled topnav-menu topnav-menu-left m-0">
-
-                    <li>
-                        <button
-                            type="button"
-                            aria-label="MobileToogle"
-                            className="button-menu-mobile d-none d-lg-block"
-                            onClick={toggleLeftSidebarWidth}
-                        >
-                            <i className="fas fa-bars" />
-                            <i className="fas fa-bars" />
-                        </button>
-                    </li>
-
-                    <li>
-                        <button
-                            type="button"
-                            aria-label="MobileToogle"
-                            className="button-menu-mobile d-lg-none d-bolck"
-                            onClick={handleLeftMenuCallBack}
-                        >
-                            <i className="fas fa-bars" />
-                        </button>
-                    </li>
-
-                    {/* Mobile menu toggle (Horizontal Layout) */}
-                    <li>
-                        <Link
-                            to="##"
-                            className={classNames('navbar-toggle nav-link', {
-                                open: isopen,
-                            })}
-                            onClick={handleLeftMenuCallBack}
-                        >
-                            <div className="lines">
-                                <span />
-                                <span />
-                                <span />
-                            </div>
-                        </Link>
-                    </li>
-
                 </ul>
             </div>
         </div>
     );
 };
 
-export default React.memo(Topbar);
+export default Topbar;
