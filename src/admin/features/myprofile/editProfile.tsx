@@ -28,6 +28,8 @@ const EditProfile = () => {
 
     const [loggedInUser] = useUser();
 
+    console.log('loggedInUser', loggedInUser);
+
     const showToast = (severity:any, summary:any, detail:any) => {
         toast.current.show({ severity, summary, detail });
     };

@@ -6,6 +6,7 @@ import ProfileDropdown from './profileDropdown/profile';
 import { ThemeSettings, useThemeContext } from 'context/useThemeContext';
 import useViewport from 'hooks/useViewPort';
 import { PublicImageURL } from 'constants/PublicUrl';
+import { useUser } from 'hooks';
 
 /* eslint-disable */
 /**
@@ -43,6 +44,7 @@ navOpen?: boolean
 const Topbar = ({ toggleMenu, navOpen }: TopbarProps) => {
     const { sideBarType } = useThemeCustomizer();
     const { width } = useViewport();
+    const [loggedInUser] = useUser();
 
     /**
 	 * Toggle the leftmenu when having mobile screen
@@ -162,7 +164,7 @@ const Topbar = ({ toggleMenu, navOpen }: TopbarProps) => {
                         <ProfileDropdown
                             menuItems={profileMenus}
                             userImage={`${window.location.origin}/${PublicImageURL}/logo/logo.jpg`}
-                            username="User"
+                            username={loggedInUser.firstName}
                         />
                     </li>
                 </ul>

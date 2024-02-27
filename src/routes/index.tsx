@@ -136,12 +136,6 @@ const otherPublicRoutes: RoutesProps[] = [
         route: Route,
     },
     {
-        path: '/Checkout',
-        name: 'Checkout',
-        element: <Checkout />,
-        route: Route,
-    },
-    {
         path: '/events',
         name: 'Events',
         element: <Events />,
@@ -606,6 +600,11 @@ const bookingsReportRoutes: RoutesProps = {
             path: '/event-payment/:id',
             name: 'Event payment',
             element: <EventPaymentPage />,
+        },
+        {
+            path: '/Checkout',
+            name: 'Checkout',
+            element: <Checkout />,
         },
     ],
 };
