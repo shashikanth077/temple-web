@@ -176,18 +176,8 @@ const SubmitVolunteer = () => {
                         </div>
                     </div>
                     <div className="row">
-                        <div className="col-lg-6">
-                            <div className="mt-4 home-img text-center">
-                                <div className="animation-2"></div>
-                                <div className="animation-3"></div>
-                                <img
-                                    src={`${window.location.origin}/assets/images/${staticVolunteers?.LeftImage}`}
-                                    className="img-fluid"
-                                    alt=""
-                                />
-                            </div>
-                        </div>
-                        <div className="col-lg-6">
+                       
+                        <div className="col-lg-12">
                             <form
                                 name="voluteer-form"
                                 id="voluteer-form"

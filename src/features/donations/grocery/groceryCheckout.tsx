@@ -550,7 +550,8 @@ const GroceryCheckout = () => {
                                     {/* Order Details on Right Side */}
                                     <div className="col-lg-5 order-lg-1">
                                         <div className="your-order-area card-payment-details">
-                                            <h4>Enter Payment Details</h4>
+                                            <h3>Enter Card details</h3>
+                                            <div className='your-order-wrap'>
                                             <div className="billing-info mb-20">
                                                 <FormInput
                                                     type="text"
@@ -576,6 +577,7 @@ const GroceryCheckout = () => {
                                                         }
                                                     }}
                                                 />
+                                            </div>
                                             </div>
                                             {cardErrors && <p className="error-message">{cardErrors}</p>}
                                         </div>
