@@ -13,15 +13,12 @@ import { PublicImageURL } from 'constants/PublicUrl';
 interface DefaultLayoutProps {
      children?: any;
   }
-const CustomLoader = () => {
-    console.log('CustomLoader rendered');
-    return (
-        <div className="custom-loader">
-            {/* <img src={`${window.location.origin}/${PublicImageURL}/logo/logo.jpg`} alt="Temple Logo" className="Temple-logo" /> */}
-            <RingLoader color="#007bff" loading size={50} />
-        </div>
-    );
-};
+const CustomLoader = () => (
+    <div className="custom-loader">
+        <img src={`${window.location.origin}/${PublicImageURL}/logo/logo.jpg`} alt="Temple Logo" className="Temple-logo" />
+        {/* <RingLoader color="#007bff" loading size={50} /> */}
+    </div>
+);
 const Layout = (props: DefaultLayoutProps) => {
     const { children } = props;
 
