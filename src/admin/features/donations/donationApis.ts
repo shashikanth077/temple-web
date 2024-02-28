@@ -7,6 +7,12 @@ export function getDonationById(payload:any) {
     return response;
 }
 
+export function getDonationByType(payload:any) {
+    const baseUrl = 'http://localhost:8080/api/donations-type/'+payload.type
+    const response = APICore.get(`${baseUrl}`, {});
+    return response;
+}
+
 export function getDonationsDetails(payload:any) {
     const baseUrl = 'http://localhost:8080/api/donation-type/details';
     const response = APICore.create(`${baseUrl}`, {});

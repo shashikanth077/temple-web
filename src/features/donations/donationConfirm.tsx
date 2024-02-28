@@ -8,6 +8,7 @@ import { useRedux } from 'hooks';
 import { formatCurrency } from 'helpers/currency';
 import { myprofileActions } from 'admin/features/myprofile/myProfileSlice';
 import { selectMyProfileDetails } from 'admin/features/myprofile/myProfileSelectors';
+import { capitalizeFirstLetter } from 'utils/valueUtil';
 
 /* eslint-disable */
 const DonationConfirm = () => {
@@ -171,7 +172,7 @@ const DonationConfirm = () => {
                                     <tbody>
                                         <tr>
                                             <td>{BookDetails?.type}</td>
-                                            <td>{BookDetails?.frequency}</td>
+                                            <td>{capitalizeFirstLetter(BookDetails?.frequency)}</td>
                                             <td>
                                                 {formatCurrency(
                                                     intl,

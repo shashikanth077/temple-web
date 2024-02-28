@@ -1,7 +1,11 @@
 import React, { useEffect, useRef } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import { Button } from 'react-bootstrap';
+import {
+    Button,
+    Dropdown,
+    Form,
+} from 'react-bootstrap';
 import { useForm, SubmitHandler, SubmitErrorHandler } from 'react-hook-form';
 import { Toast } from 'primereact/toast';
 import { useSelector } from 'react-redux';
@@ -13,15 +17,18 @@ import { useRedux, useUser } from 'hooks';
 import Loader from 'sharedComponents/loader/loader';
 import { selectDonationType } from 'admin/features/donations/donationSelector';
 import { formatCurrency } from 'helpers/currency';
+import { capitalizeFirstLetter } from 'utils/valueUtil';
 import { DonationForm } from 'models';
 import { adminDonationTypeActions } from 'admin/features/donations/donationSlice';
 
 /* eslint-disable */
 const DonateForm = () => {
   const { dispatch, appSelector } = useRedux();
+
   const { loading, error, successMessage } = useSelector(
     (state: any) => state.apiState,
   );
+
   const [loggedInUser] = useUser();
   const { id } = useParams();
   const navigate = useNavigate();
@@ -43,7 +50,8 @@ const DonateForm = () => {
   */
   const schemaResolver = yupResolver(
     yup.object().shape({
-      amount: yup.string().required('Please enter an amount')
+      amount: yup.string().required('Please enter an amount'),
+      prasadamOverEmail: yup.string().required('Please select the option for prasadam'),
     }),
   );
 
@@ -63,6 +71,7 @@ const DonateForm = () => {
     data.userid = loggedInUser?.id;
     data.amount = donationAmount;
     data.comments = data.comments;
+    data.prasadamOverEmail = data.prasadamOverEmail;
     data.frequency = donatationDetails.frequency;
     dispatch(mydonationsActions.saveDonationLocalData(data));
     navigate('/confirm-donation-details');
@@ -136,7 +145,7 @@ const DonateForm = () => {
                               Frequency
                             </li>
                             <li className="booking-info">
-                              {donatationDetails?.frequency}
+                              {capitalizeFirstLetter(donatationDetails?.frequency)}
                             </li>
                           </ul>
                         </div>
@@ -223,19 +232,38 @@ const DonateForm = () => {
                       </div>
                       <p>{errors.amount?.message}</p>
                     </div>
-                    {/* <div className="row">
-                      <div className="col-md-12">
-                        <label htmlFor="donation-notes">Donation notes:</label>
-                        <textarea
-                          {...register('comments')}
-                          className="give-textarea-input give-amount-top filled fill_inited"
-                          id="comments"
-                          name="comments"
-                          key="comments"
-                        />
-                        <p>{errors.comments?.message}</p>
-                      </div>
-                    </div> */}
+                    <div className="row">
+                                            <div className="col-12 prasadamOverEmail">
+                                                <div className="form-wrap" id="prasadamoveremail">
+
+                                                    <Form.Group className="d-flex">
+                                                        <Form.Label className="mr-2" style={{ fontSize: '18px' }}>
+                                                            Prasadam over mail:
+                                                        </Form.Label>
+                                                        <Form.Check
+                                                            type="radio"
+                                                            {...register('prasadamOverEmail')}
+                                                            id="prasadamOverEmailYes"
+                                                            name="prasadamOverEmail"
+                                                            value="yes"
+                                                            label="Yes"
+                                                            className="mr-2"
+                                                            style={{ fontSize: '18px' }} // Adjust font size
+                                                        />
+                                                        <Form.Check
+                                                            type="radio"
+                                                            {...register('prasadamOverEmail')}
+                                                            id="prasadamOverEmailNo"
+                                                            name="prasadamOverEmail"
+                                                            value="no"
+                                                            label="No"
+                                                            className="mr-2"
+                                                            style={{ fontSize: '18px' }} // Adjust font size
+                                                        />
+                                                    </Form.Group>
+                                                </div>
+                                            </div>
+                                        </div>
                   </div>
 
                   <div className="row text-center">
