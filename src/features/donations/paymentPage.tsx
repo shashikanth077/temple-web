@@ -168,6 +168,7 @@ const DonationPayment = () => {
                         PaymentHistory.donorNotes = data.comments;
                         PaymentHistory.stripeReferenceId = payload.paymentIntent.id;
                         PaymentHistory.donatedAmount = BookDetails.amount;
+                        PaymentHistory.prasadamOverEmail = BookDetails.prasadamOverEmail;
                         PaymentHistory.transStatus = payload.paymentIntent.status;
                         PaymentHistory.paymentMethod = payload.paymentIntent.payment_method;
                         PaymentHistory.paymentMode = payload.paymentIntent.payment_method_types;

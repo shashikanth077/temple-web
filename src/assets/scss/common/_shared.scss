@@ -1964,4 +1964,14 @@ button:disabled {
   flex-grow: 1; /* Allow the phone number input to take up remaining space */
 }
 
+.donation-types-dropdown {
+  .dropdown-toggle,.dropdown-menu {
+    width: 50%;
+  }
+  .btn-success {
+    background-color: indianred;
+    border-color: indianred;
+  }
+}
+
 

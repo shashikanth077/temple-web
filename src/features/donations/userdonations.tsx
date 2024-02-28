@@ -18,10 +18,17 @@ export default function DonationTypes() {
         dispatch(adminDonationTypeActions.getDonationDetails());
     }, [dispatch]);
 
-    const handleBook = (e:any, id:string) => {
+    const handleBook = (e:any, id:string, type:string) => {
         if (!APICore.isUserAuthenticated()) {
-            localStorage.setItem('targetUrl', `/donation-confirm/${id}`);
+            localStorage.removeItem('targetUrl');
+            if (type === 'Grocery Danam') {
+                localStorage.setItem('targetUrl', '/donation/grocery/list');
+            } else {
+                localStorage.setItem('targetUrl', `/donation-confirm/${id}`);
+            }
             navigate('/login');
+        } else if (type === 'Grocery Danam') {
+            navigate('/donation/grocery/list');
         } else {
             navigate(`/donation-confirm/${id}`);
         }
@@ -32,7 +39,7 @@ export default function DonationTypes() {
     return (
         <section className="donation-list-section area-padding">
             <div className="container">
-                <HeadingVersionOne classes="donation-heading" title="Donation type list" />
+                <HeadingVersionOne classes="donation-heading" title="Donations" />
                 <div className="card flex donations-list">
                     {donationTypes?.map((donationType:any) => (
                         <div className="card-donation-section">
@@ -41,7 +48,7 @@ export default function DonationTypes() {
                             <h5>{donationType?.description}</h5>
                             <div className="donation-btn">
                                 <ViewMore url={`/donation-details/${donationType?._id}`} classnames="d" title="View more" />
-                                <button onClick={e => handleBook(e, donationType?._id)} type="button">Donate Now <img className="right-arrow" src={`${window.location.origin}/${PublicImageURL}/icons/right-arrow.svg`} alt="right-arrow" />
+                                <button onClick={e => handleBook(e, donationType?._id, donationType?.donationType)} type="button">Donate Now <img className="right-arrow" src={`${window.location.origin}/${PublicImageURL}/icons/right-arrow.svg`} alt="right-arrow" />
                                 </button>
                             </div>
                         </div>

@@ -76,6 +76,7 @@ const OtpVerifY = React.lazy(() => import('features/auth/register/otpverificatio
 const ConfirmSevaBook = React.lazy(() => import('features/bookings/sevaConfirm'));
 const EventBook = React.lazy(() => import('features/events/pages/eventBook'));
 const EventPaymentPage = React.lazy(() => import('features/events/pages/eventPayment'));
+const OtherDonations = React.lazy(() => import('features/donations/Otherdonation'));
 
 export interface RoutesProps {
     path: RouteProps['path'];
@@ -605,6 +606,11 @@ const bookingsReportRoutes: RoutesProps = {
             path: '/Checkout',
             name: 'Checkout',
             element: <Checkout />,
+        },
+        {
+            path: '/otherdonations',
+            name: 'donationtypes',
+            element: <OtherDonations />,
         },
     ],
 };

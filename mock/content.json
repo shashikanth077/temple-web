@@ -928,8 +928,14 @@
                     "children": [
                         {
                             "key": "grocerydonation",
-                            "label": "Grocery donate",
+                            "label": "Grocery danam",
                             "url": "/donation/grocery/list",
+                            "parentKey": "donations"
+                        },
+                        {
+                            "key": "Otherdonations",
+                            "label": "Other donations",
+                            "url": "/otherdonations",
                             "parentKey": "donations"
                         }
                       ]

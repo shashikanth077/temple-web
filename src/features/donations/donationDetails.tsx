@@ -18,14 +18,21 @@ const DonationDetails = () => {
 
     const serviceDetails = appSelector(selectDonationType);
 
-    const handleBook = (e:any,id:string) => {
-        if(!APICore.isUserAuthenticated()) {
-            localStorage.setItem('targetUrl', `/donation-confirm/${id}`);
+    const handleBook = (e:any, id:string, type:string) => {
+        if (!APICore.isUserAuthenticated()) {
+            localStorage.removeItem('targetUrl');
+            if (type === 'Grocery Danam') {
+                localStorage.setItem('targetUrl', '/donation/grocery/list');
+            } else {
+                localStorage.setItem('targetUrl', `/donation-confirm/${id}`);
+            }
             navigate('/login');
+        } else if (type === 'Grocery Danam') {
+            navigate('/donation/grocery/list');
         } else {
             navigate(`/donation-confirm/${id}`);
         }
-    }
+    };
 
     return (
         <section className="shop-area pt-120 pb-70">
@@ -49,7 +56,7 @@ const DonationDetails = () => {
                                         </div>
                                         <p>{serviceDetails?.description}</p>
                                         <CSSTransition in appear timeout={500} classNames="fade-up">
-                                            <a onClick={(e) =>handleBook(e,serviceDetails?._id)} className="tp-btn mr-20">Donate now</a>
+                                            <a onClick={(e) =>handleBook(e,serviceDetails?._id,serviceDetails?.donationType)} className="tp-btn mr-20">Donate now</a>
                                         </CSSTransition>
                                     </div>
                                 </div>

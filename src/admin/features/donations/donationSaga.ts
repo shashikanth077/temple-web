@@ -2,7 +2,7 @@ import {
     call, put, all, fork, takeLatest,
 } from 'redux-saga/effects';
 import {
-    addDonations, editDonations, deleteDonations, getDonationsDetails, getDonationById,
+    addDonations, editDonations, deleteDonations, getDonationsDetails, getDonationById, getDonationByType,
 } from './donationApis';
 import { adminDonationTypeActions } from './donationSlice';
 import {
@@ -16,6 +16,24 @@ function* getDonationByIdRow(action:any) {
     try {
         yield put(startLoading());
         const response: DonationTypesSingle = yield call(getDonationById, action.payload);
+        if (response.success) {
+            yield put(adminDonationTypeActions.getDonationByIdSuccess(response));
+        } else {
+            yield put(setError(response.errorMessage));
+        }
+    } catch (error) {
+        if (error instanceof Error) {
+            yield put(setError(error.message));
+        }
+    } finally {
+        yield put(endLoading());
+    }
+}
+
+function* getDonationByTypeRow(action:any) {
+    try {
+        yield put(startLoading());
+        const response: DonationTypesSingle = yield call(getDonationByType, action.payload);
         if (response.success) {
             yield put(adminDonationTypeActions.getDonationByIdSuccess(response));
         } else {
@@ -118,11 +136,15 @@ export function* watchDonationById() {
     yield takeLatest(adminDonationTypeActions.getDonationById.type, getDonationByIdRow);
 }
 
+export function* watchDonationByType() {
+    yield takeLatest(adminDonationTypeActions.getDonationByType.type, getDonationByTypeRow);
+}
+
 export function* watchdeleteDonation() {
     yield takeLatest(adminDonationTypeActions.deleteDonation.type, deleteDonation);
 }
 function* adminDonationSaga() {
-    yield all([fork(watchDonationById), fork(watchAddDonation), fork(watchupdateDonation), fork(watchdeleteDonation), fork(watchDonationDetails)]);
+    yield all([fork(watchDonationByType), fork(watchDonationById), fork(watchAddDonation), fork(watchupdateDonation), fork(watchdeleteDonation), fork(watchDonationDetails)]);
 }
 
 export default adminDonationSaga;

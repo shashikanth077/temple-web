@@ -53,6 +53,7 @@ export interface DonationForm {
     amount:number;
     type:string;
     frequency:string;
+    prasadamOverEmail:boolean;
     donateTypeId:string;
     comments:string;
 }

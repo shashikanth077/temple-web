@@ -14,6 +14,10 @@ export interface DonationPayload {
     _id:string | undefined;
 }
 
+export interface DonationTypePayload {
+    type:string | undefined;
+}
+
 const initialState: DonationState = {
     loading: false,
     donationtype: {},
@@ -27,6 +31,13 @@ const DonationSlice = createSlice({
     reducers: {
         getDonationById(state, action: PayloadAction<DonationPayload>) {
             state.loading = true;
+        },
+        getDonationByType(state, action: PayloadAction<DonationTypePayload>) {
+            state.loading = true;
+        },
+        getDonationByTypeSuccess(state, action: PayloadAction<DonationTypesSingle>) {
+            state.loading = false;
+            state.donationtype = action.payload.donationType;
         },
         getDonationByIdSuccess(state, action: PayloadAction<DonationTypesSingle>) {
             state.loading = false;
