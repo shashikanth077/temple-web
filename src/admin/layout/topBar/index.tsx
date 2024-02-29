@@ -1,12 +1,13 @@
 import React from 'react';
-import { Image } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import useThemeCustomizer from '../../../ThemeCustomizer/useThemeCustomizer';
 import ProfileDropdown from './profileDropdown/profile';
 import { ThemeSettings, useThemeContext } from 'context/useThemeContext';
 import useViewport from 'hooks/useViewPort';
 import { PublicImageURL } from 'constants/PublicUrl';
-import { useUser } from 'hooks';
+import { useRedux, useUser } from 'hooks';
+import { APICore } from 'helpers/api';
+import { selectCurrentCartData } from 'features/shop/cart/cartSelectors';
 
 /* eslint-disable */
 /**
@@ -45,7 +46,10 @@ const Topbar = ({ toggleMenu, navOpen }: TopbarProps) => {
     const { sideBarType } = useThemeCustomizer();
     const { width } = useViewport();
     const [loggedInUser] = useUser();
+    const { dispatch, appSelector } = useRedux();
 
+    const cartItems:any = appSelector(selectCurrentCartData);
+    
     /**
 	 * Toggle the leftmenu when having mobile screen
 	 */
@@ -115,28 +119,6 @@ const Topbar = ({ toggleMenu, navOpen }: TopbarProps) => {
         <div className="navbar-custom">
             <div className="admintopbar container-fluid">
                 <div className="d-flex align-items-center gap-1">
-                    {/* Topbar Brand Logo */}
-                    {/* <div className="logo-topbar">
-                    
-                        <Link to="/" className="logo-light">
-                            <span className="logo-lg">
-                                <Image src={`${window.location.origin}/${PublicImageURL}/logo/logo.jpg`} alt="logo" />
-                            </span>
-                            <span className="logo-sm">
-                                <Image src={`${window.location.origin}/${PublicImageURL}/logo/logo.jpg`} alt="small logo" />
-                            </span>
-                        </Link>
-                      
-                        <Link to="/" className="logo-dark">
-                            <span className="logo-lg">
-                                <img src={`${window.location.origin}/${PublicImageURL}/logo/logo.jpg`} alt="dark logo" />
-                            </span>
-                            <span className="logo-sm">
-                                <img src={`${window.location.origin}/${PublicImageURL}/logo/logo.jpg`} alt="small logo" />
-                            </span>
-                        </Link>
-                    </div> */}
-                    
                     <button
                         className="button-toggle-menu"
                         onClick={handleLeftMenuCallBack}
@@ -159,6 +141,21 @@ const Topbar = ({ toggleMenu, navOpen }: TopbarProps) => {
                         >
                             <i className="ri-moon-line fs-22" />
                         </div>
+                    </li>
+                    <li className='cart-wrap'>
+                    {APICore.isUserAuthenticated()
+                        ? (
+                            cartItems.list.totalQuantity !== undefined ? (
+                            <Link className="icon-cart store-cart-icon" to={`${process.env.PUBLIC_URL}/cart/view-cart`}>
+                                <button type="button" className="icon-cart">
+                                    <i className="fas fa-shopping-cart" />
+                                    <span className="count-style">
+                                        {cartItems?.list?.totalQuantity !== undefined ? cartItems.list.totalQuantity : 0}
+                                    </span>
+                                </button>
+                            </Link>
+                            ):''
+                        ) : '' }
                     </li>
                     <li className="dropdown">
                         <ProfileDropdown

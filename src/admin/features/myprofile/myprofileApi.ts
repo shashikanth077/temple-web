@@ -9,7 +9,7 @@ export function getMyProfileDetails(payload:any) {
 
 export function updateProfiles(payload:any) {
     const baseUrl = `http://localhost:8080/api/profile/${payload.userid}`;
-    const response = APICore.update(`${baseUrl}`, payload);
+    const response = APICore.create(`${baseUrl}`, payload);
     return response;
 }
 
