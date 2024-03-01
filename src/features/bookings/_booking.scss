@@ -129,3 +129,14 @@
     color: indianred;
 }
 
+.member-seva-list-section {
+    .seva-list {
+        display: flex;
+        justify-content: left;
+        flex-wrap: wrap;
+    }
+    .seva-box {
+        width: 278px;
+    }
+}
+

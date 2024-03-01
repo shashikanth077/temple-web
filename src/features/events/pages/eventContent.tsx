@@ -10,11 +10,12 @@ interface EventProps{
     currentEventData:any;
     pageCount:number;
     onchangclick:any;
+    member?:boolean;
 }
 /* eslint no-underscore-dangle: 0 */
 function EventContent(props:EventProps) {
     const {
-        events, currentEventData, pageCount, onchangclick,
+        events, currentEventData, pageCount, onchangclick, member,
     } = props;
 
     const navigate = useNavigate();
@@ -62,9 +63,16 @@ function EventContent(props:EventProps) {
 
                                         </div>
                                         <h3 className="events-calendar-list-event-title events-common-h4--min-medium">
-                                            <Link className="events-calendar-list-event-name" to={`${process.env.PUBLIC_URL}/events/eventsdetails/${event._id}`}>
-                                                {event.name}
-                                            </Link>
+
+                                            {!member ? (
+                                                <Link className="events-calendar-list-event-name" to={`${process.env.PUBLIC_URL}/events/eventsdetails/${event._id}`}>
+                                                    {event.name}
+                                                </Link>
+                                            ) : (
+                                                <span className="events-calendar-list-event-name">
+                                                    {event.name}
+                                                </span>
+                                            )}
 
                                         </h3>
                                         <address className="events-calendar-list-event-venue events-common-b2">
