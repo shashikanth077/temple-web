@@ -108,7 +108,7 @@ export default function ServiceBookings() {
                     globalFilter={globalFilter}
                     header={header}
                 >
-                    <Column field="ServiceName" header="Service N=name" />
+                    <Column field="ServiceName" header="Service Name" />
                     <Column field="ServiceBookId" header="Booking id" />
                     <Column field="serviceType" header="Service type" />
                     <Column field="godName" header="god Name" />
