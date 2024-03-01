@@ -106,8 +106,6 @@ const EditProfile = () => {
     const onSubmit = handleSubmit((formData: ProfileData) => {
         const ProfileObj:any = {};
 
-        console.log('formData', formData);
-
         ProfileObj.firstName = formData.firstName;
         ProfileObj.lastName = formData.lastName;
         ProfileObj.nationality = formData.nationality;

@@ -315,3 +315,37 @@ html[data-bs-theme="dark"] {
         }
     }
 }
+
+.navbar-custom {
+    .cart-wrap {
+        position: relative;
+        margin-right: 7px;
+        .icon-cart {
+        position: relative;
+        background: transparent;
+        border: none;
+        color: #000;
+        display: inline-block;
+        font-size: 16px;
+        padding: 0;
+        position: relative;
+        .fa-shopping-cart {
+            color:white;
+        }
+        .count-style{
+            background-color: #000;
+            border-radius: 100%;
+            color: #fff;
+            display: inline-block;
+            font-size: 9px;
+            height: 19px;
+            line-height: 21px;
+            position: absolute;
+            right: -14px;
+            text-align: center;
+            top: -9px;
+            width: 17px;
+        }
+        }
+    }
+}
