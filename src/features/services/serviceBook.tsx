@@ -189,11 +189,11 @@ const BookService = () => {
                                                                     );
                                                                     setSelectedDate(
                                                                         e.value,
-                                                                    ); // Update local state if needed
+                                                                    ); 
                                                                 }}
                                                                 showIcon
                                                                 className="events-top-bar-datepicker-button mb-3"
-                                                            />
+                                                                minDate={new Date()}                                                             />
                                                         </>
                                                     )}
                                                 />

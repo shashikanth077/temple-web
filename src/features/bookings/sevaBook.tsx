@@ -188,6 +188,7 @@ const BookSeva = () => {
                                                                 }}
                                                                 showIcon
                                                                 className="events-top-bar-datepicker-button mb-3"
+                                                                minDate={new Date()} 
                                                             />
                                                         </>
                                                     )}
