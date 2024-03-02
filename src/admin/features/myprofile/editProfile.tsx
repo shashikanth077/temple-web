@@ -320,6 +320,8 @@ const EditProfile = () => {
                                                                         onChange={e => field.onChange(e.value)} // Update the form state when the value changes
                                                                         showIcon
                                                                         className="events-top-bar-datepicker-button mb-3"
+                                                                        maxDate={new Date()} // Set maxDate to disable future dates
+                                                                        yearRange="1900:{{currentYear}}" // Set the range of years, replace {{currentYear}} with the current year
                                                                     />
                                                                 </>
                                                             )}
