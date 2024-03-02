@@ -14,12 +14,12 @@ const admindonationTypes = require('./mock/donations/donationmaster.mock.json');
 const server = express();
 
 server.use(
-  cors({
-    origin: true,
-    credentials: true,
-    preflightContinue: false,
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-  })
+    cors({
+        origin: true,
+        credentials: true,
+        preflightContinue: false,
+        methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    })
 );
 server.options('*', cors());
 

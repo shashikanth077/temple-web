@@ -15,26 +15,26 @@ import RegularSponsorsTwo from './regulareventssponsorships/regularprogrammone';
 import RegularEventSlides from './homeevents/regularprogrammsponsor';
 
 function Home() {
-  return (
-    <>
-      <Banner />
-      <About />
-      <AboutImage />
-      {/* <Services /> */}
-      <GrandprogramOne />
-      <Bookings />
-      <Recentevents />
-      <RegularSponsorsOne />
-      <Staffs />
-      <RegularEventSlides />
-      <GrandprogramHomeTwo />
-      <Ads />
-      <Dailyevents />
-      <RegularSponsorsTwo />
-      <Shop />
-      <AboutImage />
-    </>
-  );
+    return (
+        <>
+            <Banner />
+            <About />
+            <AboutImage />
+            {/* <Services /> */}
+            <GrandprogramOne />
+            <Bookings />
+            <Recentevents />
+            <RegularSponsorsOne />
+            <Staffs />
+            <RegularEventSlides />
+            <GrandprogramHomeTwo />
+            <Ads />
+            <Dailyevents />
+            <RegularSponsorsTwo />
+            <Shop />
+            <AboutImage />
+        </>
+    );
 }
 
 export default Home;

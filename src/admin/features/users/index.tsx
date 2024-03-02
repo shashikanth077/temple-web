@@ -4,13 +4,13 @@ import { adminUserActions } from './userSlice';
 import { useRedux } from 'hooks';
 
 const UsersMain = () => {
-  const { dispatch } = useRedux();
+    const { dispatch } = useRedux();
 
-  useEffect(() => {
-    dispatch(adminUserActions.getUsers());
-  }, [dispatch]);
+    useEffect(() => {
+        dispatch(adminUserActions.getUsers());
+    }, [dispatch]);
 
-  return <Users />;
+    return <Users />;
 };
 
 export default UsersMain;
