@@ -7,27 +7,30 @@ import ViewMore from 'sharedComponents/viewmorebtn/viewmorebtn';
 import { useRedux } from 'hooks';
 
 export default function Homeabout() {
-  const { appSelector } = useRedux();
-  const aboutHome = appSelector(selectStaticAbout);
+    const { appSelector } = useRedux();
+    const aboutHome = appSelector(selectStaticAbout);
 
-  return (
-    <section className="home-about area-padding">
-      <Container>
-        <Row className="justify-content-between gy-4">
-          <Col md={6} lg={6}>
-            <img
-              alt="about"
-              src={`assets/images/about/${aboutHome?.HomeaboutDescription?.image}`}
-            />
-          </Col>
-          <Col md={6} lg={6} className="">
-            <p className="about-description">
-              {aboutHome?.HomeaboutDescription?.description}
-            </p>
-            <ViewMore classnames="home-about-readmore" title="View More" />
-          </Col>
-        </Row>
-      </Container>
-    </section>
-  );
+    return (
+        <section className="home-about area-padding">
+            <Container>
+                <Row className="justify-content-between gy-4">
+                    <Col md={6} lg={6}>
+                        <img
+                            alt="about"
+                            src={`assets/images/about/${aboutHome?.HomeaboutDescription?.image}`}
+                        />
+                    </Col>
+                    <Col md={6} lg={6} className="">
+                        <p className="about-description">
+                            {aboutHome?.HomeaboutDescription?.description}
+                        </p>
+                        <ViewMore
+                            classnames="home-about-readmore"
+                            title="View More"
+                        />
+                    </Col>
+                </Row>
+            </Container>
+        </section>
+    );
 }

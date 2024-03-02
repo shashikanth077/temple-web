@@ -4,15 +4,15 @@ import { selectStaticContentHome } from 'features/content/contactSelectors';
 import { useRedux } from 'hooks';
 
 const GrandprogramHomeTwo = () => {
-  const { appSelector } = useRedux();
+    const { appSelector } = useRedux();
 
-  const ProgramStaticData = appSelector(selectStaticContentHome);
-  return (
-    <Grandprogram
-      title={ProgramStaticData?.donations?.donationTwoTitle}
-      url={ProgramStaticData?.donations?.link2}
-    />
-  );
+    const ProgramStaticData = appSelector(selectStaticContentHome);
+    return (
+        <Grandprogram
+            title={ProgramStaticData?.donations?.donationTwoTitle}
+            url={ProgramStaticData?.donations?.link2}
+        />
+    );
 };
 
 export default GrandprogramHomeTwo;

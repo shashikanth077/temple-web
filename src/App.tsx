@@ -18,25 +18,25 @@ global.Buffer = Buffer;
 const stripePromise = loadStripe('pk_test_kLXZAIgM9jW9flHREsbzTupH');
 
 function App() {
-  return (
-    <IntlProvider locale="en">
-      <Provider store={store}>
-        <PersistGate loading={null} persistor={persistor}>
-          <div className="App">
-            <ErrorBoundary>
-              <PrimeReactProvider>
-                <Elements stripe={stripePromise}>
-                  <ThemeProvider>
-                    <Routes />
-                  </ThemeProvider>
-                </Elements>
-              </PrimeReactProvider>
-            </ErrorBoundary>
-          </div>
-        </PersistGate>
-      </Provider>
-    </IntlProvider>
-  );
+    return (
+        <IntlProvider locale="en">
+            <Provider store={store}>
+                <PersistGate loading={null} persistor={persistor}>
+                    <div className="App">
+                        <ErrorBoundary>
+                            <PrimeReactProvider>
+                                <Elements stripe={stripePromise}>
+                                    <ThemeProvider>
+                                        <Routes />
+                                    </ThemeProvider>
+                                </Elements>
+                            </PrimeReactProvider>
+                        </ErrorBoundary>
+                    </div>
+                </PersistGate>
+            </Provider>
+        </IntlProvider>
+    );
 }
 
 export default React.memo(App);
