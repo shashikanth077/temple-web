@@ -5,9 +5,9 @@ import {
 import { ThemeSettings } from 'context/useThemeContext';
 
 type LayoutTypeProps = {
-handleChangeSideBarType: (value: string) => void
-sideBarType: string
-layoutConstants: typeof ThemeSettings.sidebar.size
+    handleChangeSideBarType: (value: string) => void
+    sideBarType: string
+    layoutConstants: typeof ThemeSettings.sidebar.size
 }
 
 const SideBarType = ({

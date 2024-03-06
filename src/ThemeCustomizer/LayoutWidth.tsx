@@ -5,19 +5,15 @@ import { ThemeSettings } from 'context/useThemeContext';
 interface LayoutWidthProps {
 
 handleChangeLayoutWidth: (value: any) => void
-layoutWidth?: string
-layoutConstants: typeof ThemeSettings.layout.mode
-
+    layoutWidth?: string
+    layoutConstants: typeof ThemeSettings.layout.mode
 }
 
 const LayoutWidth = ({
 
     handleChangeLayoutWidth,
-
     layoutWidth,
-
     layoutConstants,
-
 }: LayoutWidthProps) => (
 
     <div id="layout-width">

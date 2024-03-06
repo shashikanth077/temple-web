@@ -4,8 +4,10 @@ import { createPaymentIntent } from 'features/donations/mydonations/donationApis
 
 /* eslint-disable */
 function Payment() {
-    const [initialClientSecret, setInitialClientSecret] = useState < any > '';
-    const [currentClientSecret, setCurrentClientSecret] = useState < any > '';
+    
+    const [initialClientSecret, setInitialClientSecret] = useState<any>('');
+    const [currentClientSecret, setCurrentClientSecret] = useState<any>('');
+
     const isMounted = useRef(true);
 
     useEffect(() => {

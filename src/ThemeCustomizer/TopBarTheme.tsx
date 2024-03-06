@@ -7,9 +7,9 @@ import { ThemeSettings } from 'context/useThemeContext';
 
 type TopBarThemeProps = {
 
-handleChangeTopBarTheme: (value: any) => void
-topBarTheme?: string
-layoutConstants: typeof ThemeSettings.topbar.theme
+    handleChangeTopBarTheme: (value: any) => void
+    topBarTheme?: string
+    layoutConstants: typeof ThemeSettings.topbar.theme
 }
 
 const TopBarTheme = ({
