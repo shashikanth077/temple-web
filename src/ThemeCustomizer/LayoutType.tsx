@@ -7,9 +7,9 @@ import {
 import { ThemeSettings } from 'context/useThemeContext';
 
 type LayoutTypeProps = {
-handleChangeLayoutType: (value: string) => void
-layoutType: string
-layoutConstants: typeof ThemeSettings.layout.type
+    handleChangeLayoutType: (value: string) => void
+    layoutType: string
+    layoutConstants: typeof ThemeSettings.layout.type
 }
 
 const LayoutType = ({

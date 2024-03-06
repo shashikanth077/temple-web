@@ -1,5 +1,7 @@
 import React from 'react';
-import { Button, Col, Offcanvas, Row } from 'react-bootstrap';
+import {
+    Button, Col, Offcanvas, Row,
+} from 'react-bootstrap';
 import SimpleBar from 'simplebar-react';
 import { Link } from 'react-router-dom';
 import useThemeCustomizer from 'ThemeCustomizer/useThemeCustomizer';

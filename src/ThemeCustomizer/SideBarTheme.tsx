@@ -7,9 +7,9 @@ import {
 import { ThemeSettings } from 'context/useThemeContext';
 
 type SideBarThemeProps = {
-handleChangeSideBarTheme: (value: any) => void
-sideBarTheme?: string
-layoutConstants: typeof ThemeSettings.sidebar.theme
+    handleChangeSideBarTheme: (value: any) => void
+    sideBarTheme?: string
+    layoutConstants: typeof ThemeSettings.sidebar.theme
 }
 
 const SideBarTheme = ({

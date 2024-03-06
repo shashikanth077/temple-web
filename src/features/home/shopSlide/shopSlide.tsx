@@ -21,7 +21,6 @@ export default function Shop() {
     }, [dispatch]);
 
     const productList = appSelector(selectProductsList);
-    console.log('productList', productList);
 
     return (
         <section className="shopping area-padding">
@@ -34,7 +33,7 @@ export default function Shop() {
                             NumOfSlide={4}
                             autoPly={false}
                         >
-                            {productList.map((product:any, index:any) => (
+                            {productList?.map((product:any, index:any) => (
                                 <Col key={product.productid} lg={4} md={6}>
                                     <Link to={`/products/details/${product._id}`}>
                                         <div className="single-shop-box">
