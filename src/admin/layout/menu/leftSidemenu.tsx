@@ -11,18 +11,19 @@ import { useRedux, useUser } from 'hooks';
 /* eslint-disable */
 const SideBarContent = () => {
     const { appSelector } = useRedux();
-    const loggedInUser:any = useUser();
+    const loggedInUser: any = useUser();
 
     const Menus = appSelector(selectAdminMenu);
 
-    //separate admin and user
-    const updateItems:any = Menus?.filter((item:any) => {
-        for (let i = 0; i < item.roles?.length; i++) {
-            return loggedInUser[0].roles?.includes(item.roles[i]);
-        }
-    });
-
-    console.log(loggedInUser);
+    let updateItems:any;
+    if (Menus) {
+        //separate admin and user
+        updateItems = Menus?.filter((item: any) => {
+            for (let i = 0; i < item.roles?.length; i++) {
+                return loggedInUser[0].roles?.includes(item.roles[i]);
+            }
+        });
+    }
 
     return (
         <>

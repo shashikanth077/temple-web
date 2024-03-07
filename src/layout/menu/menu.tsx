@@ -23,31 +23,31 @@ const Navigation = () => {
     window.addEventListener('scroll', setFixed);
 
     return (
-        <ul>
-            {menuList?.map((data:any) => (data?.isDropdown === true ? (
-                <li key={data.menuId}>
-                    <Link
-                        className="nav-link scroll"
-                        to={`${data.link}`}
-                    >
-                        {data.title}
-                        <i className="fal fa-angle-down" />
-                    </Link>
-                    <ul className="sub-menu">
-                        {data.dropdownItem.map((item:any) => (
-                            <li key={item.link}>
-                                <PageLink to={item.link}>{item.title}</PageLink>
-                            </li>
-                        ))}
-                    </ul>
-                </li>
-            ) : (
-                <li key={data.menuId}>
-                    <PageLink to={`${data.link}`}>{data.title}</PageLink>
-                </li>
-            )))}
-        </ul>
+        menuList && menuList.length > 0 && (
+            <ul>
+                {menuList.map((data:any) => (
+                    <li key={data.menuId}>
+                        {data.isDropdown === true ? (
+                            <Link className="nav-link scroll" to={`${data.link}`}>
+                                {data.title}
+                                <i className="fal fa-angle-down" />
+                            </Link>
+                        ) : (
+                            <PageLink to={`${data.link}`}>{data.title}</PageLink>
+                        )}
+                        {data.isDropdown === true && data.dropdownItem && data.dropdownItem.length > 0 && (
+                            <ul className="sub-menu">
+                                {data.dropdownItem.map((item:any) => (
+                                    <li key={item.link}>
+                                        <PageLink to={item.link}>{item.title}</PageLink>
+                                    </li>
+                                ))}
+                            </ul>
+                        )}
+                    </li>
+                ))}
+            </ul>
+        )
     );
 };
-
 export default React.memo(Navigation);
