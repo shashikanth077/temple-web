@@ -8,7 +8,7 @@ export function getBookingList(payload:any) {
 }
 
 export function getSevaTypes(payload:any) {
-    const baseUrl = `http://localhost:8080/api/bookings`;
+    const baseUrl = `http://localhost:8080/api/sevas`;
     const response = APICore.get(`${baseUrl}`, {});
     return response;
 }
