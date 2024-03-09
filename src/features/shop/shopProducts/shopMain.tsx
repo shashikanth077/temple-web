@@ -7,6 +7,7 @@ import ShopProducts from '../products/shopProduct';
 import { selectProductsList } from '../providers/productSelectors';
 import { useRedux } from 'hooks';
 import { getSortedProducts } from 'helpers/products';
+import Heading from 'sharedComponents/heading/heading';
 
 const ShopGridStandard = () => {
     const [layout, setLayout] = useState('grid three-column');
@@ -57,8 +58,18 @@ const ShopGridStandard = () => {
     }, [offset, products, sortType, sortValue, filterSortType, filterSortValue]);
 
     return (
-        <div className="shop-area pt-95 pb-100">
+        <div className="shop-area pt-10 pb-50">
             <div className="container">
+                <div className="col-lg-12">
+                    <div className="title-box text-center">
+                        <Heading
+                            headingWrapClass="heading-head-wrap"
+                            title="Temple store"
+                            classes="text-center mt-3"
+                            align="text-center"
+                        />
+                    </div>
+                </div>
                 <div className="row">
                     {/* <div className="col-lg-3 order-2 order-lg-1">
                         <ShopSidebar products={products} getSortParams={getSortParams} sideSpaceClass="mr-30" />

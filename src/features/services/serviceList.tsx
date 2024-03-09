@@ -12,6 +12,7 @@ import { admingodActions } from 'admin/features/godmaster/godSlice';
 import { selectGods } from 'admin/features/godmaster/godSelector';
 import { APICore } from 'helpers';
 import ButtonV1 from 'sharedComponents/button/buttonv1';
+import Heading from 'sharedComponents/heading/heading';
 
 /* eslint no-underscore-dangle: 0 */
 /* eslint-disable */
@@ -59,6 +60,18 @@ export function ServiceList() {
         <section className="seva-list-section area-padding">
             
             <div className="container">
+            <div className="row">
+                    <div className="col-lg-12">
+                        <div className="title-box text-center">
+                            <Heading
+                                headingWrapClass="heading-head-wrap"
+                                title="Services"
+                                classes="text-center mt-3"
+                                align="text-center"
+                            />
+                        </div>
+                    </div>
+                </div>
                 <div className="god-lists">
                     <div className="god-list-view">
                         {godList?.map((god: any) => (

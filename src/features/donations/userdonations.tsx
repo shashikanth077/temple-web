@@ -9,6 +9,7 @@ import { useRedux } from 'hooks';
 import { PublicImageURL } from 'constants/PublicUrl';
 import { APICore } from 'helpers';
 import ButtonV1 from 'sharedComponents/button/buttonv1';
+import Heading from 'sharedComponents/heading/heading';
 
 /* eslint no-underscore-dangle: 0 */
 export default function DonationTypes() {
@@ -40,7 +41,18 @@ export default function DonationTypes() {
     return (
         <section className="donation-list-section area-padding">
             <div className="container">
-                <HeadingVersionOne classes="donation-heading" title="Donations" />
+                <div className="row">
+                    <div className="col-lg-12">
+                        <div className="title-box text-center">
+                            <Heading
+                                headingWrapClass="heading-head-wrap"
+                                title="Donations"
+                                classes="text-center mt-3"
+                                align="text-center"
+                            />
+                        </div>
+                    </div>
+                </div>
                 <div className="card flex donations-list">
                     {donationTypes?.map((donationType:any) => (
                         <div className="card-donation-section">

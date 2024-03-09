@@ -11,6 +11,7 @@ import { PublicImageURL } from 'constants/PublicUrl';
 import { formatCurrency } from 'helpers/currency';
 import { APICore } from 'helpers';
 import ButtonV1 from 'sharedComponents/button/buttonv1';
+import Heading from 'sharedComponents/heading/heading';
 
 /* eslint no-underscore-dangle: 0 */
 export function BookingTypes() {
@@ -36,7 +37,18 @@ export function BookingTypes() {
     return (
         <section className="seva-list-section area-padding">
             <div className="container">
-                <HeadingVersionOne classes="seva-heading" title="List of seva" />
+                <div className="row">
+                    <div className="col-lg-12">
+                        <div className="title-box text-center">
+                            <Heading
+                                headingWrapClass="heading-head-wrap"
+                                title="Sevas"
+                                classes="text-center mt-3"
+                                align="text-center"
+                            />
+                        </div>
+                    </div>
+                </div>
                 <div className="seva-list">
                     {bookingTypes?.map((Seva:any) => (
                         <div className="seva-box">

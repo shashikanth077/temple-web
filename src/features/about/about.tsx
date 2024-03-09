@@ -9,6 +9,7 @@ import RegularSponsorsOne from 'features/home/regulareventssponsorships/regularp
 import { useRedux } from 'hooks';
 import AboutImage from 'features/home/about/aboutImagesection/aboutimage';
 import { selectStaticAbout } from 'features/content/contactSelectors';
+import Heading from 'sharedComponents/heading/heading';
 
 export default function About() {
     const { appSelector } = useRedux();
@@ -17,6 +18,16 @@ export default function About() {
     return (
         <section className="about area-padding">
             <Container>
+                <div className="col-lg-12">
+                    <div className="title-box text-center">
+                        <Heading
+                            headingWrapClass="heading-head-wrap"
+                            title="About"
+                            classes="text-center mt-3"
+                            align="text-center"
+                        />
+                    </div>
+                </div>
                 <Row className="justify-content-between gy-4">
                     <Col md={6} lg={6}>
                         <img
