@@ -3,9 +3,9 @@ import {
 } from 'redux-saga/effects';
 import { EventListRes } from '../../models';
 import {
-    startLoading, endLoading, setError, setSuccessMessage,
+    startLoading, endLoading, setError,
 } from '../../storeConfig/api/apiSlice';
-import { getEvents, bookEvent } from './eventsApi';
+import { getEvents, bookEvent, getEventsByFilter } from './eventsApi';
 import { eventsActions } from './eventsSlice';
 
 function* fetcheventsList() {
@@ -13,8 +13,25 @@ function* fetcheventsList() {
         yield put(startLoading());
         const response: EventListRes = yield call(getEvents);
         if (response.success) {
-            // yield put(setSuccessMessage('Success'));
             yield put(eventsActions.fetchEventListSuccess(response));
+        } else {
+            yield put(setError(response.errorMessage));
+        }
+    } catch (error) {
+        if (error instanceof Error) {
+            yield put(setError(error.message));
+        }
+    } finally {
+        yield put(endLoading());
+    }
+}
+
+function* fetcheventsListByFilter(action:any) {
+    try {
+        yield put(startLoading());
+        const response: EventListRes = yield call(getEventsByFilter, action.payload);
+        if (response.success) {
+            yield put(eventsActions.fetchEventListByFilterSuccess(response));
         } else {
             yield put(setError(response.errorMessage));
         }
@@ -53,8 +70,12 @@ export function* watchStoreEventDetails() {
     yield takeLatest(eventsActions.confirmPayment.type, storeEventBookHistory);
 }
 
+export function* watchFetcheventsListByFilter() {
+    yield takeLatest(eventsActions.fetchEventByFilter.type, fetcheventsListByFilter);
+}
+
 function* eventSaga() {
-    yield all([fork(watchEventsDetails), fork(watchStoreEventDetails)]);
+    yield all([fork(watchEventsDetails), fork(watchStoreEventDetails), fork(watchFetcheventsListByFilter)]);
 }
 
 export default eventSaga;

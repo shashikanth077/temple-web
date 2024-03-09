@@ -1,7 +1,7 @@
 import React from 'react-bootstrap';
 import { useEffect } from 'react';
 import HomeEvents from './homeevents';
-import { selectEventsList } from 'features/events/eventSelector';
+import { selectEventsFilterList } from 'features/events/eventSelector';
 import { eventsActions } from 'features/events/eventsSlice';
 import Anchor from 'sharedComponents/button/anchor';
 import useRedux from 'hooks/useRedux';
@@ -10,10 +10,11 @@ export default function Dailyevents() {
     const { dispatch, appSelector } = useRedux();
 
     useEffect(() => {
-        dispatch(eventsActions.fetchEvents());
+        dispatch(eventsActions.fetchEventByFilter({ type: 'daily' }));
     }, [dispatch]);
 
-    const eventsList = appSelector(selectEventsList);
+    const eventsList = appSelector(selectEventsFilterList);
+    console.log('eventsList', eventsList);
 
     const eventMap = eventsList.map((item:any) => (
         <div key={item.event_id}>
