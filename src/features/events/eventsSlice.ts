@@ -5,12 +5,14 @@ export interface EventState {
   loading: boolean;
   events: any;
   eventData:any;
+  eventsfilter:any;
 }
 
 const initialState: EventState = {
     loading: false,
     events: [],
     eventData: [],
+    eventsfilter: [],
 };
 
 const eventsSlice = createSlice({
@@ -23,6 +25,13 @@ const eventsSlice = createSlice({
         fetchEventListSuccess(state, action: PayloadAction<EventListRes>) {
             state.loading = false;
             state.events = action.payload.events;
+        },
+        fetchEventByFilter(state, action: PayloadAction<any>) {
+            state.loading = false;
+        },
+        fetchEventListByFilterSuccess(state, action: PayloadAction<EventListRes>) {
+            state.loading = false;
+            state.eventsfilter = action.payload.events;
         },
         confirmPayment(state, action: PayloadAction<any>) {
             state.loading = false;
