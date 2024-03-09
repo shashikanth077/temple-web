@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import ReactPaginate from 'react-paginate';
 import { APICore } from 'helpers';
 import { PublicImageURL } from 'constants/PublicUrl';
+import ButtonV1 from 'sharedComponents/button/buttonv1';
 
 interface EventProps{
     events:any;
@@ -89,8 +90,16 @@ function EventContent(props:EventProps) {
                                         <span className="events-c-small-cta-price">
                                             ${event.bookingPrice}
                                         </span>
-                                        <button className="events-common-c-btn-border-small events-c-top-bar-today-button" aria-label="Click to select today's date" onClick={e => handleBook(e, event?._id)} type="button">Book now <img className="right-arrow" src={`${window.location.origin}/${PublicImageURL}/icons/right-arrow.svg`} alt="right-arrow" />
-                                        </button>
+                                        <ButtonV1
+                                            label="Book now"
+                                            btnClassName="events-common-c-btn-border-small events-c-top-bar-today-button"
+                                            onClick={e => handleBook(e, event?._id)}
+                                            btnType="button"
+                                            imgClassName="right-arrow"
+                                            imgAlt="right-arrow"
+                                            imageSrc={`${window.location.origin}/${PublicImageURL}/icons/right-arrow.svg`}
+                                        />
+
                                     </div>
 
                                 </div>

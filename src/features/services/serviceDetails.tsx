@@ -7,6 +7,7 @@ import { adminServiceActions } from 'admin/features/services/serviceSlice';
 import { selectService } from 'admin/features/services/serviceSelector';
 import { formatCurrency } from 'helpers/currency';
 import { APICore } from 'helpers';
+import ButtonV1 from 'sharedComponents/button/buttonv1';
 
 /* eslint-disable */
 const ServiceDetails = () => {
@@ -55,7 +56,13 @@ const ServiceDetails = () => {
                                         <p>{serviceDetails?.description}</p>
                                         <h5 className="product-dprice mt-30">{formatCurrency(intl, serviceDetails?.price)}</h5>
                                         <CSSTransition in appear timeout={500} classNames="fade-up">
-                                            <a onClick={(e) =>handleBook(e,serviceDetails?._id)} className="tp-btn mr-20">Book now</a>
+                                        <ButtonV1
+                                    onClick={(e) =>handleBook(e,serviceDetails?._id)}
+                                    label='Book now'
+                                    btnClassName='tp-btn mr-20'
+                                    
+                                />
+                                          
                                         </CSSTransition>
                                     </div>
                                 </div>

@@ -11,6 +11,7 @@ import { formatCurrency } from 'helpers/currency';
 import { admingodActions } from 'admin/features/godmaster/godSlice';
 import { selectGods } from 'admin/features/godmaster/godSelector';
 import { APICore } from 'helpers';
+import ButtonV1 from 'sharedComponents/button/buttonv1';
 
 /* eslint no-underscore-dangle: 0 */
 /* eslint-disable */
@@ -101,14 +102,14 @@ export function ServiceList() {
                                             {formatCurrency(intl, Seva?.price)}
                                         </p>
                                     </div>
-                                    <button  onClick={(e) =>handleBook(e,Seva?._id)} type="button">
-                                        Book now{" "}
-                                        <img
-                                            className="right-arrow"
-                                            src={`${window.location.origin}/${PublicImageURL}/icons/right-arrow.svg`}
-                                            alt="right-arrow"
-                                        />
-                                    </button>
+                                    <ButtonV1
+                                        onClick={(e) =>handleBook(e,Seva?._id)}
+                                        label='Book now'
+                                        btnClassName=''
+                                        imgAlt="right-arrow"
+                                        imgClassName="right-arrow"
+                                        imageSrc={`${window.location.origin}/${PublicImageURL}/icons/right-arrow.svg`}
+                                    />
                                 </div>
                             </div>
                         ))

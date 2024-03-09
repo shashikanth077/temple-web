@@ -24,6 +24,7 @@ import { formatCurrency } from 'helpers/currency';
 import { FormInput } from 'sharedComponents/inputs';
 import { createPaymentIntent } from 'features/donations/mydonations/donationApis';
 import { clearState } from 'storeConfig/api/apiSlice';
+import ButtonV1 from 'sharedComponents/button/buttonv1';
 
 /* eslint-disable */
 const ServiceConfimPage = () => {
@@ -570,15 +571,17 @@ const ServiceConfimPage = () => {
                                     className="col-lg-3 order-btn"
                                     style={{ textAlign: "right" }}
                                 >
+
+
+
                                     {/* Place Order Button */}
                                     <div className="place-order mt-25">
-                                        <button
-                                            type="submit"
-                                            disabled={processing || !stripe || !elements}
-                                            className="btn btn-hover"
-                                        >
-                                            {processing ? 'PROCESSING' : 'Book service'}
-                                        </button>
+                                    <ButtonV1
+                                        disabled={processing || !stripe || !elements}
+                                        btnType="submit"
+                                        label={processing ? 'PROCESSING' : 'Book service'}
+                                        btnClassName='btn btn-hover'
+                                   />
                                     </div>
                                 </div>
                             </form>
