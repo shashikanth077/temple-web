@@ -1,7 +1,7 @@
 :root {
     --#{$prefix}logo-lg-height:           40px;
     --#{$prefix}logo-sm-height:           30px;
-    --#{$prefix}boxed-layout-bg:        $theme-color;
+    --#{$prefix}boxed-layout-bg:          $theme-color;
     --#{$prefix}leftbar-width:            240px;
     --#{$prefix}leftbar-width-md:         160px;
     --#{$prefix}leftbar-width-sm:         70px;
@@ -141,7 +141,7 @@ $logo-sm-height:                    var(--#{$prefix}logo-sm-height);
 $logo-sm-width:                    60px;
 
 // Menu
-$menu-bg:                                 indianred;
+$menu-bg:                                 $theme-color;
 $menu-item-color:                         var(--#{$prefix}menu-item-color);
 $menu-item-hover-color:                   var(--#{$prefix}menu-item-hover-color);
 $menu-item-active-color:                  var(--#{$prefix}menu-item-active-color);
