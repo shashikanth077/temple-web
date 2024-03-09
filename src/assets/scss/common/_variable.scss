@@ -8,7 +8,8 @@ $dark:  #343a40;
 $muted: #9b9bae;
 $indianred:#cd5c5c;
 $theme-color: #cd5c5c;
-$color-primary: #c27b7f;
+$color-primary: #cd5c5c;
+$grey:#495057;
 $color-secondary: #876585;
 $color-tertiary: #fcb0b4;
 
@@ -38,7 +39,6 @@ $info:          #17a2b8;
 $warning:       #ffc107;
 $danger:        #dc3545;
 $light:         #f8f9fa;
-
 
 // Social Color
 $android: #7AC157;
@@ -574,7 +574,7 @@ $transition-collapse-width:   width .35s ease;
 
 $topbar-item-color : $black;
 
-
+$section-bg:#eef1f6;
 
 //password view icon code
 $password-eye-hexa-code: "\f06e";
