@@ -1911,5 +1911,9 @@ button:disabled {
     border-color: $theme-color;
   }
 }
-
+.heading-head-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
