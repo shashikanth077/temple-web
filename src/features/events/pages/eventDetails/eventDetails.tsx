@@ -6,6 +6,7 @@ import { useRedux } from 'hooks';
 import { selectEventsList } from 'features/events/eventSelector';
 import { APICore } from 'helpers';
 import { PublicImageURL } from 'constants/PublicUrl';
+import ButtonV1 from 'sharedComponents/button/buttonv1';
 
 /* eslint no-underscore-dangle: 0 */
 function EventDetails() {
@@ -37,8 +38,15 @@ function EventDetails() {
                         <div><i className="fas fa-calendar-week" /><span className="event-date"> {moment(events?.startDate).format('MMM DD,YYYY @ h a')} -  {moment(events?.endDate).format('MMM DD,YYYY @ h a')}</span></div>
                         <div className="event-price-book">
                             <span className="event-price">${events?.bookingPrice}</span>
-                            <button className="events-common-c-btn-border-small events-c-top-bar-today-button" aria-label="Click to select today's date" onClick={e => handleBook(e, events?._id)} type="button">Book now <img className="right-arrow" src={`${window.location.origin}/${PublicImageURL}/icons/right-arrow.svg`} alt="right-arrow" />
-                            </button>
+                            <ButtonV1
+                                label="Book now"
+                                btnClassName="events-common-c-btn-border-small events-c-top-bar-today-button"
+                                onClick={e => handleBook(e, events?._id)}
+                                btnType="button"
+                                imgClassName="right-arrow"
+                                imgAlt="right-arrow"
+                                imageSrc={`${window.location.origin}/${PublicImageURL}/icons/right-arrow.svg`}
+                            />
                         </div>
                     </div>
                 </Row>

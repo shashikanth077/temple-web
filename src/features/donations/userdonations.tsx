@@ -8,6 +8,7 @@ import { adminDonationTypeActions } from 'admin/features/donations/donationSlice
 import { useRedux } from 'hooks';
 import { PublicImageURL } from 'constants/PublicUrl';
 import { APICore } from 'helpers';
+import ButtonV1 from 'sharedComponents/button/buttonv1';
 
 /* eslint no-underscore-dangle: 0 */
 export default function DonationTypes() {
@@ -48,8 +49,14 @@ export default function DonationTypes() {
                             <h5>{donationType?.description}</h5>
                             <div className="donation-btn">
                                 <ViewMore url={`/donation-details/${donationType?._id}`} classnames="d" title="View more" />
-                                <button onClick={e => handleBook(e, donationType?._id, donationType?.donationType)} type="button">Donate Now <img className="right-arrow" src={`${window.location.origin}/${PublicImageURL}/icons/right-arrow.svg`} alt="right-arrow" />
-                                </button>
+                                <ButtonV1
+                                    onClick={e => handleBook(e, donationType?._id, donationType?.donationType)}
+                                    label="Donate Now "
+                                    btnClassName=""
+                                    imgAlt="right-arrow"
+                                    imgClassName="right-arrow"
+                                    imageSrc={`${window.location.origin}/${PublicImageURL}/icons/right-arrow.svg`}
+                                />
                             </div>
                         </div>
                     ))}

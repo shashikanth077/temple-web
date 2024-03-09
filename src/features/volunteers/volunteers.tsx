@@ -710,14 +710,6 @@ const SubmitVolunteer = () => {
                                             >
                                                 Submit
                                             </Button>
-                                            <a
-                                                className="btn primary cancelbtn"
-                                                href="/admin/bookingtypes/list"
-                                                id="cancel"
-                                            >
-                                                {" "}
-                                                Cancel
-                                            </a>
                                         </div>
                                     </div>
                                 </div>

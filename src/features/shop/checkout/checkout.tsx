@@ -95,20 +95,20 @@ const Checkout = () => {
 
     React.useEffect(() => {
         if (isChecked) {
-            setSelectedState(ProfileDetails?.homeAddress.province);
+            setSelectedState(ProfileDetails?.homeAddress?.province);
             setBillingAddressFormData({
-                billingAddress: ProfileDetails?.homeAddress.address1,
-                billingCity: ProfileDetails?.homeAddress.city,
-                billingZipcode: ProfileDetails?.homeAddress.postalCode,
-                state: ProfileDetails?.homeAddress.province,
+                billingAddress: ProfileDetails?.homeAddress?.address1,
+                billingCity: ProfileDetails?.homeAddress?.city,
+                billingZipcode: ProfileDetails?.homeAddress?.postalCode,
+                state: ProfileDetails?.homeAddress?.province,
             });
         } else if (ProfileDetails?.billingAddress) {
-            setSelectedState(ProfileDetails?.billingAddress.province);
+            setSelectedState(ProfileDetails?.billingAddress?.province);
             setBillingAddressFormData({
-                billingAddress: ProfileDetails?.billingAddress.address1,
-                billingCity: ProfileDetails?.billingAddress.city,
-                billingZipcode: ProfileDetails?.billingAddress.postalCode,
-                state: ProfileDetails?.billingAddress.province,
+                billingAddress: ProfileDetails?.billingAddress?.address1,
+                billingCity: ProfileDetails?.billingAddress?.city,
+                billingZipcode: ProfileDetails?.billingAddress?.postalCode,
+                state: ProfileDetails?.billingAddress?.province,
             });
         } else {
             setBillingAddressFormData({

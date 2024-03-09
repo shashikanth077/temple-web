@@ -10,6 +10,7 @@ import { useRedux } from 'hooks';
 import { PublicImageURL } from 'constants/PublicUrl';
 import { formatCurrency } from 'helpers/currency';
 import { APICore } from 'helpers';
+import ButtonV1 from 'sharedComponents/button/buttonv1';
 
 /* eslint no-underscore-dangle: 0 */
 export function BookingTypes() {
@@ -47,8 +48,14 @@ export function BookingTypes() {
                                 <div className="left-side">
                                     <p className="seva-amount">{formatCurrency(intl, Seva?.amount)}</p>
                                 </div>
-                                <button onClick={e => handleBook(e, Seva?._id)} type="button">Book now <img className="right-arrow" src={`${window.location.origin}/${PublicImageURL}/icons/right-arrow.svg`} alt="right-arrow" />
-                                </button>
+                                <ButtonV1
+                                    onClick={e => handleBook(e, Seva?._id)}
+                                    label="Book now"
+                                    btnClassName=""
+                                    imgAlt="right-arrow"
+                                    imgClassName="right-arrow"
+                                    imageSrc={`${window.location.origin}/${PublicImageURL}/icons/right-arrow.svg`}
+                                />
                             </div>
                         </div>
 
