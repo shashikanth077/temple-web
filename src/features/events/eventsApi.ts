@@ -6,8 +6,8 @@ export function getEvents() {
     return response;
 }
 
-export function getEventsByFilter(payload:any) {
-    const baseUrl = `http://localhost:8080/api/events/filter/${payload.type}`;
+export function getEventsByFilter() {
+    const baseUrl = 'http://localhost:8080/api/events/filter';
     const response = APICore.get(`${baseUrl}`, {});
     return response;
 }
