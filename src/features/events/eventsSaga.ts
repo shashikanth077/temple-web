@@ -26,10 +26,10 @@ function* fetcheventsList() {
     }
 }
 
-function* fetcheventsListByFilter(action:any) {
+function* fetcheventsListByFilter() {
     try {
         yield put(startLoading());
-        const response: EventListRes = yield call(getEventsByFilter, action.payload);
+        const response: EventListRes = yield call(getEventsByFilter);
         if (response.success) {
             yield put(eventsActions.fetchEventListByFilterSuccess(response));
         } else {

@@ -23,7 +23,7 @@ export default function Bookings() {
             <Card className="booking-box p-m-2">
                 <img alt={booking.name} src={booking.image} style={{ width: '100%', height: '200px', objectFit: 'cover' }} />
                 <p className="p-m-0 booking-title p-text-center">{booking.name}</p>
-                <ViewMore classnames="bookingb-btn" title="View more" url="#" />
+                <ViewMore classnames="bookingb-btn" title="View more" url={`/seva-details/${booking._id}`}  />
             </Card>
         </div>
     );

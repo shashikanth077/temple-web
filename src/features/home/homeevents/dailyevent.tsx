@@ -6,24 +6,23 @@ import { eventsActions } from 'features/events/eventsSlice';
 import Anchor from 'sharedComponents/button/anchor';
 import useRedux from 'hooks/useRedux';
 
+/* eslint no-underscore-dangle: 0 */
 export default function Dailyevents() {
     const { dispatch, appSelector } = useRedux();
 
     useEffect(() => {
-        dispatch(eventsActions.fetchEventByFilter({ type: 'daily' }));
+        dispatch(eventsActions.fetchEventByFilter());
     }, [dispatch]);
 
     const eventsList = appSelector(selectEventsFilterList);
-    console.log('eventsList', eventsList);
 
-    const eventMap = eventsList.map((item:any) => (
+    const eventMap = eventsList?.dailyevents?.map((item: any) => (
         <div key={item.event_id}>
             <div
                 className="slider-item"
                 style={{ backgroundImage: `url(${item.image})` }}
             >
-
-                <Anchor classnames="event-anchor" title="know-more" />
+                <Anchor link={`/events/eventsdetails/${item._id}`} classnames="event-anchor" title="know-more" />
             </div>
         </div>
     ));

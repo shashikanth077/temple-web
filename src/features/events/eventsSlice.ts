@@ -26,7 +26,7 @@ const eventsSlice = createSlice({
             state.loading = false;
             state.events = action.payload.events;
         },
-        fetchEventByFilter(state, action: PayloadAction<any>) {
+        fetchEventByFilter(state) {
             state.loading = false;
         },
         fetchEventListByFilterSuccess(state, action: PayloadAction<EventListRes>) {

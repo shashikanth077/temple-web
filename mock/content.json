@@ -50,15 +50,15 @@
                 "donations": {
                     "btnName":"Donate now",
                     "donationOneTitle": "Journey to enlightenment: we invite you to experience divine love and grace",
-                    "link1": "#",
-                    "link2": "#",
+                    "link1": "/donations/types",
+                    "link2": "/donations/types",
                     "donationTwoTitle": "Journey to enlightenment: we invite you to experience divine love and grace"
                 },
                 "regularProgram": {
                     "btnName":"Donate now",
                     "regularProgramTitleOne": "Program name one",
-                    "link1": "#",
-                    "link2": "#",
+                    "link1": "/donations/types",
+                    "link2": "/donations/types",
                     "regularProgramTitleTwo": "Program name two"
                 }
             },

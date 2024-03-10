@@ -1,28 +1,25 @@
 import React from 'react-bootstrap';
-import { useEffect } from 'react';
+import moment from 'moment';
 import HomeEvents from './homeevents';
-import { selectEventsList } from 'features/events/eventSelector';
-import { eventsActions } from 'features/events/eventsSlice';
+import { selectEventsFilterList } from 'features/events/eventSelector';
 import Anchor from 'sharedComponents/button/anchor';
 import useRedux from 'hooks/useRedux';
 
+/* eslint no-underscore-dangle: 0 */
 export default function Recentevents() {
-    const { dispatch, appSelector } = useRedux();
+    const { appSelector } = useRedux();
 
-    useEffect(() => {
-        dispatch(eventsActions.fetchEvents());
-    }, [dispatch]);
+    const eventsList = appSelector(selectEventsFilterList);
+    console.log('recentevents', eventsList.recentevents);
 
-    const eventsList = appSelector(selectEventsList);
-
-    const RecenteventMap = eventsList.map((item:any) => (
-        <div key={item.event_id}>
+    const RecenteventMap = eventsList?.recentevents?.map((item:any) => (
+        <div key={item._id}>
             <div
                 className="slider-item"
-                style={{ backgroundImage: `url(${item.event_image})` }}
+                style={{ backgroundImage: `url(${item.image})` }}
             >
-                <p className="event-recent-date">{item.event_date}</p>
-                <Anchor classnames="event-more-details" title="know-more" />
+                <p className="event-recent-date">{moment(item.endDate).format('DD-MM-YYYY')}</p>
+                <Anchor link={`/events/eventsdetails/${item._id}`} classnames="event-more-details" title="know-more" />
             </div>
         </div>
     ));
