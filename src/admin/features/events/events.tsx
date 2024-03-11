@@ -10,15 +10,15 @@ import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import moment from 'moment';
 import { useIntl } from 'react-intl';
-import { eventsActions } from '../../../features/events/eventsSlice';
+import { selectEventsList } from './adminEventSelector';
 import { adminEventActions } from './adminEventSlice';
 import DeleteDiaLog from 'sharedComponents/dialogs/dialogs';
 import { useRedux } from 'hooks';
 import { Event } from 'models';
-import { selectEventsList } from 'features/events/eventSelector';
-import { clearState } from 'storeConfig/api/apiSlice';
+import { clearState } from 'storeConfig/apiStatus/apiSlice';
 import ImageComponent from 'sharedComponents/Image/image';
 import { formatCurrency } from 'helpers/currency';
+import { getApiState } from 'storeConfig/apiStatus/apiSelector';
 
 /* eslint-disable */
 export default function Events() {
@@ -37,7 +37,7 @@ export default function Events() {
         description:'',
     }
 
-    const { loading, error, successMessage } = useSelector((state:any) => state.apiState);
+    const { loading, error, successMessage } = useSelector(getApiState);
 
     const showToast = (severity:any, summary:any, detail:any) => {
         toast.current.show({ severity, summary, detail });
@@ -60,7 +60,7 @@ export default function Events() {
     const { dispatch, appSelector } = useRedux();
 
     useEffect(() => {
-        dispatch(eventsActions.fetchEvents());
+        dispatch(adminEventActions.fetchEvents());
     }, [dispatch]);
    
      

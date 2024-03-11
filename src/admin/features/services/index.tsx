@@ -15,10 +15,11 @@ import { adminServiceActions } from './serviceSlice';
 import { selectServices } from './serviceSelector';
 import DeleteDiaLog from 'sharedComponents/dialogs/dialogs';
 import { useRedux } from 'hooks';
-import { clearState } from 'storeConfig/api/apiSlice';
+import { clearState } from 'storeConfig/apiStatus/apiSlice';
 import { AdminService } from 'models';
 import Image from 'sharedComponents/Image/image';
 import { formatCurrency } from 'helpers/currency';
+import { getApiState } from 'storeConfig/apiStatus/apiSelector';
 
 /* eslint-disable */
 export default function Services() {
@@ -53,7 +54,7 @@ export default function Services() {
     const toast = useRef<any>(null);
     const dt = useRef<any>(null);
     const { dispatch, appSelector } = useRedux();
-    const { loading, error, successMessage } = useSelector((state:any) => state.apiState);
+    const { loading, error, successMessage } = useSelector(getApiState);
 
     const showToast = (severity:any, summary:any, detail:any) => {
         toast.current.show({ severity, summary, detail });

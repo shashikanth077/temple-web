@@ -16,14 +16,15 @@ import Loader from 'sharedComponents/loader/loader';
 import {
     Masam, Tithi, Paksha, NakshtraRasi, Relationship,
 } from 'constants/profile';
-import { clearState } from 'storeConfig/api/apiSlice';
+import { clearState } from 'storeConfig/apiStatus/apiSlice';
+import { getApiState } from 'storeConfig/apiStatus/apiSelector';
 
 /* eslint-disable */
 const AddFamily = () => {
     const { dispatch, appSelector } = useRedux();
     const toast = useRef<any>(null);
 
-    const { loading, error, successMessage } = useSelector((state:any) => state.apiState);
+    const { loading, error, successMessage } = useSelector(getApiState);
     const [datetime12h, setDateTime12h] = useState<any>(null);
     const [time, setTime] = useState<string | null>(null);
     const [endDatetime12h, setDateTimeEnd12h] = useState(null);

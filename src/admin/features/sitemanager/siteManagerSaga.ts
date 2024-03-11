@@ -8,7 +8,7 @@ import { adminSiteManagerActions } from './siteManagerSlice';
 import { SiteResponse } from 'models';
 import {
     startLoading, endLoading, setError, setSuccessMessage,
-} from 'storeConfig/api/apiSlice';
+} from 'storeConfig/apiStatus/apiSlice';
 
 function* getStatiContentData(action:any) {
     try {

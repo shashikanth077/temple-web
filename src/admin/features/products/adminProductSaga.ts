@@ -2,13 +2,27 @@ import {
     call, put, all, fork, takeLatest,
 } from 'redux-saga/effects';
 import {
-    addProducts, updateProducts, deleteproducts, getProductById,
+    addProducts, updateProducts, deleteproducts, getProductById, getProducts,
 } from './adminProductApi';
 import { adminProductActions } from './adminProductSlice';
 import {
     startLoading, endLoading, setError, setSuccessMessage,
-} from 'storeConfig/api/apiSlice';
-import { SuccesResponse, ProductSingleRes } from 'models';
+} from 'storeConfig/apiStatus/apiSlice';
+import { SuccesResponse, ProductSingleRes, ProductListRes } from 'models';
+
+function* fetchproductList() {
+    try {
+        yield put(startLoading());
+        const response: ProductListRes = yield call(getProducts);
+        yield put(adminProductActions.fetchproductListSuccess(response));
+    } catch (error) {
+        if (error instanceof Error) {
+            yield put(setError(error.message));
+        }
+    } finally {
+        yield put(endLoading());
+    }
+}
 
 function* getProductByIdRow(action:any) {
     try {
@@ -85,6 +99,9 @@ function* deleteProduct(action:any) {
 export function* watchAddProduct() {
     yield takeLatest(adminProductActions.addProduct.type, addProduct);
 }
+export function* watchFetchproductList() {
+    yield takeLatest(adminProductActions.fetchproductList.type, fetchproductList);
+}
 export function* watchupdateProduct() {
     yield takeLatest(adminProductActions.updateProduct.type, updateProduct);
 }
@@ -96,7 +113,7 @@ export function* watchdeleteProduct() {
 }
 
 function* adminProductSaga() {
-    yield all([fork(WatchgetProductById), fork(watchAddProduct), fork(watchupdateProduct), fork(watchdeleteProduct)]);
+    yield all([fork(watchFetchproductList), fork(WatchgetProductById), fork(watchAddProduct), fork(watchupdateProduct), fork(watchdeleteProduct)]);
 }
 
 export default adminProductSaga;

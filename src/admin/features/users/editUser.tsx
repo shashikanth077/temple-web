@@ -10,13 +10,14 @@ import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { Typeahead } from 'react-bootstrap-typeahead';
 import 'react-bootstrap-typeahead/css/Typeahead.css';
-import { clearState } from '../../../storeConfig/api/apiSlice';
+import { clearState } from '../../../storeConfig/apiStatus/apiSlice';
 import { adminUserActions } from './userSlice';
 import { FormInput } from 'sharedComponents/inputs';
 import { useRedux } from 'hooks';
 import { User } from 'models';
 import Loader from 'sharedComponents/loader/loader';
-import { selectStaticUsers } from 'features/content/contactSelectors';
+import { selectStaticUsers } from 'contents/content/contactSelectors';
+import { getApiState } from 'storeConfig/apiStatus/apiSelector';
 
 /* eslint-disable */
 
@@ -32,7 +33,7 @@ const UserRoles: Array<OptionTypes> = [
 
 const Edituser = () => {
     const { dispatch,appSelector } = useRedux();
-    const { loading, error, successMessage } = useSelector((state:any) => state.apiState);
+    const { loading, error, successMessage } = useSelector(getApiState);
     const { id } = useParams<any>();
     const [multiSelections, setMultiSelections] = useState<OptionTypes[]>([]);
     const staticContentUsers = appSelector(selectStaticUsers);

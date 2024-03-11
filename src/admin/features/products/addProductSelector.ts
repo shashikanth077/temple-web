@@ -1,7 +1,7 @@
 import { RootState } from 'storeConfig/store';
 
 export const selectaddAdminloadingStatus = (state: RootState) => {
-    const { loading, error, message } = state.adminproduct;
+    const { loading, error, message } = state.admin.adminproduct;
 
     const adminaddProductState = {
         loading,
@@ -10,3 +10,5 @@ export const selectaddAdminloadingStatus = (state: RootState) => {
     };
     return adminaddProductState;
 };
+
+export const selectProductsList = (state: RootState) => state.admin.adminproduct.products;

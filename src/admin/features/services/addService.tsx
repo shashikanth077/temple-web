@@ -12,7 +12,7 @@ import 'react-bootstrap-typeahead/css/Typeahead.css';
 import { admingodActions } from '../godmaster/godSlice';
 import { selectGods } from '../godmaster/godSelector';
 import { adminServiceActions } from './serviceSlice';
-import { clearState } from 'storeConfig/api/apiSlice';
+import { clearState } from 'storeConfig/apiStatus/apiSlice';
 import { FormInput } from 'sharedComponents/inputs';
 import { useRedux } from 'hooks';
 import { AdminService } from 'models';
@@ -20,7 +20,8 @@ import Loader from 'sharedComponents/loader/loader';
 import {
     numberOfDaysAhead, ServiceTypes, bookingTypes, Months, Frequency,
 } from 'constants/services';
-import { selectStaticContentServices } from 'features/content/contactSelectors';
+import { getApiState } from 'storeConfig/apiStatus/apiSelector';
+import { selectStaticContentServices } from 'contents/content/contactSelectors';
 
 interface OptionTypes {
     value: string;
@@ -30,7 +31,7 @@ interface OptionTypes {
 /* eslint-disable */
 const AddService = () => {
     const { dispatch, appSelector } = useRedux();
-    const { loading, error, successMessage } = useSelector((state:any) => state.apiState);
+    const { loading, error, successMessage } = useSelector(getApiState);
     const [image, setImage] = useState({ preview: '', data: '' })
     const [multiSelections, setMultiSelections] = useState<OptionTypes[]>([]);
     const [frequencyVal,setFrequency] = useState('');

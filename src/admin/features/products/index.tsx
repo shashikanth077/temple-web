@@ -11,12 +11,12 @@ import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useIntl } from 'react-intl';
 import { adminProductActions } from './adminProductSlice';
+import { selectProductsList } from './addProductSelector';
 import DeleteDiaLog from 'sharedComponents/dialogs/dialogs';
 import { useRedux } from 'hooks';
-import { selectProductsList } from 'features/shop/providers/productSelectors';
-import { productActions } from 'features/shop/providers/productSlice';
-import { clearState } from 'storeConfig/api/apiSlice';
+import { clearState } from 'storeConfig/apiStatus/apiSlice';
 import { formatCurrency } from 'helpers/currency';
+import { getApiState } from 'storeConfig/apiStatus/apiSelector';
 
 interface Product {
     _id:string;
@@ -58,14 +58,15 @@ export default function Products() {
     const toast = useRef<any>(null);
     const dt = useRef<any>(null);
     const { dispatch, appSelector } = useRedux();
-    const { loading, error, successMessage } = useSelector((state:any) => state.apiState);
 
+    const { loading, error, successMessage } = useSelector(getApiState);
+  
     const showToast = (severity:any, summary:any, detail:any) => {
         toast.current.show({ severity, summary, detail });
     };
 
     useEffect(() => {
-        dispatch(productActions.fetchproductList());
+        dispatch(adminProductActions.fetchproductList());
     }, [dispatch]);
    
     const productDetails:any = appSelector(selectProductsList);

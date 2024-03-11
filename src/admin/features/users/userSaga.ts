@@ -7,7 +7,7 @@ import {
 import { adminUserActions } from './userSlice';
 import {
     startLoading, endLoading, setError, setSuccessMessage,
-} from 'storeConfig/api/apiSlice';
+} from 'storeConfig/apiStatus/apiSlice';
 import { SuccesResponse, userSingleResponse, userResponse } from 'models';
 
 function* getAllUsers(action:any) {

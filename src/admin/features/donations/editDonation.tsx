@@ -16,10 +16,11 @@ import { Denominations, Frequency } from 'constants/donation';
 import { FormInput } from 'sharedComponents/inputs';
 import { useRedux } from 'hooks';
 import { DonationTypes } from 'models';
-import { clearState } from 'storeConfig/api/apiSlice';
+import { clearState } from 'storeConfig/apiStatus/apiSlice';
 import Loader from 'sharedComponents/loader/loader';
 import ImageComponent from 'sharedComponents/Image/image';
-import { selectStaticDonation } from 'features/content/contactSelectors';
+import { selectStaticDonation } from 'contents/content/contactSelectors';
+import { getApiState } from 'storeConfig/apiStatus/apiSelector';
 
 interface OptionTypes {
     value: string;
@@ -32,7 +33,7 @@ const EditDonation = () => {
     const { dispatch, appSelector } = useRedux();
     const toast = useRef<any>(null);
     const [multiSelections, setMultiSelections] = useState<OptionTypes[]>([]);
-    const { loading, error, successMessage } = useSelector((state: any) => state.apiState);
+    const { loading, error, successMessage } = useSelector(getApiState);
     const [image, setImage] = useState({ preview: '', data: '' })
 
     const showToast = (severity: any, summary: any, detail: any) => {

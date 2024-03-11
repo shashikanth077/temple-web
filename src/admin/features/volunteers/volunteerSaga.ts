@@ -7,7 +7,7 @@ import {
 import { adminVolunteersActions } from './volunteerSlice';
 import {
     startLoading, endLoading, setError, setSuccessMessage,
-} from 'storeConfig/api/apiSlice';
+} from 'storeConfig/apiStatus/apiSlice';
 import { VoluteersRes } from 'models';
 
 function* getVolunteersDetails(action:any) {

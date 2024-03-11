@@ -12,8 +12,9 @@ import { adminGroceryActions } from './adminGrocerySlice';
 import { FormInput } from 'sharedComponents/inputs';
 import { useRedux } from 'hooks';
 import { Grocery } from 'models';
-import { clearState } from 'storeConfig/api/apiSlice';
+import { clearState } from 'storeConfig/apiStatus/apiSlice';
 import Loader from 'sharedComponents/loader/loader';
+import { getApiState } from 'storeConfig/apiStatus/apiSelector';
 
 /* eslint-disable */
 const EditGrocery = () => {
@@ -21,7 +22,7 @@ const EditGrocery = () => {
     const { dispatch } = useRedux();
     const toast = useRef<any>(null);
 
-    const { loading, error, successMessage } = useSelector((state:any) => state.apiState);
+    const { loading, error, successMessage } = useSelector(getApiState);
     const { Grocery } = useSelector((state:any) => state.adminGrocery);
     
     const showToast = (severity:any, summary:any, detail:any) => {

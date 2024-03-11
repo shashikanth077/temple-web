@@ -1,5 +1,5 @@
 import React from 'react';
-import { selectStaticAdminvolunteers } from 'features/content/contactSelectors';
+import { selectStaticAdminvolunteers } from 'contents/content/contactSelectors';
 import { useRedux } from 'hooks';
 
 /* eslint-disable */

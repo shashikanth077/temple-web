@@ -15,17 +15,16 @@ import PrintComponent from './PrintCertificate';
 import { selectVolunters } from './volunteerSelector';
 import { adminVolunteersActions } from './volunteerSlice';
 import { useRedux } from 'hooks';
-import { clearState } from 'storeConfig/api/apiSlice';
-import { selectStaticAdminvolunteers } from 'features/content/contactSelectors';
+import { clearState } from 'storeConfig/apiStatus/apiSlice';
+import { selectStaticAdminvolunteers } from 'contents/content/contactSelectors';
+import { getApiState } from 'storeConfig/apiStatus/apiSelector';
 
 /* eslint-disable */
 export function Managevolunteers() {
 
     const navigate = useNavigate();
 
-    const { loading, error, successMessage } = useSelector(
-        (state: any) => state.apiState,
-    );
+    const { loading, error, successMessage } = useSelector(getApiState);
 
     const componentRef = useRef(null);
 

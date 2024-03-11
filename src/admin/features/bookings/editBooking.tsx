@@ -10,20 +10,21 @@ import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { adminBookingActions } from './bookingSlice';
 import { selectBooking } from './bookingSelector';
-import { clearState } from 'storeConfig/api/apiSlice';
+import { clearState } from 'storeConfig/apiStatus/apiSlice';
 import { FormInput } from 'sharedComponents/inputs';
 import { useRedux } from 'hooks';
 import { Booking } from 'models';
 import Loader from 'sharedComponents/loader/loader';
 import ImageComponent from 'sharedComponents/Image/image';
 import { category } from 'constants/seva';
-import { selectStaticBookings } from 'features/content/contactSelectors';
+import { selectStaticBookings } from 'contents/content/contactSelectors';
+import { getApiState } from 'storeConfig/apiStatus/apiSelector';
 
 /* eslint-disable */
 /* eslint no-underscore-dangle: 0 */
 const EditBooking = () => {
     const { dispatch, appSelector } = useRedux();
-    const { loading, error, successMessage } = useSelector((state:any) => state.apiState);
+    const { loading, error, successMessage } = useSelector(getApiState);
     const [image, setImage] = useState({ preview: '', data: '' })
     const { id } = useParams<any>();
     const toast = useRef<any>(null);

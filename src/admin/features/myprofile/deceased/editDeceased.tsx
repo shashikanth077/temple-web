@@ -19,7 +19,8 @@ import { FormInput } from 'sharedComponents/inputs';
 import { useRedux, useUser } from 'hooks';
 
 import Loader from 'sharedComponents/loader/loader';
-import { clearState } from 'storeConfig/api/apiSlice';
+import { clearState } from 'storeConfig/apiStatus/apiSlice';
+import { getApiState } from 'storeConfig/apiStatus/apiSelector';
 
 /* eslint-disable */
 const EditDeceased = () => {
@@ -27,7 +28,7 @@ const EditDeceased = () => {
     const { id } = useParams<any>();
     const navigate = useNavigate();
 
-    const { loading, error, successMessage } = useSelector((state:any) => state.apiState);
+    const { loading, error, successMessage } = useSelector(getApiState);
 
     const toast = useRef<any>(null);
     const [time, setTime] = useState<string | null>(null);

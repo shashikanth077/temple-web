@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 // images
 import SimpleBar from 'simplebar-react';
 import AppMenu from './MainMenu';
-import { selectAdminMenu } from 'features/content/contactSelectors';
+import { selectAdminMenu } from 'contents/content/contactSelectors';
 import { useRedux, useUser } from 'hooks';
 
 /* Sidebar content */

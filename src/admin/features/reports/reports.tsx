@@ -16,7 +16,8 @@ import { selectInComeReportDetails } from './reportsSelectors';
 import ReportFilter from './reportFilter';
 import ExportPdf from './generatePdf';
 import { useRedux } from 'hooks';
-import { clearState } from 'storeConfig/api/apiSlice';
+import { clearState } from 'storeConfig/apiStatus/apiSlice';
+import { getApiState } from 'storeConfig/apiStatus/apiSelector';
 
 /* eslint-disable */
 export default function ManageReports() {
@@ -80,7 +81,7 @@ export default function ManageReports() {
 
     const componentRef = useRef(null);
     const navigate = useNavigate();
-    const { loading, error, successMessage } = useSelector((state: any) => state.apiState);
+    const { loading, error, successMessage } = useSelector(getApiState);
 
     const [filters, setFilters] = useState({
         global: { value: null, matchMode: FilterMatchMode.CONTAINS },

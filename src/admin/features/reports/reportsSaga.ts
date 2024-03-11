@@ -7,7 +7,7 @@ import {
 import { adminReportsActions } from './reportsSlice';
 import {
     startLoading, endLoading, setError,
-} from 'storeConfig/api/apiSlice';
+} from 'storeConfig/apiStatus/apiSlice';
 import { ReportsRes } from 'models';
 
 function* getReportsDetails(action:any) {

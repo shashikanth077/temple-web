@@ -14,15 +14,16 @@ import { FormInput } from 'sharedComponents/inputs';
 import { useRedux } from 'hooks';
 import { Event } from 'models';
 import Loader from 'sharedComponents/loader/loader';
-import { clearState } from 'storeConfig/api/apiSlice';
+import { clearState } from 'storeConfig/apiStatus/apiSlice';
 import ImageComponent from 'sharedComponents/Image/image';
-import { selectStaticEvents } from 'features/content/contactSelectors';
+import { selectStaticEvents } from 'contents/content/contactSelectors';
+import { getApiState } from 'storeConfig/apiStatus/apiSelector';
 
 /* eslint-disable */
 const EditEvent = () => {
     const { dispatch,appSelector } = useRedux();
     const {id} = useParams();
-    const { loading, error, successMessage } = useSelector((state:any) => state.apiState);
+    const { loading, error, successMessage } = useSelector(getApiState);
     const toast = useRef<any>(null);
     const [datetime12h, setDateTime12h] = useState<any>(null);
     const [endDatetime12h, setDateTimeEnd12h] = useState<any>(null);

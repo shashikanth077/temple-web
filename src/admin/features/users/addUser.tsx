@@ -9,14 +9,15 @@ import { Toast } from 'primereact/toast';
 import { Typeahead } from 'react-bootstrap-typeahead';
 import 'react-bootstrap-typeahead/css/Typeahead.css';
 import { useSelector } from 'react-redux';
-import { clearState } from '../../../storeConfig/api/apiSlice';
+import { clearState } from '../../../storeConfig/apiStatus/apiSlice';
 import { adminUserActions } from './userSlice';
 import { FormInput } from 'sharedComponents/inputs';
 import { useRedux } from 'hooks';
 import { User } from 'models';
 import Loader from 'sharedComponents/loader/loader';
 import { countryCodes } from 'constants/CAProvinces';
-import { selectStaticRegistration, selectStaticUsers } from 'features/content/contactSelectors';
+import { selectStaticRegistration, selectStaticUsers } from 'contents/content/contactSelectors';
+import { getApiState } from 'storeConfig/apiStatus/apiSelector';
 
 /* eslint-disable */
 
@@ -32,7 +33,7 @@ const UserRoles: Array<OptionTypes> = [
 
 const AddProduct = () => {
     const { dispatch, appSelector } = useRedux();
-    const { loading, error, successMessage } = useSelector((state: any) => state.apiState);
+    const { loading, error, successMessage } = useSelector(getApiState);
     const [multiSelections, setMultiSelections] = useState<OptionTypes[]>([]);
 
     const toast = useRef<any>(null);
