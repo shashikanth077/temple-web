@@ -8,19 +8,20 @@ import { useForm, Controller } from 'react-hook-form';
 import { Toast } from 'primereact/toast';
 import { useSelector } from 'react-redux';
 import Select from 'react-select';
-import { clearState } from '../../../storeConfig/api/apiSlice';
+import { clearState } from '../../../storeConfig/apiStatus/apiSlice';
 import { admingodActions } from './godSlice';
 import { FormInput } from 'sharedComponents/inputs';
 import { useRedux } from 'hooks';
 import { God } from 'models';
 import Loader from 'sharedComponents/loader/loader';
 import { Days } from 'constants/services';
-import { selectStaticGods } from 'features/content/contactSelectors';
+import { getApiState } from 'storeConfig/apiStatus/apiSelector';
+import { selectStaticGods } from 'contents/content/contactSelectors';
 
 /* eslint-disable */
 const AddGod = () => {
     const { dispatch,appSelector } = useRedux();
-    const { loading, error, successMessage } = useSelector((state:any) => state.apiState);
+    const { loading, error, successMessage } = useSelector(getApiState);
     const [image, setImage] = useState({ preview: '', data: '' })
 
     const toast = useRef<any>(null);

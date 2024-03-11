@@ -12,9 +12,10 @@ import { adminProductActions } from './adminProductSlice';
 import { FormInput } from 'sharedComponents/inputs';
 import { useRedux } from 'hooks';
 import { Product } from 'models';
-import { clearState } from 'storeConfig/api/apiSlice';
+import { clearState } from 'storeConfig/apiStatus/apiSlice';
 import Loader from 'sharedComponents/loader/loader';
 import ImageComponent from 'sharedComponents/Image/image';
+import { getApiState } from 'storeConfig/apiStatus/apiSelector';
 
 /* eslint-disable */
 const EditProduct = () => {
@@ -23,7 +24,7 @@ const EditProduct = () => {
     const toast = useRef<any>(null);
     const [image, setImage] = useState({ preview: '', data: '' });
 
-    const { loading, error, successMessage } = useSelector((state:any) => state.apiState);
+    const { loading, error, successMessage } = useSelector(getApiState);
     const { product } = useSelector((state:any) => state.adminproduct);
     
     const showToast = (severity:any, summary:any, detail:any) => {
@@ -53,8 +54,18 @@ const EditProduct = () => {
     const schemaResolver = yupResolver(
         yup.object().shape({
             name: yup.string().required('Please enter product name').min(2, 'This value is too short. It should have 2 characters or more.'),
-            price: yup.number().required('Please enter price'),
-            stock: yup.number().required('Please enter stock'),
+            price: yup
+            .number()
+            .typeError('Please enter valid price')
+            .required('Please enter valid price')
+            .positive('Number must be positive')
+            .integer('Number must be an integer'),
+            stock: yup
+            .number()
+            .typeError('Please enter valid stock')
+            .required('Please enter valid stock')
+            .positive('Number must be positive')
+            .integer('Number must be an integer'),
             shortDescription: yup.string().required('Please enter short description').min(10, 'This value is too short. It should have 10 characters or more.'),
             fullDescription: yup.string().required('Please enter full description').min(10, 'This value is too short. It should have 10 characters or more.'),
         }),

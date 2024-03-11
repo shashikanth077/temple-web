@@ -1,11 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Product, ProductSingleRes } from 'models';
+import { Product, ProductListRes, ProductSingleRes } from 'models';
 
 export interface ProductState {
     loading?: boolean;
     error:any;
     message:string;
     product:any;
+    products:any;
 }
 
 export interface GetProductPayload {
@@ -15,6 +16,7 @@ const initialState: ProductState = {
     loading: false,
     error: null,
     message: '',
+    products: [],
     product: {},
 };
 
@@ -22,6 +24,12 @@ const productSlice = createSlice({
     name: 'adminproduct',
     initialState,
     reducers: {
+        fetchproductList(state) {
+            state.loading = true;
+        },
+        fetchproductListSuccess(state, action: PayloadAction<ProductListRes>) {
+            state.products = action.payload.products;
+        },
         getProductById(state, action: PayloadAction<GetProductPayload>) {
             state.loading = true;
         },

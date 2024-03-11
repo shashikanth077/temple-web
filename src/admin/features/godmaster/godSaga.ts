@@ -7,7 +7,7 @@ import {
 import { admingodActions } from './godSlice';
 import {
     startLoading, endLoading, setError, setSuccessMessage,
-} from 'storeConfig/api/apiSlice';
+} from 'storeConfig/apiStatus/apiSlice';
 import { SuccesResponse, GodList, GodSingleResponse } from 'models';
 
 function* getGodById(action:any) {

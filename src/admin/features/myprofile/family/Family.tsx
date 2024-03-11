@@ -11,7 +11,7 @@ import { myprofileActions } from '../myProfileSlice';
 import { useRedux, useUser } from 'hooks';
 
 import DeleteDiaLog from 'sharedComponents/dialogs/dialogs';
-import { clearState } from 'storeConfig/api/apiSlice';
+import { clearState } from 'storeConfig/apiStatus/apiSlice';
 import Loader from 'sharedComponents/loader/loader';
 
 /* eslint-disable */

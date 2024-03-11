@@ -8,15 +8,16 @@ import { useForm } from 'react-hook-form';
 import { Toast } from 'primereact/toast';
 import { useSelector } from 'react-redux';
 import { adminGroceryActions } from 'admin/features/grocery/adminGrocerySlice';
-import { clearState } from 'storeConfig/api/apiSlice';
+import { clearState } from 'storeConfig/apiStatus/apiSlice';
 import { FormInput } from 'sharedComponents/inputs';
 import { useRedux } from 'hooks';
 import { Grocery } from 'models';
 import Loader from 'sharedComponents/loader/loader';
+import { getApiState } from 'storeConfig/apiStatus/apiSelector';
 
 const AddGrocery = () => {
     const { dispatch } = useRedux();
-    const { loading, error, successMessage } = useSelector((state:any) => state.apiState);
+    const { loading, error, successMessage } = useSelector(getApiState);
     const [preview, setPreview] = useState();
 
     const toast = useRef<any>(null);

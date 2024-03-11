@@ -7,7 +7,7 @@ import {
 import { adminGroceryActions } from './adminGrocerySlice';
 import {
     startLoading, endLoading, setError, setSuccessMessage,
-} from 'storeConfig/api/apiSlice';
+} from 'storeConfig/apiStatus/apiSlice';
 import { SuccesResponse, GrocerySingleRes, GroceryListRes } from 'models';
 
 function* getGroceryByDetails(action:any) {

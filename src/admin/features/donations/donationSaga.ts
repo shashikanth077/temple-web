@@ -10,7 +10,7 @@ import {
 } from 'models';
 import {
     startLoading, endLoading, setError, setSuccessMessage,
-} from 'storeConfig/api/apiSlice';
+} from 'storeConfig/apiStatus/apiSlice';
 
 function* getDonationByIdRow(action:any) {
     try {

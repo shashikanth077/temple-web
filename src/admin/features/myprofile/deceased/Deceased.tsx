@@ -11,8 +11,9 @@ import { selectDeasedList } from '../myProfileSelectors';
 import { myprofileActions } from '../myProfileSlice';
 import { useRedux, useUser } from 'hooks';
 import DeleteDiaLog from 'sharedComponents/dialogs/dialogs';
-import { clearState } from 'storeConfig/api/apiSlice';
+import { clearState } from 'storeConfig/apiStatus/apiSlice';
 import Loader from 'sharedComponents/loader/loader';
+import { getApiState } from 'storeConfig/apiStatus/apiSelector';
 
 /* eslint-disable */
 interface DeceasedPersons{
@@ -31,7 +32,7 @@ interface DeceasedPersons{
 function ManageDeceased() {
 
     const navigate = useNavigate();
-    const { loading, error, successMessage } = useSelector((state:any) => state.apiState);
+    const { loading, error, successMessage } = useSelector(getApiState);
 
     const emptyDeceased:DeceasedPersons = {
         _id:'',

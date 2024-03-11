@@ -8,7 +8,7 @@ import { adminServiceActions } from './serviceSlice';
 import { SuccesResponse, ServerList, ServerSingleList } from 'models';
 import {
     startLoading, endLoading, setError, setSuccessMessage,
-} from 'storeConfig/api/apiSlice';
+} from 'storeConfig/apiStatus/apiSlice';
 
 function* getServiceByIdRow(action:any) {
     try {

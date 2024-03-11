@@ -13,13 +13,14 @@ import { FormInput } from 'sharedComponents/inputs';
 import { useRedux } from 'hooks';
 import { Event } from 'models';
 import Loader from 'sharedComponents/loader/loader';
-import { clearState } from 'storeConfig/api/apiSlice';
-import { selectStaticEvents } from 'features/content/contactSelectors';
+import { clearState } from 'storeConfig/apiStatus/apiSlice';
+import { selectStaticEvents } from 'contents/content/contactSelectors';
+import { getApiState } from 'storeConfig/apiStatus/apiSelector';
 
 /* eslint-disable */
 const AddEvent = () => {
     const { dispatch,appSelector } = useRedux();
-    const { loading, error, successMessage } = useSelector((state:any) => state.apiState);
+    const { loading, error, successMessage } = useSelector(getApiState);
     const [image, setImage] = useState({ preview: '', data: '' })
 
     const staticEventContent = appSelector(selectStaticEvents);

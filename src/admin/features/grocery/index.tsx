@@ -13,7 +13,7 @@ import { selectGroceries } from './adminGrocerySelector';
 import { adminGroceryActions } from './adminGrocerySlice';
 import DeleteDiaLog from 'sharedComponents/dialogs/dialogs';
 import { useRedux } from 'hooks';
-import { clearState } from 'storeConfig/api/apiSlice';
+import { clearState } from 'storeConfig/apiStatus/apiSlice';
 import { Grocery } from 'models';
 
 /* eslint-disable */

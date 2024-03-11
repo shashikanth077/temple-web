@@ -1,5 +1,5 @@
 import {
-    Action, combineReducers, configureStore, ThunkAction,
+    Action, configureStore, ThunkAction,
 } from '@reduxjs/toolkit';
 import createSagaMiddleware from 'redux-saga';
 import {
@@ -7,77 +7,28 @@ import {
     persistReducer,
 } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-import { serviceReducer } from '../features/services/serviceSlice';
-import { eventReducer } from '../features/events/eventsSlice';
-import { myBookingsReducer } from '../features/bookings/bookingSlice';
-import { staffReducer } from '../features/staffs/staffSlice';
-import { cartReducer } from '../features/shop/cart/cartSlice';
-import { AboutReducer } from '../features/home/about/aboutSlice';
-import rootSaga from './rootSaga';
-import { contactReducer, sendcontactReducer } from 'features/contact/contactSlice';
-import authReducer from 'features/auth/login/loginSlice';
-import registerReducer from 'features/auth/register/registerSlice';
-import forgotpasswordReducer from 'features/auth/login/forgotpassword/forgotpassSlice';
-import { productReducer } from 'features/shop/providers/productSlice';
-import { adminmenuReducer } from 'admin/layout/menu/menuSlice';
-import { adminlayoutReducer } from 'admin/layout/layoutSlice';
-import { adminProductReducer } from 'admin/features/products/adminProductSlice';
-import myProfileReducer from 'admin/features/myprofile/myProfileSlice';
-import { admingodReducer } from 'admin/features/godmaster/godSlice';
-import { adminServiceReducer } from 'admin/features/services/serviceSlice';
-import apiReducer from 'storeConfig/api/apiSlice';
-import { adminEventReducer } from 'admin/features/events/adminEventSlice';
-import { admincontentReducer } from 'features/content/contentSlice';
-import { adminUserReducer } from 'admin/features/users/userSlice';
-import { adminGroceryReducer } from 'admin/features/grocery/adminGrocerySlice';
-import { GroceryCartReducer } from 'features/donations/grocery/grocerySlice';
-import { mydonationsReducer } from 'features/donations/mydonations/donationSlice';
-import { adminReportsReducer } from 'admin/features/reports/reportsSlice';
-import { adminBookingReducer } from 'admin/features/bookings/bookingSlice';
-import { adminDonationTypeReducer } from 'admin/features/donations/donationSlice';
-import { adminSiteManagerReducer } from 'admin/features/sitemanager/siteManagerSlice';
-import { volunteerReducer } from 'features/volunteers/volunteersSlice';
-import { adminVolunteersReducer } from 'admin/features/volunteers/volunteerSlice';
-
-const rootReducer = combineReducers({
-    contact: contactReducer,
-    sendcontact: sendcontactReducer,
-    services: serviceReducer,
-    events: eventReducer,
-    bookings: myBookingsReducer,
-    staff: staffReducer,
-    cartitems: cartReducer,
-    about: AboutReducer,
-    login: authReducer,
-    register: registerReducer,
-    forgotpassword: forgotpasswordReducer,
-    product: productReducer,
-    adminmenu: adminmenuReducer,
-    adminlayout: adminlayoutReducer,
-    adminproduct: adminProductReducer,
-    myprofile: myProfileReducer,
-    gods: admingodReducer,
-    adminService: adminServiceReducer,
-    apiState: apiReducer,
-    adminEvent: adminEventReducer,
-    staticContent: admincontentReducer,
-    adminuser: adminUserReducer,
-    admingrocery: adminGroceryReducer,
-    donategrocert: GroceryCartReducer,
-    mydonations: mydonationsReducer,
-    reports: adminReportsReducer,
-    adminbookingtypes: adminBookingReducer,
-    admindonationtypes: adminDonationTypeReducer,
-    adminStatic: adminSiteManagerReducer,
-    volunteers: volunteerReducer,
-    adminVoltr: adminVolunteersReducer,
-});
+import rootSaga from './Saga';
+import rootReducer from './reducers';
 
 const persistConfig = {
     key: 'arora',
-    version: 1.1,
+    version: 1.0,
     storage,
-    blacklist: ['adminVoltr', 'adminuser', 'myprofile', 'apiState', 'adminproduct', 'login', 'about', 'product', 'menu', 'staff', 'events', 'contact', 'sendcontact'],
+    blacklist: [
+        'adminVoltr',
+        'adminuser',
+        'myprofile',
+        'apiState',
+        'adminproduct',
+        'login',
+        'about',
+        'product',
+        'menu',
+        'staff',
+        'events',
+        'contact',
+        'sendcontact',
+    ],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

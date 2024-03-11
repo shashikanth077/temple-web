@@ -10,9 +10,9 @@ import {
 
 } from './index';
 import { AuthProtected } from './PrivateRoute';
-import PageNotFound from 'features/404Page';
+import DefaultLayout from 'public/layout';
+import PageNotFound from 'sharedComponents/404Page';
 import AuthLayout from 'admin/layout/index';
-import DefaultLayout from 'layout/index';
 import { useUser } from 'hooks';
 
 /* eslint-disable */

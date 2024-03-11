@@ -14,9 +14,10 @@ import Loader from 'sharedComponents/loader/loader';
 import { FormInput } from 'sharedComponents/inputs';
 import { ProfileData } from 'models';
 import { useRedux, useToggle, useUser } from 'hooks';
-import { clearState } from 'storeConfig/api/apiSlice';
+import { clearState } from 'storeConfig/apiStatus/apiSlice';
 import { CAProvinces } from 'constants/CAProvinces';
 import { NakshtraRasi } from 'constants/profile';
+import { getApiState } from 'storeConfig/apiStatus/apiSelector';
 
 /* eslint no-underscore-dangle: 0 */
 const EditProfile = () => {
@@ -24,7 +25,7 @@ const EditProfile = () => {
     const toast = useRef<any>(null);
     const [date, setDate] = useState(null);
     const [billingAddressShow, hideBillingToggle] = useToggle(true);
-    const { loading, error, successMessage } = useSelector((state:any) => state.apiState);
+    const { loading, error, successMessage } = useSelector(getApiState);
 
     const [loggedInUser] = useUser();
 

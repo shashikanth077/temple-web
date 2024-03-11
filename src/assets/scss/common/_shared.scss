@@ -1916,4 +1916,11 @@ button:disabled {
   align-items: center;
   justify-content: center;
 }
-
+.multiple-select-common {
+  input {
+    height:32px;
+  }
+}
+.rbt-input-main {
+  height: 32px;
+}

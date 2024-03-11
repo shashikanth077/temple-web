@@ -13,7 +13,7 @@ import { admingodActions } from '../godmaster/godSlice';
 import { selectGods } from '../godmaster/godSelector';
 import { adminServiceActions } from './serviceSlice';
 import { selectService } from './serviceSelector';
-import { clearState } from 'storeConfig/api/apiSlice';
+import { clearState } from 'storeConfig/apiStatus/apiSlice';
 import { FormInput } from 'sharedComponents/inputs';
 import { useRedux } from 'hooks';
 import { AdminService } from 'models';
@@ -23,7 +23,8 @@ import ImageComponent from 'sharedComponents/Image/image';
 import {
     numberOfDaysAhead, ServiceTypes, bookingTypes, Months, Frequency,
 } from 'constants/services';
-import { selectStaticContentServices } from 'features/content/contactSelectors';
+import { selectStaticContentServices } from 'contents/content/contactSelectors';
+import { getApiState } from 'storeConfig/apiStatus/apiSelector';
 
 interface OptionTypes {
     value: string;
@@ -34,7 +35,7 @@ interface OptionTypes {
 /* eslint no-underscore-dangle: 0 */
 const EditService = () => {
     const { dispatch, appSelector } = useRedux();
-    const { loading, error, successMessage } = useSelector((state:any) => state.apiState);
+    const { loading, error, successMessage } = useSelector(getApiState);
     const [image, setImage] = useState({ preview: '', data: '' })
     const { id } = useParams<any>();
     const toast = useRef<any>(null);

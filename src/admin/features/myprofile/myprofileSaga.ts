@@ -7,7 +7,7 @@ import {
 import { myprofileActions } from './myProfileSlice';
 import {
     startLoading, endLoading, setError, setSuccessMessage,
-} from 'storeConfig/api/apiSlice';
+} from 'storeConfig/apiStatus/apiSlice';
 import {
     DeasedSingleResponse, DeasedListResponse, FamilyResponse, FamilySingleResponse, SuccesResponse,
 } from 'models';

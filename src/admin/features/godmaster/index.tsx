@@ -14,8 +14,9 @@ import { admingodActions } from './godSlice';
 import { selectGods } from 'admin/features/godmaster/godSelector';
 import DeleteDiaLog from 'sharedComponents/dialogs/dialogs';
 import { useRedux } from 'hooks';
-import { clearState } from 'storeConfig/api/apiSlice';
+import { clearState } from 'storeConfig/apiStatus/apiSlice';
 import Image from 'sharedComponents/Image/image';
+import { getApiState } from 'storeConfig/apiStatus/apiSelector';
 
 interface Gods {
     _id:string;
@@ -33,7 +34,7 @@ export default function ManageGods() {
     }
     
     const navigate = useNavigate();
-    const { loading, error, successMessage } = useSelector((state:any) => state.apiState);
+    const { loading, error, successMessage } = useSelector(getApiState);
 
     const [filters, setFilters] = useState({
         global: { value: null, matchMode: FilterMatchMode.CONTAINS },

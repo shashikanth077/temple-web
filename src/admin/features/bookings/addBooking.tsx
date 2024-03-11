@@ -8,18 +8,19 @@ import { useForm } from 'react-hook-form';
 import { Toast } from 'primereact/toast';
 import { useSelector } from 'react-redux';
 import { adminBookingActions } from './bookingSlice';
-import { clearState } from 'storeConfig/api/apiSlice';
+import { selectStaticBookings } from 'contents/content/contactSelectors';
+import { clearState } from 'storeConfig/apiStatus/apiSlice';
 import { FormInput } from 'sharedComponents/inputs';
 import { useRedux } from 'hooks';
 import { Booking } from 'models';
 import Loader from 'sharedComponents/loader/loader';
 import { category } from 'constants/seva';
-import { selectStaticBookings } from 'features/content/contactSelectors';
+import { getApiState } from 'storeConfig/apiStatus/apiSelector';
 
 /* eslint-disable */
 const AddBooking = () => {
     const { dispatch,appSelector} = useRedux();
-    const { loading, error, successMessage } = useSelector((state:any) => state.apiState);
+    const { loading, error, successMessage } = useSelector(getApiState);
     const [image, setImage] = useState({ preview: '', data: '' })
 
     const toast = useRef<any>(null);

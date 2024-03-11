@@ -14,8 +14,9 @@ import { FormInput } from 'sharedComponents/inputs';
 import { useRedux, useUser } from 'hooks';
 import { FamilyData } from 'models';
 import Loader from 'sharedComponents/loader/loader';
-import { clearState } from 'storeConfig/api/apiSlice';
+import { clearState } from 'storeConfig/apiStatus/apiSlice';
 import { NakshtraRasi, Relationship } from 'constants/profile';
+import { getApiState } from 'storeConfig/apiStatus/apiSelector';
 
 /* eslint-disable */
 const AddFamily = () => {
@@ -23,7 +24,7 @@ const AddFamily = () => {
     const [loggedInUser] = useUser();
     const navigate = useNavigate();
 
-    const { loading, error, successMessage } = useSelector((state:any) => state.apiState);
+    const { loading, error, successMessage } = useSelector(getApiState);
 
     const toast = useRef<any>(null);
     const [date, setDate] = useState(null);

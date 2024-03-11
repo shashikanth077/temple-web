@@ -1,11 +1,14 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Event, SuccessRes, EventSingleRes } from 'models';
+import {
+    Event, SuccessRes, EventSingleRes, EventList, EventListRes,
+} from 'models';
 
 export interface EventState {
     loading?: boolean;
     error:any;
     message:string;
     event:any;
+    events:any;
 }
 
 export interface GetEventPayload {
@@ -16,12 +19,20 @@ const initialState: EventState = {
     error: '',
     message: '',
     event: {},
+    events: [],
 };
 
 const EventSlice = createSlice({
     name: 'adminEvent',
     initialState,
     reducers: {
+        fetchEvents(state) {
+            state.loading = false;
+        },
+        fetchEventListSuccess(state, action: PayloadAction<EventListRes>) {
+            state.loading = false;
+            state.events = action.payload.events;
+        },
         getEventById(state, action: PayloadAction<GetEventPayload>) {
             state.loading = true;
         },

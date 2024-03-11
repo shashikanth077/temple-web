@@ -16,8 +16,9 @@ import { NakshtraRasi, Relationship } from 'constants/profile';
 import { FormInput } from 'sharedComponents/inputs';
 import { useRedux, useUser } from 'hooks';
 import { FamilyData } from 'models';
-import { clearState } from 'storeConfig/api/apiSlice';
+import { clearState } from 'storeConfig/apiStatus/apiSlice';
 import Loader from 'sharedComponents/loader/loader';
+import { getApiState } from 'storeConfig/apiStatus/apiSelector';
 
 /* eslint-disable */
 const EditFamily = () => {
@@ -27,7 +28,7 @@ const EditFamily = () => {
 
     const [loggedInUser] = useUser();
 
-    const { loading, error, successMessage } = useSelector((state:any) => state.apiState);
+    const { loading, error, successMessage } = useSelector(getApiState);
 
     const toast = useRef<any>(null);
     const [selectedDate, setSelectedDate] = useState<Date>(new Date());

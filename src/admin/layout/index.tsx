@@ -10,7 +10,7 @@ import 'primeicons/primeicons.css';
 import 'primeflex/primeflex.css';
 import 'primereact/resources/primereact.css';
 import { PublicImageURL } from 'constants/PublicUrl';
-import AutoLogout from 'features/autoLogout';
+import AutoLogout from 'sharedComponents/autoLogout';
 
 const Topbar = React.lazy(() => import('./topBar/index'));
 const LeftSidebar = React.lazy(() => import('./menu/leftSidemenu'));
