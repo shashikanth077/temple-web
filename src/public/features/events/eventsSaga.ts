@@ -1,7 +1,7 @@
 import {
     call, put, all, fork, takeLatest,
 } from 'redux-saga/effects';
-import { getEvents, bookEvent, getEventsByFilter } from './eventsApi';
+import { getEvents, getEventsByFilter } from './eventsApi';
 import { eventsActions } from './eventsSlice';
 import { EventListRes } from 'models';
 import {
@@ -44,30 +44,8 @@ function* fetcheventsListByFilter() {
     }
 }
 
-function* storeEventBookHistory(action:any) {
-    try {
-        yield put(startLoading());
-        const response: EventListRes = yield call(bookEvent, action.payload);
-        if (response.success) {
-            // yield put(setSuccessMessage('Success'));
-        } else {
-            yield put(setError(response.errorMessage));
-        }
-    } catch (error) {
-        if (error instanceof Error) {
-            yield put(setError(error.message));
-        }
-    } finally {
-        yield put(endLoading());
-    }
-}
-
 export function* watchEventsDetails() {
     yield takeLatest(eventsActions.fetchEvents.type, fetcheventsList);
-}
-
-export function* watchStoreEventDetails() {
-    yield takeLatest(eventsActions.confirmPayment.type, storeEventBookHistory);
 }
 
 export function* watchFetcheventsListByFilter() {
@@ -75,7 +53,7 @@ export function* watchFetcheventsListByFilter() {
 }
 
 function* eventSaga() {
-    yield all([fork(watchEventsDetails), fork(watchStoreEventDetails), fork(watchFetcheventsListByFilter)]);
+    yield all([fork(watchEventsDetails), fork(watchFetcheventsListByFilter)]);
 }
 
 export default eventSaga;

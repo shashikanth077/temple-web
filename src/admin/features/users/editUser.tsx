@@ -12,6 +12,7 @@ import { Typeahead } from 'react-bootstrap-typeahead';
 import 'react-bootstrap-typeahead/css/Typeahead.css';
 import { clearState } from '../../../storeConfig/apiStatus/apiSlice';
 import { adminUserActions } from './userSlice';
+import { selectUser } from './userSelector';
 import { FormInput } from 'sharedComponents/inputs';
 import { useRedux } from 'hooks';
 import { User } from 'models';
@@ -48,7 +49,12 @@ const Edituser = () => {
         setMultiSelections(selected);
     };
 
-    const user = useSelector((state:any) => state.adminuser.user);
+    useEffect(() => {
+        dispatch(adminUserActions.getUserById({ _id: id }));
+    }, [dispatch, id]);
+
+
+    const user = appSelector(selectUser);
 
     useEffect(() => {
         const uRoles:any = [];
@@ -57,10 +63,7 @@ const Edituser = () => {
         });
         setMultiSelections(uRoles);
     }, [user]);
-
-    useEffect(() => {
-        dispatch(adminUserActions.getUserById({ _id: id }));
-    }, [dispatch, id]);
+  
 
     /*
        form validation schema
@@ -92,7 +95,6 @@ const Edituser = () => {
     */
     const onSubmit = handleSubmit((formData: any) => {
 
-      
         formData._id = id;
 
         let Roles:any = [];
@@ -108,10 +110,10 @@ const Edituser = () => {
     });
 
     useEffect(() => {
-        setValue('firstName', user.firstName);
-        setValue('lastName', user.lastName);
-        setValue('phonenumber', user.phonenumber);
-        setValue('email', user.email);
+        setValue('firstName', user?.firstName);
+        setValue('lastName', user?.lastName);
+        setValue('phonenumber', user?.phonenumber);
+        setValue('email', user?.email);
      },[user,setValue])
 
     useEffect(() => {

@@ -7,8 +7,4 @@ export function getServiceById(payload:any) {
     return response;
 }
 
-export function bookService(payload:any) {
-    const baseUrl = 'http://localhost:8080/api/service-booking'
-    const response = APICore.create(`${baseUrl}`,payload);
-    return response;
-}
+

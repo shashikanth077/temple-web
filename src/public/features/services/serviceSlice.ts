@@ -18,7 +18,7 @@ const initialState: ServiceState = {
 };
 
 const serviceSlice = createSlice({
-    name: 'services',
+    name: 'pbservices',
     initialState,
     reducers: {
         getServices(state, action: PayloadAction<GetBookingPayload>) {
@@ -27,16 +27,6 @@ const serviceSlice = createSlice({
         fetchServiceListSuccess(state, action: PayloadAction<ServerList>) {
             state.loading = false;
             state.services = action.payload.services;
-        },
-        bookService(state, action: PayloadAction<ServiceBookData>) {
-            state.loading = false;
-        },
-        saveBookingLocalData(state, action: PayloadAction<SuccesResponse>) {
-            state.loading = false;
-            state.bookingData = action.payload;
-        },
-        confirmPayment(state, action: PayloadAction<ServiceBookData>) {
-            state.loading = false;
         },
     },
 });

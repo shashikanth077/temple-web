@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm, Controller } from 'react-hook-form';
 import * as yup from 'yup';
@@ -23,13 +23,10 @@ import { getApiState } from 'storeConfig/apiStatus/apiSelector';
 const EditProfile = () => {
     const { appSelector, dispatch } = useRedux();
     const toast = useRef<any>(null);
-    const [date, setDate] = useState(null);
     const [billingAddressShow, hideBillingToggle] = useToggle(true);
     const { loading, error, successMessage } = useSelector(getApiState);
 
     const [loggedInUser] = useUser();
-
-    console.log('loggedInUser', loggedInUser);
 
     const showToast = (severity:any, summary:any, detail:any) => {
         toast.current.show({ severity, summary, detail });

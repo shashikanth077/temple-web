@@ -33,9 +33,7 @@ const eventsSlice = createSlice({
             state.loading = false;
             state.eventsfilter = action.payload.events;
         },
-        confirmPayment(state, action: PayloadAction<any>) {
-            state.loading = false;
-        },
+
     },
 });
 
