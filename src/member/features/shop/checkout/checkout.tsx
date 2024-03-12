@@ -204,7 +204,6 @@ const Checkout = () => {
             }
             if (!error) {
                 setCardErrors('');
-                console.log('payment start');
                 const payload = await stripe.confirmCardPayment(response.clientSecret, {
                     payment_method: paymentMethod?.id,
                 });

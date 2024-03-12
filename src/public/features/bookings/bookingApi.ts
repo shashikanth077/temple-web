@@ -13,16 +13,3 @@ export function getSevaTypes(payload:any) {
     return response;
 }
 
-//same apis for all order history for user
-export function getShoppingOrders(payload:any) {
-    const baseUrl = `http://localhost:8080/api/orders/${payload.userId}/${payload.type}`;
-    const response = APICore.get(`${baseUrl}`, {});
-    return response;
-}
-
-
-export function bookSeva(payload:any) {
-    const baseUrl = `http://localhost:8080/api/booking`;
-    const response = APICore.create(`${baseUrl}`,payload);
-    return response;
-}

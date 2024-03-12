@@ -13,6 +13,7 @@ import { useRedux, useUser } from 'hooks';
 import DeleteDiaLog from 'sharedComponents/dialogs/dialogs';
 import { clearState } from 'storeConfig/apiStatus/apiSlice';
 import Loader from 'sharedComponents/loader/loader';
+import { getApiState } from 'storeConfig/apiStatus/apiSelector';
 
 /* eslint-disable */
 interface Families{
@@ -28,7 +29,7 @@ interface Families{
 function ManageFamily() {
 
     const navigate = useNavigate();
-    const { loading, error, successMessage } = useSelector((state:any) => state.apiState);
+    const { loading, error, successMessage } = useSelector(getApiState);
 
     const showToast = (severity:any, summary:any, detail:any) => {
         toast.current.show({ severity, summary, detail });
