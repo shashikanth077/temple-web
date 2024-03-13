@@ -31,6 +31,8 @@ const serviceConfirm = () => {
         let data: any = {};
         data.name = BookDetails?.name;
         data.godName = BookDetails?.godName;
+        data.NoOfChild = BookDetails?.NoOfChild;
+        data.poojaTime = BookDetails?.poojaTime;
         data.NoOfPerson = BookDetails?.NoOfPerson;
         data.type = BookDetails?.type;
         data.amount = BookDetails?.amount;

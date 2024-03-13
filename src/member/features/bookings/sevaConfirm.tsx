@@ -56,8 +56,7 @@ const SevaConfirmPage = () => {
 
 
     const BookDetails = appSelector(selecLocalSevaData);
-    console.log(BookDetails,"BookDetails");
-
+  
     /*
        form validation schema
     */
@@ -228,6 +227,8 @@ const SevaConfirmPage = () => {
                     requestPayload.bookingDate =  BookDetails?.bookingDate;
                     requestPayload.sevaName = BookDetails?.name;
                     requestPayload.NoOfPerson = BookDetails?.NoOfPerson;
+                    requestPayload.poojaTime = BookDetails?.poojaTime;
+                    requestPayload.NoOfChild = BookDetails?.NoOfChild;
                     requestPayload.billingAddress = billingAddressFormData;
                     requestPayload.devoteeName = ProfileDetails.firstName + '' + ProfileDetails.lastName;
                     requestPayload.devoteePhoneNumber = loggedInUser?.phonenumber;
@@ -458,7 +459,7 @@ const SevaConfirmPage = () => {
                                                     control={control}
                                                     name="comments"
                                                     type="textarea"
-                                                    placeholder="Notes about your shopping, e.g. special notes for order. "
+                                                    placeholder="Pooja notes. "
                                                     defaultValue=""
                                                 />
                                             </div>
@@ -472,12 +473,6 @@ const SevaConfirmPage = () => {
                                         <h2><strong>Your seva details</strong></h2>
                                         <div className="your-order-wrap gray-bg-4">
                                             <div className="your-order-product-info">
-                                                {/* <div className="your-order-top">
-                                                    <ul>
-                                                        <li>Donation </li>
-                                                        <li>Total</li>
-                                                    </ul>
-                                                </div> */}
                                                 <div className="your-order-middle">
                                                     <ul>
                                                    

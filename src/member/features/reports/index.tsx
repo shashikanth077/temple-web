@@ -4,6 +4,7 @@ import ServiceBookings from './services';
 import SevaBookings from './seva';
 import EventBookings from './events';
 import { Types } from 'constants/services';
+import Heading from 'sharedComponents/heading/heading';
 
 const Orders: React.FC = () => {
     const [type, setType] = useState<string>('shopOrders');
@@ -14,7 +15,12 @@ const Orders: React.FC = () => {
 
     return (
         <>
-            <h2 className="mb-4">My Bookings</h2>
+            <Heading
+                headingWrapClass="heading-head-wrap"
+                title="Bookings"
+                classes="text-center mt-3"
+                align="text-center"
+            />
 
             <div className="mb-4">
                 <label htmlFor="orderType" className="form-label">

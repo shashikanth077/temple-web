@@ -232,6 +232,8 @@ const ServiceConfimPage = () => {
                     requestPayload.bookingDate =  BookDetails?.bookingDate;
                     requestPayload.ServiceName = BookDetails?.name;
                     requestPayload.NoOfPerson = BookDetails?.NoOfPerson;
+                    requestPayload.NoOfChild = BookDetails?.NoOfChild;
+                    requestPayload.poojaTime = BookDetails?.poojaTime;
                     requestPayload.billingAddress = billingAddressFormData;
                     requestPayload.devoteeName = ProfileDetails.firstName + '' + ProfileDetails.lastName;
                     requestPayload.devoteePhoneNumber = loggedInUser?.phonenumber;
@@ -463,7 +465,7 @@ const ServiceConfimPage = () => {
                                                     control={control}
                                                     name="comments"
                                                     type="textarea"
-                                                    placeholder="Notes about your shopping, e.g. special notes for order. "
+                                                    placeholder="Service booking notes."
                                                     defaultValue=""
                                                 />
                                             </div>

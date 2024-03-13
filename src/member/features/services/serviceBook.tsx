@@ -32,6 +32,7 @@ const BookService = () => {
     const [loggedInUser] = useUser();
     const { id } = useParams();
     const navigate = useNavigate();
+    const [time, setTime] = useState<string | null>(null);
 
     const intl = useIntl();
     const toast = useRef<any>(null);
@@ -61,12 +62,19 @@ const BookService = () => {
     const schemaResolver = yupResolver(
         yup.object().shape({
             bookingDate: yup.string().required("Please select a date"),
+            poojaTime: yup.string().required("Please select a pooja time"),
             NoOfPerson: yup
-            .number()
-            .typeError('Number of persons is required')
-            .required('Number of persons is required')
-            .positive('Number must be positive')
-            .integer('Number must be an integer'),
+                .number()
+                .typeError('Number of persons is required')
+                .required('Number of persons is required')
+                .positive('Number must be positive')
+                .integer('Number must be an integer'),
+            NoOfChild: yup
+                .number()
+                .typeError('Number of children is required')
+                .required('Number of children is required')
+                .positive('Number must be positive')
+                .integer('Number must be an integer'),
         }),
     );
 
@@ -90,6 +98,9 @@ const BookService = () => {
         data.name = serviceDetails?.serviceName;
         data.godName = serviceDetails?.godName;
         data.type = serviceDetails?.serviceType;
+        data.NoOfChild = data?.NoOfChild;
+        data.poojaTime = data?.poojaTime;
+        data.NoOfPerson = data?.NoOfPerson;
         data.amount = serviceDetails?.price;
         data.bookingDate = selectedDate ? moment(selectedDate).format('DD/MM/YYYY') : null;
         data.userId = loggedInUser?.id;
@@ -207,6 +218,36 @@ const BookService = () => {
                                             </div>
                                             <div className="col-md-6">
                                                 <div className="form-group">
+                                                    <Controller
+                                                        name="poojaTime"
+                                                        key={"poojaTime"}
+                                                        defaultValue={time}
+                                                        control={control}
+                                                        rules={{ required: 'Date is required.' }}
+                                                        render={({ field }) => (
+                                                            <>
+                                                                <label htmlFor={field.name}>Pooja time</label>
+                                                                <Calendar
+                                                                    timeOnly
+                                                                    value={field.value}
+                                                                    onChange={(e: any) => {
+                                                                        const formattedTime = e.value?.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                                                                        field.onChange(e.value);
+                                                                        setTime(formattedTime);
+                                                                    }}
+                                                                    showIcon
+                                                                    icon={() => <i className="pi pi-clock" />}
+                                                                    className="events-top-bar-datepicker-button mb-3"
+                                                                />
+                                                            </>
+                                                        )}
+                                                    />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className='row'>
+                                            <div className="col-md-6">
+                                                <div className="form-group">
                                                     <FormInput
                                                         type="number"
                                                         name="NoOfPerson"
@@ -219,8 +260,21 @@ const BookService = () => {
                                                     />
                                                 </div>
                                             </div>
+                                            <div className="col-md-6">
+                                                <div className="form-group">
+                                                    <FormInput
+                                                        type="number"
+                                                        name="NoOfChild"
+                                                        register={register}
+                                                        key="NoOfChild"
+                                                        errors={errors}
+                                                        control={control}
+                                                        label="Number of children (under 5 years)"
+                                                        containerClass="mb-3"
+                                                    />
+                                                </div>
+                                            </div>
                                         </div>
-
                                         <div className="row text-center">
                                             <div className="col-sm-12">
                                                 <div className="text-center d-flex mb-3 update-profile-btn">

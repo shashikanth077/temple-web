@@ -54,7 +54,7 @@ const EventPaymentPage = () => {
         dispatch(adminEventActions.getEventById({ _id: id }));
     }, [dispatch, id]);
 
-    const { event } = useSelector((state: any) => state.adminEvent);
+    const { event } = useSelector((state: any) => state.admin.adminEvent);
 
     useEffect(() => {
         dispatch(
@@ -92,7 +92,6 @@ const EventPaymentPage = () => {
         register,
         control,
         setValue,
-        reset,
         formState: { errors },
     } = methods;
 
