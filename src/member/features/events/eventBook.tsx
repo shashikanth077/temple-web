@@ -1,6 +1,5 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 import { Button } from 'react-bootstrap';
-import { Toast } from 'primereact/toast';
 import { useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useIntl } from 'react-intl';
@@ -9,39 +8,31 @@ import { useRedux } from 'hooks';
 import Loader from 'sharedComponents/loader/loader';
 import { formatCurrency } from 'helpers/currency';
 import { adminEventActions } from 'admin/features/events/adminEventSlice';
+import { getApiState } from 'storeConfig/apiStatus/apiSelector';
 
 /* eslint-disable */
 const EventBook = () => {
-    const { dispatch, appSelector } = useRedux();
+    const { dispatch } = useRedux();
     const navigate = useNavigate();
 
-    const { loading } = useSelector(
-        (state: any) => state.apiState,
-    );
+    const { loading } = useSelector(getApiState);
 
     const { id } = useParams();
    
     const intl = useIntl();
-    const toast = useRef<any>(null);
-
-    const showToast = (severity: any, summary: any, detail: any) => {
-        toast.current.show({ severity, summary, detail });
-    };
-
+   
     useEffect(() => {
         dispatch(adminEventActions.getEventById({ _id: id }));
     }, [dispatch, id]);
 
-    const { event } = useSelector((state: any) => state.adminEvent);
-
+    const { event } = useSelector((state: any) => state.admin.adminEvent);
+   
     const handleSubmit = () => {
         navigate('/event-payment/'+id);
     }
     
     return (
         <>
-            <Toast ref={toast} />
-
             {loading && <Loader />}
 
             <div className="container-fluid">

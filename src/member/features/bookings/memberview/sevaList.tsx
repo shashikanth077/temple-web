@@ -9,6 +9,7 @@ import { useRedux } from 'hooks';
 import { PublicImageURL } from 'constants/PublicUrl';
 import { formatCurrency } from 'helpers/currency';
 import ButtonV1 from 'sharedComponents/button/buttonv1';
+import Heading from 'sharedComponents/heading/heading';
 
 /* eslint no-underscore-dangle: 0 */
 export function BookingTypes() {
@@ -29,7 +30,12 @@ export function BookingTypes() {
     return (
         <section className="member-seva-list-section area-padding">
             <div className="container">
-                <HeadingVersionOne classes="seva-heading" title="List of seva" />
+                <Heading
+                    headingWrapClass="heading-head-wrap"
+                    title="Seva list"
+                    classes="text-center mt-3"
+                    align="text-center"
+                />
                 <div className="seva-list">
                     {bookingTypes?.map((Seva:any) => (
                         <div className="seva-box">

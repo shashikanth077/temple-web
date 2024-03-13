@@ -26,6 +26,7 @@ const BookSeva = () => {
     const [selectedDate, setSelectedDate] = useState<any>(null);
     const [loggedInUser] = useUser();
     const { id } = useParams();
+    const [time, setTime] = useState<string | null>(null);
     const navigate = useNavigate();
 
     const intl = useIntl();
@@ -47,12 +48,19 @@ const BookSeva = () => {
     const schemaResolver = yupResolver(
         yup.object().shape({
             bookingDate: yup.string().required("Please select a date"),
+            poojaTime: yup.string().required("Please select a pooja time"),
             NoOfPerson: yup
-            .number()
-            .typeError('Number of persons is required')
-            .required('Number of persons is required')
-            .positive('Number must be positive')
-            .integer('Number must be an integer'),
+                .number()
+                .typeError('Number of persons is required')
+                .required('Number of persons is required')
+                .positive('Number must be positive')
+                .integer('Number must be an integer'),
+            NoOfChild: yup
+                .number()
+                .typeError('Number of children is required')
+                .required('Number of children is required')
+                .positive('Number must be positive')
+                .integer('Number must be an integer'),
         }),
     );
 
@@ -76,10 +84,13 @@ const BookSeva = () => {
         data.name = serviceDetails?.name;
         data.type = serviceDetails?.sevaBookingType;
         data.amount = serviceDetails?.amount;
+        data.NoOfChild = data?.NoOfChild;
+        data.poojaTime = data?.poojaTime;
+        data.NoOfPerson = data?.NoOfPerson;
         data.bookingDate = selectedDate ? moment(selectedDate).format('DD/MM/YYYY') : null;
         data.userId = loggedInUser?.id;
         data.category = "seva-book",
-        dispatch(myBookingsActions.saveSevaLocalData(data));
+            dispatch(myBookingsActions.saveSevaLocalData(data));
         navigate('/confirm-seva-details');
     });
 
@@ -117,7 +128,7 @@ const BookSeva = () => {
                                     <h3>Your seva details</h3>
                                     <div className="your-order-wrap gray-bg-4 mb-4">
                                         <div className="your-order-product-info ">
-                                                                                       
+
                                             <div className="your-order-bottom mb-4">
                                                 <ul>
                                                     <li className="your-order-shipping">
@@ -131,7 +142,7 @@ const BookSeva = () => {
                                                     <li className="your-order-shipping">
                                                         Price
                                                     </li>
-                                                    <li className="booking-info">{formatCurrency(intl,serviceDetails?.amount)}</li>
+                                                    <li className="booking-info">{formatCurrency(intl, serviceDetails?.amount)}</li>
                                                 </ul>
                                             </div>
                                             <div className="your-order-bottom mb-4">
@@ -152,82 +163,126 @@ const BookSeva = () => {
                                             </div>
                                         </div>
                                     </div>
-                               
-                                <form
-                                    name="Booking-form"
-                                    id="Booking-form"
-                                    className=''
-                                    onSubmit={onSubmit}
-                                >
-                                    <div className='row'>
-                                        <div className="col-md-6">
-                                            <div className="form-group">
-                                                <Controller
-                                                    defaultValue={null}
-                                                    name="bookingDate"
-                                                    key={"deathDate"}
-                                                    control={control}
-                                                    rules={{
-                                                        required:
-                                                            "Date is required.",
-                                                    }}
-                                                    render={({ field }) => (
-                                                        <>
-                                                            <label
-                                                                htmlFor={field.name}
-                                                            >
-                                                                Select date
-                                                            </label>
-                                                            <Calendar
-                                                                value={field.value}
-                                                                onChange={(
-                                                                    e: any,
-                                                                ) => {
-                                                                    field.onChange(
-                                                                        e.value,
-                                                                    );
-                                                                    setSelectedDate(
-                                                                        e.value,
-                                                                    ); // Update local state if needed
-                                                                }}
-                                                                showIcon
-                                                                className="events-top-bar-datepicker-button mb-3"
-                                                                minDate={new Date()} 
-                                                            />
-                                                        </>
-                                                    )}
-                                                />
+
+                                    <form
+                                        name="Booking-form"
+                                        id="Booking-form"
+                                        className=''
+                                        onSubmit={onSubmit}
+                                    >
+                                        <div className='row'>
+                                            <div className="col-md-6">
+                                                <div className="form-group">
+                                                    <Controller
+                                                        defaultValue={null}
+                                                        name="bookingDate"
+                                                        key={"deathDate"}
+                                                        control={control}
+                                                        rules={{
+                                                            required:
+                                                                "Date is required.",
+                                                        }}
+                                                        render={({ field }) => (
+                                                            <>
+                                                                <label
+                                                                    htmlFor={field.name}
+                                                                >
+                                                                    Select date
+                                                                </label>
+                                                                <Calendar
+                                                                    value={field.value}
+                                                                    onChange={(
+                                                                        e: any,
+                                                                    ) => {
+                                                                        field.onChange(
+                                                                            e.value,
+                                                                        );
+                                                                        setSelectedDate(
+                                                                            e.value,
+                                                                        ); // Update local state if needed
+                                                                    }}
+                                                                    showIcon
+                                                                    className="events-top-bar-datepicker-button mb-3"
+                                                                    minDate={new Date()}
+                                                                />
+                                                            </>
+                                                        )}
+                                                    />
+                                                </div>
+                                            </div>
+                                            <div className="col-md-6">
+                                                <div className="form-group">
+                                                    <Controller
+                                                        name="poojaTime"
+                                                        key={"poojaTime"}
+                                                        defaultValue={time}
+                                                        control={control}
+                                                        rules={{ required: 'Date is required.' }}
+                                                        render={({ field }) => (
+                                                            <>
+                                                                <label htmlFor={field.name}>Pooja time</label>
+                                                                <Calendar
+                                                                    timeOnly
+                                                                    value={field.value}
+                                                                    onChange={(e: any) => {
+                                                                        const formattedTime = e.value?.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                                                                        field.onChange(e.value);
+                                                                        setTime(formattedTime);
+                                                                    }}
+                                                                    showIcon
+                                                                    icon={() => <i className="pi pi-clock" />}
+                                                                    className="events-top-bar-datepicker-button mb-3"
+                                                                />
+                                                            </>
+                                                        )}
+                                                    />
+                                                </div>
                                             </div>
                                         </div>
-                                        <div className="col-md-6">
-                                            <div className="form-group">
-                                                <FormInput
-                                                    type="number"
-                                                    name="NoOfPerson"
-                                                    register={register}
-                                                    key="NoOfPerson"
-                                                    errors={errors}
-                                                    control={control}
-                                                    label="Number of persons"
-                                                    containerClass="mb-3"
-                                                />
+                                        <div className='row'>
+                                            <div className="col-md-6">
+                                                <div className="form-group">
+                                                    <FormInput
+                                                        type="number"
+                                                        name="NoOfPerson"
+                                                        register={register}
+                                                        key="NoOfPerson"
+                                                        errors={errors}
+                                                        control={control}
+                                                        label="Number of persons"
+                                                        containerClass="mb-3"
+                                                    />
+                                                </div>
+                                            </div>
+                                            <div className="col-md-6">
+                                                <div className="form-group">
+                                                    <FormInput
+                                                        type="number"
+                                                        name="NoOfChild"
+                                                        register={register}
+                                                        key="NoOfChild"
+                                                        errors={errors}
+                                                        control={control}
+                                                        label="Number of children (under 5 years)"
+                                                        containerClass="mb-3"
+                                                    />
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div className="row text-center">
-                                        <div className="col-sm-12">
-                                            <div className="text-center d-flex mb-3 update-profile-btn">
-                                                <Button
-                                                    type="submit"
-                                                    className="btn btn-primary book-btn submit-btn mr-1 waves-effect waves-light"
-                                                    disabled={loading}
-                                                >
-                                                    Confirm Booking
-                                                </Button>
+                                        <div className="row text-center">
+                                            <div className="col-sm-12">
+                                                <div className="text-center d-flex mb-3 update-profile-btn">
+                                                    <Button
+                                                        type="submit"
+                                                        className="btn btn-primary book-btn submit-btn mr-1 waves-effect waves-light"
+                                                        disabled={loading}
+                                                    >
+                                                        Confirm Booking
+                                                    </Button>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </form>
+                                    </form>
                                 </div>
                             </div>
                         </div>

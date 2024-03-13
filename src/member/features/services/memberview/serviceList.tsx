@@ -11,6 +11,7 @@ import { APICore } from 'helpers';
 import { PublicImageURL } from 'constants/PublicUrl';
 import { formatCurrency } from 'helpers/currency';
 import ButtonV1 from 'sharedComponents/button/buttonv1';
+import Heading from 'sharedComponents/heading/heading';
 
 /* eslint no-underscore-dangle: 0 */
 /* eslint-disable */
@@ -59,9 +60,12 @@ const ServiceList = () => {
             <div className="col-xs-12 col-sm-12 col-md-9 col-lg-9">
                 <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12 pl-0 xs-pr-0 sd-profile pr-0">
                     <h2 className="col-xs-12 col-sm-12 col-md-12 col-lg-12 pl-0 xs-pr-0 sd-side-heading fw400">
-                        <span className="fw400">
-                            <span className="fw700">List of services</span>
-                        </span>
+                    <Heading
+                        headingWrapClass="heading-head-wrap"
+                        title="List of services"
+                        classes="text-center mt-3"
+                        align="text-center"
+                    />
                     </h2>
                     <div className="service-form">
                         <div className="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12 xssm-pr-0 pl-0 pr-0">
