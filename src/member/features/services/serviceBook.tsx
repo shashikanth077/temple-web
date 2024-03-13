@@ -19,13 +19,14 @@ import Loader from 'sharedComponents/loader/loader';
 import { adminServiceActions } from 'admin/features/services/serviceSlice';
 import { selectService } from 'admin/features/services/serviceSelector';
 import { formatCurrency } from 'helpers/currency';
+import { getApiState } from 'storeConfig/apiStatus/apiSelector';
 
 /* eslint-disable */
 const BookService = () => {
     const { dispatch, appSelector } = useRedux();
 
     const { loading, error, successMessage } = useSelector(
-        (state: any) => state.apiState,
+       getApiState
     );
     const [selectedDate, setSelectedDate] = useState<any>(null);
     const [loggedInUser] = useUser();
