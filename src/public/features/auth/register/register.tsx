@@ -19,6 +19,7 @@ import Loader from 'sharedComponents/loader/loader';
 import { countryCodes } from 'constants/CAProvinces';
 import { FormInput } from 'sharedComponents/inputs';
 import { clearState } from 'storeConfig/apiStatus/apiSlice';
+import { getApiState } from 'storeConfig/apiStatus/apiSelector';
 
 /* bottom links */
 const BottomLink = () => (
@@ -36,7 +37,8 @@ const BottomLink = () => (
 
 const Register = () => {
     const { dispatch, appSelector } = useRedux();
-    const { loading, error, successMessage } = useSelector((state:any) => state.apiState);
+
+    const { loading, error, successMessage } = useSelector(getApiState);
     const navigate = useNavigate();
     const [ValMob, setMobileNumber] = useState('');
     const [CountryVal, setCountryCode] = useState('');

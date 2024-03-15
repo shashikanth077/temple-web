@@ -8,6 +8,7 @@ import Loader from 'sharedComponents/loader/loader';
 import { clearState } from 'storeConfig/apiStatus/apiSlice';
 import { CartData } from 'models';
 import { formatCurrency } from 'helpers/currency';
+import { getApiState } from 'storeConfig/apiStatus/apiSelector';
 
 interface productProps{
     currency:any;
@@ -32,7 +33,7 @@ const ProductDescriptionInfo = (props:productProps) => {
     const navigate = useNavigate();
     const intl = useIntl();
 
-    const { loading, error, successMessage } = useSelector((state:any) => state.apiState);
+    const { loading, error, successMessage } = useSelector(getApiState);
     const toast = useRef<any>(null);
 
     const showToast = (severity:any, summary:any, detail:any) => {

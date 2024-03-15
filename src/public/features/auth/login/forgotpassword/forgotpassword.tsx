@@ -12,6 +12,7 @@ import { forgotpasswodActions } from './forgotpassSlice';
 import { Form, FormInput } from 'sharedComponents/inputs';
 import { useRedux } from 'hooks';
 import { clearState } from 'storeConfig/apiStatus/apiSlice';
+import { getApiState } from 'storeConfig/apiStatus/apiSelector';
 
 type UserData = {
   email: string;
@@ -32,7 +33,7 @@ const BottomLink = () => (
 
 const ForgetPassword = () => {
     const { dispatch } = useRedux();
-    const { loading, error, successMessage } = useSelector((state: any) => state.apiState);
+    const { loading, error, successMessage } = useSelector(getApiState);
     const navigate = useNavigate(); // Impor
     const initialSuccessMessageRef = useRef<string | null>(null);
     const [showForm, setShowForm] = useState(true);

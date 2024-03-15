@@ -40,7 +40,7 @@ const EditEvent = () => {
         toast.current.show({ severity, summary, detail });
     };
 
-    const { event } = useSelector((state:any) => state.adminEvent);
+    const { event } = useSelector((state:any) => state.admin.adminEvent);
 
     /*
        form validation schema

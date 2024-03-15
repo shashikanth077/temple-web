@@ -10,7 +10,6 @@ export default function Recentevents() {
     const { appSelector } = useRedux();
 
     const eventsList = appSelector(selectEventsFilterList);
-    console.log('recentevents', eventsList.recentevents);
 
     const RecenteventMap = eventsList?.recentevents?.map((item:any) => (
         <div key={item._id}>

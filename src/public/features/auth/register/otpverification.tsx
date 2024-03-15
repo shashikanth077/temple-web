@@ -18,6 +18,7 @@ import { useRedux } from 'hooks';
 import { FormInput } from 'sharedComponents/inputs';
 import { clearState } from 'storeConfig/apiStatus/apiSlice';
 import { selectStaticRegistration } from 'contents/content/contactSelectors';
+import { getApiState } from 'storeConfig/apiStatus/apiSelector';
 
 type LocationState = {
     from?: Location;
@@ -51,9 +52,7 @@ const Otpverification = () => {
 
     const RegisterContent = appSelector(selectStaticRegistration);
 
-    const { loading, error, successMessage } = useSelector(
-        (state: any) => state.apiState,
-    );
+    const { loading, error, successMessage } = useSelector(getApiState);
 
     /*
   form validation schema

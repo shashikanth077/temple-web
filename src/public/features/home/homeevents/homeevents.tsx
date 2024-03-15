@@ -20,24 +20,26 @@ export default function HomeEvents(props:EventProps) {
     } = props;
 
     return (
-        <section className={`${classes} home-events area-padding`}>
-            <Container>
-                <div className="justify-content-right row">
-                    <Heading title={heading} />
-                </div>
-                <Row className="justify-content-between d-flex gy-4">
-                    <div className="slider-area">
-                        <SlickSlider
-                            arrowClassPrev={`${classes}-home-prev-pr`}
-                            arrowClassNext={`${classes}-home-next-pr`}
-                            NumOfSlide={1}
-                            autoPly={false}
-                        >
-                            {data}
-                        </SlickSlider>
+        data.length > 0 ? (
+            <section className={`${classes} home-events area-padding`}>
+                <Container>
+                    <div className="justify-content-right row">
+                        <Heading title={heading} />
                     </div>
-                </Row>
-            </Container>
-        </section>
+                    <Row className="justify-content-between d-flex gy-4">
+                        <div className="slider-area">
+                            <SlickSlider
+                                arrowClassPrev={`${classes}-home-prev-pr`}
+                                arrowClassNext={`${classes}-home-next-pr`}
+                                NumOfSlide={1}
+                                autoPly={false}
+                            >
+                                {data}
+                            </SlickSlider>
+                        </div>
+                    </Row>
+                </Container>
+            </section>
+        ) : null
     );
 }
