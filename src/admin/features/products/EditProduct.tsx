@@ -25,7 +25,7 @@ const EditProduct = () => {
     const [image, setImage] = useState({ preview: '', data: '' });
 
     const { loading, error, successMessage } = useSelector(getApiState);
-    const { product } = useSelector((state:any) => state.adminproduct);
+    const { product } = useSelector((state:any) => state.admin.adminproduct);
     
     const showToast = (severity:any, summary:any, detail:any) => {
         toast.current.show({ severity, summary, detail });
