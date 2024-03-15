@@ -46,7 +46,7 @@ const Topbar = ({ toggleMenu, navOpen }: TopbarProps) => {
     const { sideBarType } = useThemeCustomizer();
     const { width } = useViewport();
     const [loggedInUser] = useUser();
-    const { dispatch, appSelector } = useRedux();
+    const { appSelector } = useRedux();
 
     const cartItems:any = appSelector(selectCurrentCartData);
     
@@ -161,7 +161,7 @@ const Topbar = ({ toggleMenu, navOpen }: TopbarProps) => {
                         <ProfileDropdown
                             menuItems={profileMenus}
                             userImage={`${window.location.origin}/${PublicImageURL}/logo/logo.jpg`}
-                            username={loggedInUser.firstName}
+                            username={loggedInUser?.firstName}
                         />
                     </li>
                 </ul>

@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { authActions } from 'public/features/auth/login/loginSlice';
 import { selectStaticTopbar, selectContactDetails } from 'contents/content/contactSelectors';
 import useRedux from 'hooks/useRedux';
@@ -7,9 +8,11 @@ import { APICore } from 'helpers/api';
 /* eslint-disable */
 function Topbar() {
     const { dispatch, appSelector } = useRedux();
+    const navigate = useNavigate();
 
     const userLogout = () => {
         dispatch(authActions.logout());
+        navigate('/');
     };
 
     const TopbarDetails:any = appSelector(selectStaticTopbar);
