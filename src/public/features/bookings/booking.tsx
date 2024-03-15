@@ -27,6 +27,10 @@ export default function Bookings() {
             </Card>
         </div>
     );
+    
+    if (!bookingList.bookings || bookingList.bookings.length === 0) {
+        return null; // Return null to not render anything if bookingList.bookings is empty
+    }
 
     return (
         <section className="booking-home area-padding">

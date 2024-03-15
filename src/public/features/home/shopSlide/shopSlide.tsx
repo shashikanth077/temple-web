@@ -30,11 +30,11 @@ export default function Shop() {
                         <SlickSlider
                             arrowClassPrev="shop-home-prev-pr"
                             arrowClassNext="shop-home-next-pr"
-                            NumOfSlide={4}
+                            NumOfSlide={productList.length > 4 ? 4 : productList.length}
                             autoPly={false}
                         >
                             {productList?.map((product:any, index:any) => (
-                                <Col key={product.productid} lg={4} md={6}>
+                                <Col key={product.productid} lg={productList.length > 4 ? 4 : productList.length} md={6}>
                                     <Link to={`/products/details/${product._id}`}>
                                         <div className="single-shop-box">
                                             <div className="thumb text-center">
