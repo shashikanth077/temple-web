@@ -23,7 +23,7 @@ function EventDetails() {
         }
     }, [dispatch, id]);
 
-    const eventData = useSelector((state:any) => state.adminEvent);
+    const eventData = useSelector((state:any) => state.admin.adminEvent);
     console.log('eventData', eventData);
 
     const handleBook = (e:any, eventId:string) => {
