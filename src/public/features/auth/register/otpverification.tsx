@@ -35,7 +35,7 @@ const Otpverification = () => {
     const navigate = useNavigate();
 
     const { email, mobileNumber, countrycode } = useSelector(
-        (state: any) => state.register,
+        (state: any) => state.public.register,
     );
     const { num, code } = useParams<{ num?: string; code?: string }>() || {};
     const [resendAttempts, setResendAttempts] = useState(3);

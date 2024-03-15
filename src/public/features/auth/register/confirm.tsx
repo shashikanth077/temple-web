@@ -10,7 +10,7 @@ type LocationState = {
 };
 
 const Confirm = () => {
-    const { email } = useSelector((state:any) => state.register);
+    const { email } = useSelector((state:any) => state.public.register);
     const { dispatch, appSelector } = useRedux();
 
     const location = useLocation();
