@@ -1,29 +1,23 @@
 import React, { useEffect } from 'react';
-import { useLocation, Navigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { authActions } from './login/loginSlice';
 import { useRedux } from 'hooks';
+import { APICore, setAuthorization } from 'helpers';
 
 function Logout() {
     const { dispatch } = useRedux();
-
-    type LocationState = {
-        from?: Location;
-    };
+    const navigate = useNavigate();
 
     useEffect(() => {
         dispatch(authActions.logout());
-    }, [dispatch]);
-
-    const location = useLocation();
-    let redirectUrl = '/';
-
-    if (location.state) {
-        const { from } = location.state as LocationState;
-        redirectUrl = from ? from.pathname : '/';
-    }
+        APICore.setLoggedInUser(null);
+        setAuthorization(null);
+        APICore.destoryUser();
+        navigate('/login');
+    }, [dispatch, navigate]);
 
     return (
-        <Navigate to={redirectUrl} replace />
+        <>null</>
     );
 }
 
