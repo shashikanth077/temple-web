@@ -465,7 +465,7 @@ const EventPaymentPage = () => {
                                                     control={control}
                                                     name="comments"
                                                     type="textarea"
-                                                    placeholder="Notes about your shopping, e.g. special notes for order. "
+                                                    placeholder="Event booking notes"
                                                     defaultValue=""
                                                 />
                                             </div>

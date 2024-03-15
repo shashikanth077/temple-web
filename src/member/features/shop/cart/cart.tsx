@@ -208,14 +208,6 @@ const Cart = () => {
                                                                 cartItem.price,
                                                                 cartItem.discount,
                                                             );
-
-                                                        // const finalProductPrice = (
-                                                        //     cartItem.product_price * currency.currencyRate
-                                                        // ).toFixed(2);
-                                                        // const finalDiscountedPrice = (
-                                                        //     discountedPrice * currency.currencyRate
-                                                        // ).toFixed(2);
-
                                                         return (
                                                             <tr
                                                                 key={
@@ -234,37 +226,15 @@ const Cart = () => {
                                                                 </td>
 
                                                                 <td className="product-name">
-                                                                    {/* <Link
-                                                                to={
-                                                                    `${process.env.PUBLIC_URL
-                                                                    }/product/${
-                                                                        cartItem.cartid}`
-                                                                }
-                                                            >
-
-                                                            </Link> */}
                                                                     {
                                                                         cartItem.name
                                                                     }
                                                                 </td>
 
                                                                 <td className="product-price-cart">
-                                                                    {/* {discountedPrice !== null ? (
-                                                                <>
-                                                                    <span className="amount old">
-                                                                        {currency.currencySymbol
-                                                                + cartItem.totalcartvalue}
-                                                                                            </span>
-                                                                                            <span className="amount">
-                                                                                                {currency.currencySymbol
-                                                                + cartItem.finaldiscountedprice}
-                                                                    </span>
-                                                                </>
-                                                            ) : ( */}
                                                                     <span className="amount">
                                                                     {formatCurrency(intl, cartItem.price)}
                                                                     </span>
-                                                                    {/* )} */}
                                                                 </td>
 
                                                                 <td className="product-quantity">
@@ -318,24 +288,8 @@ const Cart = () => {
                                                                     </div>
                                                                 </td>
                                                                 <td className="product-subtotal">
-                                                                    {/* $
-                                                                {cartItem.price}{" "}
-                                                                *{" "}
-                                                                {
-                                                                    cartItem.quantity
-                                                                }
-                                                                = */}
                                                                     {
-                                                                        //  {discountedPrice !== null
-                                                                        //     ? currency.currencySymbol
-                                                                        //         + (
-                                                                        //             cartItem.finaldiscountedprice * cartItem.quantity
-                                                                        //         ).toFixed(2)
-                                                                        //     :
-
-                                                                        formatCurrency(intl, cartItem.price *
-                                                                            cartItem.quantity)  
-                                                                     
+                                                                        formatCurrency(intl, cartItem.price * cartItem.quantity)  
                                                                     }
                                                                 </td>
 
@@ -393,21 +347,14 @@ const Cart = () => {
                                 </div>
                             </div>
 
-                            <div className="row">
-                                <div className="col-lg-4 col-md-12">
+                            <div className="row cart-grand-total">
+                                <div className="col-lg-6 col-md-12">
                                     <div className="grand-totall">
                                         <div className="title-wrap">
                                             <h4 className="cart-bottom-title mb-3 section-bg-gary-cart">
                                                 Cart Total
                                             </h4>
                                         </div>
-                                        {/* <h5>
-                                        Total products{' '}
-                                        <span>
-                                            {currency.currencySymbol + cartItems.list.totalProducts.toFixed(2)}
-                                        </span>
-                                    </h5> */}
-
                                         <h4 className="grand-totall-title">
                                             Grand Total{" "}
                                             <span>

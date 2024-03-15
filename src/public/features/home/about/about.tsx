@@ -27,6 +27,7 @@ export default function Homeabout() {
                         <ViewMore
                             classnames="home-about-readmore"
                             title="View More"
+                            url="/about"
                         />
                     </Col>
                 </Row>
