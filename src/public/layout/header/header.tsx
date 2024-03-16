@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { useEffect } from 'react';
 import Navigation from '../menu/menu';
 import { selectStaticHeader } from 'contents/content/contactSelectors';
@@ -28,7 +29,7 @@ function Header(props: HeaderProps) {
                     </a>
                     <div className="temple-btn-box">
                         <div aria-label="mobile-bar" className="toggle-btn ml-30 canvas_open d-lg-none d-block" tabIndex={0} onClick={e => action(e)} onKeyDown={e => action(e)} role="button">
-                            <i className="fa fa-bars" />
+                            <i className="fa fa-bars" style={{ "fontSize": '32px'}} />
                         </div>
                     </div>
                     <div className="temple-header-main-menu">

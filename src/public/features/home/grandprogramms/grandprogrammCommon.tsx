@@ -18,7 +18,7 @@ const Grandprogram = (props:{title:string, url:string}) => {
                         </div>
                     </Col>
                     <Col md={3} lg={2}>
-                        <a href={url} className="anchor-box">Donate Now</a>
+                        <a href={url} className="anchor-box btn btn-link">Donate Now</a>
                     </Col>
                 </Row>
             </Container>
