@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     Button, Row, Col,
 } from 'react-bootstrap';
@@ -51,6 +51,7 @@ const Login = () => {
     const { dispatch } = useRedux();
     const navigate = useNavigate();
     const { loading, error, successMessage } = useSelector(getApiState);
+    const [firstTimeReload, setFirstTimeReload] = useState(true);
 
     /*
         form validation schema
@@ -82,7 +83,7 @@ const Login = () => {
                 if (sessionUrl) {
                     navigate(sessionUrl);
                 } else {
-                    navigate(redirectUrl, { replace: true });
+                    navigate('/dashboard');
                 }
 
                 dispatch(clearState());
@@ -132,7 +133,7 @@ const Login = () => {
                     // localStorage.removeItem('targetUrl');
                 } else {
                     // If there is no stored session URL, redirect to the default URL (e.g., /dashboard)
-                    navigate(redirectUrl, { replace: true });
+                    navigate(redirectUrl);
                 }
             }
         };
