@@ -2,6 +2,7 @@ import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 
 // All layouts containers
+import { useSelector } from 'react-redux';
 import {
     publicProtectedFlattenRoutes,
     adminProtectedRoutes,
@@ -14,6 +15,7 @@ import DefaultLayout from 'public/layout';
 import PageNotFound from 'sharedComponents/404Page';
 import AuthLayout from 'admin/layout/index';
 import { useUser } from 'hooks';
+import { selectCurrentUser } from 'public/features/auth/login/loginSelectors';
 
 /* eslint-disable */
 interface RoutesProps { }
@@ -23,16 +25,24 @@ const AllRoutes = (props: RoutesProps) => {
 
     const [loggedInUser] = useUser();
 
+    let currentUser = useSelector(selectCurrentUser);
+    let sessionUser;
+    if(currentUser) {
+        sessionUser = currentUser;
+    } else {
+        sessionUser = loggedInUser;
+    }
+
     let RoleStatus;
-    if (loggedInUser?.roles?.includes('ROLE_ADMIN') && loggedInUser?.roles?.includes('ROLE_USER')) {
+    if (sessionUser?.roles?.includes('ROLE_ADMIN') && sessionUser?.roles?.includes('ROLE_USER')) {
         RoleStatus = 'BOTH';
-    } else if (loggedInUser?.roles?.includes('ROLE_ADMIN')) {
+    } else if (sessionUser?.roles?.includes('ROLE_ADMIN')) {
         RoleStatus = 'ROLE_ADMIN';
-    } else if (loggedInUser?.roles?.includes('ROLE_USER')) {
+    } else if (sessionUser?.roles?.includes('ROLE_USER')) {
         RoleStatus = 'ROLE_USER';
     }
 
-
+    
     return (
         <Routes>
             <Route>
