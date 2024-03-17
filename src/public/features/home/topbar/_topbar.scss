@@ -117,3 +117,15 @@
       }
     }
   }
+
+  @media (max-width: 767px) {
+    .topbar {
+      display: flex !important;
+      flex-direction: column !important;
+      height: 75px;
+      font-size: 12px;
+    }
+    .contact-info i {
+      padding: 0 5px 0 5px;
+  }
+  }

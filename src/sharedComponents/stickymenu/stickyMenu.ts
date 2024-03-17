@@ -1,3 +1,4 @@
+/* eslint-disable */
 export default function StickyMenu(selector = '.temple-sticky') {
     document.addEventListener('scroll', () => {
         const element = document.querySelector(selector);

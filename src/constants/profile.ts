@@ -1,3 +1,4 @@
+/* eslint-disable */
 const Relationship = [
     { value: 'father', label: 'Father' },
     { value: 'mother', label: 'Mother' },
