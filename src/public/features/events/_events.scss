@@ -2,7 +2,7 @@
 
     margin-bottom: 60px;
     width: 100%;
-    border: 1px solid #DED4E1;
+    border-bottom: 1px solid #DED4E1;
     background-color: #FFFFFF;
     .top-bar-search {
         align-items: center;
@@ -40,7 +40,9 @@
             background-size: 18px;
             background-position: 18px center;
             background-repeat: no-repeat;
-            background-image: url("data:image/svg+xml,%3Csvg id='search' xmlns='http://www.w3.org/2000/svg' width='18.376' height='18.376' viewBox='0 0 18.376 18.376'%3E%3Cg%3E%3Cg%3E%3Cpath d='M8.092,0a8.092,8.092,0,1,0,8.092,8.092A8.1,8.1,0,0,0,8.092,0Zm0,14.691a6.6,6.6,0,1,1,6.6-6.6A6.606,6.606,0,0,1,8.092,14.691Z' fill='%23222733'/%3E%3C/g%3E%3C/g%3E%3Cg transform='translate%2812.599 12.599%29'%3E%3Cg%3E%3Cpath d='M356.6,355.547l-4.283-4.283a.747.747,0,1,0-1.056,1.056l4.283,4.283a.747.747,0,0,0,1.056-1.056Z' transform='translate%28-351.046 -351.046%29' fill='%23222733'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E%0A");
+            border: 1px solid #ccc;
+            width: 400px;
+            //background-image: url("data:image/svg+xml,%3Csvg id='search' xmlns='http://www.w3.org/2000/svg' width='18.376' height='18.376' viewBox='0 0 18.376 18.376'%3E%3Cg%3E%3Cg%3E%3Cpath d='M8.092,0a8.092,8.092,0,1,0,8.092,8.092A8.1,8.1,0,0,0,8.092,0Zm0,14.691a6.6,6.6,0,1,1,6.6-6.6A6.606,6.606,0,0,1,8.092,14.691Z' fill='%23222733'/%3E%3C/g%3E%3C/g%3E%3Cg transform='translate%2812.599 12.599%29'%3E%3Cg%3E%3Cpath d='M356.6,355.547l-4.283-4.283a.747.747,0,1,0-1.056,1.056l4.283,4.283a.747.747,0,0,0,1.056-1.056Z' transform='translate%28-351.046 -351.046%29' fill='%23222733'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E%0A");
         }
         .events-left-search-bar {
             align-items: center;
@@ -61,7 +63,10 @@
             background-color: $theme-color;
             border-color: $theme-color;
             width: auto;
-            border-radius: 0;
+            //border-radius: 0;
+            border-top-right-radius: 0.25rem;
+            border-bottom-right-radius: 0.25rem;
+            height: 47px;
         }
     }
     .top-bar-right-search {
@@ -483,3 +488,21 @@ button.events-top-bar-nav-link--prev:disabled {
     overflow: visible;
     white-space: nowrap;
 }
+
+.events-selector-list{
+    margin-left: 360px;
+}
+@media (max-width: 767px) {
+    .search-top-input-box{
+    width: 230px !important;
+    }
+    .events{
+        border-bottom: none;
+    }
+    .events-selector-list{
+        margin-left: 50px;
+    }
+    .events-calendar-list-event-cost{
+        width:250px !important;
+    }
+  }
