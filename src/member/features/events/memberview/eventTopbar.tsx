@@ -12,8 +12,8 @@ function EventTopBar(props:topProps) {
 
     return (
         <div className="container">
-            <div className="events d-flex align-items-center">
-                <div className="top-bar-search">
+            <div className="events align-items-center row flex-md-nowrap">
+                <div className="top-bar-search col-md-6">
                     <div className="events-left-search-bar">
                         <div className="events-search-input-control-keyword">
                             <label className="events-search-input-control-label" htmlFor="events-bar-keyword">
@@ -23,11 +23,11 @@ function EventTopBar(props:topProps) {
                         </div>
                     </div>
                     <button onClick={(e) => getFilterSortParams('topsearch', inputRef,e)} className="events-btn-top-bar-search" type="submit" name="submit-bar">
-                        Find Events
+                    <i className="fa fa-search"></i>
                     </button>
                 </div>
 
-                <div className="top-bar-right-search">
+                <div className="top-bar-right-search float-right">
                     <ul className="events-selector-list">
                         <li className="events-selector-list-items events-selector-list-items-active">
                             <a onClick={(e) => getFilterSortParams('listAll', inputRef,e)} className="events-selector-list-items-link">
