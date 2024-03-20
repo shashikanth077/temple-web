@@ -218,4 +218,6 @@ const Tithi = [
     },
 ];
 
-export { Relationship, NakshtraRasi, Masam, Paksha, Tithi };
+export {
+    Relationship, NakshtraRasi, Masam, Paksha, Tithi,
+};

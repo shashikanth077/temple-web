@@ -13,6 +13,7 @@ import { selectGods } from 'admin/features/godmaster/godSelector';
 import { APICore } from 'helpers';
 import ButtonV1 from 'sharedComponents/button/buttonv1';
 import Heading from 'sharedComponents/heading/heading';
+import DataNotFound from 'sharedComponents/DataNotFound';
 
 /* eslint no-underscore-dangle: 0 */
 /* eslint-disable */
@@ -55,6 +56,10 @@ export function ServiceList() {
     }, [dispatch, activeGod]);
 
     const serviceList = appSelector(selectServiceList);
+
+    if (!serviceList || serviceList.length === 0) {
+        return <DataNotFound />;
+    }
 
     return (
         <section className="seva-list-section area-padding">

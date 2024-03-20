@@ -11,6 +11,7 @@ import { formatCurrency } from 'helpers/currency';
 import { APICore } from 'helpers';
 import ButtonV1 from 'sharedComponents/button/buttonv1';
 import Heading from 'sharedComponents/heading/heading';
+import DataNotFound from 'sharedComponents/DataNotFound';
 
 /* eslint no-underscore-dangle: 0 */
 export function BookingTypes() {
@@ -33,6 +34,9 @@ export function BookingTypes() {
     const bookingTypes:any = useSelector(selectSevaList);
     const intl = useIntl();
 
+    if (!bookingTypes || !bookingTypes.bookings || bookingTypes.bookings.length === 0) {
+        return <DataNotFound />;
+    }
     return (
         <section className="seva-list-section area-padding">
             <div className="container">

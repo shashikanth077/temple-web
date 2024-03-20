@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     Col, Container, Row,
 } from 'react-bootstrap';
@@ -15,13 +15,39 @@ import { formatCurrency } from 'helpers/currency';
 export default function Shop() {
     const { dispatch, appSelector } = useRedux();
     const intl = useIntl();
-
+    const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+    const [slideOnPage, setSlideOnPage] = useState(1);
+/* eslint-disable */
     useEffect(() => {
         dispatch(productActions.fetchproductList());
     }, [dispatch]);
 
+    useEffect(() => {
+        const handleResize = () => {
+          setScreenWidth(window.innerWidth);
+        };
+    
+        window.addEventListener('resize', handleResize);
+    
+        return () => {
+          window.removeEventListener('resize', handleResize);
+        };
+      }, []);
+
+    useEffect(() => {
+        if (screenWidth < 768) {
+            setSlideOnPage(1);
+        } else {
+            setSlideOnPage(4);
+        }
+      }, [screenWidth]);
+
     const productList = appSelector(selectProductsList);
 
+    if(productList.length === 0) {
+        return null;
+    }
+    
     return (
         <section className="shopping area-padding">
             <Container>
@@ -30,11 +56,11 @@ export default function Shop() {
                         <SlickSlider
                             arrowClassPrev="shop-home-prev-pr"
                             arrowClassNext="shop-home-next-pr"
-                            NumOfSlide={4}
+                            NumOfSlide={slideOnPage}
                             autoPly={false}
                         >
                             {productList?.map((product:any, index:any) => (
-                                <Col key={product.productid} lg={4} md={6}>
+                                <Col key={product.productid} lg={slideOnPage} md={slideOnPage + 2}>
                                     <Link to={`/products/details/${product._id}`}>
                                         <div className="single-shop-box">
                                             <div className="thumb text-center">

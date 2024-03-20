@@ -9,6 +9,7 @@ import { PublicImageURL } from 'constants/PublicUrl';
 import { APICore } from 'helpers';
 import ButtonV1 from 'sharedComponents/button/buttonv1';
 import Heading from 'sharedComponents/heading/heading';
+import DataNotFound from 'sharedComponents/DataNotFound';
 
 /* eslint no-underscore-dangle: 0 */
 export default function DonationTypes() {
@@ -36,6 +37,10 @@ export default function DonationTypes() {
     };
 
     const donationTypes = useSelector(selectDonationTypes);
+
+    if (!donationTypes || donationTypes.length === 0) {
+        return <DataNotFound />;
+    }
 
     return (
         <section className="donation-list-section area-padding">
