@@ -8,6 +8,7 @@ import { selectProductsList } from '../providers/productSelectors';
 import { useRedux } from 'hooks';
 import { getSortedProducts } from 'helpers/products';
 import Heading from 'sharedComponents/heading/heading';
+import DataNotFound from 'sharedComponents/DataNotFound';
 
 const ShopGridStandard = () => {
     const [layout, setLayout] = useState('grid three-column');
@@ -56,6 +57,10 @@ const ShopGridStandard = () => {
         setSortedProducts(sortedProducts);
         setCurrentData(sortedProducts.slice(offset, offset + pageLimit));
     }, [offset, products, sortType, sortValue, filterSortType, filterSortValue]);
+
+    if (!currentData || currentData.length === 0) {
+        return <DataNotFound />;
+    }
 
     return (
         <div className="shop-area pt-10 pb-50">

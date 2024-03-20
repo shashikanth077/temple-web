@@ -28,6 +28,10 @@ export default function Bookings() {
         </div>
     );
 
+    if (bookingList?.bookings?.length === 0) {
+        return null;
+    }
+
     return (
         <section className="booking-home area-padding">
             <Container>

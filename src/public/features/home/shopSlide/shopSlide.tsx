@@ -44,6 +44,10 @@ export default function Shop() {
 
     const productList = appSelector(selectProductsList);
 
+    if(productList.length === 0) {
+        return null;
+    }
+    
     return (
         <section className="shopping area-padding">
             <Container>
