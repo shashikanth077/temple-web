@@ -44,7 +44,7 @@ export default function Shop() {
 
     const productList = appSelector(selectProductsList);
 
-    if(productList.length === 0) {
+    if(!productList || productList.length === 0) {
         return null;
     }
     
