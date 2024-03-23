@@ -21,13 +21,13 @@ import { selectStaticGods } from 'contents/content/contactSelectors';
 
 /* eslint-disable */
 const AddGod = () => {
-    const { dispatch,appSelector } = useRedux();
+    const { dispatch, appSelector } = useRedux();
     const { loading, error, successMessage } = useSelector(getApiState);
     const [image, setImage] = useState({ preview: '', data: '' })
 
     const toast = useRef<any>(null);
     const navigate = useNavigate();
-    const showToast = (severity:any, summary:any, detail:any) => {
+    const showToast = (severity: any, summary: any, detail: any) => {
         toast.current.show({ severity, summary, detail });
     };
 
@@ -40,16 +40,20 @@ const AddGod = () => {
         yup.object().shape({
             description: yup.string().required("Please enter the description").min(2, 'This value is too short. It should have 2 characters or more.'),
             name: yup.string().required(staticGodContent?.addGod?.formValidation?.name).min(2, 'This value is too short. It should have 2 characters or more.'),
-           // worshipDay: yup.string().required(staticGodContent?.addGod?.formValidation?.worshipDay).min(4, 'This value is too short. It should have 2 characters or more.'),
+            worshipDay: yup
+                .array()
+                .of(yup.string())
+                .required(staticGodContent?.addGod?.formValidation?.worshipDay)
+                .min(1, 'Please select at least one worship day'),
             image: yup
                 .mixed()
-                .test('required', staticGodContent?.addGod?.formValidation?.image, (value:any) => value.length > 0)
-                .test('fileSize', 'File Size is too large', (value:any) => value.length && value[0].size <= 5242880)
-                .test('fileType', 'Unsupported File Format', (value:any) => value.length && ['image/jpeg', 'image/png', 'image/jpg'].includes(value[0].type)),
+                .test('required', staticGodContent?.addGod?.formValidation?.image, (value: any) => value.length > 0)
+                .test('fileSize', 'File Size is too large', (value: any) => value.length && value[0].size <= 5242880)
+                .test('fileType', 'Unsupported File Format', (value: any) => value.length && ['image/jpeg', 'image/png', 'image/jpg'].includes(value[0].type)),
         }),
     );
 
-    const methods = useForm<God>({
+    const methods:any = useForm<God>({
         resolver: schemaResolver,
     });
 
@@ -67,17 +71,17 @@ const AddGod = () => {
     */
     const onSubmit = handleSubmit((data: any) => {
 
-        let wDays:any = [];
-        data?.worshipDay?.forEach((worshipDay:any) => {
+        let wDays: any = [];
+        data?.worshipDay?.forEach((worshipDay: any) => {
             wDays.push(worshipDay.value)
         })
 
         const formData = new FormData();
         for (const k in data) {
-            if(k === 'image') {
+            if (k === 'image') {
                 formData.append('image', image.data)
-            } else if (k === 'worshipDay') { 
-                console.log('worshipDay',wDays);
+            } else if (k === 'worshipDay') {
+                console.log('worshipDay', wDays);
                 formData.append('worshipDay', JSON.stringify(wDays))
             } else {
                 formData.append(k, data[k]);
@@ -100,7 +104,7 @@ const AddGod = () => {
         }
     }, [successMessage, error, dispatch]);
 
-    const handleUploadedFile = (event:any) => {
+    const handleUploadedFile = (event: any) => {
         const img = {
             preview: URL.createObjectURL(event.target.files[0]),
             data: event.target.files[0],
@@ -156,11 +160,14 @@ const AddGod = () => {
                                                             {...field}
                                                             options={Days}
                                                             className="multiple-select-common"
-                                                            onChange={(selectedOption:any) => setValue('worshipDay', selectedOption)}
+                                                            onChange={(selectedOption: any) => setValue('worshipDay', selectedOption)}
                                                         />
                                                     )}
                                                 />
                                             </div>
+                                            {errors.worshipDay && errors.worshipDay.message && (
+    <span className="text-danger">{errors?.worshipDay?.message}</span>
+)}
                                         </div>
                                     </div>
 

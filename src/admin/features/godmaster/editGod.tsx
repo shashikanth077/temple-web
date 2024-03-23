@@ -76,12 +76,17 @@ const EditGod = () => {
     }, [successMessage, error, dispatch]);
 
     /*
-        form validation schema
-     */
-    const schemaResolver = yupResolver(
+       form validation schema
+    */
+       const schemaResolver = yupResolver(
         yup.object().shape({
+            description: yup.string().required("Please enter the description").min(2, 'This value is too short. It should have 2 characters or more.'),
             name: yup.string().required(staticGodContent?.addGod?.formValidation?.name).min(2, 'This value is too short. It should have 2 characters or more.'),
-            // worshipDay: yup.string().required(staticGodContent?.addGod?.formValidation?.worshipDay).min(4, 'This value is too short. It should have 2 characters or more.'),
+            worshipDay: yup
+                .array()
+                .of(yup.string())
+                .required(staticGodContent?.addGod?.formValidation?.worshipDay)
+                .min(1, 'Please select at least one worship day')
         }),
     );
 
@@ -134,6 +139,7 @@ const EditGod = () => {
     useEffect(() => {
         setValue('name', god.name);
         setValue('description', god.description);
+        setValue('worshipDay', god.worshipDay);
     },[god])
 
     return (
