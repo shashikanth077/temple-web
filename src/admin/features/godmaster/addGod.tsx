@@ -6,6 +6,7 @@ import {
 } from 'react-bootstrap';
 import { useForm, Controller } from 'react-hook-form';
 import { Toast } from 'primereact/toast';
+import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import Select from 'react-select';
 import { clearState } from '../../../storeConfig/apiStatus/apiSlice';
@@ -25,7 +26,7 @@ const AddGod = () => {
     const [image, setImage] = useState({ preview: '', data: '' })
 
     const toast = useRef<any>(null);
-
+    const navigate = useNavigate();
     const showToast = (severity:any, summary:any, detail:any) => {
         toast.current.show({ severity, summary, detail });
     };
@@ -90,6 +91,7 @@ const AddGod = () => {
             showToast('success', 'Success', successMessage);
             dispatch(clearState());
             reset();
+            navigate("/admin/gods/list");
         }
 
         if (error) {
