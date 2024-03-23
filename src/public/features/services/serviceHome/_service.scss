@@ -36,16 +36,23 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    background-color: #fff;
-    .god-list-view {
+    background-color: #efefef;
+    .god-each-box {
         padding: 30px 60px 5px;
-        background-color: #fff;
+        background-color: #efefef;
         overflow: hidden;
-        flex-wrap: wrap;
         display: flex;
-        justify-content: center;
-        align-items: center;
         width: 100%;
+    .god-list-view {
+        height: auto;
+        max-height: 100%;
+        width: 8.5%;
+        min-width: 8.5%;
+        margin-right: .75%;
+        box-sizing: border-box;
+        cursor: pointer;
+        margin-bottom: 5px;
+        background-color: #efefef;
 
         .active {
             box-shadow: 0 0 20px 6px indianred;
@@ -89,7 +96,7 @@
                 }
               }
         }
-      
+        }
     }
 }
 
@@ -129,6 +136,7 @@
     font-weight: 400;
     font-size: 16px;
     color: #777B83;
+    text-align: justify;
 }
 .product-dprice {
     font-weight: 400;

@@ -9,7 +9,6 @@ const AuthProtected = (props:any) => {
     /*
         redirect is un-auth access protected routes via url
     */
-
     if (APICore.isUserAuthenticated() === false) {
         return (
             <Navigate

@@ -24,6 +24,8 @@ const Voluteers = React.lazy(() => import('public/features/volunteers/volunteers
 const SevaDetails = React.lazy(() => import('public/features/bookings/bookingDetails'));
 const DonationDetails = React.lazy(() => import('public/features/donations/donationDetails'));
 const OtpVerifY = React.lazy(() => import('public/features/auth/register/otpverification'));
+const GodList = React.lazy(() => import('public/features/services/godList'));
+const GodDetails = React.lazy(() => import('public/features/services/godDetails'));
 
 export interface RoutesProps {
     path: RouteProps['path'];
@@ -108,7 +110,7 @@ const otherPublicRoutes: RoutesProps[] = [
         route: Route,
     },
     {
-        path: '/service-list',
+        path: '/service-list/:id',
         name: 'Service types',
         element: <UserServiceList />,
         route: Route,
@@ -141,6 +143,18 @@ const otherPublicRoutes: RoutesProps[] = [
         path: '/verifyOTP/:num/:code',
         name: 'DonationDetails',
         element: <OtpVerifY />,
+        route: Route,
+    },
+    {
+        path: '/gods',
+        name: 'Godlist',
+        element: <GodList />,
+        route: Route,
+    },
+    {
+        path: '/god-details/:id',
+        name: 'GodDetails',
+        element: <GodDetails />,
         route: Route,
     },
 ];

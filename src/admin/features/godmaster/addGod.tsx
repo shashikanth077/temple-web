@@ -37,6 +37,7 @@ const AddGod = () => {
     */
     const schemaResolver = yupResolver(
         yup.object().shape({
+            description: yup.string().required("Please enter the description").min(2, 'This value is too short. It should have 2 characters or more.'),
             name: yup.string().required(staticGodContent?.addGod?.formValidation?.name).min(2, 'This value is too short. It should have 2 characters or more.'),
            // worshipDay: yup.string().required(staticGodContent?.addGod?.formValidation?.worshipDay).min(4, 'This value is too short. It should have 2 characters or more.'),
             image: yup
@@ -156,6 +157,23 @@ const AddGod = () => {
                                                             onChange={(selectedOption:any) => setValue('worshipDay', selectedOption)}
                                                         />
                                                     )}
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className="row">
+                                        <div className="col-md-12">
+                                            <div className="form-group">
+                                                <FormInput
+                                                    type="textarea"
+                                                    name="description"
+                                                    register={register}
+                                                    key="description"
+                                                    errors={errors}
+                                                    control={control}
+                                                    label="Description"
+                                                    containerClass="mb-3"
                                                 />
                                             </div>
                                         </div>
