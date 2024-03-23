@@ -7,7 +7,6 @@ interface GridProps{
 }
 function ProductGridList(props:GridProps) {
     const { products } = props;
-    const { appSelector } = useRedux();
 
     return (
 
@@ -16,7 +15,6 @@ function ProductGridList(props:GridProps) {
                     <div className="col-xl-4 col-sm-6" key={product.id}>
                         <ProductGridListSingle
                             product={product}
-                            currency="$"
                         />
                     </div>
                 ))

@@ -4,8 +4,6 @@ import ProductImageGallery from './ProductImageGallery';
 import ProductDescriptionInfo from './ProductDescription';
 import ProductImageGallerySideThumb from './ProductImageThumbSlider';
 import ProductImageFixed from './ProductImageFixed';
-import { getDiscountPrice } from 'helpers/products';
-import { useRedux } from 'hooks';
 
 interface imageProps{
     spaceTopClass:string;
@@ -17,18 +15,6 @@ const ProductImageDescription = (props:imageProps) => {
     const {
         spaceTopClass, spaceBottomClass, galleryType, product,
     } = props;
-
-    const currency = {
-        currencyRate: 45.56,
-    };
-
-    const { appSelector } = useRedux();
-
-    const discountedPrice:any = getDiscountPrice(product?.price, product?.discount);
-    const finalProductPrice = +(product.price * currency.currencyRate).toFixed(2);
-    const finalDiscountedPrice = +(
-        discountedPrice * currency.currencyRate
-    ).toFixed(2);
 
     let GalleryType;
     if (galleryType === 'leftThumb') {
@@ -57,10 +43,6 @@ const ProductImageDescription = (props:imageProps) => {
                             <div className="col-lg-6 col-md-6">
                                 <ProductDescriptionInfo
                                     product={product}
-                                    discountedPrice={discountedPrice}
-                                    currency={4}
-                                    finalDiscountedPrice={finalDiscountedPrice}
-                                    finalProductPrice={finalProductPrice}
                                 />
                             </div>
                         </div>

@@ -90,6 +90,7 @@ const EditGod = () => {
         handleSubmit,
         register,
         control,
+        setValue,
         formState: { errors },
     } = methods;
 
@@ -125,6 +126,11 @@ const EditGod = () => {
         dispatch(admingodActions.updategod(formData));
     });
 
+
+    useEffect(() => {
+        setValue('name', god.name);
+        setValue('description', god.description);
+    },[god])
 
     return (
         <>
