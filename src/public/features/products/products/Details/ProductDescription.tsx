@@ -6,29 +6,20 @@ import { useIntl } from 'react-intl';
 import { useRedux, useUser } from 'hooks';
 import Loader from 'sharedComponents/loader/loader';
 import { clearState } from 'storeConfig/apiStatus/apiSlice';
-import { CartData } from 'models';
 import { formatCurrency } from 'helpers/currency';
 import { getApiState } from 'storeConfig/apiStatus/apiSelector';
 
 interface productProps{
-    currency:any;
     product:any;
-    discountedPrice:number;
-    finalDiscountedPrice:number;
-    finalProductPrice:number;
 }
 
 /* eslint-disable */
 const ProductDescriptionInfo = (props:productProps) => {
     const {
         product,
-        currency,
-        discountedPrice,
-        finalDiscountedPrice,
-        finalProductPrice
     } = props;
 
-    const {dispatch,appSelector} = useRedux();
+    const {dispatch} = useRedux();
     const [loggedInUser] = useUser();
     const navigate = useNavigate();
     const intl = useIntl();
@@ -42,20 +33,11 @@ const ProductDescriptionInfo = (props:productProps) => {
       
     const [productStock, setProductStock] = useState(product.stock);
   
-    const [actionName,Setaction] =  useState<string>('');
-    const [productVal,setProductId] =  useState<string>('');
-
-    const handleCarts = (
-        e: React.MouseEvent,
-        productId: string,
-        action: string,
-    ) => {
-        e.stopPropagation();
-
-        Setaction(action);
-        setProductId(productId);
+    const AddtoCartItems = (productid:number, quantity:number) => {
+        if (!loggedInUser?.id) {
+            navigate('/login');
+        }
     };
-
    
 
     useEffect(() => {
@@ -77,16 +59,7 @@ const ProductDescriptionInfo = (props:productProps) => {
         <div className="product-details-content ml-70">
             <h2>{product.name}</h2>
             <div className="product-details-price">
-                {discountedPrice !== null ? (
-                    <>
-                        <span>{finalDiscountedPrice}</span>{' '}
-                        <span className="old">
-                            {finalDiscountedPrice}
-                        </span>
-                    </>
-                ) : (
-                    <span>{formatCurrency(intl, product.price)}</span>
-                )}
+                <span>{formatCurrency(intl, product.price)}</span>
             </div>
             <div className="pro-details-list">
                 <p>{product.fullDescription}</p>
@@ -106,48 +79,11 @@ const ProductDescriptionInfo = (props:productProps) => {
                 </div>
             ) : (
                 <div className="pro-details-quality">
-                    <div className="cart-plus-minus">
-                        <button
-                            type="button"
-                            onClick={(
-                                e,
-                            ) =>
-                                handleCarts(
-                                    e,
-                                    product._id,
-                                    "decrease",
-                                )
-                            }
-                            className="dec qtybutton"
-                        >
-                            -
-                        </button>
-                        <input
-                            className="cart-plus-minus-box"
-                            type="text"
-                            readOnly
-                        />
-                        <button
-                            type="button"
-                            onClick={(
-                                e,
-                            ) =>
-                            handleCarts(
-                                    e,
-                                    product._id,
-                                    "increase",
-                                )
-                            }
-                            className="inc qtybutton"
-                        >
-                            +
-                        </button>
-                    </div>
                     <div className="pro-details-cart btn-hover">
                         {productStock && productStock > 0 ? (
                             <button
                                 type="button"
-                                // onClick={() => AddtoCartItems(product._id,1)}
+                                onClick={() => AddtoCartItems(product._id, 1)}
                                 // disabled={ProductCartCurrentData[0]?.quantity >= productStock}
                             >
                                 {' '}

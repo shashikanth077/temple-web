@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { Loader } from 'react-bootstrap-typeahead';
@@ -6,12 +6,10 @@ import { Toast } from 'primereact/toast';
 import { useIntl } from 'react-intl';
 import { clearState } from 'storeConfig/apiStatus/apiSlice';
 import { formatCurrency } from 'helpers/currency';
-import { getDiscountPrice } from 'helpers/products';
 import { useRedux, useUser } from 'hooks';
 import { getApiState } from 'storeConfig/apiStatus/apiSelector';
 
 interface ProductSingleProps {
-    currency: any;
     product: any;
 }
 
@@ -30,15 +28,10 @@ const ProductGridListSingle = (props:ProductSingleProps) => {
     };
 
     const {
-        currency, product,
+        product,
     } = props;
 
-    const discountedPrice:number|null = getDiscountPrice(product.price, product.discount);
-    const [modalShow, setModalShow] = useState(false);
     const finalProductPrice = +(product.price).toFixed(2);
-    const finalDiscountedPrice = +(
-        (discountedPrice) || 0.0 * currency.currencyRate
-    ).toFixed(2);
 
     useEffect(() => {
         if (successMessage) {

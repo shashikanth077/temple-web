@@ -9,14 +9,6 @@ const ProductImageFixed = (props:slideProps) => {
 
     return (
         <div className="product-large-image-wrapper">
-            {product.discount || product.new ? (
-                <div className="product-img-badges">
-                    {product.new ? <span className="purple">New</span> : ''}
-                </div>
-            ) : (
-                ''
-            )}
-
             <div className="product-fixed-image">
                 {product.image ? (
                     <img

@@ -93,6 +93,7 @@ const EditGod = () => {
         handleSubmit,
         register,
         control,
+        setValue,
         formState: { errors },
     } = methods;
 
@@ -129,6 +130,11 @@ const EditGod = () => {
         navigate("/admin/gods/list");
     });
 
+
+    useEffect(() => {
+        setValue('name', god.name);
+        setValue('description', god.description);
+    },[god])
 
     return (
         <>

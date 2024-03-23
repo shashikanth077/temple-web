@@ -13,7 +13,6 @@ import { FormInput } from 'sharedComponents/inputs';
 import { useRedux } from 'hooks';
 import { Product } from 'models';
 import Loader from 'sharedComponents/loader/loader';
-import ImageComponent from 'sharedComponents/Image/image';
 import { getApiState } from 'storeConfig/apiStatus/apiSelector';
 
 /* eslint-disable */

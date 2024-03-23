@@ -61,6 +61,7 @@ export interface GodSingleResponse {
 export interface God {
   _id:string;
   name:string;
+  description:string;
   worshipDay:any;
 }
 
