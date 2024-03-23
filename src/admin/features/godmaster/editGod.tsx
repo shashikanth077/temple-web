@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { useEffect, useRef, useState } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
@@ -7,6 +8,7 @@ import {
 import { useParams } from 'react-router-dom';
 import { useForm, Controller } from 'react-hook-form';
 import { Toast } from 'primereact/toast';
+import { useNavigate } from 'react-router-dom';
 import { Typeahead } from 'react-bootstrap-typeahead';
 import 'react-bootstrap-typeahead/css/Typeahead.css';
 import { useSelector } from 'react-redux';
@@ -27,11 +29,11 @@ interface OptionTypes {
     label: string;
 }
 
-/* eslint-disable */
 const EditGod = () => {
     const { id } = useParams<string>();
     const { dispatch, appSelector } = useRedux();
     const toast = useRef<any>(null);
+    const navigate = useNavigate();
     const [multiSelections, setMultiSelections] = useState<OptionTypes[]>([]);
     const { loading, error, successMessage } = useSelector(getApiState);
     const [image, setImage] = useState({ preview: '', data: '' })
@@ -64,6 +66,7 @@ const EditGod = () => {
         if (successMessage) {
             showToast('success', 'Success', successMessage);
             dispatch(clearState());
+            navigate("/admin/gods/list");
         }
 
         if (error) {
@@ -123,6 +126,7 @@ const EditGod = () => {
         }
         formData.append('_id', id)
         dispatch(admingodActions.updategod(formData));
+        navigate("/admin/gods/list");
     });
 
 
