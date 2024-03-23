@@ -58,7 +58,7 @@ const ServiceConfimPage = () => {
 
 
     const BookDetails = appSelector(selecLocalBookingData);
-    console.log(BookDetails,"BookDetails");
+    console.log(BookDetails, "BookDetails");
 
     /*
        form validation schema
@@ -148,15 +148,15 @@ const ServiceConfimPage = () => {
         }
 
         if (stripe) {
-        
+
             const paymentIntentDetails = {
                 currency: 'cad',
-                devoteePhonenumber:loggedInUser?.phonenumber,
+                devoteePhonenumber: loggedInUser?.phonenumber,
                 receipt_email: loggedInUser?.email,
-                payment_method_types:['card'],
-                amount:BookDetails?.amount,
-                bookingDetails:BookDetails?.name,
-                description: 'Booking for temple service '+BookDetails?.name,
+                payment_method_types: ['card'],
+                amount: BookDetails?.amount,
+                bookingDetails: BookDetails?.name,
+                description: 'Booking for temple service ' + BookDetails?.name,
                 shipping: {
                     name: `${loggedInUser?.userName}`,
                     address: {
@@ -172,7 +172,7 @@ const ServiceConfimPage = () => {
             // Create the payment intent and get the client secret
             const response = await createPaymentIntent(paymentIntentDetails);
 
-            if(!response.clientSecret) {
+            if (!response.clientSecret) {
                 setCardErrors("Something went wrong!");
                 setProcessing(false);
                 return;
@@ -228,8 +228,8 @@ const ServiceConfimPage = () => {
                     requestPayload.serviceType = BookDetails?.type;
                     requestPayload.devoteeId = loggedInUser?.devoteeId;
                     requestPayload.orderType = 'services';
-                    requestPayload.amount =  BookDetails?.amount;
-                    requestPayload.bookingDate =  BookDetails?.bookingDate;
+                    requestPayload.amount = BookDetails?.amount;
+                    requestPayload.bookingDate = BookDetails?.bookingDate;
                     requestPayload.ServiceName = BookDetails?.name;
                     requestPayload.NoOfPerson = BookDetails?.NoOfPerson;
                     requestPayload.NoOfChild = BookDetails?.NoOfChild;
@@ -241,11 +241,11 @@ const ServiceConfimPage = () => {
                     requestPayload.paymentMethod = payload.paymentIntent.payment_method;
                     requestPayload.transStatus = payload.paymentIntent.status;
                     requestPayload.stripeReferenceId = payload.paymentIntent.id;
-                    requestPayload.paymentMode =  payload.paymentIntent.payment_method_types;
-                    requestPayload.orderNotes =  data.comments;
-                 
+                    requestPayload.paymentMode = payload.paymentIntent.payment_method_types;
+                    requestPayload.orderNotes = data.comments;
+
                     dispatch(serviceActions.confirmPayment(requestPayload)); //add booking history
-                  
+
                     setProcessing(false);
 
                     Swal.fire({
@@ -256,7 +256,7 @@ const ServiceConfimPage = () => {
                         dispatch(clearState());
                         document.body.style.overflow = 'auto';
                         document.body.removeChild(overlay);
-                        navigate('/mybookings/lists'); 
+                        navigate('/mybookings/lists');
                     });
 
                     document.body.style.overflow = 'hidden';
@@ -475,64 +475,64 @@ const ServiceConfimPage = () => {
 
                                 <div className="row">
                                     <div className="col-lg-7 order-lg-2">
-                                    <div className="your-order-area">
-                                        <h2><strong>Your service details</strong></h2>
-                                        <div className="your-order-wrap gray-bg-4">
-                                            <div className="your-order-product-info">
-                                                {/* <div className="your-order-top">
+                                        <div className="your-order-area">
+                                            <h2><strong>Your service details</strong></h2>
+                                            <div className="your-order-wrap gray-bg-4">
+                                                <div className="your-order-product-info">
+                                                    {/* <div className="your-order-top">
                                                     <ul>
                                                         <li>Donation </li>
                                                         <li>Total</li>
                                                     </ul>
                                                 </div> */}
-                                                <div className="your-order-middle">
-                                                    <ul>
-                                                    <li>
-                                                            <span className="order-middle-left">
-                                                                God name
-                                                            </span>{' '}
-                                                            <span className="order-price">
-                                                                <strong>{BookDetails.godname}</strong>
-                                                            </span>
-                                                        </li>
-                                                        <li>
-                                                            <span className="order-middle-left">
-                                                                Service type
-                                                            </span>{' '}
-                                                            <span className="order-price">
-                                                                <strong>{BookDetails.type}</strong>
-                                                            </span>
-                                                        </li>
-                                                        <li>
-                                                            <span className="order-middle-left">
-                                                                Service name
-                                                            </span>{' '}
-                                                            <span className="order-price">
-                                                                <strong>{BookDetails.name}</strong>
-                                                            </span>
-                                                        </li>
-                                                        <li>
-                                                            <span className="order-middle-left">
-                                                                Booking date
-                                                            </span>{' '}
-                                                            <span className="order-price">
-                                                                <strong>{BookDetails.bookingDate}</strong>
-                                                            </span>
-                                                        </li>
-                                                    </ul>
+                                                    <div className="your-order-middle">
+                                                        <ul>
+                                                            <li>
+                                                                <span className="order-middle-left">
+                                                                    God name
+                                                                </span>{' '}
+                                                                <span className="order-price">
+                                                                    <strong>{BookDetails.godName}</strong>
+                                                                </span>
+                                                            </li>
+                                                            <li>
+                                                                <span className="order-middle-left">
+                                                                    Service type
+                                                                </span>{' '}
+                                                                <span className="order-price">
+                                                                    <strong>{BookDetails.type}</strong>
+                                                                </span>
+                                                            </li>
+                                                            <li>
+                                                                <span className="order-middle-left">
+                                                                    Service name
+                                                                </span>{' '}
+                                                                <span className="order-price">
+                                                                    <strong>{BookDetails.name}</strong>
+                                                                </span>
+                                                            </li>
+                                                            <li>
+                                                                <span className="order-middle-left">
+                                                                    Booking date
+                                                                </span>{' '}
+                                                                <span className="order-price">
+                                                                    <strong>{BookDetails.bookingDate}</strong>
+                                                                </span>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                    <div className="your-order-total">
+                                                        <ul>
+                                                            <li className="order-total">Total</li>
+                                                            <li>
+                                                                {formatCurrency(intl, BookDetails.amount)}
+                                                            </li>
+                                                        </ul>
+                                                    </div>
                                                 </div>
-                                                <div className="your-order-total">
-                                                    <ul>
-                                                        <li className="order-total">Total</li>
-                                                        <li>
-                                                            {formatCurrency(intl, BookDetails.amount)}
-                                                        </li>
-                                                    </ul>
-                                                </div>
+                                                <div className="payment-method" />
                                             </div>
-                                            <div className="payment-method" />
                                         </div>
-                                    </div>
                                     </div>
 
                                     {/* Order Details on Right Side */}
@@ -573,17 +573,13 @@ const ServiceConfimPage = () => {
                                     className="col-lg-3 order-btn"
                                     style={{ textAlign: "right" }}
                                 >
-
-
-
-                                    {/* Place Order Button */}
-                                    <div className="place-order mt-25">
-                                    <ButtonV1
-                                        disabled={processing || !stripe || !elements}
-                                        btnType="submit"
-                                        label={processing ? 'PROCESSING' : 'Book service'}
-                                        btnClassName='btn btn-hover'
-                                   />
+                                   <div className="place-order mt-25">
+                                        <ButtonV1
+                                            disabled={processing || !stripe || !elements}
+                                            btnType="submit"
+                                            label={processing ? 'PROCESSING' : 'Pay now'}
+                                            btnClassName='btn btn-hover'
+                                        />
                                     </div>
                                 </div>
                             </form>

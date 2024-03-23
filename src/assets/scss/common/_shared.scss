@@ -1924,3 +1924,17 @@ button:disabled {
 .rbt-input-main {
   height: 32px;
 }
+.no-services-found {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.no-services-found p {
+  font-size: 18px;
+  color: #666;
+  font-weight: bold;
+  padding: 10px 20px;
+  background-color: #f9f9f9;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
