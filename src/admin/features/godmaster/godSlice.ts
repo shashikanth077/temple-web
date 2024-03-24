@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import {
-    God, GodSingleResponse, SuccessRes, GodList,
+    GodSingleResponse, SuccessRes, GodList,
 } from 'models';
 
 export interface godState {
