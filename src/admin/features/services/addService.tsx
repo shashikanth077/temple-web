@@ -64,7 +64,6 @@ const AddService = () => {
         yup.object().shape({
             godId: yup.string().required(staticContent?.addService?.formValidation?.godId),
             frequency:yup.string().required(staticContent?.addService?.formValidation?.frequency),
-            daysahead:yup.string().required(staticContent?.addService?.formValidation?.daysahead),
             accountNumber: yup.string().required(staticContent?.addService?.formValidation?.accountNumber).min(2, 'This value is too short. It should have 2 characters or more.'),
             serviceName: yup.string().required(staticContent?.addService?.formValidation?.serviceName).min(2, 'This value is too short. It should have 2 characters or more.'),
             price: yup.string().required(staticContent?.addService?.formValidation?.price).min(1, 'This value is too short. It should have 2 characters or more.'),
@@ -88,6 +87,7 @@ const AddService = () => {
         register,
         control,
         reset,
+        setValue,
         formState: { errors },
     } = methods;
 
@@ -119,7 +119,7 @@ const AddService = () => {
         if (successMessage) {
             showToast('success', 'Success', successMessage);
             dispatch(clearState());
-            //reset();
+            reset();
         }
 
         if (error) {

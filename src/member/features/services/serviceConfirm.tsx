@@ -160,13 +160,13 @@ const serviceConfirm = () => {
                                     <span className="fw700">Confirm</span>{" "}
                                     Details
                                 </span>
-                                <a className="sd-confirm-edit-button">
+                                {/* <a className="sd-confirm-edit-button">
                                     <img
                                         src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA4RpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMDY3IDc5LjE1Nzc0NywgMjAxNS8wMy8zMC0yMzo0MDo0MiAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo3NjA2MTc3MC00OTIwLThmNDYtOTQ3Zi1iODA3OWU5NTQ5MDYiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6MDJFRTMyMTQ4QkM2MTFFQjk1Mzk5RTczMDQ4MERBRTgiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6MDJFRTMyMTM4QkM2MTFFQjk1Mzk5RTczMDQ4MERBRTgiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTUgKFdpbmRvd3MpIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6MjkzMmNkN2EtMjJhYy1kNTQxLTlkYjgtN2JkZGZmYzU0YTAyIiBzdFJlZjpkb2N1bWVudElEPSJhZG9iZTpkb2NpZDpwaG90b3Nob3A6ZTM4ZWJlMzktODNlMS0xMWViLTk4NDgtZDFkMmFkNzM1ODNjIi8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+oFVMygAAAU9JREFUeNqM088rRFEUwPH7nsuoMWVLkTULSSml/CqlkRSFspS/QDaysZG1srFWrIhMWWCULCxkNoqSspDt+NGYmpHvqfPq9pq5M6c+82bunXPuvWfmBr19OyljzBGGUEJo/FFGE24wY3k5QTcm8YvGWMIn3pBEpxaQ9/uSKwVG0I97z6qbuETWGZtATrZbrLBqFG14xRQyWHbmAvxIgT89Uzza8YIu7OIBS858QnJtlZU79NwHWNE+SPTEvxh6kmXLi5jX8VE81iqQ0K2eIY017GlyttJWQ6chEqv41qatYxvjVZIlNxn1oKjPOaQ0YRhjuPL8vIWoQEmf78jjCQv48CTnMBAVaNFn2tQfBWmq1bPkdXALg54/lhtfuLPa+bIOPuvnwJMY6pHl/mxYbdgFZnGMwxorS8NbcYprKTCt1/lcJxvquM7NuJXr/C/AAPTARXGgnzFPAAAAAElFTkSuQmCC"
                                         alt="Image"
                                     />{" "}
                                     Edit details
-                                </a>
+                                </a> */}
                             </h2>
                             <div className="clearfix  sd-booking-details">
                                 <h4>Booking Details</h4>
