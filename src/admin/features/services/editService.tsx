@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { useEffect, useRef, useState } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
@@ -6,6 +7,7 @@ import {
 } from 'react-bootstrap';
 import { useForm, Controller } from 'react-hook-form';
 import { Toast } from 'primereact/toast';
+import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { Typeahead } from 'react-bootstrap-typeahead';
@@ -39,6 +41,7 @@ const EditService = () => {
     const [image, setImage] = useState({ preview: '', data: '' })
     const { id } = useParams<any>();
     const toast = useRef<any>(null);
+    const navigate = useNavigate();
     const [checkBoxVal, SetCheckboxVal] = useState(false);
 
     const [multiSelections, setMultiSelections] = useState<OptionTypes[]>([]);
@@ -123,6 +126,7 @@ const EditService = () => {
         formData.append('_id', id);
 
         dispatch(adminServiceActions.updateService(formData));
+        navigate("/admin/services/list");
     });
 
     useEffect(() => {

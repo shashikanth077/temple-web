@@ -6,6 +6,7 @@ import {
 } from 'react-bootstrap';
 import { useForm, Controller } from 'react-hook-form';
 import { Toast } from 'primereact/toast';
+import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { Typeahead } from 'react-bootstrap-typeahead';
 import 'react-bootstrap-typeahead/css/Typeahead.css';
@@ -37,6 +38,7 @@ const AddService = () => {
     const [frequencyVal,setFrequency] = useState('');
 
     const toast = useRef<any>(null);
+    const navigate = useNavigate();
     const staticContent = appSelector(selectStaticContentServices);
 
     useEffect(() => {
@@ -113,6 +115,7 @@ const AddService = () => {
             }
         }
         dispatch(adminServiceActions.addService(formData));
+        navigate("/admin/services/list");
     });
 
     useEffect(() => {
