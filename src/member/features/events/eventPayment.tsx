@@ -128,7 +128,9 @@ const EventPaymentPage = () => {
         setIsChecked(!isChecked);
     };
 
+    console.log("billingAddressFormData",billingAddressFormData);
     useEffect(() => {
+        setSelectedState(billingAddressFormData?.state);
         setValue("email", ProfileDetails?.email);
         setValue("billingAddress", billingAddressFormData?.billingAddress);
         setValue("billingCity", billingAddressFormData?.billingCity);
@@ -166,7 +168,7 @@ const EventPaymentPage = () => {
                         city: billingAddressFormData?.billingCity,
                         state: billingAddressFormData?.state,
                         postal_code: billingAddressFormData?.billingZipcode,
-                        country: 'CA', // You may need to adjust the country code
+                        country: 'CA', 
                     },
                 },
             };
@@ -208,7 +210,6 @@ const EventPaymentPage = () => {
             }
             if (!error) {
                 setCardErrors('');
-                console.log('payment start');
                 const payload = await stripe.confirmCardPayment(response.clientSecret, {
                     payment_method: paymentMethod?.id,
                 });
@@ -246,7 +247,6 @@ const EventPaymentPage = () => {
                     requestPayload.orderNotes =  data.comments;
                  
                     dispatch(eventsActions.confirmPayment(requestPayload));
-                  
                     setProcessing(false);
 
                     Swal.fire({
@@ -558,7 +558,7 @@ const EventPaymentPage = () => {
                                             disabled={processing || !stripe || !elements}
                                             className="btn btn-hover"
                                         >
-                                            {processing ? 'PROCESSING' : 'Book Event'}
+                                            {processing ? 'PROCESSING' : 'Pay now'}
                                         </button>
                                     </div>
                                 </div>
