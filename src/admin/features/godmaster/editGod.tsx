@@ -132,8 +132,7 @@ const EditGod = () => {
         }
         formData.append('_id', id)
         dispatch(admingodActions.updategod(formData));
-        navigate("/admin/gods/list");
-    });
+     });
 
 
     useEffect(() => {
