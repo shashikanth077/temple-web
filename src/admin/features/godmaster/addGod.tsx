@@ -40,11 +40,10 @@ const AddGod = () => {
         yup.object().shape({
             description: yup.string().required("Please enter the description").min(2, 'This value is too short. It should have 2 characters or more.'),
             name: yup.string().required(staticGodContent?.addGod?.formValidation?.name).min(2, 'This value is too short. It should have 2 characters or more.'),
-            worshipDay: yup
-                .array()
-                .of(yup.string())
-                .required(staticGodContent?.addGod?.formValidation?.worshipDay)
-                .min(1, 'Please select at least one worship day'),
+            // worshipDay: yup
+            //     .string()
+            //     .required(staticGodContent?.addGod?.formValidation?.worshipDay)
+            //     .min(1, 'Please select at least one worship day'),
             image: yup
                 .mixed()
                 .test('required', staticGodContent?.addGod?.formValidation?.image, (value: any) => value.length > 0)
@@ -66,6 +65,7 @@ const AddGod = () => {
         formState: { errors },
     } = methods;
 
+    console.log(errors);
     /*
       handle form submission
     */
@@ -91,18 +91,26 @@ const AddGod = () => {
     });
 
     useEffect(() => {
-        if (successMessage) {
-            showToast('success', 'Success', successMessage);
-            dispatch(clearState());
-            reset();
-            navigate("/admin/gods/list");
-        }
-
-        if (error) {
-            showToast('error', 'Error', error);
-            dispatch(clearState());
-        }
-    }, [successMessage, error, dispatch]);
+        const handleSuccess = async () => {
+            if (successMessage) {
+                showToast('success', 'Success', successMessage);
+                await dispatch(clearState());
+                setTimeout(() => {
+                    navigate("/admin/gods/list");
+                }, 1000); //1 sec
+            }
+        };
+    
+        const handleError = () => {
+            if (error) {
+                showToast('error', 'Error', error);
+                dispatch(clearState());
+            }
+        };
+    
+        handleSuccess();
+        handleError();
+    }, [successMessage, error, dispatch, navigate]);
 
     const handleUploadedFile = (event: any) => {
         const img = {
@@ -147,28 +155,31 @@ const AddGod = () => {
                                                 />
                                             </div>
                                         </div>
+
                                         <div className="col-md-6">
-                                            <div className="form-group">
-                                                <label>{staticGodContent?.addGod?.formLabels?.worshipDay}</label>
-                                                <Controller
-                                                    key="worshipDay"
-                                                    name="worshipDay"
-                                                    control={control}
-                                                    render={({ field }) => (
-                                                        <Select
-                                                            isMulti={true}
-                                                            {...field}
-                                                            options={Days}
-                                                            className="multiple-select-common"
-                                                            onChange={(selectedOption: any) => setValue('worshipDay', selectedOption)}
-                                                        />
-                                                    )}
-                                                />
-                                            </div>
-                                            {errors.worshipDay && errors.worshipDay.message && (
-    <span className="text-danger">{errors?.worshipDay?.message}</span>
-)}
-                                        </div>
+    <div className="form-group">
+        <label>{staticGodContent?.addGod?.formLabels?.worshipDay}</label>
+        <Controller
+            key="worshipDay"
+            name="worshipDay"
+            control={control}
+            render={({ field }) => (
+                <Select
+                    isMulti={true}
+                    {...field}
+                    options={Days}
+                    className="multiple-select-common"
+                    onChange={(selectedOption: any) => setValue('worshipDay', selectedOption)}
+                />
+            )}
+        />
+        {errors?.worshipDay && (
+            <span className="text-danger">{errors?.worshipDay?.message}</span>
+        )}
+    </div>
+</div>
+
+
                                     </div>
 
                                     <div className="row">
