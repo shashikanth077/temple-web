@@ -4,7 +4,7 @@ import * as yup from 'yup';
 import {
     Button,
 } from 'react-bootstrap';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useForm, Controller } from 'react-hook-form';
 import { Toast } from 'primereact/toast';
 import { Typeahead } from 'react-bootstrap-typeahead';
@@ -32,6 +32,7 @@ const EditDonation = () => {
     const { id } = useParams<string>();
     const { dispatch, appSelector } = useRedux();
     const toast = useRef<any>(null);
+    const navigate = useNavigate();
     const [multiSelections, setMultiSelections] = useState<OptionTypes[]>([]);
     const { loading, error, successMessage } = useSelector(getApiState);
     const [image, setImage] = useState({ preview: '', data: '' })
@@ -52,16 +53,26 @@ const EditDonation = () => {
     const StaticDonationContent:any = appSelector(selectStaticDonation);
     
     useEffect(() => {
-        if (successMessage) {
-            showToast('success', 'Success', successMessage);
-            dispatch(clearState());
-        }
-
-        if (error) {
-            showToast('error', 'Error', error);
-            dispatch(clearState());
-        }
-    }, [successMessage, error, dispatch]);
+        const handleSuccess = async () => {
+            if (successMessage) {
+                showToast('success', 'Success', successMessage);
+                await dispatch(clearState());
+                setTimeout(() => {
+                    navigate("/admin/DonationTypes/list");
+                }, 1000); //1 sec
+            }
+        };
+    
+        const handleError = () => {
+            if (error) {
+                showToast('error', 'Error', error);
+                dispatch(clearState());
+            }
+        };
+    
+        handleSuccess();
+        handleError();
+    }, [successMessage, error, dispatch, navigate]);
 
     /*
        form validation schema
