@@ -6,6 +6,7 @@ import {
 } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { Toast } from 'primereact/toast';
+import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { clearState } from '../../../storeConfig/apiStatus/apiSlice';
 import { adminProductActions } from './adminProductSlice';
@@ -22,7 +23,7 @@ const AddProduct = () => {
     const [image, setImage] = useState({ preview: '', data: '' });
 
     const toast = useRef<any>(null);
-
+    const navigate = useNavigate();
     const showToast = (severity:any, summary:any, detail:any) => {
         toast.current.show({ severity, summary, detail });
     };
@@ -84,16 +85,26 @@ const AddProduct = () => {
     });
 
     useEffect(() => {
-        if (successMessage) {
-            showToast('success', 'Success', successMessage);
-            dispatch(clearState());
-            reset();
-        }
-        if (error) {
-            showToast('error', 'Error', error);
-            dispatch(clearState());
-        }
-    }, [successMessage, error, dispatch]);
+        const handleSuccess = async () => {
+            if (successMessage) {
+                showToast('success', 'Success', successMessage);
+                await dispatch(clearState());
+                setTimeout(() => {
+                    navigate("/admin/products/list");
+                }, 1000); //1 sec
+            }
+        };
+    
+        const handleError = () => {
+            if (error) {
+                showToast('error', 'Error', error);
+                dispatch(clearState());
+            }
+        };
+    
+        handleSuccess();
+        handleError();
+    }, [successMessage, error, dispatch, navigate]);
 
     const handleUploadedFile = (event:any) => {
         const img = {
