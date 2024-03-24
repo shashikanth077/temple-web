@@ -8,7 +8,7 @@ import { useForm, Controller } from 'react-hook-form';
 import { Calendar } from 'primereact/calendar';
 import { Toast } from 'primereact/toast';
 import { useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { adminEventActions } from './adminEventSlice';
 import { FormInput } from 'sharedComponents/inputs';
 import { useRedux } from 'hooks';
@@ -25,6 +25,7 @@ const EditEvent = () => {
     const { id } = useParams();
     const { loading, error, successMessage } = useSelector(getApiState);
     const toast = useRef<any>(null);
+    const navigate = useNavigate();
     const [datetime12h, setDateTime12h] = useState<any>(null);
     const [endDatetime12h, setDateTimeEnd12h] = useState<any>(null);
 
@@ -125,17 +126,26 @@ const EditEvent = () => {
     });
 
     useEffect(() => {
-        if (successMessage) {
-            showToast('success', 'Success', successMessage);
-            dispatch(clearState());
-            reset();
-        }
-
-        if (error) {
-            showToast('error', 'Error', error);
-            dispatch(clearState());
-        }
-    }, [successMessage, error, dispatch]);
+        const handleSuccess = async () => {
+            if (successMessage) {
+                showToast('success', 'Success', successMessage);
+                await dispatch(clearState());
+                setTimeout(() => {
+                    navigate("/admin/events/list");
+                }, 1000); //1 sec
+            }
+        };
+    
+        const handleError = () => {
+            if (error) {
+                showToast('error', 'Error', error);
+                dispatch(clearState());
+            }
+        };
+    
+        handleSuccess();
+        handleError();
+    }, [successMessage, error, dispatch, navigate]);
 
     return (
         <>
