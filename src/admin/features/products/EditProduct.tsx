@@ -4,7 +4,7 @@ import * as yup from 'yup';
 import {
     Button,
 } from 'react-bootstrap';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { Toast } from 'primereact/toast';
 import { useSelector } from 'react-redux';
@@ -22,6 +22,7 @@ const EditProduct = () => {
     const {id} = useParams<string>();
     const { dispatch } = useRedux();
     const toast = useRef<any>(null);
+    const navigate = useNavigate();
     const [image, setImage] = useState({ preview: '', data: '' });
 
     const { loading, error, successMessage } = useSelector(getApiState);
@@ -37,17 +38,27 @@ const EditProduct = () => {
 
     
     useEffect(() => {
-        if (successMessage) {
-            showToast('success', 'Success', successMessage);
-            dispatch(clearState());
-        }
-
-        if (error) {
-            showToast('error', 'Error', error);
-            dispatch(clearState());
-        }
-    }, [successMessage, error, dispatch]);
-
+        const handleSuccess = async () => {
+            if (successMessage) {
+                showToast('success', 'Success', successMessage);
+                await dispatch(clearState());
+                setTimeout(() => {
+                    navigate("/admin/products/list");
+                }, 1000); //1 sec
+            }
+        };
+    
+        const handleError = () => {
+            if (error) {
+                showToast('error', 'Error', error);
+                dispatch(clearState());
+            }
+        };
+    
+        handleSuccess();
+        handleError();
+    }, [successMessage, error, dispatch, navigate]);
+    
     /*
        form validation schema
     */

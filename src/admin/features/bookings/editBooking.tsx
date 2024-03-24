@@ -7,7 +7,7 @@ import {
 import { useForm } from 'react-hook-form';
 import { Toast } from 'primereact/toast';
 import { useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { adminBookingActions } from './bookingSlice';
 import { selectBooking } from './bookingSelector';
 import { clearState } from 'storeConfig/apiStatus/apiSlice';
@@ -28,7 +28,7 @@ const EditBooking = () => {
     const [image, setImage] = useState({ preview: '', data: '' })
     const { id } = useParams<any>();
     const toast = useRef<any>(null);
-
+    const navigate = useNavigate();
     useEffect(() => {
         dispatch(adminBookingActions.getBookingById({ _id: id }));
     }, [dispatch, id]);
@@ -89,16 +89,26 @@ const EditBooking = () => {
     });
 
     useEffect(() => {
-        if (successMessage) {
-            showToast('success', 'Success', successMessage);
-            dispatch(clearState());
-        }
-
-        if (error) {
-            showToast('error', 'Error', error);
-            dispatch(clearState());
-        }
-    }, [successMessage, error, dispatch]);
+        const handleSuccess = async () => {
+            if (successMessage) {
+                showToast('success', 'Success', successMessage);
+                await dispatch(clearState());
+                setTimeout(() => {
+                    navigate("/admin/bookingtypes/list");
+                }, 1000); //1 sec
+            }
+        };
+    
+        const handleError = () => {
+            if (error) {
+                showToast('error', 'Error', error);
+                dispatch(clearState());
+            }
+        };
+    
+        handleSuccess();
+        handleError();
+    }, [successMessage, error, dispatch, navigate]);
 
     const handleFileChange = (event:any) => {
         const img = {

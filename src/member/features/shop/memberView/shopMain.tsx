@@ -5,7 +5,7 @@ import { selectProductsList } from './providers/productSelectors';
 import ShopProducts from './products';
 import { useRedux } from 'hooks';
 import { getSortedProducts } from 'helpers/products';
-
+/* eslint-disable */
 const ShopGridStandard = () => {
     const [layout, setLayout] = useState('grid three-column');
     const [sortType, setSortType] = useState('');
@@ -19,7 +19,7 @@ const ShopGridStandard = () => {
     const products = appSelector(selectProductsList);
 
     const pageLimit = 10;
-    const pageCount = Math.ceil(products.length / pageLimit);
+    const pageCount = products && products.length ? Math.ceil(products.length / pageLimit) : 0;
 
     const getLayout = (layouPage:any) => {
         setLayout(layouPage);
@@ -51,7 +51,7 @@ const ShopGridStandard = () => {
                 <div className="row">
                     <div className="col-lg-12 order-1 order-lg-2">
 
-                        <ShopTopbar getLayout={getLayout} getFilterSortParams={getFilterSortParams} productCount={products.length} sortedProductCount={currentData.length} />
+                    {products && <ShopTopbar getLayout={getLayout} getFilterSortParams={getFilterSortParams} productCount={products.length} sortedProductCount={currentData.length} />}
                         <ShopProducts layout={layout} products={currentData} />
 
                         <div className="pro-pagination-style text-center mt-30">

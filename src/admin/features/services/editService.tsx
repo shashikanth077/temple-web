@@ -128,18 +128,28 @@ const EditService = () => {
         dispatch(adminServiceActions.updateService(formData));
         navigate("/admin/services/list");
     });
-
+    
     useEffect(() => {
-        if (successMessage) {
-            showToast('success', 'Success', successMessage);
-            dispatch(clearState());
-        }
-
-        if (error) {
-            showToast('error', 'Error', error);
-            dispatch(clearState());
-        }
-    }, [successMessage, error, dispatch]);
+        const handleSuccess = async () => {
+            if (successMessage) {
+                showToast('success', 'Success', successMessage);
+                await dispatch(clearState());
+                setTimeout(() => {
+                    navigate("/admin/services/list");
+                }, 1000); //1 sec
+            }
+        };
+    
+        const handleError = () => {
+            if (error) {
+                showToast('error', 'Error', error);
+                dispatch(clearState());
+            }
+        };
+    
+        handleSuccess();
+        handleError();
+    }, [successMessage, error, dispatch, navigate]);
 
     const handleUploadedFile = (event:any) => {
         const img = {
