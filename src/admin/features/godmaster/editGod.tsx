@@ -63,17 +63,26 @@ const EditGod = () => {
     }, [god])
 
     useEffect(() => {
-        if (successMessage) {
-            showToast('success', 'Success', successMessage);
-            dispatch(clearState());
-            navigate("/admin/gods/list");
-        }
-
-        if (error) {
-            showToast('error', 'Error', error);
-            dispatch(clearState());
-        }
-    }, [successMessage, error, dispatch]);
+        const handleSuccess = async () => {
+            if (successMessage) {
+                showToast('success', 'Success', successMessage);
+                await dispatch(clearState());
+                setTimeout(() => {
+                    navigate("/admin/gods/list");
+                }, 1000); //1 sec
+            }
+        };
+    
+        const handleError = () => {
+            if (error) {
+                showToast('error', 'Error', error);
+                dispatch(clearState());
+            }
+        };
+    
+        handleSuccess();
+        handleError();
+    }, [successMessage, error, dispatch, navigate]);
 
     /*
        form validation schema
