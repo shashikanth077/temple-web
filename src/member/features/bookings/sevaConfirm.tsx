@@ -561,7 +561,7 @@ const SevaConfirmPage = () => {
                                             disabled={processing || !stripe || !elements}
                                             className="btn btn-hover"
                                         >
-                                            {processing ? 'PROCESSING' : 'Book seva'}
+                                            {processing ? 'PROCESSING' : 'Pay now'}
                                         </button>
                                     </div>
                                 </div>

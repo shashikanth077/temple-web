@@ -60,15 +60,16 @@ const EditBooking = () => {
         handleSubmit,
         register,
         control,
-        reset,
         setValue,
-        watch,
         formState: { errors },
     } = methods;
 
 
     useEffect(() => {
         setValue('category',seva.category);
+        setValue('name',seva.name);
+        setValue('amount',seva.amount);
+        setValue('description',seva.description);
     },[seva]);
 
     /*

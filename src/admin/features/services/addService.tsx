@@ -6,6 +6,7 @@ import {
 } from 'react-bootstrap';
 import { useForm, Controller } from 'react-hook-form';
 import { Toast } from 'primereact/toast';
+import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { Typeahead } from 'react-bootstrap-typeahead';
 import 'react-bootstrap-typeahead/css/Typeahead.css';
@@ -37,6 +38,7 @@ const AddService = () => {
     const [frequencyVal,setFrequency] = useState('');
 
     const toast = useRef<any>(null);
+    const navigate = useNavigate();
     const staticContent = appSelector(selectStaticContentServices);
 
     useEffect(() => {
@@ -64,7 +66,6 @@ const AddService = () => {
         yup.object().shape({
             godId: yup.string().required(staticContent?.addService?.formValidation?.godId),
             frequency:yup.string().required(staticContent?.addService?.formValidation?.frequency),
-            daysahead:yup.string().required(staticContent?.addService?.formValidation?.daysahead),
             accountNumber: yup.string().required(staticContent?.addService?.formValidation?.accountNumber).min(2, 'This value is too short. It should have 2 characters or more.'),
             serviceName: yup.string().required(staticContent?.addService?.formValidation?.serviceName).min(2, 'This value is too short. It should have 2 characters or more.'),
             price: yup.string().required(staticContent?.addService?.formValidation?.price).min(1, 'This value is too short. It should have 2 characters or more.'),
@@ -88,6 +89,7 @@ const AddService = () => {
         register,
         control,
         reset,
+        setValue,
         formState: { errors },
     } = methods;
 
@@ -113,13 +115,14 @@ const AddService = () => {
             }
         }
         dispatch(adminServiceActions.addService(formData));
+        navigate("/admin/services/list");
     });
 
     useEffect(() => {
         if (successMessage) {
             showToast('success', 'Success', successMessage);
             dispatch(clearState());
-            //reset();
+            reset();
         }
 
         if (error) {

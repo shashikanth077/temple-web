@@ -54,13 +54,7 @@ const BookSeva = () => {
                 .typeError('Number of persons is required')
                 .required('Number of persons is required')
                 .positive('Number must be positive')
-                .integer('Number must be an integer'),
-            NoOfChild: yup
-                .number()
-                .typeError('Number of children is required')
-                .required('Number of children is required')
-                .positive('Number must be positive')
-                .integer('Number must be an integer'),
+                .integer('Number must be an integer')
         }),
     );
 
@@ -250,20 +244,6 @@ const BookSeva = () => {
                                                         errors={errors}
                                                         control={control}
                                                         label="Number of persons"
-                                                        containerClass="mb-3"
-                                                    />
-                                                </div>
-                                            </div>
-                                            <div className="col-md-6">
-                                                <div className="form-group">
-                                                    <FormInput
-                                                        type="number"
-                                                        name="NoOfChild"
-                                                        register={register}
-                                                        key="NoOfChild"
-                                                        errors={errors}
-                                                        control={control}
-                                                        label="Number of children (under 5 years)"
                                                         containerClass="mb-3"
                                                     />
                                                 </div>

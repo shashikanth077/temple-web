@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { useEffect, useRef, useState } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
@@ -6,6 +7,7 @@ import {
 } from 'react-bootstrap';
 import { useForm, Controller } from 'react-hook-form';
 import { Toast } from 'primereact/toast';
+import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { Typeahead } from 'react-bootstrap-typeahead';
@@ -39,6 +41,7 @@ const EditService = () => {
     const [image, setImage] = useState({ preview: '', data: '' })
     const { id } = useParams<any>();
     const toast = useRef<any>(null);
+    const navigate = useNavigate();
     const [checkBoxVal, SetCheckboxVal] = useState(false);
 
     const [multiSelections, setMultiSelections] = useState<OptionTypes[]>([]);
@@ -76,7 +79,6 @@ const EditService = () => {
         yup.object().shape({
             godId: yup.string().required(staticContent?.addService?.formValidation?.godId),
             frequency:yup.string().required(staticContent?.addService?.formValidation?.frequency),
-            daysahead:yup.string().required(staticContent?.addService?.formValidation?.daysahead),
             accountNumber: yup.string().required(staticContent?.addService?.formValidation?.accountNumber).min(2, 'This value is too short. It should have 2 characters or more.'),
             serviceName: yup.string().required(staticContent?.addService?.formValidation?.serviceName).min(2, 'This value is too short. It should have 2 characters or more.'),
             price: yup.string().required(staticContent?.addService?.formValidation?.price).min(1, 'This value is too short. It should have 2 characters or more.'),
@@ -95,8 +97,6 @@ const EditService = () => {
         register,
         control,
         setValue,
-        reset,
-        watch,
         formState: { errors },
     } = methods;
 
@@ -126,6 +126,7 @@ const EditService = () => {
         formData.append('_id', id);
 
         dispatch(adminServiceActions.updateService(formData));
+        navigate("/admin/services/list");
     });
 
     useEffect(() => {
@@ -167,6 +168,11 @@ const EditService = () => {
     useEffect(() => {
         setValue("serviceType",service.serviceType);
         setValue("bookingType",service.bookingType);
+        setValue("serviceName",service.serviceName);
+        setValue("isTaxable",service.isTaxable);
+        setValue("price",service.price);
+        setValue("description",service.description);
+        setValue("accountNumber",service.accountNumber);
         setValue("godId",service.godId);
         setValue("daysahead",service.daysahead);
         setValue("frequency",service.frequency);
