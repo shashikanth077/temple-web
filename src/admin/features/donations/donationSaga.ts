@@ -12,6 +12,10 @@ import {
     startLoading, endLoading, setError, setSuccessMessage,
 } from 'storeConfig/apiStatus/apiSlice';
 
+/**
+ * Retrieves a donation by its ID and dispatches appropriate actions based on the response.
+ * @param action - The action object containing the payload.
+ */
 function* getDonationByIdRow(action:any) {
     try {
         yield put(startLoading());
@@ -30,6 +34,11 @@ function* getDonationByIdRow(action:any) {
     }
 }
 
+/**
+ * Retrieves a donation by type and updates the state accordingly.
+ *
+ * @param action - The action object containing the payload.
+ */
 function* getDonationByTypeRow(action:any) {
     try {
         yield put(startLoading());

@@ -20,6 +20,9 @@ import { selectStaticDonation } from 'contents/content/contactSelectors';
 import { getApiState } from 'storeConfig/apiStatus/apiSelector';
 
 /* eslint-disable */
+/**
+ * Component for adding a donation type
+ */
 const AddDonation = () => {
     const { dispatch,appSelector } = useRedux();
     const { loading, error, successMessage } = useSelector(getApiState);
