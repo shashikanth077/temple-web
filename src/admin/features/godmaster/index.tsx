@@ -76,8 +76,8 @@ export default function ManageGods() {
         setFilters(_filters);
     };
 
-    const editGod = (data:any) => {
-        navigate("/admin/gods/god/edit/"+data._id);
+    const editGod = (god: any) => {
+        navigate(`/admin/gods/god/edit/${god._id}`);
     };
 
     const confirmDeleteGod = (God:any) => {
