@@ -86,6 +86,7 @@
     "@types/react-html-parser": "^2.0.6",
     "@types/react-slick": "^0.23.11",
     "@types/simplebar": "^5.3.3",
+    "env-cmd": "^10.1.0",
     "eslint": "^8.52.0",
     "eslint-config-airbnb": "^19.0.4",
     "json-server": "^0.17.4",
@@ -96,8 +97,8 @@
   "scripts": {
     "preinstalled": "node ./checkVersions.js",
     "start": "npm run start:mock | react-scripts start",
-    "build:dev": "react-scripts build",
-    "build:prod": "react-scripts build",
+    "build:dev": "env-cmd -f .env.development react-scripts build",
+    "build:prod": "env-cmd -f .env.production react-scripts build",
     "start:mock": "nodemon ./jsonServer.js",
     "mock": "json-server --watch mock/index.js --port 4000 --routes mock/routes.json",
     "build": "react-scripts build",

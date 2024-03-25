@@ -14,7 +14,6 @@ import Routes from 'routes/Routes';
 import ErrorBoundary from 'sharedComponents/Error/ErrorBoundary';
 
 global.Buffer = Buffer;
-
 const stripePromise = loadStripe('pk_test_kLXZAIgM9jW9flHREsbzTupH');
 
 function App() {
