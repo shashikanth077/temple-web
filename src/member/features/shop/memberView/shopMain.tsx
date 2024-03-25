@@ -42,7 +42,7 @@ const ShopGridStandard = () => {
         let sortedProducts = getSortedProducts(products, sortType, sortValue);
         const filterSortedProducts = getSortedProducts(sortedProducts, filterSortType, filterSortValue);
         sortedProducts = filterSortedProducts;
-        setCurrentData(sortedProducts.slice(offset, offset + pageLimit));
+        setCurrentData(sortedProducts?.slice(offset, offset + pageLimit));
     }, [offset, products, sortType, sortValue, filterSortType, filterSortValue]);
 
     return (
