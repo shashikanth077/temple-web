@@ -1,14 +1,15 @@
 import { APICore } from 'helpers/api';
+import { config } from 'config/Env';
 
 /* eslint-disable */
 export function getBookingList(payload:any) {
-    const baseUrl = `http://localhost:4000/api/mybookings`;
+    const baseUrl = `${config.API_BASE_URL}/api/mybookings`;
     const response = APICore.get(`${baseUrl}`, {});
     return response;
 }
 
 export function getSevaTypes(payload:any) {
-    const baseUrl = `http://localhost:8080/api/sevas`;
+    const baseUrl = `${config.API_BASE_URL}/api/sevas`;
     const response = APICore.get(`${baseUrl}`, {});
     return response;
 }

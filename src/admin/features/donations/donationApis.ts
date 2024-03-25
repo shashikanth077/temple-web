@@ -1,4 +1,5 @@
 import { APICore } from 'helpers/api';
+import { config } from 'config/Env';
 
 /* eslint-disable */
 /**
@@ -7,7 +8,7 @@ import { APICore } from 'helpers/api';
  * @returns A Promise that resolves to the response from the API.
  */
 export function getDonationById(payload:any) {
-    const baseUrl = 'http://localhost:8080/api/donation-type/'+payload._id;;
+    const baseUrl = `${config.API_BASE_URL}/api/donation-type/${payload._id}`;
     const response = APICore.get(`${baseUrl}`, {});
     return response;
 }
@@ -18,7 +19,7 @@ export function getDonationById(payload:any) {
  * @returns A Promise that resolves to the response from the API.
  */
 export function getDonationByType(payload:any) {
-    const baseUrl = 'http://localhost:8080/api/donations-type/'+payload.type
+    const baseUrl = `${config.API_BASE_URL}/api/donations-type/${payload.type}`;
     const response = APICore.get(`${baseUrl}`, {});
     return response;
 }
@@ -29,7 +30,7 @@ export function getDonationByType(payload:any) {
  * @returns A Promise that resolves to the response of the API request.
  */
 export function getDonationsDetails(payload:any) {
-    const baseUrl = 'http://localhost:8080/api/donation-type/details';
+    const baseUrl = `${config.API_BASE_URL}/api/donation-type/details`;
     const response = APICore.create(`${baseUrl}`, {});
     return response;
 }
@@ -40,7 +41,7 @@ export function getDonationsDetails(payload:any) {
  * @returns A Promise that resolves to the response from the API.
  */
 export function addDonations(payload:any) {
-    const baseUrl = 'http://localhost:8080/api/donation-type';
+    const baseUrl = `${config.API_BASE_URL}/api/donation-type`;
     const response = APICore.createWithFile(`${baseUrl}`, payload);
     return response;
 }
@@ -51,7 +52,7 @@ export function addDonations(payload:any) {
  * @returns A Promise that resolves to the response from the server.
  */
 export function editDonations(payload:any) {
-    const baseUrl = 'http://localhost:8080/api/donation-type/'+payload.get('_id');
+    const baseUrl = `${config.API_BASE_URL}/api/donation-type/${payload.get('_id')}`;
     const response = APICore.createWithFileUpdate(`${baseUrl}`, payload);
     return response;
 }
@@ -62,7 +63,7 @@ export function editDonations(payload:any) {
  * @returns A promise that resolves to the response from the API.
  */
 export function deleteDonations(payload:any) {
-    const baseUrl = 'http://localhost:8080/api/donation-type/'+payload._id;
+    const baseUrl = `${config.API_BASE_URL}/api/donation-type/${payload._id}`;
     const response = APICore.delete(`${baseUrl}`);
     return response;
 }

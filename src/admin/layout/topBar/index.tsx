@@ -8,6 +8,7 @@ import useViewport from 'hooks/useViewPort';
 import { PublicImageURL } from 'constants/PublicUrl';
 import { useRedux, useUser } from 'hooks';
 import { APICore } from 'helpers/api';
+import { config } from 'config/Env';
 
 /* eslint-disable */
 /**
@@ -146,7 +147,7 @@ const Topbar = ({ toggleMenu, navOpen }: TopbarProps) => {
                     {APICore.isUserAuthenticated()
                         ? (
                             cartItems.list.totalQuantity !== undefined ? (
-                            <Link className="icon-cart store-cart-icon" to={`${process.env.PUBLIC_URL}/cart/view-cart`}>
+                            <Link className="icon-cart store-cart-icon" to={`${config.PUBLIC_URL}/cart/view-cart`}>
                                 <button type="button" className="icon-cart">
                                     <i className="fas fa-shopping-cart" />
                                     <span className="count-style">

@@ -1,4 +1,5 @@
 import React from 'react';
+import { config } from 'config/Env';
 
 interface ImageProps {
     imageUrl:string;
@@ -12,7 +13,7 @@ const ImageComponent = (props:ImageProps) => {
     const {
         imageUrl, altText, classname, style, width, height,
     } = props;
-    const defaultImageUrl = 'http://localhost:3000/assets/images/default/default.jpg';
+    const defaultImageUrl = `${config.PUBLIC_URL}/assets/images/default/default.jpg`;
     return (
         <img
             style={style}

@@ -46,6 +46,9 @@ export interface RoutesProps {
     children?: RoutesProps[];
 }
 
+/**
+ * Represents the routes for the admin section of the application.
+ */
 const productRoutes: RoutesProps = {
     path: '/admin/products',
     name: 'Products',
@@ -56,19 +59,16 @@ const productRoutes: RoutesProps = {
             path: '/admin/products/list',
             name: 'Products',
             element: <ProductManage />,
-
         },
         {
             path: '/admin/products/add',
             name: 'AddProduct',
             element: <Addproduct />,
-
         },
         {
             path: '/admin/products/edit/:id',
             name: 'EditProduct',
             element: <EditProduct />,
-
         },
         {
             path: '/dashboard',

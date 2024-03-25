@@ -8,6 +8,7 @@ import { clearState } from 'storeConfig/apiStatus/apiSlice';
 import { formatCurrency } from 'helpers/currency';
 import { useRedux, useUser } from 'hooks';
 import { getApiState } from 'storeConfig/apiStatus/apiSelector';
+import { config } from 'config/Env';
 
 interface ProductSingleProps {
     product: any;
@@ -96,7 +97,7 @@ const ProductGridListSingle = (props:ProductSingleProps) => {
             {loading && <Loader />}
             <div className="product-wrap mb-25">
                 <div className="product-img">
-                    <Link to={`${process.env.PUBLIC_URL}/products/details/${product._id}`}>
+                    <Link to={`${config.PUBLIC_URL}/products/details/${product._id}`}>
                         <img
                             className="default-img"
                             src={product?.image}
@@ -134,7 +135,7 @@ const ProductGridListSingle = (props:ProductSingleProps) => {
                 </div>
                 <div className="product-content text-center">
                     <h3>
-                        <Link to={`${process.env.PUBLIC_URL}/products/details/${product._id}`}>
+                        <Link to={`${config.PUBLIC_URL}/products/details/${product._id}`}>
                             {product.name}
                         </Link>
                     </h3>
@@ -149,7 +150,7 @@ const ProductGridListSingle = (props:ProductSingleProps) => {
                     <div className="col-xl-4 col-md-5 col-sm-6">
                         <div className="product-list-image-wrap">
                             <div className="product-img">
-                                <Link to={`${process.env.PUBLIC_URL}/products/details/${product.id}`}>
+                                <Link to={`${config.PUBLIC_URL}/products/details/${product.id}`}>
                                     <img
                                         className="default-img img-fluid"
                                         src={product.image}
@@ -172,7 +173,7 @@ const ProductGridListSingle = (props:ProductSingleProps) => {
                     <div className="col-xl-8 col-md-7 col-sm-6">
                         <div className="shop-list-content">
                             <h3>
-                                <Link to={`${process.env.PUBLIC_URL}/products/details/${product._id}`}>
+                                <Link to={`${config.PUBLIC_URL}/products/details/${product._id}`}>
                                     {product.name}
                                 </Link>
                             </h3>

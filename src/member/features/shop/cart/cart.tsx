@@ -12,6 +12,7 @@ import Loader from 'sharedComponents/loader/loader';
 import { clearState } from 'storeConfig/apiStatus/apiSlice';
 import { formatCurrency } from 'helpers/currency';
 import { getApiState } from 'storeConfig/apiStatus/apiSelector';
+import { config } from 'config/Env';
 
 /* eslint-disable */
 const Cart = () => {
@@ -324,11 +325,11 @@ const Cart = () => {
                                     <div className="cart-shiping-update-wrapper">
                                         <div className="cart-shiping-update">
                                         {loggedInUser ? (
-                                            <Link to={`${process.env.PUBLIC_URL}/online-store`}>
+                                            <Link to={`${config.PUBLIC_URL}/online-store`}>
                                                 Continue Shopping
                                             </Link>
                                         ) : (
-                                            <Link to={`${process.env.PUBLIC_URL}/purchase`}>
+                                            <Link to={`${config.PUBLIC_URL}/purchase`}>
                                                 Continue Shopping
                                             </Link>
                                         )}
@@ -366,7 +367,7 @@ const Cart = () => {
                                             </span>
                                         </h4>
                                         <Link
-                                            to={`${process.env.PUBLIC_URL}/checkout`}
+                                            to={`${config.PUBLIC_URL}/checkout`}
                                         >
                                             Proceed to Checkout
                                         </Link>
@@ -384,7 +385,7 @@ const Cart = () => {
                                     <div className="item-empty-area__text">
                                         No items found in cart <br />{" "}
                                         <Link
-                                            to={`${process.env.PUBLIC_URL}/purchase`}
+                                            to={`${config.PUBLIC_URL}/purchase`}
                                         >
                                             Shop Now
                                         </Link>

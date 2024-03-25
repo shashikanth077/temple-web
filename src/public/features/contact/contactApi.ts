@@ -1,14 +1,15 @@
 import { APICore } from 'helpers/api';
+import { config } from 'config/Env';
 
-function getContacts(payload:any) {
-    const baseUrl = 'http://localhost:4000/api/getContacts/';
-    const response = APICore.get(`${baseUrl}`, {});
+function getContacts(payload: any) {
+    const baseUrl = `${config.API_BASE_URL}/api/getContacts/`;
+    const response = APICore.get(baseUrl, {});
     return response;
 }
 
-function sendContact(payload:any) {
-    const baseUrl = 'http://localhost:8080/api/sendEnquiry';
-    const response = APICore.create(`${baseUrl}`, payload);
+function sendContact(payload: any) {
+    const baseUrl = `${config.API_BASE_URL}/api/sendEnquiry`;
+    const response = APICore.create(baseUrl, payload);
     return response;
 }
 

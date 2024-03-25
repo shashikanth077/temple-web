@@ -3,6 +3,7 @@ import React, {
 } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Collapse } from 'react-bootstrap';
+import { config } from 'config/Env';
 
 // helpers
 import { MenuItemTypes } from 'constants/adminMenu';
@@ -159,14 +160,14 @@ const AppMenu = ({ menuItems }: AppMenuProps) => {
             const items: any = div.getElementsByClassName('side-nav-link-ref');
             for (let i = 0; i < items.length; ++i) {
                 let trimmedURL = location?.pathname?.replaceAll(
-                    process.env.PUBLIC_URL ?? '',
+                    config.PUBLIC_URL ?? '',
                     '',
                 );
                 const url = items[i].pathname;
-                if (trimmedURL === `${process.env.PUBLIC_URL}/`) {
+                if (trimmedURL === `${config.PUBLIC_URL}/`) {
                     trimmedURL += 'ecommerce';
                 }
-                if (trimmedURL === url?.replaceAll(process.env.PUBLIC_URL, '')) {
+                if (trimmedURL === url?.replaceAll(config.PUBLIC_URL, '')) {
                     matchingMenuItem = items[i];
                     break;
                 }

@@ -23,6 +23,7 @@ import { selectMyProfileDetails } from 'admin/features/myprofile/myProfileSelect
 import { formatCurrency } from 'helpers/currency';
 import { FormInput } from 'sharedComponents/inputs';
 import { createPaymentIntent } from 'member/features/donations/mydonations/donationApis';
+import { config } from 'config/Env';
 
 /* eslint-disable */
 const Checkout = () => {
@@ -592,7 +593,7 @@ const Checkout = () => {
                                     <div className="item-empty-area__text">
                                         No items found in cart to checkout <br />{" "}
                                         <Link
-                                            to={`${process.env.PUBLIC_URL}/shop-grid-standard`}
+                                            to={`${config.PUBLIC_URL}/shop-grid-standard`}
                                         >
                                             Shop Now
                                         </Link>

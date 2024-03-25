@@ -12,9 +12,10 @@ import './assets/scss/_main.scss';
 import { ThemeProvider } from 'context/useThemeContext';
 import Routes from 'routes/Routes';
 import ErrorBoundary from 'sharedComponents/Error/ErrorBoundary';
+import { config } from 'config/Env';
 
 global.Buffer = Buffer;
-const stripePromise = loadStripe('pk_test_kLXZAIgM9jW9flHREsbzTupH');
+const stripePromise = loadStripe(config.STRIPE_PUBLIC_API_KEY || 'null');
 
 function App() {
     return (
