@@ -323,11 +323,15 @@ const Cart = () => {
                                 <div className="col-lg-12">
                                     <div className="cart-shiping-update-wrapper">
                                         <div className="cart-shiping-update">
-                                            <Link
-                                                to={`${process.env.PUBLIC_URL}/purchase`}
-                                            >
+                                        {loggedInUser ? (
+                                            <Link to={`${process.env.PUBLIC_URL}/online-store`}>
                                                 Continue Shopping
                                             </Link>
+                                        ) : (
+                                            <Link to={`${process.env.PUBLIC_URL}/purchase`}>
+                                                Continue Shopping
+                                            </Link>
+                                        )}
                                         </div>
                                         <div className="cart-clear">
                                             <button

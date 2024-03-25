@@ -13,7 +13,7 @@ function ProductGridList(props:GridProps) {
 
     return (
 
-        products.length > 0
+        products?.length > 0
                 && products?.map((product:any, index:number) => (
                     <div className="col-xl-4 col-sm-6" key={product.id}>
                         <ProductGridListSingle
