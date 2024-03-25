@@ -8,6 +8,11 @@ interface ConfigTypes {
     | SideBarTypes.LEFT_SIDEBAR_TYPE_COMPACT;
 }
 
+/**
+ * Retrieves the layout configurations based on the provided layout width.
+ * @param layoutWidth - The layout width to determine the configurations for.
+ * @returns The layout configurations.
+ */
 const getLayoutConfigs = (layoutWidth: string | boolean | null) => {
     // add property to change in particular layoutWidth
     const config: ConfigTypes = {
@@ -28,12 +33,21 @@ const getLayoutConfigs = (layoutWidth: string | boolean | null) => {
 };
 
 /**
- * Changes the body attribute
+ * Changes the specified HTML attribute of the <body> element.
+ *
+ * @param attribute - The name of the attribute to change.
+ * @param value - The new value for the attribute.
  */
 const changeBodyAttribute = (attribute: string, value: string): void => {
     if (document.body) document.body.setAttribute(attribute, value);
 };
 
+/**
+ * Changes the specified HTML attribute of the <html> element.
+ *
+ * @param attribute - The name of the attribute to change.
+ * @param value - The new value for the attribute.
+ */
 const changeHTMLAttribute = (attribute: string, value: string): void => {
     if (document.body) document.getElementsByTagName('html')[0].setAttribute(attribute, value);
 };

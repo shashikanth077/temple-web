@@ -16,6 +16,7 @@ import Loader from 'sharedComponents/loader/loader';
 import DownloadJsonButton from 'sharedComponents/JsonDownloadBtn';
 import { selectStaticSiteManage } from 'contents/content/contactSelectors';
 import { getApiState } from 'storeConfig/apiStatus/apiSelector';
+import { config } from 'config/Env';
 
 /* eslint-disable */
 const ManageSite = () => {
@@ -151,7 +152,7 @@ const ManageSite = () => {
                                                 containerClass="mb-3"
                                             />
                                             <p className='mb-3'> <b>Current File</b>: {staticContent?.downloadTitle}</p>
-                                            <DownloadJsonButton classes="btn static-download-btn mb-2" jsonUrl="http://localhost:8080/uploads/staticfile/content.json" fileName="content.json" />
+                                            <DownloadJsonButton classes="btn static-download-btn mb-2" jsonUrl={`${config.API_BASE_URL}/uploads/staticfile/content.json`} fileName="content.json" />
                                         </div>
                                     </div>
                                     <div className="row text-center">

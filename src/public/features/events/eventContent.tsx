@@ -5,6 +5,7 @@ import ReactPaginate from 'react-paginate';
 import { APICore } from 'helpers';
 import { PublicImageURL } from 'constants/PublicUrl';
 import ButtonV1 from 'sharedComponents/button/buttonv1';
+import { config } from 'config/Env';
 
 interface EventProps{
     events:any;
@@ -66,7 +67,7 @@ function EventContent(props:EventProps) {
                                         <h3 className="events-calendar-list-event-title events-common-h4--min-medium">
 
                                             {!member ? (
-                                                <Link className="events-calendar-list-event-name" to={`${process.env.PUBLIC_URL}/events/eventsdetails/${event._id}`}>
+                                                <Link className="events-calendar-list-event-name" to={`${config.PUBLIC_URL}/events/eventsdetails/${event._id}`}>
                                                     {event.name}
                                                 </Link>
                                             ) : (

@@ -5,6 +5,7 @@ import { EffectFade, Thumbs } from 'swiper';
 // import Zoom from 'yet-another-react-lightbox/plugins/zoom';
 // import Fullscreen from 'yet-another-react-lightbox/plugins/fullscreen';
 import Swiper, { SwiperSlide } from 'sharedComponents/swiper/Swiper';
+import { config } from 'config/Env';
 
 /* eslint-disable */
 interface slideProps{
@@ -16,7 +17,7 @@ const ProductImageGallery = (props:slideProps) => {
     const [thumbsSwiper, setThumbsSwiper] = useState<any>(null);
     const [index, setIndex] = useState(-1);
     const slides = product?.image.map((img:any, i:any) => ({
-        src: process.env.PUBLIC_URL + img,
+        src: config.PUBLIC_URL + img,
         key: i,
     }));
 
@@ -67,7 +68,7 @@ const ProductImageGallery = (props:slideProps) => {
                                 </button>
                                 <div className="single-image">
                                     <img
-                                        src={process.env.PUBLIC_URL + single}
+                                        src={config.PUBLIC_URL + single}
                                         className="img-fluid"
                                         alt=""
                                     />
@@ -92,7 +93,7 @@ const ProductImageGallery = (props:slideProps) => {
                             <SwiperSlide key={key}>
                                 <div className="single-image">
                                     <img
-                                        src={process.env.PUBLIC_URL + single}
+                                        src={config.PUBLIC_URL + single}
                                         className="img-fluid"
                                         alt=""
                                     />

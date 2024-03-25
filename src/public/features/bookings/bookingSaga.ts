@@ -8,7 +8,7 @@ import { myBookingsActions } from './bookingSlice';
 import {
     startLoading, endLoading, setError,
 } from 'storeConfig/apiStatus/apiSlice';
-import { BookingRes, OrderBookingHistoryRes } from 'models';
+import { BookingRes } from 'models';
 
 function* getBookingDetails(action:any) {
     try {

@@ -7,6 +7,7 @@ import { EffectFade, Thumbs } from 'swiper';
 // import Zoom from 'yet-another-react-lightbox/plugins/zoom';
 // import Fullscreen from 'yet-another-react-lightbox/plugins/fullscreen';
 import Swiper, { SwiperSlide } from 'sharedComponents/swiper/Swiper';
+import { config } from 'config/Env';
 
 interface slideProps{
     product:any;
@@ -22,7 +23,7 @@ const ProductImageGalleryLeftThumb = (props:slideProps) => {
     const [index, setIndex] = useState(-1);
 
     const slides = product?.image.map((img:any, i:number) => ({
-        src: process.env.PUBLIC_URL + img,
+        src: config.PUBLIC_URL + img,
         key: i,
     }));
 
