@@ -48,7 +48,7 @@ export default function Events() {
         global: { value: null, matchMode: FilterMatchMode.CONTAINS },
     });
 
-    const [events, setEvents] = useState<any>([]);
+    const [eventList, setEvents] = useState<any>([]);
     const intl = useIntl();
     const [deleteEventDialog, setDeleteEventDialog] = useState(false);
     const [event, setEvent] = useState(emptyEvent);
@@ -89,9 +89,9 @@ export default function Events() {
     };
 
     const deleteEvent = () => {
-        const _events = events.filter((val:any) => val !== event._id);
-        setEvent(_events);
+        const _events = eventList.filter((val:any) => val._id !== event._id);
         dispatch(adminEventActions.deleteEvent({_id:event._id}))
+        setEvents(_events);
         setDeleteEventDialog(false);
         setEvent(emptyEvent);
     };
@@ -158,8 +158,10 @@ export default function Events() {
     const priceBodyTemplate = (rowData:any) => formatCurrency(intl,rowData.bookingPrice);
     const eventsList:any = appSelector(selectEventsList);
 
-    console.log("eventsList",eventsList);
-    
+    useEffect(() => {
+        setEvents(eventsList);
+    },[eventsList]);
+
     return (
         <div>
             <Toast ref={toast} />
@@ -169,7 +171,7 @@ export default function Events() {
                 <DataTable
                     ref={dt}
                     filters={filters} onFilter={(e:any) => setFilters(e.filters)}
-                    value={eventsList}
+                    value={eventList}
                     selection={selectedEvents} 
                     onSelectionChange={(e:any) => setSelectedEvents(e.value)} 
                     dataKey="_id"

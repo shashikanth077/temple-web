@@ -84,7 +84,7 @@ function* deleteGod(action:any) {
     try {
         const response: SuccesResponse = yield call(deleteGods, action.payload);
         if (response.success) {
-            yield put(setSuccessMessage('Updated successfully'));
+            yield put(setSuccessMessage('Deleted successfully'));
         } else {
             yield put(setError(response.errorMessage));
         }
