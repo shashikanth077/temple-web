@@ -53,7 +53,6 @@ export default function Products() {
     const [deleteProductDialog, setDeleteProductDialog] = useState(false);
     const [product, setProduct] = useState(emptyProduct);
     const [selectedProducts, setSelectedProducts] = useState<any>(null);
-    const [submitted, setSubmitted] = useState(false);
     const [globalFilter, setGlobalFilter] = useState(null);
     const toast = useRef<any>(null);
     const dt = useRef<any>(null);
@@ -82,7 +81,6 @@ export default function Products() {
     const hideDeleteProductDialog = () => {
         setDeleteProductDialog(false);
     };
-
    
     const onGlobalFilterChange = (event:any) => {
         const value = event.target.value;
@@ -118,7 +116,6 @@ export default function Products() {
         setDeleteProductDialog(false);
         setProducts(_products);
         setProduct(emptyProduct);
-        
     };
 
     const exportCSV = () => {

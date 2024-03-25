@@ -20,7 +20,7 @@ export default function HomeEvents(props:EventProps) {
     } = props;
 
     return (
-        data.length > 0 ? (
+        data?.length > 0 ? (
             <section className={`${classes} home-events area-padding`}>
                 <Container>
                     <div className="justify-content-right row">

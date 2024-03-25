@@ -95,6 +95,8 @@
   "scripts": {
     "preinstalled": "node ./checkVersions.js",
     "start": "npm run start:mock | react-scripts start",
+    "build:dev": "react-scripts build",
+    "build:prod": "react-scripts build",
     "start:mock": "nodemon ./jsonServer.js",
     "mock": "json-server --watch mock/index.js --port 4000 --routes mock/routes.json",
     "build": "react-scripts build",

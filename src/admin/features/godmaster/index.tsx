@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { classNames } from 'primereact/utils';
 import { FilterMatchMode } from 'primereact/api';
 import { useNavigate } from 'react-router-dom';
 import { DataTable } from 'primereact/datatable';
@@ -7,7 +6,6 @@ import { Column } from 'primereact/column';
 import { Toast } from 'primereact/toast';
 import { Button } from 'primereact/button';
 import { Toolbar } from 'primereact/toolbar';
-import { Dialog } from 'primereact/dialog';
 import { InputText } from 'primereact/inputtext';
 import { useSelector } from 'react-redux';
 import { admingodActions } from './godSlice';
@@ -40,9 +38,9 @@ export default function ManageGods() {
         global: { value: null, matchMode: FilterMatchMode.CONTAINS },
     });
 
-    const [gods, setGods] = useState<any>([]);
+    const [godList, setGods] = useState<any>([]);
     const [deleteGodDialog, setDeleteGodDialog] = useState(false);
-    const [god, setGod] = useState(emptyGod);
+    const [godSingle, setGod] = useState(emptyGod);
     const [selectedGods, setSelectedGods] = useState<any>(null);
     const [globalFilter, setGlobalFilter] = useState(null);
     const toast = useRef<any>(null);
@@ -67,6 +65,10 @@ export default function ManageGods() {
         setDeleteGodDialog(false);
     };
 
+    useEffect(() => {
+        setGods(GodDetails);
+    });
+
     const onGlobalFilterChange = (event:any) => {
         const value = event.target.value;
         let _filters = { ...filters };
@@ -84,9 +86,9 @@ export default function ManageGods() {
     };
 
     const deleteGod = () => {
-        const _Gods = gods.filter((val:any) => val !== god._id);
+        const _Gods = godList.filter((val:any) => val._id !== godSingle._id);
+        dispatch(admingodActions.deletegod({_id:godSingle._id}));
         setGods(_Gods);
-        dispatch(admingodActions.deletegod({_id:god._id}))
         setDeleteGodDialog(false);
         setGod(emptyGod);
     };
@@ -143,7 +145,7 @@ export default function ManageGods() {
             <h4 className="m-0">Manage God Section</h4>
             <span className="p-input-icon-left mb-1">
                 <i className="pi pi-search" />
-                <InputText type="search" value={value || ''} onChange={(e) => onGlobalFilterChange(e)} placeholder="Search Gods" />
+                <InputText type="search" value={value || ''} onChange={(e:any) => onGlobalFilterChange(e)} placeholder="Search Gods" />
             </span>
         </div>
         )
@@ -165,7 +167,7 @@ export default function ManageGods() {
                 <DataTable
                     ref={dt}
                     filters={filters} onFilter={(e:any) => setFilters(e.filters)}
-                    value={GodDetails}
+                    value={godList}
                     selection={selectedGods} 
                     onSelectionChange={(e:any) => setSelectedGods(e.value)} 
                     dataKey="_id"
@@ -188,8 +190,8 @@ export default function ManageGods() {
                 deleteonClick={deleteGodDialog}
                 deleteDialogFooter={deleteGodDialogFooter}
                 hideDeleteDialog={hideDeleteGodDialog}
-                deleteTitle={god.name}
-                dataLength={god}
+                deleteTitle={godSingle.name}
+                dataLength={godSingle}
             />
           
 

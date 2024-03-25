@@ -66,7 +66,10 @@ export default function Services() {
    
     const ServiceDetails:any = appSelector(selectServices);
 
-    console.log("ServiceDetails",ServiceDetails);
+    useEffect(() => {
+        setServices(ServiceDetails);
+    },[ServiceDetails]);
+
  
     const openNew = () => {
         navigate("/admin/services/add");
@@ -106,9 +109,9 @@ export default function Services() {
     }, [successMessage, error, dispatch]);
 
     const deleteService = () => {
-        const _Services = Services.filter((val:any) => val !== Service._id);
-        setServices(_Services);
+        const _Services = Services.filter((val:any) => val._id !== Service._id);
         dispatch(adminServiceActions.deleteService({_id:Service._id}))
+        setServices(_Services);
         setDeleteServiceDialog(false);
         setService(emptyService);
         
@@ -179,7 +182,7 @@ export default function Services() {
                 <DataTable
                     ref={dt}
                     filters={filters} onFilter={(e:any) => setFilters(e.filters)}
-                    value={ServiceDetails}
+                    value={Services}
                     selection={selectedServices} 
                     onSelectionChange={(e:any) => setSelectedServices(e.value)} 
                     dataKey="_id"
