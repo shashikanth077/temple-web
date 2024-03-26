@@ -29,10 +29,10 @@ const AuthLayout = ({ hasLogo, bottomLinks, children }: AccountLayoutProps) => {
                     <Col md={6} lg={4} sm={3}>
                         {hasLogo && (
                             <div className="text-center">
-                                <div className="auth-logo">
+                                <div className="auth-logo mb-3">
                                     <Link to="/" className="logo logo-dark text-center">
-                                        <span className="logo-lg">
-                                            <img src="assets/images/logo/logo.jpg" alt="" height="35" />
+                                        <span className="auth-logo-lg">
+                                            <img src="assets/images/logo/logo.jpg" alt="" height="90" />
                                         </span>
                                     </Link>
 

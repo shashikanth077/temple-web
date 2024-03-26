@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useIntl } from 'react-intl';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { serviceActions } from '../serviceSlice';
 import { selectServiceList } from '../serviceSelector';
 import { admingodActions } from 'admin/features/godmaster/godSlice';
@@ -19,6 +19,7 @@ const ServiceList = () => {
     const { dispatch, appSelector } = useRedux();
     const navigate = useNavigate();
     const intl = useIntl();
+    const {id} = useParams();
 
     useEffect(() => {
         dispatch(admingodActions.getGodDetails());
@@ -26,22 +27,9 @@ const ServiceList = () => {
 
     const godList = useSelector(selectGods);
 
-    const [activeGod, setActiveGod] = useState(
-        godList.length > 0 ? godList[0]?._id : null,
-    );
-
-    const [activeGodName, setActiveGodName] = useState(
-        godList.length > 0 ? godList[0]?.name : null,
-    );
-
-    const handleGodClick = (value:string, name:string) => {
-        setActiveGod(value);
-        setActiveGodName(name);
-    };
-
     useEffect(() => {
-        dispatch(serviceActions.getServices({ _id: activeGod }));
-    }, [dispatch, activeGod]);
+        dispatch(serviceActions.getServices({ _id: id }));
+    }, [dispatch, id]);
 
     const serviceList = appSelector(selectServiceList);
 
@@ -67,22 +55,6 @@ const ServiceList = () => {
                         align="text-center"
                     />
                     </h2>
-                    <div className="service-form">
-                        <div className="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12 xssm-pr-0 pl-0 pr-0">
-                            <label>Select God <span className="sd-imp">*</span></label>
-                            <select
-                                className="form-control service-list-dropdown"
-                                onChange={event => handleGodClick(event.target.value, event.target.options[event.target.selectedIndex].text)}
-                            >
-                                <option>Select god</option>
-                                {godList?.map((god: any) => (
-                                    <option key={god._id} value={god._id}>
-                                        {god.name}
-                                    </option>
-                                ))}
-                            </select>
-                        </div>
-                    </div>
                 </div>
             </div>
            
@@ -120,7 +92,7 @@ const ServiceList = () => {
                     </div>
                 ) : (
                     <div className="no-services-found">
-                        <p>No services found for {activeGodName} </p>
+                        <p>No services found  </p>
                     </div>
                 )}
             </div>

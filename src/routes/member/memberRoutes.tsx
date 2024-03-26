@@ -24,6 +24,7 @@ const MemberServices = React.lazy(() => import('member/features/services/memberv
 const MemberSevas = React.lazy(() => import('member/features/bookings/memberview/sevaList'));
 const MemberEvents = React.lazy(() => import('member/features/events/memberview/eventList'));
 const Dashboard = React.lazy(() => import('admin/features/dashboard'));
+const GodList = React.lazy(() => import('member/features/services/godList'));
 
 export interface RoutesProps {
     path: RouteProps['path'];
@@ -113,7 +114,12 @@ const bookingsReportRoutes: RoutesProps = {
             element: <MemberStore />,
         },
         {
-            path: '/online-booking/services',
+            path: '/online-booking/gods',
+            name: 'onlineservices',
+            element: <GodList />,
+        },
+        {
+            path: '/online-booking/services/:id',
             name: 'onlineservices',
             element: <MemberServices />,
         },

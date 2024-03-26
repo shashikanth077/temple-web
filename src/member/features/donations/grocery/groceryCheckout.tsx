@@ -90,7 +90,7 @@ const GroceryCheckout = () => {
             cardholdername: yup.string().required('Please enter the card holder name as per card'),
             comments: yup
                 .string()
-                .required("Please add some notes for  your order")
+                .required("Please add some notes for  your grocery donation.")
                 .min(
                     10,
                     "This value is too short. It should have 10 characters or more.",
@@ -480,7 +480,7 @@ const GroceryCheckout = () => {
                                                     control={control}
                                                     name="comments"
                                                     type="textarea"
-                                                    placeholder="Notes about your shopping, e.g. special notes for order. "
+                                                    placeholder="Notes about your grocery donation, e.g. special notes for donations. "
                                                     defaultValue=""
                                                 />
                                             </div>
@@ -489,9 +489,9 @@ const GroceryCheckout = () => {
                                 </div>
 
                                 <div className="row">
-                                    <div className="col-lg-7 order-lg-2">
+                                    <div className="col-lg-6 order-lg-2">
                                         <div className="your-order-area">
-                                            <h3>Your order</h3>
+                                            <h3>Your donation details</h3>
                                             <div className="your-order-wrap gray-bg-4">
                                                 <div className="your-order-product-info">
                                                     <div className="your-order-top">
@@ -547,42 +547,33 @@ const GroceryCheckout = () => {
                                         </div>
                                     </div>
 
-                                    {/* Order Details on Right Side */}
-                                    <div className="col-lg-5 order-lg-1">
-                                        <div className="your-order-area card-payment-details">
-                                            <h3>Enter Card details</h3>
-                                            <div className='your-order-wrap'>
-                                            <div className="billing-info mb-20">
-                                                <FormInput
-                                                    type="text"
-                                                    register={register}
-                                                    key="cardholdername"
-                                                    errors={errors}
-                                                    label="Card holder name"
-                                                    control={control}
-                                                    name="cardholdername"
-                                                />
+                                    <div className="col-lg-6">
+                                        <div id="pay-invoice" className="card">
+                                            <div className="card-body">
+                                                <div className="card-title">
+                                                    <h2 className="text-center">Enter card details</h2>
+                                                </div>
+                                                <div className="form-group has-success">
+                                                    <FormInput
+                                                        register={register}
+                                                        key="cardholdername"
+                                                        errors={errors}
+                                                        label="Name on the card"
+                                                        control={control}
+                                                        name="cardholdername"
+                                                        type="text"
+                                                        className='mb-3'
+                                                        placeholder="Card holder name"
+                                                        defaultValue=""
+                                                    />
+                                                    <CardElement className="card-element card-box form-control mb-4" options={{ style: { base: { fontSize: '16px' } } }} />
+                                                    {cardErrors && <p className="error-message">{cardErrors}</p>}
+                                                </div>
                                             </div>
-                                            <div className="Card-Info mb-20">
-                                                <CardElement
-                                                    className='card-details'
-                                                    id="card"
-                                                    options={{
-                                                        style: {
-                                                            base: {
-                                                                fontSize: '16px',
-                                                                color: '#32325d',
-                                                                fontFamily: 'Arial, sans-serif',
-                                                            },
-                                                        }
-                                                    }}
-                                                />
-                                            </div>
-                                            </div>
-                                            {cardErrors && <p className="error-message">{cardErrors}</p>}
                                         </div>
                                     </div>
                                 </div>
+
                                 <div
                                     className="col-lg-3 order-btn"
                                     style={{ textAlign: "right" }}
