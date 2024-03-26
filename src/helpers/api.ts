@@ -2,8 +2,8 @@
 import axios, { AxiosResponse, InternalAxiosRequestConfig } from 'axios';
 import { config } from 'config/Env';
 
-const username = 'ClientApi';
-const password = 'ClientApi';
+const username = process.env.REACT_APP_BASE_AUTH_USERNAME;
+const password = process.env.REACT_APP_BASE_AUTH_PASSWORD;
 const credentials = btoa(`${username}:${password}`);
 const basicAuth = `Basic ${credentials}`;
 
@@ -61,7 +61,7 @@ axios.interceptors.response.use(
     },
 );
 
-const AUTH_SESSION_KEY = 'admintemple_user';
+const AUTH_SESSION_KEY:any = process.env.REACT_APP_LOGIN_AUTH_KEY;
 
 /**
  * Sets the default authorization
@@ -90,10 +90,12 @@ class APICore {
                     .map(key => `${key}=${params[key]}`)
                     .join('&')
                 : '';
+            const baseAuthUsername = process.env.REACT_APP_BASE_AUTH_USERNAME || '';
+            const baseAuthPassword = process.env.REACT_APP_BASE_AUTH_PASSWORD || '';
             return axios.get(`${url}?${queryString}`, {
                 auth: {
-                    username: 'ClientApi',
-                    password: 'ClientApi',
+                    username: baseAuthUsername,
+                    password: baseAuthPassword,
                 },
                 params: { username },
             }).then(res => res)
@@ -253,7 +255,6 @@ class APICore {
         const userInfo = localStorage.getItem(AUTH_SESSION_KEY);
         if (userInfo) {
             const { user } = JSON.parse(userInfo);
-            console.log("setUserInSession",user);
             APICore.setLoggedInUser({ ...user, ...modifiedUser });
         }
     }
