@@ -468,11 +468,11 @@ const SevaConfirmPage = () => {
                                 </div>
 
                                 <div className="row">
-                                    <div className="col-lg-7 order-lg-2">
+                                    <div className="col-lg-6 order-lg-2">
                                     <div className="your-order-area">
-                                        <h2><strong>Your seva details</strong></h2>
                                         <div className="your-order-wrap gray-bg-4">
                                             <div className="your-order-product-info">
+                                            <h3>Your seva details</h3>
                                                 <div className="your-order-middle">
                                                     <ul>
                                                    
@@ -481,7 +481,7 @@ const SevaConfirmPage = () => {
                                                                 Booking type
                                                             </span>{' '}
                                                             <span className="order-price">
-                                                                <strong>{BookDetails.type}</strong>
+                                                                {BookDetails.type}
                                                             </span>
                                                         </li>
                                                         <li>
@@ -489,7 +489,7 @@ const SevaConfirmPage = () => {
                                                                 Seva name
                                                             </span>{' '}
                                                             <span className="order-price">
-                                                                <strong>{BookDetails.name}</strong>
+                                                                {BookDetails.name}
                                                             </span>
                                                         </li>
                                                         <li>
@@ -497,7 +497,7 @@ const SevaConfirmPage = () => {
                                                                 Booking date
                                                             </span>{' '}
                                                             <span className="order-price">
-                                                                <strong>{BookDetails.bookingDate}</strong>
+                                                                {BookDetails.bookingDate}
                                                             </span>
                                                         </li>
                                                     </ul>
@@ -517,10 +517,13 @@ const SevaConfirmPage = () => {
                                     </div>
 
                                     {/* Order Details on Right Side */}
-                                    <div className="col-lg-5 order-lg-1">
-                                        <div className="your-order-area card-payment-details">
-                                            <h4>Enter Payment Details</h4>
-                                            <div className="billing-info mb-20">
+                                    <div className="col-lg-6">
+                                        <div className="card">
+                                        <div className="card-body">
+                                            <div className="card-title">
+                                                <h2 className="text-center">Enter card details</h2>
+                                            </div>
+                                            <div className="form-group has-success">
                                                 <FormInput
                                                     type="text"
                                                     register={register}
@@ -530,23 +533,10 @@ const SevaConfirmPage = () => {
                                                     control={control}
                                                     name="cardholdername"
                                                 />
+                                                <CardElement className="card-element card-box form-control mb-4 mt-4" options={{ style: { base: { fontSize: '16px' } } }} />
+                                                    {cardErrors && <p className="error-message">{cardErrors}</p>}
                                             </div>
-                                            <div className="Card-Info mb-20">
-                                                <CardElement
-                                                    className='card-details'
-                                                    id="card"
-                                                    options={{
-                                                        style: {
-                                                            base: {
-                                                                fontSize: '16px',
-                                                                color: '#32325d',
-                                                                fontFamily: 'Arial, sans-serif',
-                                                            },
-                                                        }
-                                                    }}
-                                                />
                                             </div>
-                                            {cardErrors && <p className="error-message">{cardErrors}</p>}
                                         </div>
                                     </div>
                                 </div>

@@ -474,11 +474,11 @@ const EventPaymentPage = () => {
                                 </div>
 
                                 <div className="row">
-                                    <div className="col-lg-7 order-lg-2">
+                                    <div className="col-lg-6 order-lg-2">
                                     <div className="your-order-area">
-                                        <h2><strong>Your Event details</strong></h2>
                                         <div className="your-order-wrap gray-bg-4">
                                             <div className="your-order-product-info">
+                                            <h3>Your Event details</h3>
                                                 <div className="your-order-middle">
                                                     <ul>
                                                     <li>
@@ -486,7 +486,7 @@ const EventPaymentPage = () => {
                                                                 Event name
                                                             </span>{' '}
                                                             <span className="order-price">
-                                                                <strong>{event.name}</strong>
+                                                                {event.name}
                                                             </span>
                                                         </li>
                                                         <li>
@@ -494,7 +494,7 @@ const EventPaymentPage = () => {
                                                                 Price
                                                             </span>{' '}
                                                             <span className="order-price">
-                                                                <strong>{event.bookingPrice}</strong>
+                                                                {event.bookingPrice}
                                                             </span>
                                                         </li>
                                                     </ul>
@@ -514,10 +514,13 @@ const EventPaymentPage = () => {
                                     </div>
 
                                     {/* Order Details on Right Side */}
-                                    <div className="col-lg-5 order-lg-1">
-                                        <div className="your-order-area card-payment-details">
-                                            <h4>Enter Payment Details</h4>
-                                            <div className="billing-info mb-20">
+                                    <div className="col-lg-6 order-lg-1">
+                                    <div className="card">
+                                        <div className="card-body">
+                                            <div className="card-title">
+                                                <h2 className="text-center">Enter card details</h2>
+                                            </div>
+                                            <div className="form-group has-success">
                                                 <FormInput
                                                     type="text"
                                                     register={register}
@@ -527,23 +530,10 @@ const EventPaymentPage = () => {
                                                     control={control}
                                                     name="cardholdername"
                                                 />
+                                                <CardElement className="card-element card-box form-control mb-4 mt-4" options={{ style: { base: { fontSize: '16px' } } }} />
+                                                    {cardErrors && <p className="error-message">{cardErrors}</p>}
                                             </div>
-                                            <div className="Card-Info mb-20">
-                                                <CardElement
-                                                    className='card-details'
-                                                    id="card"
-                                                    options={{
-                                                        style: {
-                                                            base: {
-                                                                fontSize: '16px',
-                                                                color: '#32325d',
-                                                                fontFamily: 'Arial, sans-serif',
-                                                            },
-                                                        }
-                                                    }}
-                                                />
-                                            </div>
-                                            {cardErrors && <p className="error-message">{cardErrors}</p>}
+                                        </div>
                                         </div>
                                     </div>
                                 </div>
