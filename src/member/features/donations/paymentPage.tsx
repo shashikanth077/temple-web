@@ -23,6 +23,7 @@ import { selectMyProfileDetails } from 'admin/features/myprofile/myProfileSelect
 import { CAProvinces } from 'constants/CAProvinces';
 import { FormInput } from 'sharedComponents/inputs';
 import 'sweetalert2/dist/sweetalert2.min.css';
+import ButtonV1 from 'sharedComponents/button/buttonv1';
 
 /* eslint-disable */
 const DonationPayment = () => {
@@ -104,7 +105,7 @@ const DonationPayment = () => {
                 description: `Donating amount for ${BookDetails?.type}`,
                 receipt_email: ProfileDetails?.email,
                 shipping: {
-                    name: ProfileDetails?.firstName +' '+ProfileDetails?.lastName,
+                    name: ProfileDetails?.firstName + ' ' + ProfileDetails?.lastName,
                     phone: ProfileDetails?.mobileNumber,
                     address: {
                         line1: billingAddressFormData?.billingAddress,
@@ -153,18 +154,18 @@ const DonationPayment = () => {
                         }).then(() => {
                         });
                     } else {
-                                               
+
                         //insert in  to database
-                        let PaymentHistory:any = {}
+                        let PaymentHistory: any = {}
 
                         PaymentHistory.userId = param2;
                         PaymentHistory.devoteeId = loggedInUser.devoteeId;
                         PaymentHistory.donateTypeId = param1;
                         PaymentHistory.donationType = BookDetails.type;
-                        PaymentHistory.donorName = ProfileDetails.firstName +' '+ProfileDetails.lastName;
+                        PaymentHistory.donorName = ProfileDetails.firstName + ' ' + ProfileDetails.lastName;
                         PaymentHistory.donorEmail = ProfileDetails.email;
                         PaymentHistory.frequency = BookDetails.frequency;
-                        PaymentHistory.donorPhoneNumber = ProfileDetails.mobileNumber;
+                        PaymentHistory.donorPhoneNumber = ProfileDetails.phonenumber;
                         PaymentHistory.donorNotes = data.comments;
                         PaymentHistory.stripeReferenceId = payload.paymentIntent.id;
                         PaymentHistory.donatedAmount = BookDetails.amount;
@@ -176,7 +177,7 @@ const DonationPayment = () => {
                         PaymentHistory.billingAddress = billingAddressFormData;
 
                         dispatch(mydonationsActions.PayDonation(PaymentHistory));
-                        
+
                         setProcessing(false);
 
                         Swal.fire({
@@ -211,7 +212,7 @@ const DonationPayment = () => {
             }
         } catch (error) {
             console.error('Error during payment:', error);
-        } 
+        }
     });
 
     useEffect(() => {
@@ -224,7 +225,7 @@ const DonationPayment = () => {
 
     const ProfileDetails: any = appSelector(selectMyProfileDetails);
 
-    const [selectedState, setSelectedState] = useState<string>(''); // Initialize with an empty string
+    const [selectedState, setSelectedState] = useState<string>(''); 
 
     React.useEffect(() => {
         if (isChecked) {
@@ -268,239 +269,230 @@ const DonationPayment = () => {
     return (
 
         <>
-        {
-            processing &&  
-            <div className="overlay">
-                <CircleLoader />
-            </div>
-        }
-        
-        <div className="checkout-area pt-95 pb-100">
-            <div className="container">
-                <form name="donation-payment-form" id="donation-payment-form" onSubmit={onSubmit}>
-                    {BookDetails ? (
-                        <>
-                            <div className="row">
+            {
+                processing &&
+                <div className="overlay">
+                    <CircleLoader />
+                </div>
+            }
 
-                                <div className="col-lg-12">
-                                    <div className="billing-info-wrap">
-                                        <h3>Billing Details</h3>
+            <div className="checkout-area pt-95 pb-100">
+                <div className="container">
+                    <form name="donation-payment-form" id="donation-payment-form" onSubmit={onSubmit}>
+                        {BookDetails ? (
+                            <>
+                                <div className="row">
 
-                                        <div className="form-group row">
-                                            <div className="col-sm-10">
-                                                <div className="form-check">
-                                                    <input className="form-check-input" checked={isChecked} onChange={handleBillingToggle} type="checkbox" id="saveAddress" />
-                                                    <label className="form-check-label d-flex align-items-center" htmlFor="saveAddress">
-                                                        Save as default address
-                                                    </label>
+                                    <div className="col-lg-12">
+                                        <div className="billing-info-wrap">
+                                            <h3>Billing Details</h3>
+
+                                            <div className="form-group row">
+                                                <div className="col-sm-10">
+                                                    <div className="form-check">
+                                                        <input className="form-check-input" checked={isChecked} onChange={handleBillingToggle} type="checkbox" id="saveAddress" />
+                                                        <label className="form-check-label d-flex align-items-center" htmlFor="saveAddress">
+                                                            Save as default address
+                                                        </label>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div className="row">
-                                            <div className="col-lg-12">
-                                                <div className="billing-info mb-20">
+                                            <div className="row">
+                                                <div className="col-lg-12">
+                                                    <div className="billing-info mb-20">
+                                                        <FormInput
+                                                            type="text"
+                                                            register={register}
+                                                            key="billingAddress"
+                                                            errors={errors}
+                                                            control={control}
+                                                            label="Address"
+                                                            name="billingAddress"
+                                                            defaultValue={billingAddressFormData?.billingAddress || ''}
+                                                        />
+                                                    </div>
+                                                </div>
+                                                <div className="col-lg-12">
+                                                    <div className="billing-info mb-20">
+                                                        <FormInput
+                                                            type="text"
+                                                            register={register}
+                                                            key="billingCity"
+                                                            errors={errors}
+                                                            control={control}
+                                                            label="City"
+                                                            name="billingCity"
+                                                            defaultValue={billingAddressFormData?.billingCity || ''} />
+                                                    </div>
+                                                </div>
+                                                <div className="col-lg-6 col-md-6">
+                                                    <div className="billing-info mb-20">
+                                                        <FormInput
+                                                            register={register}
+                                                            key="state"
+                                                            label="State"
+                                                            errors={errors}
+                                                            control={control}
+                                                            type="select"
+                                                            defaultValue={selectedState}
+                                                            onChange={event => setSelectedState(event.target.value)}
+                                                            name="state"
+                                                            id="state"
+                                                            className="billing-selectinput mb-20"
+                                                        >
+
+                                                            <option value="">Select</option>
+                                                            {CAProvinces?.map((option: any, index: any) => (
+                                                                <option key={index} value={option.name} selected={option.name === selectedState}>
+                                                                    {option.name}
+                                                                </option>
+                                                            ))}
+                                                        </FormInput>
+                                                    </div>
+                                                </div>
+                                                <div className="col-lg-6 col-md-6">
+                                                    <div className="billing-info mb-20">
+                                                        <FormInput
+                                                            register={register}
+                                                            key="postalCode"
+                                                            errors={errors}
+                                                            label="Postal code"
+                                                            control={control}
+                                                            type="text"
+                                                            name="postalCode"
+                                                            defaultValue={billingAddressFormData?.billingZipcode || ''} />
+                                                    </div>
+                                                </div>
+                                                <div className="col-lg-6 col-md-6">
+                                                    <div className="billing-info mb-20">
+                                                        <FormInput label="Email address" type="email" name="email" value={ProfileDetails?.email} disabled />
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div className="additional-info-wrap mb-3">
+                                                <h4>Additional information</h4>
+                                                <div className="additional-info">
+                                                    <label>Donation notes</label>
                                                     <FormInput
-                                                        type="text"
                                                         register={register}
-                                                        key="billingAddress"
+                                                        key="comments"
                                                         errors={errors}
+                                                        label="Notes"
                                                         control={control}
-                                                        label="Address"
-                                                        name="billingAddress"
-                                                        defaultValue={billingAddressFormData?.billingAddress || ''}
+                                                        name="comments"
+                                                        type="textarea"
+                                                        placeholder="Notes about your donation, e.g. special notes for donation. "
+                                                        defaultValue=""
                                                     />
                                                 </div>
                                             </div>
-                                            <div className="col-lg-12">
-                                                <div className="billing-info mb-20">
-                                                    <FormInput
-                                                        type="text"
-                                                        register={register}
-                                                        key="billingCity"
-                                                        errors={errors}
-                                                        control={control}
-                                                        label="City"
-                                                        name="billingCity"
-                                                        defaultValue={billingAddressFormData?.billingCity || ''} />
-                                                </div>
-                                            </div>
-                                            <div className="col-lg-6 col-md-6">
-                                                <div className="billing-info mb-20">
-                                                    <FormInput
-                                                        register={register}
-                                                        key="state"
-                                                        label="State"
-                                                        errors={errors}
-                                                        control={control}
-                                                        type="select"
-                                                        defaultValue={selectedState}
-                                                        onChange={event => setSelectedState(event.target.value)}
-                                                        name="state"
-                                                        id="state"
-                                                        className="billing-selectinput mb-20"
-                                                    >
 
-                                                        <option value="">Select</option>
-                                                        {CAProvinces?.map((option: any, index: any) => (
-                                                            <option key={index} value={option.name} selected={option.name === selectedState}>
-                                                                {option.name}
-                                                            </option>
-                                                        ))}
-                                                    </FormInput>
-                                                </div>
-                                            </div>
-                                            <div className="col-lg-6 col-md-6">
-                                                <div className="billing-info mb-20">
-                                                    <FormInput
-                                                        register={register}
-                                                        key="postalCode"
-                                                        errors={errors}
-                                                        label="Postal code"
-                                                        control={control}
-                                                        type="text"
-                                                        name="postalCode"
-                                                        defaultValue={billingAddressFormData?.billingZipcode || ''} />
-                                                </div>
-                                            </div>
-                                            <div className="col-lg-6 col-md-6">
-                                                <div className="billing-info mb-20">
-                                                    <FormInput label="Email address" type="email" name="email" value={ProfileDetails?.email} disabled />
-                                                </div>
-                                            </div>
                                         </div>
-
-                                        <div className="additional-info-wrap mb-3">
-                                            <h4>Additional information</h4>
-                                            <div className="additional-info">
-                                                <label>Donation notes</label>
-                                                <FormInput
-                                                    register={register}
-                                                    key="comments"
-                                                    errors={errors}
-                                                    label="Notes"
-                                                    control={control}
-                                                    name="comments"
-                                                    type="textarea"
-                                                    placeholder="Notes about your donation, e.g. special notes for donation. "
-                                                    defaultValue=""
-                                                />
-                                            </div>
-                                        </div>
-
                                     </div>
                                 </div>
-                            </div>
 
-                            <div className='row'>
+                                <div className='row'>
 
-                                <div className="col-lg-6">
-                                    <div id="pay-invoice" className="card">
-                                        <div className="card-body">
-                                            <div className="card-title">
-                                                <h2 className="text-center">Enter card details</h2>
-                                            </div>
-
-                                            <div className="form-group">
-                                                <label>Payment amount</label>
-                                                <h2>{formatCurrency(intl, BookDetails.amount)}</h2>
-                                            </div>
-                                            <div className="form-group has-success">
-                                                <FormInput
-                                                    register={register}
-                                                    key="cardholdername"
-                                                    errors={errors}
-                                                    label="Name on the card"
-                                                    control={control}
-                                                    name="cardholdername"
-                                                    type="text"
-                                                    className='mb-5'
-                                                    placeholder="Card holder name"
-                                                    defaultValue=""
-                                                />
-                                                <CardElement className="card-element card-box form-control mb-4" options={{ style: { base: { fontSize: '16px' } } }} />
-                                                {cardError && <p className="error-message">{cardError}</p>}
-                                            </div>
-                                            <div>
-                                                <button id="payment-button" type="submit" className="btn btn-lg btn-success btn-block">
-                                                    <button
-                                                        type="submit"
+                                    <div className="col-lg-6">
+                                        <div id="pay-invoice" className="card">
+                                            <div className="card-body">
+                                                <div className="card-title">
+                                                    <h2 className="text-center">Enter card details</h2>
+                                                </div>
+                                              
+                                                <div className="form-group has-success">
+                                                    <FormInput
+                                                        register={register}
+                                                        key="cardholdername"
+                                                        errors={errors}
+                                                        label="Name on the card"
+                                                        control={control}
+                                                        name="cardholdername"
+                                                        type="text"
+                                                        className='mb-5'
+                                                        placeholder="Card holder name"
+                                                        defaultValue=""
+                                                    />
+                                                    <CardElement className="card-element card-box form-control mb-4" options={{ style: { base: { fontSize: '16px' } } }} />
+                                                    {cardError && <p className="error-message">{cardError}</p>}
+                                                </div>
+                                                <div>
+                                                    <ButtonV1
+                                                        btnType="submit"
+                                                        label={processing ? 'PROCESSING' : 'PAY NOW'}
                                                         disabled={processing}
-                                                        className="btn"
-                                                    >
-                                                        {processing ? 'PROCESSING' : 'PAY'}
-                                                    </button>
-                                                </button>
+                                                        btnClassName='btn btn-primary book-btn submit-btn mr-1 waves-effect waves-light'
+                                                        imgClassName='sd-arrow-btn ml-5'
+                                                    />
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
 
-                                <div className="col-lg-5">
-                                    <div className="your-order-area">
-                                        <h2><strong>Your donation details</strong></h2>
-                                        <div className="your-order-wrap gray-bg-4">
-                                            <div className="your-order-product-info">
-                                                {/* <div className="your-order-top">
+                                    <div className="col-lg-5">
+                                        <div className="your-order-area">
+                                            <h2><strong>Your donation details</strong></h2>
+                                            <div className="your-order-wrap gray-bg-4">
+                                                <div className="your-order-product-info">
+                                                    {/* <div className="your-order-top">
                                                     <ul>
                                                         <li>Donation </li>
                                                         <li>Total</li>
                                                     </ul>
                                                 </div> */}
-                                                <div className="your-order-middle">
-                                                    <ul>
-                                                        <li>
-                                                            <span className="order-middle-left">
-                                                                Donation type
-                                                            </span>{' '}
-                                                            <span className="order-price">
-                                                                <strong>{BookDetails.type}</strong>
-                                                            </span>
-                                                        </li>
-                                                        <li>
-                                                            <span className="order-middle-left">
-                                                                Frequency
-                                                            </span>{' '}
-                                                            <span className="order-price">
-                                                                <strong>{BookDetails.frequency}</strong>
-                                                            </span>
-                                                        </li>
-                                                    </ul>
+                                                    <div className="your-order-middle">
+                                                        <ul>
+                                                            <li>
+                                                                <span className="order-middle-left">
+                                                                    Donation type
+                                                                </span>{' '}
+                                                                <span className="order-price">
+                                                                    <strong>{BookDetails.type}</strong>
+                                                                </span>
+                                                            </li>
+                                                            <li>
+                                                                <span className="order-middle-left">
+                                                                    Frequency
+                                                                </span>{' '}
+                                                                <span className="order-price">
+                                                                    <strong>{BookDetails.frequency}</strong>
+                                                                </span>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                    <div className="your-order-total">
+                                                        <ul>
+                                                            <li className="order-total">Total</li>
+                                                            <li>
+                                                                {formatCurrency(intl, BookDetails.amount)}
+                                                            </li>
+                                                        </ul>
+                                                    </div>
                                                 </div>
-                                                <div className="your-order-total">
-                                                    <ul>
-                                                        <li className="order-total">Total</li>
-                                                        <li>
-                                                            {formatCurrency(intl, BookDetails.amount)}
-                                                        </li>
-                                                    </ul>
-                                                </div>
+                                                <div className="payment-method" />
                                             </div>
-                                            <div className="payment-method" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </>
+                        ) : (
+                            <div className="row">
+                                <div className="col-lg-12">
+                                    <div className="item-empty-area text-center">
+                                        <div className="item-empty-area__icon mb-30">
+                                            <i className="pe-7s-cash" />
+                                        </div>
+                                        <div className="item-empty-area__text">
+                                            Something went wrong please try again!<br />{' '}
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </>
-                    ) : (
-                        <div className="row">
-                            <div className="col-lg-12">
-                                <div className="item-empty-area text-center">
-                                    <div className="item-empty-area__icon mb-30">
-                                        <i className="pe-7s-cash" />
-                                    </div>
-                                    <div className="item-empty-area__text">
-                                        Something went wrong please try again!<br />{' '}
-                                        {/* <Link to={`${process.env.PUBLIC_URL}/shop-grid-standard`}>
-                                        Shop Now
-                                    </Link> */}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    )}
-                </form>
+                        )}
+                    </form>
+                </div>
             </div>
-        </div>
         </>
 
     );

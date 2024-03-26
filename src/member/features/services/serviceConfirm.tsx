@@ -187,7 +187,6 @@ const serviceConfirm = () => {
                                                     intl,
                                                     BookDetails?.amount,
                                                 )}{" "}
-                                                <br /> (Handling charges:0.00){" "}
                                             </td>
                                         </tr>
                                     </tbody>

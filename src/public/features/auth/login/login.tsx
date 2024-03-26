@@ -51,7 +51,6 @@ const Login = () => {
     const { dispatch } = useRedux();
     const navigate = useNavigate();
     const { loading, error, successMessage } = useSelector(getApiState);
-    const [firstTimeReload, setFirstTimeReload] = useState(true);
 
     /*
         form validation schema
@@ -121,18 +120,11 @@ const Login = () => {
 
     useEffect(() => {
         const handleRedirect = () => {
-            // Check if the user is authenticated
             if (APICore.isUserAuthenticated()) {
                 const sessionUrl = localStorage.getItem('targetUrl');
-                // Check if there is a stored session URL
                 if (sessionUrl) {
-                    // Navigate to the stored session URL
                     navigate(sessionUrl);
-
-                    // Remove the stored session URL after redirecting
-                    // localStorage.removeItem('targetUrl');
                 } else {
-                    // If there is no stored session URL, redirect to the default URL (e.g., /dashboard)
                     navigate(redirectUrl);
                 }
             }

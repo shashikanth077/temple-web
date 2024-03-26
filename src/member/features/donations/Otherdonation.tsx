@@ -61,6 +61,9 @@ const UserDonationsTypes = () => {
     const handleSelect = (eventKey: any) => {
         if (eventKey) {
             const selectedDonationType = donationTypes?.find((donationType: any) => donationType._id === eventKey);
+            if (selectedDonationType && selectedDonationType.donationType.toLowerCase() === 'grocery danam') {
+                navigate('/donation/grocery/list');
+            }
             setSelectedOption(selectedDonationType?.donationType || null);
             setSelectionId(eventKey);
         }
