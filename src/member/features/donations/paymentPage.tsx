@@ -165,7 +165,7 @@ const DonationPayment = () => {
                         PaymentHistory.donorName = ProfileDetails.firstName + ' ' + ProfileDetails.lastName;
                         PaymentHistory.donorEmail = ProfileDetails.email;
                         PaymentHistory.frequency = BookDetails.frequency;
-                        PaymentHistory.donorPhoneNumber = ProfileDetails.phonenumber;
+                        PaymentHistory.donorPhoneNumber = loggedInUser?.phonenumber;
                         PaymentHistory.donorNotes = data.comments;
                         PaymentHistory.stripeReferenceId = payload.paymentIntent.id;
                         PaymentHistory.donatedAmount = BookDetails.amount;
