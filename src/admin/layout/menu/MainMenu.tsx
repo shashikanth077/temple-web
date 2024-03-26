@@ -98,10 +98,21 @@ const MenuItemWithChildren = ({
     );
 };
 
+const handleMenuItemClick = (key: any) => {
+    const menuItems = document.querySelectorAll('#main-side-menu li');
+     menuItems.forEach(item => {
+        const menuItemKey = item.getAttribute('data-key');
+        if (menuItemKey === key) {
+            item.classList.add('menuitem-active'); 
+        } else {
+            item.classList.remove('menuitem-active'); 
+        }
+    });
+}
+
 const MenuItem = ({ item, className, linkClassName }: SubMenus) =>
-// console.log(linkClassName)
 	 (
-        <li className={`side-nav-item ${className}`}>
+        <li data-key={item?.key} onClick={() => handleMenuItemClick(item?.key)}  className={`side-nav-item ${className}`}>
         <MenuItemLink item={item} className={linkClassName} />
     </li>
     );
@@ -141,6 +152,7 @@ const AppMenu = ({ menuItems }: AppMenuProps) => {
 	 * toggle the menus
 	 */
     const toggleMenu = (menuItem: MenuItemTypes, show: boolean) => {
+
         if (show) {
             setActiveMenuItems([
                 menuItem.key,
@@ -164,8 +176,8 @@ const AppMenu = ({ menuItems }: AppMenuProps) => {
                     '',
                 );
                 const url = items[i].pathname;
-                if (trimmedURL === `${config.PUBLIC_URL}/`) {
-                    trimmedURL += 'ecommerce';
+                if (trimmedURL === `${config.PUBLIC_URL}`) {
+                    trimmedURL += '';
                 }
                 if (trimmedURL === url?.replaceAll(config.PUBLIC_URL, '')) {
                     matchingMenuItem = items[i];
