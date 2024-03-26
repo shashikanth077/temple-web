@@ -147,7 +147,7 @@ const Topbar = ({ toggleMenu, navOpen }: TopbarProps) => {
                     {APICore.isUserAuthenticated()
                         ? (
                             cartItems.list.totalQuantity !== undefined ? (
-                            <Link className="icon-cart store-cart-icon" to={`${config.PUBLIC_URL}/cart/view-cart`}>
+                            <Link className="icon-cart store-cart-icon" to={`/cart/view-cart`}>
                                 <button type="button" className="icon-cart">
                                     <i className="fas fa-shopping-cart" />
                                     <span className="count-style">

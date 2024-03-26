@@ -325,11 +325,11 @@ const Cart = () => {
                                     <div className="cart-shiping-update-wrapper">
                                         <div className="cart-shiping-update">
                                         {loggedInUser ? (
-                                            <Link to={`${config.PUBLIC_URL}/online-store`}>
+                                            <Link to={`/online-store`}>
                                                 Continue Shopping
                                             </Link>
                                         ) : (
-                                            <Link to={`${config.PUBLIC_URL}/purchase`}>
+                                            <Link to={`/purchase`}>
                                                 Continue Shopping
                                             </Link>
                                         )}
@@ -367,7 +367,7 @@ const Cart = () => {
                                             </span>
                                         </h4>
                                         <Link
-                                            to={`${config.PUBLIC_URL}/checkout`}
+                                            to={`/checkout`}
                                         >
                                             Proceed to Checkout
                                         </Link>
@@ -385,7 +385,7 @@ const Cart = () => {
                                     <div className="item-empty-area__text">
                                         No items found in cart <br />{" "}
                                         <Link
-                                            to={`${config.PUBLIC_URL}/purchase`}
+                                            to={`/purchase`}
                                         >
                                             Shop Now
                                         </Link>
