@@ -470,7 +470,7 @@ const Checkout = () => {
                                 </div>
 
                                 <div className="row">
-                                    <div className="col-lg-7 order-lg-2">
+                                    <div className="col-lg-6 order-lg-2">
                                         <div className="your-order-area">
                                             <h3>Your order</h3>
                                             <div className="your-order-wrap gray-bg-4">
@@ -531,10 +531,12 @@ const Checkout = () => {
                                     </div>
 
                                     {/* Order Details on Right Side */}
-                                    <div className="col-lg-5 order-lg-1 mb-3">
-                                        <div className="your-order-area card-payment-details">
-                                            <h3>Enter Payment Details</h3>
-                                            <div className="your-order-wrap gray-bg-4">
+                                    <div className="col-lg-6 order-lg-1 mb-3">
+                                    <div className="card">
+                                        <div className="card-body">
+                                            <div className="card-title">
+                                                <h2 className="text-center">Enter card details</h2>
+                                            </div>
                                             <div className="billing-info mb-20">
                                                 <FormInput
                                                     type="text"
@@ -545,24 +547,12 @@ const Checkout = () => {
                                                     control={control}
                                                     name="cardholdername"
                                                 />
+                                                  <CardElement className="card-element card-box form-control mb-4 mt-4" options={{ style: { base: { fontSize: '16px' } } }} />
+                                                    {cardErrors && <p className="error-message">{cardErrors}</p>}
                                             </div>
-                                            <div className="Card-Info mb-20">
-                                                <CardElement
-                                                    className='card-details'
-                                                    id="card"
-                                                    options={{
-                                                        style: {
-                                                            base: {
-                                                                fontSize: '16px',
-                                                                color: '#32325d',
-                                                                fontFamily: 'Arial, sans-serif',
-                                                            },
-                                                        }
-                                                    }}
-                                                />
+                                    
                                             </div>
-                                                    </div>
-                                            {cardErrors && <p className="error-message">{cardErrors}</p>}
+                                            
                                         </div>
                                     </div>
                                 </div>
