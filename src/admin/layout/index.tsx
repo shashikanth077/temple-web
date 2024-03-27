@@ -1,7 +1,6 @@
 import React, { Suspense, useEffect, useState } from 'react';
 import { Container } from 'react-bootstrap';
 import { RingLoader } from 'react-spinners';
-import { useSelector } from 'react-redux';
 import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
 import { changeHTMLAttribute } from 'utils/layout';
@@ -14,7 +13,6 @@ import 'primereact/resources/primereact.css';
 import { PublicImageURL } from 'constants/publicUrl';
 import { LogoutTime } from 'constants/general';
 import AutoLogout from 'sharedComponents/autoLogout';
-import { selectIsProfileStatus } from 'public/features/auth/login/loginSelectors';
 
 const Topbar = React.lazy(() => import('./topBar/index'));
 const LeftSidebar = React.lazy(() => import('./menu/leftSidemenu'));
