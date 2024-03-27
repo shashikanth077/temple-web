@@ -1,36 +1,40 @@
 import React from 'react';
+import {
+    Container, Row, Col, Card, CardBody, Button,
+} from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import Svg from './Svg';
+import { useUser } from 'hooks';
 
-function Error() {
+const ErrorPage = () => {
+    const [loggedInUser] = useUser();
     const navigate = useNavigate();
-    const goBack = (e:any) => {
-        e.preventDefault();
-        navigate('-1');
+
+    const handleEvent = () => {
+        if (loggedInUser?.id) {
+            navigate('/dashboard', { replace: true });
+        } else {
+            navigate('/login', { replace: true });
+        }
     };
 
     return (
-        <div className="appie-error-area">
-            <div className="container">
-                <div className="row justify-content-center">
-                    <div className="col-lg-6">
-                        <div className="appie-error-content text-center">
-                            <Svg />
-                            <span>Sorry!</span>
-                            <h3 className="title">The page can’t be found.</h3>
-                            <p>
-                                The page you`re looking for isnt available. Use the go back
-                                button below
-                            </p>
-                            <button type="button" onClick={e => goBack(e)}>
-                                Go Back <i className="fal fa-arrow-right" />
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div className="account-pages my-5 pt-sm-5">
+            <Container>
+                <Row className="justify-content-center">
+                    <Col md="8" lg="6" xl="5">
+                        <Card className="overflow-hidden">
+                            <CardBody className="pt-0">
+                                <div className="ex-page-content text-center">
+                                    <h3 className="">Something went wrong</h3>
+                                    <Button onClick={handleEvent} className="btn btn-info mb-4 waves-effect waves-light">Back to Dashboard or Home</Button>
+                                </div>
+                            </CardBody>
+                        </Card>
+                    </Col>
+                </Row>
+            </Container>
         </div>
     );
-}
+};
 
-export default Error;
+export default ErrorPage;

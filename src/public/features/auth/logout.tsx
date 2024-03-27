@@ -13,6 +13,8 @@ function Logout() {
         APICore.setLoggedInUser(null);
         setAuthorization(null);
         APICore.destoryUser();
+        localStorage.removeItem('profileStatus');
+        sessionStorage.removeItem('profileUpdateNotificationShown');
         navigate('/login');
     }, [dispatch, navigate]);
 

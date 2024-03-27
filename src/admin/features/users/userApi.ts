@@ -51,3 +51,4 @@ export function deleteUser(payload:any) {
     const response = APICore.update(`${baseUrl}`, payload);
     return response;
 }
+
