@@ -124,7 +124,7 @@ const SevaConfirmPage = () => {
     };
 
     useEffect(() => {
-        setValue("email", ProfileDetails?.email);
+        setValue("email", loggedInUser?.email);
         setValue("billingAddress", billingAddressFormData?.billingAddress);
         setValue("billingCity", billingAddressFormData?.billingCity);
         setValue("billingZipcode", billingAddressFormData?.billingZipcode);
@@ -230,7 +230,7 @@ const SevaConfirmPage = () => {
                     requestPayload.poojaTime = BookDetails?.poojaTime;
                     requestPayload.NoOfChild = BookDetails?.NoOfChild;
                     requestPayload.billingAddress = billingAddressFormData;
-                    requestPayload.devoteeName = ProfileDetails.firstName + '' + ProfileDetails.lastName;
+                    requestPayload.devoteeName = loggedInUser?.firstName + '' + loggedInUser?.lastName;
                     requestPayload.devoteePhoneNumber = loggedInUser?.phonenumber;
                     requestPayload.devoteeEmail = loggedInUser?.email;
                     requestPayload.paymentMethod = payload.paymentIntent.payment_method;
@@ -440,7 +440,7 @@ const SevaConfirmPage = () => {
                                                         control={control}
                                                         name="email"
                                                         defaultValue={
-                                                            ProfileDetails.email
+                                                            loggedInUser?.email
                                                         }
                                                         disabled
                                                     />

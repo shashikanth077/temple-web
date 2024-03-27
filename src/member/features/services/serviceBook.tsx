@@ -104,6 +104,7 @@ const BookService = () => {
         data.amount = serviceDetails?.price;
         data.bookingDate = selectedDate ? moment(selectedDate).format('DD/MM/YYYY') : null;
         data.userId = loggedInUser?.id;
+        data.firstName = loggedInUser?.firstName;
         data.category = "service-book",
             dispatch(serviceActions.saveBookingLocalData(data));
         navigate('/confirm-booking-details');

@@ -5,7 +5,7 @@ import Button from 'react-bootstrap/Button';
 import { useNavigate } from 'react-router-dom';
 import { serviceActions } from './serviceSlice';
 import { selecLocalBookingData } from './serviceSelector';
-import { useRedux } from 'hooks';
+import { useRedux, useUser } from 'hooks';
 import { formatCurrency } from 'helpers/currency';
 import { myprofileActions } from 'admin/features/myprofile/myProfileSlice';
 import { selectMyProfileDetails } from 'admin/features/myprofile/myProfileSelectors';
@@ -18,6 +18,7 @@ const serviceConfirm = () => {
     const intl = useIntl();
     const BookDetails = appSelector(selecLocalBookingData);
     const navigate = useNavigate();
+    const [loggedInUser] = useUser();
 
     useEffect(() => {
         dispatch(
@@ -38,8 +39,9 @@ const serviceConfirm = () => {
         data.amount = BookDetails?.amount;
         data.bookingDate = BookDetails.bookingDate;
         data.userId = BookDetails.userId;
+        data.firstName = loggedInUser?.firstName;
         data.category = "service-book",
-            dispatch(serviceActions.saveBookingLocalData(data));
+            dispatch(serviceActions.saveBookingLocalData(data)); 
         navigate('/payment-booking');
     }
 
@@ -77,11 +79,11 @@ const serviceConfirm = () => {
                                 <Collapse in={open}>
                                     <div className="row invoice-info">
                                         <div className="col-sm-4 invoice-col">
-                                            <p>{ProfileDetails.firstName}</p>
-                                            <p>{ProfileDetails.email}</p>
-                                            <p>{ProfileDetails.mobileNumber}</p>
-                                            <p>{ProfileDetails.homeNumber}</p>
-                                            <p>{ProfileDetails.nationality}</p>
+                                            <p>{ProfileDetails?.firstName || loggedInUser?.firstName }</p>
+                                            <p>{ProfileDetails?.email || loggedInUser?.firstName}</p>
+                                            <p>{ProfileDetails?.mobileNumber || loggedInUser?.firstName}</p>
+                                            <p>{ProfileDetails?.homeNumber  || loggedInUser?.firstName}</p>
+                                            <p>{ProfileDetails?.nationality || loggedInUser?.firstName}</p>
                                         </div>
 
                                         <div className="col-sm-4 invoice-col">
@@ -90,25 +92,25 @@ const serviceConfirm = () => {
                                             </h5>
                                             <p>
                                                 {
-                                                    ProfileDetails.homeAddress
+                                                    ProfileDetails?.homeAddress
                                                         ?.address1
                                                 }
                                             </p>
                                             <p>
                                                 {
-                                                    ProfileDetails.homeAddress
+                                                    ProfileDetails?.homeAddress
                                                         ?.city
                                                 }
                                             </p>
                                             <p>
                                                 {
-                                                    ProfileDetails.homeAddress
+                                                    ProfileDetails?.homeAddress
                                                         ?.postalCode
                                                 }
                                             </p>
                                             <p>
                                                 {
-                                                    ProfileDetails.homeAddress
+                                                    ProfileDetails?.homeAddress
                                                         ?.province
                                                 }
                                             </p>
@@ -120,29 +122,22 @@ const serviceConfirm = () => {
                                             </h5>
                                             <p>
                                                 {
-                                                    ProfileDetails
-                                                        .billingAddress
-                                                        ?.address1
+                                                    ProfileDetails?.billingAddress?.address1
                                                 }
                                             </p>
                                             <p>
                                                 {
-                                                    ProfileDetails
-                                                        .billingAddress?.city
+                                                    ProfileDetails?.billingAddress?.city
                                                 }
                                             </p>
                                             <p>
                                                 {
-                                                    ProfileDetails
-                                                        .billingAddress
-                                                        ?.postalCode
+                                                    ProfileDetails?.billingAddress?.postalCode
                                                 }
                                             </p>
                                             <p>
                                                 {
-                                                    ProfileDetails
-                                                        .billingAddress
-                                                        ?.province
+                                                    ProfileDetails?.billingAddress?.province
                                                 }
                                             </p>
                                         </div>
