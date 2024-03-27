@@ -127,7 +127,7 @@ const ServiceConfimPage = () => {
     };
 
     useEffect(() => {
-        setValue("email", ProfileDetails?.email);
+        setValue("email", loggedInUser?.email);
         setValue("billingAddress", billingAddressFormData?.billingAddress);
         setValue("billingCity", billingAddressFormData?.billingCity);
         setValue("billingZipcode", billingAddressFormData?.billingZipcode);
@@ -235,7 +235,7 @@ const ServiceConfimPage = () => {
                     requestPayload.NoOfChild = BookDetails?.NoOfChild;
                     requestPayload.poojaTime = BookDetails?.poojaTime;
                     requestPayload.billingAddress = billingAddressFormData;
-                    requestPayload.devoteeName = ProfileDetails.firstName + '' + ProfileDetails.lastName;
+                    requestPayload.devoteeName = loggedInUser?.firstName + '' + loggedInUser?.lastName;
                     requestPayload.devoteePhoneNumber = loggedInUser?.phonenumber;
                     requestPayload.devoteeEmail = loggedInUser?.email;
                     requestPayload.paymentMethod = payload.paymentIntent.payment_method;
@@ -446,7 +446,7 @@ const ServiceConfimPage = () => {
                                                         control={control}
                                                         name="email"
                                                         defaultValue={
-                                                            ProfileDetails.email
+                                                            loggedInUser?.email
                                                         }
                                                         disabled
                                                     />
