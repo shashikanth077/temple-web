@@ -1,29 +1,40 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Button } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
+import { useUser } from 'hooks';
 
-// components
-import AuthLayout from 'public/features/auth/AuthLayout';
+const Error404 = () => {
+    const navigate = useNavigate();
+    const [loggedInUser] = useUser();
 
-const Error404 = () => (
-    <AuthLayout>
-        <div className="text-center">
-            <h1 className="text-error">404</h1>
-            <h3 className="mt-3 mb-2">Page not Found</h3>
-            <p className="text-muted mb-3">
-                It`s looking like you may have taken a wrong turn. Don`t
-                worry... it happens to the best of us. You might want to check
-                your internet connection. Here`s a little tip that might help
-                you get back on track.
-            </p>
+    const handleEvent = () => {
+        if (loggedInUser?.id) {
+            navigate('/dashboard');
+        } else {
+            navigate('/');
+        }
+    };
 
-            <Link
-                to="/login"
-                className="btn btn-danger waves-effect waves-light"
-            >
-                <i className="fas fa-home me-1" /> Back to Home
-            </Link>
+    return (
+        <div>
+            <div className="error-page-wrapper d-flex align-items-center">
+                <div className="container">
+                    <div className="row">
+                        <div className="col-lg-6 col-md-9 m-auto text-center">
+                            <div className="error-content-centered d-flex align-items-center justfy-content-center">
+                                <div className="error-page-content-wrap">
+                                    <h2>404</h2>
+                                    <h3>PAGE NOT FOUND</h3>
+                                    <p>Sorry but the page you are looking for does not exist, have been removed, name changed or is temporarily unavailable.</p>
+                                    <Button onClick={handleEvent} className="ht-btn ht-btn--default ht-btn--default--dark-hover">Back to Home Page</Button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-    </AuthLayout>
-);
+    );
+};
 
 export default React.memo(Error404);

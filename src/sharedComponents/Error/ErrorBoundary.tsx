@@ -1,12 +1,13 @@
 import React, { Component, ErrorInfo, ReactNode } from 'react';
+import ErrorPage from './error';
 
 /* eslint-disable */
 interface ErrorBoundaryProps {
-  children: ReactNode;
+    children: ReactNode;
 }
 
 interface ErrorBoundaryState {
-  hasError: boolean;
+    hasError: boolean;
 }
 
 class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
@@ -22,8 +23,7 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
 
     render(): ReactNode {
         if (this.state.hasError) {
-            // You can render any custom fallback UI
-            return <h1>Something went wrong.</h1>;
+            return <ErrorPage />
         }
 
         return this.props.children;

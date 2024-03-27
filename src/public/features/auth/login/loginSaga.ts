@@ -23,6 +23,7 @@ function* fetchLoginCheck(action:any) {
                 userid: response.id,
             };
             const profileStatus:ProfileStatus = yield call(checkProfileStatus, ProfileStatusData);
+            localStorage.setItem('profileStatus', profileStatus.success);
             if (profileStatus.success === false) {
                 yield put(authActions.updateProfileStatus(profileStatus.success));
             }
@@ -46,6 +47,8 @@ function* fetchLoginCheck(action:any) {
 
 function* handleLogout() {
     yield delay(500);
+    sessionStorage.removeItem('profileUpdateNotificationShown');
+    localStorage.removeItem('profileStatus');
     const response: UserResponse = yield call(logout);
     APICore.destoryUser();
     yield put(authActions.logoutSuccess(response.message));
