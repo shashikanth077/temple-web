@@ -13,7 +13,7 @@ import * as yup from 'yup';
 import { useSelector } from 'react-redux';
 
 import { registerActions } from './registerSlice';
-import { PublicImageURL } from 'constants/PublicUrl';
+import { PublicImageURL } from 'constants/publicUrl';
 import { useRedux } from 'hooks';
 import { FormInput } from 'sharedComponents/inputs';
 import { clearState } from 'storeConfig/apiStatus/apiSlice';

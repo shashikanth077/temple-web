@@ -1,11 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import useThemeCustomizer from '../../../ThemeCustomizer/useThemeCustomizer';
+import useThemeCustomizer from '../../../themeCustomizer/useThemeCustomizer';
 import ProfileDropdown from './profileDropdown/profile';
 import { selectCurrentCartData } from 'member/features/shop/cart/cartSelectors'; // need to change the str
 import { ThemeSettings, useThemeContext } from 'context/useThemeContext';
 import useViewport from 'hooks/useViewPort';
-import { PublicImageURL } from 'constants/PublicUrl';
+import { PublicImageURL } from 'constants/publicUrl';
 import { useRedux, useUser } from 'hooks';
 import { APICore } from 'helpers/api';
 import { config } from 'config/Env';

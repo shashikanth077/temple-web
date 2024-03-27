@@ -8,7 +8,7 @@ import { admingodActions } from 'admin/features/godmaster/godSlice';
 import { useRedux } from 'hooks';
 import { selectGods } from 'admin/features/godmaster/godSelector';
 import { APICore } from 'helpers';
-import { PublicImageURL } from 'constants/PublicUrl';
+import { PublicImageURL } from 'constants/publicUrl';
 import { formatCurrency } from 'helpers/currency';
 import ButtonV1 from 'sharedComponents/button/buttonv1';
 import Heading from 'sharedComponents/heading/heading';

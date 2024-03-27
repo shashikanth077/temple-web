@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 import { adminEventActions } from 'admin/features/events/adminEventSlice';
 import { useRedux } from 'hooks';
 import { APICore } from 'helpers';
-import { PublicImageURL } from 'constants/PublicUrl';
+import { PublicImageURL } from 'constants/publicUrl';
 import ButtonV1 from 'sharedComponents/button/buttonv1';
 
 /* eslint no-underscore-dangle: 0 */

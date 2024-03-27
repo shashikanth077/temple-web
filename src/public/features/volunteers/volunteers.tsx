@@ -14,7 +14,7 @@ import { Voluteers } from 'models';
 import Loader from 'sharedComponents/loader/loader';
 import Heading from 'sharedComponents/heading/heading';
 import { selectStaticVoluteers } from 'contents/content/contactSelectors';
-import { Days, Activities } from 'constants/Volunteer';
+import { Days, Activities } from 'constants/volunteer';
 import { getApiState } from 'storeConfig/apiStatus/apiSelector';
 
 interface PossibleDaysErrors {

@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import ViewMore from 'sharedComponents/viewmorebtn/viewmorebtn';
 import { useRedux } from 'hooks';
-import { PublicImageURL } from 'constants/PublicUrl';
+import { PublicImageURL } from 'constants/publicUrl';
 import { admingodActions } from 'admin/features/godmaster/godSlice';
 import { selectGods } from 'admin/features/godmaster/godSelector';
 import ButtonV1 from 'sharedComponents/button/buttonv1';

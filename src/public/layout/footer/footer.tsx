@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { getStaticContent } from 'utils/contentUtil';
 import { selectStaticFooter, selectContactDetails } from 'contents/content/contactSelectors';
 import { useRedux } from 'hooks';
-import { PublicImageURL } from 'constants/PublicUrl';
+import { PublicImageURL } from 'constants/publicUrl';
 
 /* eslint-disable jsx-a11y/anchor-is-valid */
 function Footer() {

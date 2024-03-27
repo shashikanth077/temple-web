@@ -8,7 +8,7 @@ import BackToTop from 'sharedComponents/BacktoTop/backtotop';
 import { useToggle } from 'hooks/useToggle';
 import Topbar from 'public/features/home/topbar/topbar';
 import { useRedux } from 'hooks';
-import { PublicImageURL } from 'constants/PublicUrl';
+import { PublicImageURL } from 'constants/publicUrl';
 
 interface DefaultLayoutProps {
      children?: any;

@@ -4,8 +4,8 @@ import {
 } from 'react-bootstrap';
 import SimpleBar from 'simplebar-react';
 import { Link } from 'react-router-dom';
-import useThemeCustomizer from 'ThemeCustomizer/useThemeCustomizer';
-import { ThemeCustomizer } from 'ThemeCustomizer';
+import useThemeCustomizer from 'themeCustomizer/useThemeCustomizer';
+import { ThemeCustomizer } from 'themeCustomizer';
 import { ThemeSettings, useThemeContext } from 'context/useThemeContext';
 
 const RightSidebar = () => {

@@ -4,12 +4,12 @@ import { RingLoader } from 'react-spinners';
 import { changeHTMLAttribute } from 'utils/layout';
 import { ThemeSettings, useThemeContext } from 'context/useThemeContext';
 import useViewport from 'hooks/useViewPort';
-import Preloader from 'sharedComponents/loader/loader';
-import 'primereact/resources/themes/lara-light-indigo/theme.css'; // theme
+import 'primereact/resources/themes/lara-light-indigo/theme.css';
 import 'primeicons/primeicons.css';
 import 'primeflex/primeflex.css';
 import 'primereact/resources/primereact.css';
-import { PublicImageURL } from 'constants/PublicUrl';
+import { PublicImageURL } from 'constants/publicUrl';
+import { LogoutTime } from 'constants/general';
 import AutoLogout from 'sharedComponents/autoLogout';
 
 const Topbar = React.lazy(() => import('./topBar/index'));
@@ -82,7 +82,7 @@ const VerticalLayout = ({ children }: VerticalLayoutProps) => {
                 <div className="content-page">
                     <div className="content">
                         <Suspense fallback={<div />}>
-                            <AutoLogout>
+                            <AutoLogout logoutTime={LogoutTime}>
                                 <Container fluid>
                                     <Suspense fallback={<CustomLoader />}>{children}</Suspense>
                                 </Container>

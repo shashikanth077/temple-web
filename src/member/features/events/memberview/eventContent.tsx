@@ -3,7 +3,7 @@ import moment from 'moment';
 import { Link, useNavigate } from 'react-router-dom';
 import ReactPaginate from 'react-paginate';
 import { APICore } from 'helpers';
-import { PublicImageURL } from 'constants/PublicUrl';
+import { PublicImageURL } from 'constants/publicUrl';
 import { config } from 'config/Env';
 import ButtonV1 from 'sharedComponents/button/buttonv1';
 
