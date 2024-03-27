@@ -3,7 +3,7 @@ import React from 'react';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { selectAds } from 'contents/content/contactSelectors';
-import { PublicImageURL } from 'constants/PublicUrl';
+import { PublicImageURL } from 'constants/publicUrl';
 
 import useRedux from 'hooks/useRedux';
 

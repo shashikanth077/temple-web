@@ -4,7 +4,7 @@ import Navigation from '../menu/menu';
 import { selectStaticHeader } from 'contents/content/contactSelectors';
 import StickyMenu from 'sharedComponents/stickymenu/stickyMenu';
 import { useRedux } from 'hooks';
-import { PublicImageURL } from 'constants/PublicUrl';
+import { PublicImageURL } from 'constants/publicUrl';
 
 type HeaderProps = {
   action: any;

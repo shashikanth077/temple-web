@@ -5,7 +5,7 @@ import ViewMore from 'sharedComponents/viewmorebtn/viewmorebtn';
 import { selectDonationTypes } from 'admin/features/donations/donationSelector';
 import { adminDonationTypeActions } from 'admin/features/donations/donationSlice';
 import { useRedux } from 'hooks';
-import { PublicImageURL } from 'constants/PublicUrl';
+import { PublicImageURL } from 'constants/publicUrl';
 import { APICore } from 'helpers';
 import ButtonV1 from 'sharedComponents/button/buttonv1';
 import Heading from 'sharedComponents/heading/heading';

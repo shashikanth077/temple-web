@@ -6,7 +6,7 @@ import { myBookingsActions } from './bookingSlice';
 import { selectSevaList } from './bookingSelector';
 import ViewMore from 'sharedComponents/viewmorebtn/viewmorebtn';
 import { useRedux } from 'hooks';
-import { PublicImageURL } from 'constants/PublicUrl';
+import { PublicImageURL } from 'constants/publicUrl';
 import { formatCurrency } from 'helpers/currency';
 import { APICore } from 'helpers';
 import ButtonV1 from 'sharedComponents/button/buttonv1';

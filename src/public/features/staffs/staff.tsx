@@ -6,7 +6,7 @@ import { selectStaffs } from 'contents/content/contactSelectors';
 import useRedux from 'hooks/useRedux';
 import Button from 'sharedComponents/button/button';
 import Heading from 'sharedComponents/heading/heading';
-import { PublicImageURL } from 'constants/PublicUrl';
+import { PublicImageURL } from 'constants/publicUrl';
 
 export function Staffs() {
     const { appSelector } = useRedux();

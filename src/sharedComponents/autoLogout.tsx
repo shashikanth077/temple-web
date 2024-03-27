@@ -2,6 +2,8 @@
 
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useRedux } from 'hooks';
+import { authActions } from 'public/features/auth/login/loginSlice';
 
 interface AutoLogoutProps {
   children: React.ReactNode;
@@ -10,6 +12,8 @@ interface AutoLogoutProps {
 
 const AutoLogout: React.FC<AutoLogoutProps> = ({ children, logoutTime = 300000 }) => {
     const history = useNavigate();
+    const { dispatch } = useRedux();
+    const navigate = useNavigate();
 
     useEffect(() => {
         let timeoutId: NodeJS.Timeout;
@@ -17,7 +21,8 @@ const AutoLogout: React.FC<AutoLogoutProps> = ({ children, logoutTime = 300000 }
         const resetTimeout = () => {
             clearTimeout(timeoutId);
             timeoutId = setTimeout(() => {
-                history('/auth/logout');
+                dispatch(authActions.logout());
+                navigate('/');
             }, logoutTime);
         };
 
@@ -38,7 +43,7 @@ const AutoLogout: React.FC<AutoLogoutProps> = ({ children, logoutTime = 300000 }
             window.removeEventListener('mousemove', handleActivity);
             window.removeEventListener('keydown', handleActivity);
         };
-    }, [history, logoutTime]);
+    }, [history, logoutTime, dispatch, navigate]);
 
     return <div>{children}</div>;
 };

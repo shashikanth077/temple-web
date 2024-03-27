@@ -5,7 +5,7 @@ import { serviceActions } from './serviceSlice';
 import { selectServiceList } from './serviceSelector';
 import ViewMore from 'sharedComponents/viewmorebtn/viewmorebtn';
 import { useRedux } from 'hooks';
-import { PublicImageURL } from 'constants/PublicUrl';
+import { PublicImageURL } from 'constants/publicUrl';
 import { formatCurrency } from 'helpers/currency';
 import { admingodActions } from 'admin/features/godmaster/godSlice';
 import { APICore } from 'helpers';

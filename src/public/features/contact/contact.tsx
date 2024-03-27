@@ -20,7 +20,7 @@ import { useRedux } from 'hooks';
 import { clearState } from 'storeConfig/apiStatus/apiSlice';
 import Button from 'sharedComponents/button/button';
 import { selectContactformDetails, selectContactDetails } from 'contents/content/contactSelectors';
-import { EnquiryMessageLimit } from 'constants/General';
+import { EnquiryMessageLimit } from 'constants/general';
 import { getApiState } from 'storeConfig/apiStatus/apiSelector';
 
 type ContactData = {
