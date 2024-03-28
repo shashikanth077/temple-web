@@ -76,15 +76,25 @@ const UserDonationsTypes = () => {
         register,
         setValue,
         reset,
-        formState: { errors },
+        formState: { errors }, setError
     } = useForm<DonationForm>({
         resolver: schemaResolver,
     });
 
     const onSubmit: SubmitHandler<DonationForm> = (data) => {
         if (!data.amount) {
-            showToast('error', 'Error', 'Please enter a donation amount.');
-            return; // Stop the function execution
+            setError('amount', {
+                type: 'manual',
+                message: 'Please enter a donation amount.',
+            });
+            return;
+        }
+        if (!data.prasadamOverEmail) {
+            setError('prasadamOverEmail', {
+                type: 'manual',
+                message: 'Please select Prasadam over mail option.',
+            });
+            return;
         }
         data.type = selecteddonationDetails[0]?.donationType;
         data.donateTypeId = selecteddonationDetails[0]?._id;
@@ -97,7 +107,18 @@ const UserDonationsTypes = () => {
     };
 
     const onError: SubmitErrorHandler<DonationForm> = (error) => {
-        showToast('error', 'Error', 'Please fix the errors in the form.');
+        let errorMessage = 'Please fix the errors in the form.';
+        // Check if there are specific error messages for each field
+        if (errors && errors.amount && errors.amount.message) {
+            errorMessage = errors.amount.message;
+        } else if (errors && errors.prasadamOverEmail && errors.prasadamOverEmail.message) {
+            errorMessage = errors.prasadamOverEmail.message;
+        }
+        // If errorMessage is still empty, set a default error message
+        if (!errorMessage) {
+            errorMessage = 'An error occurred. Please try again.';
+        }
+        showToast('error', 'Error', errorMessage);
     };
 
     const [donationAmount, setDonationAmount] = React.useState<any>();
