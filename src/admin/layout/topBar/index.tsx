@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import ProfileDropdown from './profileDropdown/profile';
-import useThemeCustomizer from 'themeCustomizer/useThemeCustomizer';
+import { useThemeCustomizer } from 'themeCustomizer';
 import { selectCurrentCartData } from 'member/features/shop/cart/cartSelectors'; // need to change the str
 import { ThemeSettings, useThemeContext } from 'context/useThemeContext';
 import useViewport from 'hooks/useViewPort';
