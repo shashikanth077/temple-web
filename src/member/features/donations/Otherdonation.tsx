@@ -82,6 +82,10 @@ const UserDonationsTypes = () => {
     });
 
     const onSubmit: SubmitHandler<DonationForm> = (data) => {
+        if (!data.amount) {
+            showToast('error', 'Error', 'Please enter a donation amount.');
+            return; // Stop the function execution
+        }
         data.type = selecteddonationDetails[0]?.donationType;
         data.donateTypeId = selecteddonationDetails[0]?._id;
         data.userid = loggedInUser?.id;
@@ -96,7 +100,7 @@ const UserDonationsTypes = () => {
         showToast('error', 'Error', 'Please fix the errors in the form.');
     };
 
-    const [donationAmount, setDonationAmount] = React.useState<any>('10');
+    const [donationAmount, setDonationAmount] = React.useState<any>();
 
     const handleDonationLevelClick = (amount: string) => {
         if (amount === 'custom') {
