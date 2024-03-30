@@ -93,7 +93,9 @@ const UserDonationsTypes = () => {
     };
 
     const onError: SubmitErrorHandler<DonationForm> = (error) => {
-        showToast('error', 'Error', 'Please fix the errors in the form.');
+        const errorMessage =
+        donationAmount <= 50 ? 'Donation amount must be greater than 50.' : 'Please fix the errors in the form.';
+        showToast('error', 'Error', errorMessage);
     };
 
     const [donationAmount, setDonationAmount] = React.useState<any>('10');
