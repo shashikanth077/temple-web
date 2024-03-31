@@ -3,7 +3,7 @@ import React, {
 } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import { useForm, Controller } from 'react-hook-form';
+import { useForm, Controller, FieldErrors } from 'react-hook-form';
 import { Toast } from 'primereact/toast';
 import { useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -61,7 +61,7 @@ const BookService = () => {
     */
     const schemaResolver = yupResolver(
         yup.object().shape({
-            bookingDate: yup.string().required("Please select a date"),
+            bookingDate: yup.date().required("Please select a date"),
             poojaTime: yup.string().required("Please select a pooja time"),
             NoOfPerson: yup
                 .number()
@@ -212,9 +212,11 @@ const BookService = () => {
                                                                     showIcon
                                                                     className="events-top-bar-datepicker-button mb-3"
                                                                     minDate={new Date()} />
-                                                            </>
+                                                                    {errors.bookingDate && (<p className="text-danger">Selection of puja date is required</p>)}
+                                                                </>
                                                         )}
                                                     />
+                                                    
                                                 </div>
                                             </div>
                                             <div className="col-md-6">
@@ -240,8 +242,10 @@ const BookService = () => {
                                                                     icon={() => <i className="pi pi-clock" />}
                                                                     className="events-top-bar-datepicker-button mb-3"
                                                                 />
+                                                                {errors?.poojaTime && (<p className="text-danger">Selection of puja time is required</p>)}
                                                             </>
                                                         )}
+                                                        
                                                     />
                                                 </div>
                                             </div>

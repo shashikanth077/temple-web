@@ -199,6 +199,7 @@ const BookSeva = () => {
                                                                     className="events-top-bar-datepicker-button mb-3"
                                                                     minDate={new Date()}
                                                                 />
+                                                                {errors.bookingDate && (<p className="text-danger">Selection of puja date is required</p>)}
                                                             </>
                                                         )}
                                                     />
@@ -227,6 +228,7 @@ const BookSeva = () => {
                                                                     icon={() => <i className="pi pi-clock" />}
                                                                     className="events-top-bar-datepicker-button mb-3"
                                                                 />
+                                                                {errors.bookingDate && (<p className="text-danger">Selection of puja time is required</p>)}
                                                             </>
                                                         )}
                                                     />
