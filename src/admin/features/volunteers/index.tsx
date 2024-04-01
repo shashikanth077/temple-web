@@ -25,13 +25,13 @@ export function Managevolunteers() {
     const navigate = useNavigate();
 
     const { loading, error, successMessage } = useSelector(getApiState);
-
-    const componentRef = useRef(null);
+   
+    const componentRef:any = useRef(null);
 
     const handlePrint = useReactToPrint({
         content: () => componentRef.current,
     });
-
+    
     const [filters, setFilters] = useState({
         global: { value: null, matchMode: FilterMatchMode.CONTAINS },
     });
@@ -54,6 +54,17 @@ export function Managevolunteers() {
     useEffect(() => {
         dispatch(adminVolunteersActions.getVolunteers());
     }, [dispatch]);
+
+    const dispathStoreData = (data:any) => {
+        setSelectedVolunteer(data);
+    };
+
+    useEffect(() => {
+        dispatch(adminVolunteersActions.clearCertiLocal());
+        if(selectedVolunteer) {
+            dispatch(adminVolunteersActions.storeCertificateDataLocal(selectedVolunteer));
+        }
+    }, [selectedVolunteer]);
 
     const volunteersDetails: any = appSelector(selectVolunters);
     const staticVolunteerContent = appSelector(selectStaticAdminvolunteers);
@@ -89,6 +100,7 @@ export function Managevolunteers() {
     const handleAction = () => {
         if (selectedVolunteer && actionType) {
             if (actionType === "approve") {
+                dispatch(adminVolunteersActions.storeCertificateDataLocal(selectedVolunteer));
                 dispatch(
                     adminVolunteersActions.updateVolunteer({
                         status: "approved",
@@ -141,7 +153,7 @@ export function Managevolunteers() {
                         rounded
                         outlined
                         className="mr-2"
-                        onClick={() => handlePrint()}
+                        onClick={() => { handlePrint(); dispathStoreData(rowData); }}
                     />
                 </>
             )}

@@ -7,6 +7,7 @@ export interface volunteersState {
     loading?: boolean;
     volunteers:any;
     message:string;
+    certilocal:any;
 }
 
 export interface volunteerPayload {
@@ -18,6 +19,7 @@ const initialState: volunteersState = {
     loading: false,
     volunteers: [],
     message: '',
+    certilocal: [],
 };
 
 const volunteersSlice = createSlice({
@@ -33,6 +35,14 @@ const volunteersSlice = createSlice({
         },
         updateVolunteer(state, action: PayloadAction<volunteerPayload>) {
             state.loading = false;
+        },
+        storeCertificateDataLocal(state, action: PayloadAction<VoluteersRes>) {
+            state.loading = false;
+            state.certilocal = action.payload;
+        },
+        clearCertiLocal(state) {
+            state.loading = false;
+            state.certilocal = [];
         },
     },
 });
