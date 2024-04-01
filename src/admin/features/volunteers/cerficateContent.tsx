@@ -1,12 +1,21 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import { selectStaticAdminvolunteers } from 'contents/content/contactSelectors';
 import { useRedux } from 'hooks';
 
 /* eslint-disable */
 const CertificateContent = () => {
-    const { dispatch, appSelector } = useRedux();
+    const { appSelector } = useRedux();
+    const [CertData, setCertificateData] = React.useState<any>(null);
 
     const staticContentCertificate = appSelector(selectStaticAdminvolunteers);
+    const CertificateData = useSelector((state:any)=>state.admin.adminVoltr.certilocal);
+
+    useEffect(() => {
+        if(CertificateData) {
+            setCertificateData(CertificateData);
+        }
+    }, [CertificateData])
 
     return (
         <div className="container pm-certificate-container">
@@ -37,7 +46,7 @@ const CertificateContent = () => {
                                 <div className="col-xs-2"></div>
                                 <div className="pm-certificate-name underlines margin-0 col-xs-8 text-center">
                                     <span className="pm-name-text bold">
-                                        Shashikanth H R
+                                       {CertData?.name}
                                     </span>
                                 </div>
                                 <div className="col-xs-2"></div>
@@ -57,7 +66,7 @@ const CertificateContent = () => {
                                 <div className="col-xs-2"></div>
                                 <div className="pm-certificate-name underlines margin-0 col-xs-8 text-center">
                                     <span className="pm-name-text bold">
-                                        Something service name
+                                   Volunteer services
                                     </span>
                                 </div>
                                 <div className="col-xs-2"></div>

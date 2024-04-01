@@ -107,17 +107,8 @@ const UserDonationsTypes = () => {
     };
 
     const onError: SubmitErrorHandler<DonationForm> = (error) => {
-        let errorMessage = 'Please fix the errors in the form.';
-        // Check if there are specific error messages for each field
-        if (errors && errors.amount && errors.amount.message) {
-            errorMessage = errors.amount.message;
-        } else if (errors && errors.prasadamOverEmail && errors.prasadamOverEmail.message) {
-            errorMessage = errors.prasadamOverEmail.message;
-        }
-        // If errorMessage is still empty, set a default error message
-        if (!errorMessage) {
-            errorMessage = 'An error occurred. Please try again.';
-        }
+        const errorMessage =
+        donationAmount <= 50 ? 'Donation amount must be greater than 50.' : 'Please fix the errors in the form.';
         showToast('error', 'Error', errorMessage);
     };
 
