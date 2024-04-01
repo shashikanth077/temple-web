@@ -76,12 +76,26 @@ const UserDonationsTypes = () => {
         register,
         setValue,
         reset,
-        formState: { errors },
+        formState: { errors }, setError
     } = useForm<DonationForm>({
         resolver: schemaResolver,
     });
 
     const onSubmit: SubmitHandler<DonationForm> = (data) => {
+        if (!data.amount) {
+            setError('amount', {
+                type: 'manual',
+                message: 'Please enter a donation amount.',
+            });
+            return;
+        }
+        if (!data.prasadamOverEmail) {
+            setError('prasadamOverEmail', {
+                type: 'manual',
+                message: 'Please select Prasadam over mail option.',
+            });
+            return;
+        }
         data.type = selecteddonationDetails[0]?.donationType;
         data.donateTypeId = selecteddonationDetails[0]?._id;
         data.userid = loggedInUser?.id;
@@ -98,7 +112,7 @@ const UserDonationsTypes = () => {
         showToast('error', 'Error', errorMessage);
     };
 
-    const [donationAmount, setDonationAmount] = React.useState<any>('10');
+    const [donationAmount, setDonationAmount] = React.useState<any>();
 
     const handleDonationLevelClick = (amount: string) => {
         if (amount === 'custom') {
