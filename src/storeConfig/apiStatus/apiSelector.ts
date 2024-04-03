@@ -13,6 +13,6 @@ export const getApiState: Selector<RootState, ApiState> = createSelector(
     selectApiState,
     apiState => ({
         ...apiState,
-        error: apiState.error || null, // Handle undefined by converting to null
+        error: apiState.error || null,
     }),
 );
