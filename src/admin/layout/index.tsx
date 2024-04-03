@@ -73,7 +73,6 @@ const VerticalLayout = ({ children }: VerticalLayoutProps) => {
         const isNotificationShown = sessionStorage.getItem('profileUpdateNotificationShown');
         if (!isNotificationShown) {
             const ProfileStatus = localStorage.getItem('profileStatus');
-            console.log('ProfileStatus', ProfileStatus);
             if (!ProfileStatus) {
                 Swal.fire({
                     title: 'Profile update required',
