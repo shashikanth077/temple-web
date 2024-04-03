@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Col, Container } from 'react-bootstrap';
 import { eventsActions } from './eventsSlice';
 import { selectEventsList } from './eventSelector';
 import EventTopBar from './eventTopbar';
@@ -6,6 +7,7 @@ import EventContent from './eventContent';
 import EventDate from './eventDate';
 import useRedux from 'hooks/useRedux';
 import { getFilterEvents } from 'helpers/event';
+import Heading from 'sharedComponents/heading/heading';
 
 function Events() {
     const { dispatch, appSelector } = useRedux();
@@ -73,9 +75,23 @@ function Events() {
 
     return (
         <section className="area-padding">
-            <EventTopBar SelectedDate={selectedDate} getFilterSortParams={getFilterSortParams} />
-            <EventDate filterSortType={filterSortType} SelecteGlobaldDate={selectedDate} getFilterSortParams={getFilterSortParams} onchangclick={handlePageClick} events={eventsList} currentEventData={currentData} pageCount={pageCount} />
-            <EventContent onchangclick={handlePageClick} events={eventsList} currentEventData={currentData} pageCount={pageCount} />
+            <Container>
+                <div className="row">
+                    <div className="col-lg-12">
+                        <div className="title-box text-center">
+                            <Heading
+                                headingWrapClass="heading-head-wrap"
+                                title="Events"
+                                classes="text-center mt-3"
+                                align="text-center"
+                            />
+                        </div>
+                    </div>
+                </div>
+                <EventTopBar SelectedDate={selectedDate} getFilterSortParams={getFilterSortParams} />
+                <EventDate filterSortType={filterSortType} SelecteGlobaldDate={selectedDate} getFilterSortParams={getFilterSortParams} onchangclick={handlePageClick} events={eventsList} currentEventData={currentData} pageCount={pageCount} />
+                <EventContent onchangclick={handlePageClick} events={eventsList} currentEventData={currentData} pageCount={pageCount} />
+            </Container>
         </section>
     );
 }

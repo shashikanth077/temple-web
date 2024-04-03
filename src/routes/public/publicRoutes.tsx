@@ -8,7 +8,7 @@ const Contact = React.lazy(() => import('public/features/contact/contact'));
 const ShopLayout = React.lazy(() => import('public/features/products/shopLayout'));
 const ResetPassword = React.lazy(() => import('public/features/auth/login/forgotpassword/resetPassword'));
 const Events = React.lazy(() => import('public/features/events/event'));
-const EventDetails = React.lazy(() => import('public/features/events/event'));
+const EventDetails = React.lazy(() => import('public/features/events/eventDetails/eventDetails'));
 const Login = React.lazy(() => import('public/features/auth/login/login'));
 const Register = React.lazy(() => import('public/features/auth/register/register'));
 const Confirm = React.lazy(() => import('public/features/auth/register/confirm'));
