@@ -67,7 +67,7 @@ function EventContent(props:EventProps) {
                                         <h3 className="events-calendar-list-event-title events-common-h4--min-medium">
 
                                             {!member ? (
-                                                <Link className="events-calendar-list-event-name" to={`${config.PUBLIC_URL}/events/eventsdetails/${event._id}`}>
+                                                <Link className="events-calendar-list-event-name" to={`/events/eventsdetails/${event._id}`}>
                                                     {event.name}
                                                 </Link>
                                             ) : (
