@@ -26,7 +26,7 @@ function signup(payload: any) {
 }
 
 function AccountActivation(payload: any) {
-    const baseUrl = `${config.API_BASE_URL}/activate/${payload.token}`;
+    const baseUrl = `${config.API_BASE_URL}/api/activate/${payload.token}`;
     const response = APICore.get(`${baseUrl}`, {});
     console.log('response', response);
     return response;

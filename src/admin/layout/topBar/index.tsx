@@ -10,13 +10,6 @@ import { useRedux, useUser } from 'hooks';
 import { APICore } from 'helpers/api';
 
 /* eslint-disable */
-/**
- * for subtraction minutes
- */
-function subtractHours(date: Date, minutes: number) {
-    date.setMinutes(date.getMinutes() - minutes);
-    return date;
-}
 
 export interface ProfileOption {
     label: string
