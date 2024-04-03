@@ -35,14 +35,14 @@ const SideBarContent = () => {
 
 const LeftSidebar = () => (
     <div className="leftside-menu">
-        <Link to="/" className="logo logo-light">
+        <div  className="logo logo-light">
             <span className="logo-lg">
                 <img height="40px" width="200px" src={`${window.location.origin}/assets/images/logo/logo.jpg`} alt="logo" />
             </span>
             <span className="logo-sm">
                 <img src={`${window.location.origin}/assets/images/logo/logo.jpg`} alt="small logo" />
             </span>
-        </Link>
+        </div>
         <a href="/" className="logo logo-dark">
             <span className="logo-lg">
                 <img src={`${window.location.origin}/assets/images/logo/logo.jpg`} alt="dark logo" />
