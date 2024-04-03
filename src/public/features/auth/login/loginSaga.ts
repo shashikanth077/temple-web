@@ -11,6 +11,7 @@ import {
 
 interface ProfileStatus{
     profileStatus:any;
+    errorCode:any;
     success:any;
 }
 function* fetchLoginCheck(action:any) {
@@ -23,7 +24,13 @@ function* fetchLoginCheck(action:any) {
                 userid: response.id,
             };
             const profileStatus:ProfileStatus = yield call(checkProfileStatus, ProfileStatusData);
-            localStorage.setItem('profileStatus', profileStatus.success);
+            let profileStage;
+            if (profileStatus.errorCode) {
+                profileStage = '';
+            } else {
+                profileStage = 'true';
+            }
+            localStorage.setItem('profileStatus', profileStage);
             if (profileStatus.success === false) {
                 yield put(authActions.updateProfileStatus(profileStatus.success));
             }
