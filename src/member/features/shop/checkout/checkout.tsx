@@ -126,7 +126,7 @@ const Checkout = () => {
     };
 
     useEffect(() => {
-        setValue("email", ProfileDetails?.email);
+        setValue("email", loggedInUser?.email);
         setValue("billingAddress", billingAddressFormData?.billingAddress);
         setValue("billingCity", billingAddressFormData?.billingCity);
         setValue("billingZipcode", billingAddressFormData?.billingZipcode);
@@ -226,7 +226,7 @@ const Checkout = () => {
                     requestPayload.amount = cartItems.totalPrice.toFixed(2);
                     requestPayload.Items = cartItems?.items;
                     requestPayload.billingAddress = billingAddressFormData;
-                    requestPayload.devoteeName = ProfileDetails.firstName + '' + ProfileDetails.lastName;
+                    requestPayload.devoteeName = loggedInUser?.firstName + '' + loggedInUser?.lastName;
                     requestPayload.devoteePhoneNumber = loggedInUser?.phonenumber;
                     requestPayload.devoteeEmail = loggedInUser?.email;
                     requestPayload.paymentMethod = payload.paymentIntent.payment_method;
@@ -442,7 +442,7 @@ const Checkout = () => {
                                                         control={control}
                                                         name="email"
                                                         defaultValue={
-                                                            ProfileDetails.email
+                                                            loggedInUser.email
                                                         }
                                                         disabled
                                                     />

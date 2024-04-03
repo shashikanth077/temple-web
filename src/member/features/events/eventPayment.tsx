@@ -128,10 +128,9 @@ const EventPaymentPage = () => {
         setIsChecked(!isChecked);
     };
 
-    console.log("billingAddressFormData",billingAddressFormData);
     useEffect(() => {
         setSelectedState(billingAddressFormData?.state);
-        setValue("email", ProfileDetails?.email);
+        setValue("email", loggedInUser?.email);
         setValue("billingAddress", billingAddressFormData?.billingAddress);
         setValue("billingCity", billingAddressFormData?.billingCity);
         setValue("billingZipcode", billingAddressFormData?.billingZipcode);
@@ -446,7 +445,7 @@ const EventPaymentPage = () => {
                                                         control={control}
                                                         name="email"
                                                         defaultValue={
-                                                            ProfileDetails.email
+                                                            loggedInUser?.email
                                                         }
                                                         disabled
                                                     />
