@@ -12,3 +12,10 @@ export function getServiceById(payload:any) {
     const response = APICore.get(baseUrl, {});
     return response;
 }
+
+export function getServices() {
+    const baseUrl = `${config.API_BASE_URL}/api/services`;
+    const response = APICore.get(baseUrl, {});
+    return response;
+}
+
