@@ -27,6 +27,7 @@ export interface ServerList {
   services:string[];
   message:string;
   success:boolean;
+  allservices:string[];
   errorMessage:string;
   errorCode:number;
 }

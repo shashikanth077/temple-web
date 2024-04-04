@@ -23,7 +23,6 @@ function EventDetails() {
     }, [dispatch, id]);
 
     const eventData = useSelector((state: any) => state.admin.adminEvent);
-    console.log('eventData', eventData);
 
     const handleBook = (e: any, eventId: string) => {
         if (!APICore?.isUserAuthenticated()) {
@@ -33,6 +32,22 @@ function EventDetails() {
             navigate(`/event-book/${eventId}`);
         }
     };
+
+    const address = eventData?.event?.venue;
+
+    // Function to split the address into parts of desired length
+    const splitAddress = (addr: string, maxLength: number) => {
+        const parts = [];
+        let startIndex = 0;
+        while (startIndex < addr.length) {
+            parts.push(addr.substr(startIndex, maxLength));
+            startIndex += maxLength;
+        }
+        return parts;
+    };
+
+    // Splitting the address into parts of desired length
+    const addressComponents = address ? splitAddress(address, 25) : [];
 
     return (
         eventData ? (
@@ -62,6 +77,8 @@ function EventDetails() {
                         <div className="col-xl-8 col-lg-7">
                             <div className="event-details__left">
                                 <div className="event-details__content-one">
+                                    <h3 className="event-details__content-one-title">{eventData?.event?.name}
+                                    </h3>
                                     <p className="event-details__content-one-text-1">
                                         {eventData?.event?.description}
                                     </p>
@@ -123,7 +140,9 @@ function EventDetails() {
                                                 <p>Venue:</p>
                                             </div>
                                             <div className="right">
-                                                <p className="clr-base">{eventData?.event?.venue}</p>
+                                                {addressComponents.map(component => (
+                                                    <p className="clr-base" key={component}>{component}</p>
+                                                ))}
                                             </div>
                                         </li>
                                     </ul>

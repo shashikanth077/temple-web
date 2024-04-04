@@ -6,6 +6,7 @@ export interface ServiceState {
   services:any;
   message:string;
   bookingData:any;
+  allservices:any;
 }
 interface GetBookingPayload {
     _id:string | undefined;
@@ -15,6 +16,7 @@ const initialState: ServiceState = {
     services: [],
     message: '',
     bookingData: {},
+    allservices: [],
 };
 
 const serviceSlice = createSlice({
@@ -27,6 +29,13 @@ const serviceSlice = createSlice({
         fetchServiceListSuccess(state, action: PayloadAction<ServerList>) {
             state.loading = false;
             state.services = action.payload.services;
+        },
+        getAllServices(state) {
+            state.loading = true;
+        },
+        fetchAllServiceListSuccess(state, action: PayloadAction<ServerList>) {
+            state.loading = false;
+            state.allservices = action.payload.services;
         },
     },
 });

@@ -1,6 +1,7 @@
 import React from 'react';
 import Bookings from '../bookings/booking';
 import Staffs from '../staffs/staff';
+import Services from '../services/serviceHome/serviceList';
 import Shop from './shopSlide/shopSlide';
 import Banner from './banner/Banner';
 import Recentevents from './homeevents/recentEvents';
@@ -20,7 +21,7 @@ function Home() {
             <Banner />
             <About />
             <AboutImage />
-            {/* <Services /> */}
+            <Services />
             <GrandprogramOne />
             <Bookings />
             <Recentevents />
