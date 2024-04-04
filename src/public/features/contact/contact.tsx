@@ -16,7 +16,7 @@ import { FormInput } from 'sharedComponents/inputs';
 import Cardboxnew from 'sharedComponents/cards/card1';
 import Heading from 'sharedComponents/heading/heading';
 import { useRedux } from 'hooks';
-// import GMap from 'sharedComponents/Googlemap/googleMap';
+import GMap from 'sharedComponents/Googlemap/googleMap';
 import { clearState } from 'storeConfig/apiStatus/apiSlice';
 import Button from 'sharedComponents/button/button';
 import { selectContactformDetails, selectContactDetails } from 'contents/content/contactSelectors';
@@ -29,7 +29,7 @@ type ContactData = {
     subject:string;
     message:string;
 }
-
+/* eslint-disable */
 function Contact() {
     const { dispatch, appSelector } = useRedux();
 
@@ -113,7 +113,7 @@ function Contact() {
                     align="text-center"
                 />
                 <Row className="contact-info-area g-4 mb-5">
-                    <Col className="Col" lg={3} md={6}>
+                    <Col className="Col" lg={3} md={6} sm={12}>
                         <Cardboxnew
                             CardImage={Contacttatic?.AddressIcon}
                             imageType="icon"
@@ -124,7 +124,7 @@ function Contact() {
                             imageStatus
                         />
                     </Col>
-                    <Col className="Col" lg={3} md={6}>
+                    <Col className="Col" lg={3} md={6} sm={12}>
                         <Cardboxnew
                             CardImage={Contacttatic?.PhoneIcon}
                             imageType="icon"
@@ -135,7 +135,7 @@ function Contact() {
                             imageStatus
                         />
                     </Col>
-                    <Col className="Col" lg={3} md={6}>
+                    <Col className="Col" lg={3} md={6} sm={12}>
                         <Cardboxnew
                             CardImage={Contacttatic?.EmailIcon}
                             imageType="icon"
@@ -148,12 +148,10 @@ function Contact() {
                     </Col>
                 </Row>
                 <div className="row">
-                    <div className="col-md-12">
+                    <div className="col-md-12 p-1">
                         <div className="contact-form">
-                            <h4>{ContactFormStatic?.heading}</h4>
-
+                            <h4 className='contact-heading'>{ContactFormStatic?.heading}</h4>
                             {loading && <Loader />}
-
                             <form name="contact-enquiry-form" id="contact-enquiry-form" onSubmit={onSubmit}>
                                 <FormInput
                                     label={ContactFormStatic?.formLabels?.name}
@@ -166,7 +164,6 @@ function Contact() {
                                     id="name"
                                     name="name"
                                 />
-
                                 <FormInput
                                     label={ContactFormStatic?.formLabels?.email}
                                     register={register}
@@ -215,12 +212,13 @@ function Contact() {
                             </form>
                         </div>
                     </div>
-                    {/* <div className="col-md-4">
+                    <div className="col-md-12 pr-lg-5">
+                    <div style={{ height: '100vh', width: '100%' }}>
                         <GMap />
-                    </div> */}
+                    </div>
+                    </div>
                 </div>
             </div>
-
         </section>
     );
 }
