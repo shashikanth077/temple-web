@@ -1,10 +1,11 @@
 import React, { useMemo, useEffect, useRef } from 'react';
-import { GoogleMap, useLoadScript } from '@react-google-maps/api';
+import { useLoadScript } from '@react-google-maps/api';
 import './_gmap.scss';
+
 /* eslint-disable */
 const GMap = () => {
     const { isLoaded } = useLoadScript({
-        googleMapsApiKey: 'AIzaSyC04rZv1chRUziEDZ2V02Fdhcy5VOkpNNA' || '',
+        googleMapsApiKey: process.env.REACT_APP_GOOGLE_KEY || '',
     });
     const center = useMemo(() => ({ lat: 43.651070, lng: -79.347015 }), []);
     const mapContainerRef = useRef(null);
