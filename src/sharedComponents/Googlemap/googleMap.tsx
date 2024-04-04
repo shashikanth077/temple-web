@@ -13,7 +13,7 @@ const GMap = (props:any) => {
     const center:any = useMemo(() => ({ lat: lat || 43.651070, lng: lng || -79.347015 }), [lat, lng]);
     const mapContainerRef = useRef(null);
     const cityName = props.location || "toranto";
-   console.log(cityName);
+   
     useEffect(() => {
         const fetchLocation = async () => {
             const apiKey = process.env.REACT_APP_GOOGLE_KEY;
