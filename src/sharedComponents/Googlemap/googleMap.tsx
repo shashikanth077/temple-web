@@ -1,14 +1,36 @@
-import React, { useMemo, useEffect, useRef } from 'react';
-import { useLoadScript } from '@react-google-maps/api';
+import React, { useMemo, useState, useEffect, useRef } from 'react';
+import { GoogleMap, useLoadScript } from '@react-google-maps/api';
 import './_gmap.scss';
 
 /* eslint-disable */
-const GMap = () => {
+const GMap = (props:any) => {
     const { isLoaded } = useLoadScript({
-        googleMapsApiKey: process.env.REACT_APP_GOOGLE_KEY || '',
+        googleMapsApiKey: 'AIzaSyC04rZv1chRUziEDZ2V02Fdhcy5VOkpNNA' || '',
     });
-    const center = useMemo(() => ({ lat: 43.651070, lng: -79.347015 }), []);
+    const [lat, setLat] = useState("43.651070");
+    const [lng, setLng] = useState("-79.347015");
+
+    const center:any = useMemo(() => ({ lat: lat || 43.651070, lng: lng || -79.347015 }), [lat, lng]);
     const mapContainerRef = useRef(null);
+    const cityName = props.location || "toranto";
+   
+    useEffect(() => {
+        const fetchLocation = async () => {
+            const apiKey = process.env.REACT_APP_GOOGLE_KEY;
+            const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${cityName}&key=${apiKey}`;
+            try {
+                const response = await fetch(url);
+                const data = await response.json();
+                const location = data.results[0].geometry.location;
+                setLat(location.lat);
+                setLng(location.lng);
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        };
+
+        fetchLocation();
+    }, []); 
 
     useEffect(() => {
         if (isLoaded && mapContainerRef.current) {
@@ -20,7 +42,7 @@ const GMap = () => {
             const marker = new window.google.maps.Marker({
                 position: center,
                 map: map,
-                title: '1325 Matheson Blvd East Mississauga -ON L4W 1R1',
+                title: cityName? cityName : '1325 Matheson Blvd East Mississauga -ON L4W 1R1',
             });
         }
     }, [isLoaded, center]);
