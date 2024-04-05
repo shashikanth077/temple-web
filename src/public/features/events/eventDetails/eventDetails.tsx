@@ -7,7 +7,8 @@ import { useRedux } from 'hooks';
 import { APICore } from 'helpers';
 import ButtonV1 from 'sharedComponents/button/buttonv1';
 import Heading from 'sharedComponents/heading/heading';
-
+import GMap from 'sharedComponents/Googlemap/googleMap';
+/* eslint-disable */
 /* eslint no-underscore-dangle: 0 */
 function EventDetails() {
     const { id } = useParams();
@@ -148,7 +149,9 @@ function EventDetails() {
                                     </ul>
                                 </div>
                                 <div className="event-details__map">
-                                    <img src="/assets/images/maptemp.png" className="venue-map" alt="Venue Address" />
+                                <div style={{ height: '100vh', width: '100%' }}>
+                                    <GMap location={addressComponents[0]} />
+                                </div>
                                 </div>
                             </div>
                         </div>
