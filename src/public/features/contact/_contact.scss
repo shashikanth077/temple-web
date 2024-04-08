@@ -31,7 +31,9 @@
         background-color: #ffffff;
         font-weight: 700;
         overflow: hidden;
-        border-radius: 0px;
+        border-radius: 5px;
+        width: 100%;
+        font-size: 15px;
         transition: 0.4s;
         &:hover{
             transform: translateY(-3px);
@@ -45,3 +47,39 @@
     align-items: center;
     justify-content: center;
 }
+
+
+.cs-icon__box {
+    display: flex;
+    align-items: center;
+    padding:  50px 0 0 50px;
+  }
+
+  .cs-icon__box__icon {
+    flex-shrink: 0;
+    width: 40px; /* Adjust as needed */
+    height: 40px; /* Adjust as needed */
+    line-height: 40px; /* Adjust as needed */
+    text-align: center;
+    border-radius: 50%;
+    color: #fff;
+    font-size: 20px; /* Adjust as needed */
+    margin-right: 10px; /* Adjust as needed */
+  }
+
+  .cs-icon__box__right {
+    flex-grow: 1;
+  }
+
+  /* Background colors */
+  .cs-accent__bg {
+    background-color: #007bff; /* Adjust as needed */
+  }
+
+  .cs-green__bg {
+    background-color: #28a745; /* Adjust as needed */
+  }
+
+  .cs-yellow__bg {
+    background-color: #ffc107; /* Adjust as needed */
+  }
