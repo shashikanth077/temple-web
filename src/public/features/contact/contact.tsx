@@ -112,111 +112,107 @@ function Contact() {
                     classes="text-center mt-3"
                     align="text-center"
                 />
-                <Row className="contact-info-area g-4 mb-5">
-                    <Col className="Col" lg={3} md={6} sm={12}>
-                        <Cardboxnew
-                            CardImage={Contacttatic?.AddressIcon}
-                            imageType="icon"
-                            cardClass="contact-box"
-                            buttonStatus={false}
-                            title={Contacttatic?.addressTitle}
-                            description={Contacttatic?.Address}
-                            imageStatus
-                        />
-                    </Col>
-                    <Col className="Col" lg={3} md={6} sm={12}>
-                        <Cardboxnew
-                            CardImage={Contacttatic?.PhoneIcon}
-                            imageType="icon"
-                            cardClass="contact-box"
-                            buttonStatus={false}
-                            title={Contacttatic?.phoneTitle}
-                            description={Contacttatic?.Phonenumber}
-                            imageStatus
-                        />
-                    </Col>
-                    <Col className="Col" lg={3} md={6} sm={12}>
-                        <Cardboxnew
-                            CardImage={Contacttatic?.EmailIcon}
-                            imageType="icon"
-                            cardClass="contact-box"
-                            buttonStatus={false}
-                            title={Contacttatic?.emailTitle}
-                            description={Contacttatic?.Emailaddress}
-                            imageStatus
-                        />
-                    </Col>
-                </Row>
                 <div className="row">
-                    <div className="col-md-12 p-1">
-                        <div className="contact-form">
-                            <h4 className='contact-heading'>{ContactFormStatic?.heading}</h4>
-                            {loading && <Loader />}
-                            <form name="contact-enquiry-form" id="contact-enquiry-form" onSubmit={onSubmit}>
-                                <FormInput
-                                    label={ContactFormStatic?.formLabels?.name}
-                                    register={register}
-                                    key="name"
-                                    errors={errors}
-                                    control={control}
-                                    type="input"
-                                    containerClass="mb-3"
-                                    id="name"
-                                    name="name"
-                                />
-                                <FormInput
-                                    label={ContactFormStatic?.formLabels?.email}
-                                    register={register}
-                                    key="email"
-                                    errors={errors}
-                                    control={control}
-                                    type="input"
-                                    containerClass="mb-3"
-                                    id="email"
-                                    name="email"
-                                />
+                <div className="col-lg-6">
+                <div className="d-flex align-items-center">
+                    <div className="cs-icon__box cs-style7">
+                    <div className="cs-icon__box__icon cs-center cs-accent__bg"><i className="fas fa-map-marker-alt"></i></div>
+                    <div className="cs-icon__box__right">
+                        <h2 className="cs-icon__box__title">{Contacttatic?.addressTitle}:</h2>
+                        <div className="cs-icon__box__subtitle">{Contacttatic?.Address}</div>
+                    </div>
+                    </div>
+                </div>
+                <div className="mt-3 mt-lg-2"></div>
+                <div className="d-flex align-items-center">
+                    <div className="cs-icon__box cs-style7">
+                    <div className="cs-icon__box__icon cs-center cs-green__bg"><i className="fas fa-envelope"></i></div>
+                    <div className="cs-icon__box__right">
+                        <h2 className="cs-icon__box__title">{Contacttatic?.emailTitle}:</h2>
+                        <div className="cs-icon__box__subtitle">{Contacttatic?.Emailaddress}</div>
+                    </div>
+                    </div>
+                </div>
+                <div className="mt-3 mt-lg-2"></div>
+                <div className="d-flex align-items-center">
+                    <div className="cs-icon__box cs-style7">
+                    <div className="cs-icon__box__icon cs-center cs-yellow__bg"><i className="fas fa-mobile-alt"></i></div>
+                    <div className="cs-icon__box__right">
+                        <h2 className="cs-icon__box__title">{Contacttatic?.phoneTitle}:</h2>
+                        <div className="cs-icon__box__subtitle">{Contacttatic?.Phonenumber}</div>
+                    </div>
+                    </div>
+                </div>
+                </div>
+                <div className="col-lg-6">
+                    <div className="contact-form">
+                        <h4 className='contact-heading'>{ContactFormStatic?.heading}</h4>
+                        {loading && <Loader />}
+                        <form name="contact-enquiry-form" id="contact-enquiry-form" onSubmit={onSubmit}>
+                            <FormInput
+                                label={ContactFormStatic?.formLabels?.name}
+                                register={register}
+                                key="name"
+                                errors={errors}
+                                control={control}
+                                type="input"
+                                containerClass="mb-3"
+                                id="name"
+                                name="name"
+                            />
+                            <FormInput
+                                label={ContactFormStatic?.formLabels?.email}
+                                register={register}
+                                key="email"
+                                errors={errors}
+                                control={control}
+                                type="input"
+                                containerClass="mb-3"
+                                id="email"
+                                name="email"
+                            />
 
-                                <FormInput
-                                    label={ContactFormStatic?.formLabels?.subject}
-                                    register={register}
-                                    key="subject"
-                                    errors={errors}
-                                    control={control}
-                                    type="input"
-                                    containerClass="mb-3"
-                                    id="subject"
-                                    name="subject"
-                                />
+                            <FormInput
+                                label={ContactFormStatic?.formLabels?.subject}
+                                register={register}
+                                key="subject"
+                                errors={errors}
+                                control={control}
+                                type="input"
+                                containerClass="mb-3"
+                                id="subject"
+                                name="subject"
+                            />
 
-                                <FormInput
-                                    label={ContactFormStatic?.formLabels?.message}
-                                    register={register}
-                                    key="message"
-                                    value={enquiry}
-                                    onChange={handleEnquiryChange}
-                                    errors={errors}
-                                    control={control}
-                                    type="input"
-                                    containerClass="mb-3"
-                                    id="message"
-                                    name="message"
-                                />
-                                <p>
-                                    <b>Characters remaining: {maxCharacters - enquiry.length}</b>
-                                </p>
-                                <div className="">
-                                    <Button disabled={loading} btntype classnames="read-more contact-btn">
-                                        {ContactFormStatic?.btnName}
-                                    </Button>
-                                </div>
-                            </form>
-                        </div>
+                            <FormInput
+                                label={ContactFormStatic?.formLabels?.message}
+                                register={register}
+                                key="message"
+                                value={enquiry}
+                                onChange={handleEnquiryChange}
+                                errors={errors}
+                                control={control}
+                                type="textarea"
+                                containerClass="mb-3"
+                                id="message"
+                                name="message"
+                            />
+                            <p>
+                                <b>Characters remaining: {maxCharacters - enquiry.length}</b>
+                            </p>
+                            <div className="">
+                                <Button disabled={loading} btntype classnames="read-more contact-btn">
+                                    {ContactFormStatic?.btnName}
+                                </Button>
+                            </div>
+                        </form>
                     </div>
-                    <div className="col-md-12 pr-lg-5">
-                    <div style={{ height: '100vh', width: '100%' }}>
-                        <GMap />
-                    </div>
-                    </div>
+                </div>
+                <div className="map-container col-lg-12 pr-lg-5 pt-5">
+                <div style={{ height: '60vh', width: '100%' }}>
+                    <GMap />
+                </div>
+                </div>
                 </div>
             </div>
         </section>
