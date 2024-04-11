@@ -1,5 +1,7 @@
-import React, { useMemo, useState, useEffect, useRef } from 'react';
-import { GoogleMap, useLoadScript } from '@react-google-maps/api';
+import React, {
+    useMemo, useState, useEffect, useRef,
+} from 'react';
+import { useLoadScript } from '@react-google-maps/api';
 import './_gmap.scss';
 
 /* eslint-disable */
