@@ -103,54 +103,56 @@ function Contact() {
 
     return (
 
-        <section id="contact" className="contact-section p-80px-tb">
+<section id="contact" className="contact-section p-80px-tb">
 
-            <div className="container">
-                <Heading
-                    headingWrapClass="contactform-head-wrap"
-                    title={ContactFormStatic?.GetInTouchTitle}
-                    classes="text-center mt-3"
-                    align="text-center"
-                />
+<div className="container">
+    <div className="cs-section__heading cs-style1 text-center">
+        <h2 className="cs-section__title"><Heading
+        headingWrapClass="contactform-head-wrap"
+        title={ContactFormStatic?.GetInTouchTitle}
+        classes="text-center mt-3"
+    /></h2>
+        <div className="cs-height__25 cs-height__lg__15"></div>
+        <div className="cs-section__subtitle">{ContactFormStatic?.heading}</div>
+        {loading && <Loader />}
+    </div>
+    <div className="cs-height__70 cs-height__lg__50"></div>
+    <div className="row">
+        <div className="col-lg-6">
+            <div className="cs-vertical__middle">
+                <div className="cs-vertical__middle__in">
+                    <div className="cs-icon__box cs-style7">
+                        <div className="cs-icon__box__icon cs-center cs-accent__bg"><i className="fas fa-map-marker-alt"></i></div>
+                        <div className="cs-icon__box__right">
+                            <h2 className="cs-icon__box__title">{Contacttatic?.addressTitle}:</h2>
+                            <div className="cs-icon__box__subtitle">{Contacttatic?.Address}</div>
+                        </div>
+                    </div>
+                    <div className="cs-height__40 cs-height__lg__30"></div>
+                    <div className="cs-icon__box cs-style7">
+                        <div className="cs-icon__box__icon cs-center cs-green__bg"><i className="fas fa-envelope"></i></div>
+                        <div className="cs-icon__box__right">
+                            <h2 className="cs-icon__box__title">{Contacttatic?.emailTitle}:</h2>
+                            <div className="cs-icon__box__subtitle">{Contacttatic?.Emailaddress}</div>
+                        </div>
+                    </div>
+                    <div className="cs-height__40 cs-height__lg__30"></div>
+                    <div className="cs-icon__box cs-style7">
+                        <div className="cs-icon__box__icon cs-center cs-yellow__bg"><i className="fas fa-mobile-alt"></i></div>
+                        <div className="cs-icon__box__right">
+                            <h2 className="cs-icon__box__title">{Contacttatic?.phoneTitle}:</h2>
+                            <div className="cs-icon__box__subtitle">{Contacttatic?.Phonenumber}</div>
+                        </div>
+                    </div>
+                    <div className="cs-height__0 cs-height__lg__60"></div>
+                </div>
+            </div>
+        </div>
+        <div className="col-lg-6">
+                <form name="contact-enquiry-form" className="cs-form cs-style2" id="contact-enquiry-form" onSubmit={onSubmit}>
                 <div className="row">
-                <div className="col-lg-6">
-                <div className="d-flex align-items-center">
-                    <div className="cs-icon__box cs-style7">
-                    <div className="cs-icon__box__icon cs-center cs-accent__bg"><i className="fas fa-map-marker-alt"></i></div>
-                    <div className="cs-icon__box__right">
-                        <h2 className="cs-icon__box__title">{Contacttatic?.addressTitle}:</h2>
-                        <div className="cs-icon__box__subtitle">{Contacttatic?.Address}</div>
-                    </div>
-                    </div>
-                </div>
-                <div className="mt-3 mt-lg-2"></div>
-                <div className="d-flex align-items-center">
-                    <div className="cs-icon__box cs-style7">
-                    <div className="cs-icon__box__icon cs-center cs-green__bg"><i className="fas fa-envelope"></i></div>
-                    <div className="cs-icon__box__right">
-                        <h2 className="cs-icon__box__title">{Contacttatic?.emailTitle}:</h2>
-                        <div className="cs-icon__box__subtitle">{Contacttatic?.Emailaddress}</div>
-                    </div>
-                    </div>
-                </div>
-                <div className="mt-3 mt-lg-2"></div>
-                <div className="d-flex align-items-center">
-                    <div className="cs-icon__box cs-style7">
-                    <div className="cs-icon__box__icon cs-center cs-yellow__bg"><i className="fas fa-mobile-alt"></i></div>
-                    <div className="cs-icon__box__right">
-                        <h2 className="cs-icon__box__title">{Contacttatic?.phoneTitle}:</h2>
-                        <div className="cs-icon__box__subtitle">{Contacttatic?.Phonenumber}</div>
-                    </div>
-                    </div>
-                </div>
-                </div>
-                <div className="col-lg-6">
-                    <div className="contact-form">
-                        <h4 className='contact-heading'>{ContactFormStatic?.heading}</h4>
-                        {loading && <Loader />}
-                        <form name="contact-enquiry-form" id="contact-enquiry-form" onSubmit={onSubmit}>
-                            <FormInput
-                                label={ContactFormStatic?.formLabels?.name}
+                    <div className="col-sm-6">
+                    <FormInput
                                 register={register}
                                 key="name"
                                 errors={errors}
@@ -159,9 +161,13 @@ function Contact() {
                                 containerClass="mb-3"
                                 id="name"
                                 name="name"
+                                placeholder="First Name"
+                                className="cs-form__field"
                             />
-                            <FormInput
-                                label={ContactFormStatic?.formLabels?.email}
+                        <div className="cs-height__25 cs-height__lg__25"></div>
+                    </div>
+                    <div className="col-sm-6">
+                    <FormInput
                                 register={register}
                                 key="email"
                                 errors={errors}
@@ -170,10 +176,13 @@ function Contact() {
                                 containerClass="mb-3"
                                 id="email"
                                 name="email"
+                                placeholder="Email Address"
+                                className="cs-form__field"
                             />
-
-                            <FormInput
-                                label={ContactFormStatic?.formLabels?.subject}
+                        <div className="cs-height__25 cs-height__lg__25"></div>
+                    </div>
+                    <div className="col-sm-12">
+                        <FormInput
                                 register={register}
                                 key="subject"
                                 errors={errors}
@@ -182,10 +191,13 @@ function Contact() {
                                 containerClass="mb-3"
                                 id="subject"
                                 name="subject"
+                                placeholder="Subject"
+                                className="cs-form__field"
                             />
-
-                            <FormInput
-                                label={ContactFormStatic?.formLabels?.message}
+                        <div className="cs-height__25 cs-height__lg__25"></div>
+                    </div>
+                    <div className="col-sm-12">
+                        <FormInput
                                 register={register}
                                 key="message"
                                 value={enquiry}
@@ -196,26 +208,33 @@ function Contact() {
                                 containerClass="mb-3"
                                 id="message"
                                 name="message"
+                                placeholder="Write Comment"
+                                className="cs-form__field"
                             />
-                            <p>
-                                <b>Characters remaining: {maxCharacters - enquiry.length}</b>
-                            </p>
-                            <div className="">
-                                <Button disabled={loading} btntype classnames="read-more contact-btn">
-                                    {ContactFormStatic?.btnName}
-                                </Button>
-                            </div>
-                        </form>
+                        <div className="cs-height__25 cs-height__lg__25"></div>
+                        <p>
+                            <b>Characters remaining: {maxCharacters - enquiry.length}</b>
+                        </p>
+                    </div>
+                    <div className="col-lg-12">
+                        <Button disabled={loading} btntype classnames="read-more contact-btn cs-btn cs-style1 cs-color1 cs-primary__font w-100">
+                            {ContactFormStatic?.btnName}
+                        </Button>
                     </div>
                 </div>
-                <div className="map-container col-lg-12 pr-lg-5 pt-5">
-                <div style={{ height: '60vh', width: '100%' }}>
-                    <GMap />
-                </div>
-                </div>
-                </div>
-            </div>
-        </section>
+            </form>
+        </div>
+    </div>
+    <div className="cs-height__130 cs-height__lg__80"></div>
+    <div className="cs-google__map">
+    <iframe
+  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2887.42249355747!2d-79.63516962407788!3d43.6393774711028!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x882b38bec6f58465%3A0x72c06d94d0a7fedd!2sSri%20Siva%20Satyanarayana%20Swamy%20Temple!5e0!3m2!1sen!2sin!4v1712847786442!5m2!1sen!2sin"
+  allowFullScreen
+/>
+    </div>
+    <div className="cs-height__130 cs-height__lg__80"></div>
+</div>
+</section>
     );
 }
 
