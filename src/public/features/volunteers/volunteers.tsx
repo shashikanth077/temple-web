@@ -182,17 +182,18 @@ const SubmitVolunteer = () => {
                             <form
                                 name="voluteer-form"
                                 id="voluteer-form"
+                                className='cs-form cs-style2'
                                 onSubmit={onSubmit}
                             >
                                 <div className="row">
-                                    <div className="col-lg-12">
+                                    <div className="col-lg-6">
                                         <div className="form-group">
                                             <FormInput
                                                 register={register}
                                                 key="name"
                                                 errors={errors}
                                                 control={control}
-                                                label={
+                                                placeholder={
                                                     staticVolunteers?.formLabels
                                                         .name
                                                 }
@@ -200,12 +201,12 @@ const SubmitVolunteer = () => {
                                                 containerClass="mb-3"
                                                 id="name"
                                                 name="name"
+                                                className="cs-form__field"
                                             ></FormInput>
                                         </div>
                                     </div>
-                                </div>
-                                <div className="row">
-                                    <div className="col-lg-12">
+                       
+                                    <div className="col-lg-6">
                                         <div className="form-group">
                                             <FormInput
                                                 type="email"
@@ -214,17 +215,18 @@ const SubmitVolunteer = () => {
                                                 key="email"
                                                 errors={errors}
                                                 control={control}
-                                                label={
+                                                placeholder={
                                                     staticVolunteers?.formLabels
                                                         .email
                                                 }
                                                 containerClass="mb-3"
+                                                className="cs-form__field"
                                             />
                                         </div>
                                     </div>
                                 </div>
                                 <div className="row">
-                                    <div className="col-lg-12">
+                                    <div className="col-lg-6">
                                         <div className="form-group">
                                             <FormInput
                                                 type="phone"
@@ -233,24 +235,24 @@ const SubmitVolunteer = () => {
                                                 key="phone"
                                                 errors={errors}
                                                 control={control}
-                                                label={
+                                                placeholder={
                                                     staticVolunteers?.formLabels
                                                         .phone
                                                 }
                                                 containerClass="mb-3"
+                                                className="cs-form__field"
                                             />
                                         </div>
                                     </div>
-                                </div>
-                                <div className="row">
-                                    <div className="col-lg-12">
+                                
+                                    <div className="col-lg-6">
                                         <div className="form-group">
                                             <FormInput
                                                 register={register}
                                                 key="address"
                                                 errors={errors}
                                                 control={control}
-                                                label={
+                                                placeholder={
                                                     staticVolunteers?.formLabels
                                                         .address
                                                 }
@@ -258,19 +260,20 @@ const SubmitVolunteer = () => {
                                                 containerClass="mb-3"
                                                 id="address"
                                                 name="address"
+                                                className="cs-form__field"
                                             ></FormInput>
                                         </div>
                                     </div>
                                 </div>
                                 <div className="row">
-                                    <div className="col-lg-12">
+                                    <div className="col-lg-6">
                                         <div className="form-group">
                                             <FormInput
                                                 register={register}
                                                 key="city"
                                                 errors={errors}
                                                 control={control}
-                                                label={
+                                                placeholder={
                                                     staticVolunteers?.formLabels
                                                         .city
                                                 }
@@ -278,19 +281,19 @@ const SubmitVolunteer = () => {
                                                 containerClass="mb-3"
                                                 id="city"
                                                 name="city"
+                                                className="cs-form__field"
                                             ></FormInput>
                                         </div>
                                     </div>
-                                </div>
-                                <div className="row">
-                                    <div className="col-lg-12">
+              
+                                    <div className="col-lg-6">
                                         <div className="form-group">
                                             <FormInput
                                                 register={register}
                                                 key="state"
                                                 errors={errors}
                                                 control={control}
-                                                label={
+                                                placeholder={
                                                     staticVolunteers?.formLabels
                                                         .state
                                                 }
@@ -298,19 +301,20 @@ const SubmitVolunteer = () => {
                                                 containerClass="mb-3"
                                                 id="state"
                                                 name="state"
+                                                className="cs-form__field"
                                             ></FormInput>
                                         </div>
                                     </div>
                                 </div>
                                 <div className="row">
-                                    <div className="col-lg-12 mb-3">
+                                    <div className="col-lg-6 mb-3">
                                         <div className="form-group">
                                             <FormInput
                                                 register={register}
                                                 key="zipcode"
                                                 errors={errors}
                                                 control={control}
-                                                label={
+                                                placeholder={
                                                     staticVolunteers?.formLabels
                                                         .zipcode
                                                 }
@@ -318,6 +322,7 @@ const SubmitVolunteer = () => {
                                                 containerClass="mb-3"
                                                 id="zipcode"
                                                 name="zipcode"
+                                                className="cs-form__field"
                                             ></FormInput>
                                         </div>
                                     </div>
@@ -325,13 +330,13 @@ const SubmitVolunteer = () => {
                                 <div className="row">
                                     <div className="col-lg-12 mb-3">
                                         <div className="form-group">
-                                            <label>
+                                            <label className='text-label'>
                                                 {
                                                     staticVolunteers?.formLabels
                                                         .possibleDays
                                                 }
                                             </label>
-                                            <div className="d-flex flex-column">
+                                            <div className="d-flex display-direction">
                                                 {Days?.map((option: any) => (
                                                     <div className="form-check possible-days-form-check mr-3">
                                                         <FormInput
@@ -371,15 +376,15 @@ const SubmitVolunteer = () => {
                                     </div>
                                 </div>
                                 <div className="row">
-                                    <div className="col-lg-12 mb-3">
+                                    <div className="col-lg-6 mb-3">
                                         <div className="form-group">
-                                            <label>
+                                            <label className='text-label'>
                                                 {
                                                     staticVolunteers?.formLabels
                                                         .iswhatsupnumber
                                                 }
                                             </label>
-                                            <div>
+                                            <div className=''>
                                                 <div className="custom-control custom-radio custom-control-inline">
                                                     <FormInput
                                                         type="radio"
@@ -439,11 +444,10 @@ const SubmitVolunteer = () => {
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div className="row">
-                                    <div className="col-lg-12 mb-3">
+                          
+                                    <div className="col-lg-6 mb-3">
                                         <div className="form-group">
-                                            <label>
+                                            <label className='text-label'>
                                                 {
                                                     staticVolunteers?.formLabels
                                                         .islive
@@ -504,9 +508,9 @@ const SubmitVolunteer = () => {
                                 </div>
 
                                 <div className="row">
-                                    <div className="col-lg-12 mb-3">
+                                    <div className="col-lg-6 mb-3">
                                         <div className="form-group">
-                                            <label>
+                                            <label className='text-label'>
                                                 {
                                                     staticVolunteers?.formLabels
                                                         .isveg
@@ -564,11 +568,10 @@ const SubmitVolunteer = () => {
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div className="row">
-                                    <div className="col-lg-12 mb-3">
+  
+                                    <div className="col-lg-6 mb-3">
                                         <div className="form-group">
-                                            <label>
+                                            <label className='text-label'>
                                                 {
                                                     staticVolunteers?.formLabels
                                                         .beforevolunteer
@@ -635,30 +638,22 @@ const SubmitVolunteer = () => {
                                     </div>
                                 </div>
                                 <div className="row">
-                                    <div className="col-lg-12 mb-3">
+                                    <div className="col-lg-6"> {/* Use col-lg-6 to create 2 columns for desktop */}
                                         <div className="form-group">
-                                            <label>
-                                                {
-                                                    staticVolunteers?.formLabels.activityList
-                                                }
+                                            <label className='text-label'>
+                                                {staticVolunteers?.formLabels.activityList}
                                             </label>
                                             <div className="d-flex flex-column">
-                                                {Activities?.map(
+                                                {Activities?.slice(0, Math.ceil(Activities.length / 2)).map( // Use slice to split Activities array into two parts
                                                     (option: any) => (
                                                         <div className="form-check possible-days-form-check mr-3">
                                                             <FormInput
                                                                 className="possible-days-input-check"
-                                                                register={
-                                                                    register
-                                                                }
+                                                                register={register}
                                                                 key="activityList"
                                                                 name="activityList"
-                                                                value={
-                                                                    option?.label
-                                                                }
-                                                                control={
-                                                                    control
-                                                                }
+                                                                value={option?.label}
+                                                                control={control}
                                                                 type="checkbox"
                                                                 containerClass="mb-3"
                                                             />
@@ -671,24 +666,47 @@ const SubmitVolunteer = () => {
                                                         </div>
                                                     ),
                                                 )}
-                                                {((errors as ActivitesErrors)
-                                                    ?.activityList?.message ??
-                                                    "") && (
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="col-lg-6 mb-3"> {/* Second column */}
+                                        <div className="form-group">
+                                            <label>&nbsp;</label>
+                                            <div className="d-flex flex-column">
+                                                {Activities?.slice(Math.ceil(Activities.length / 2)).map( // Use slice to get the second half of Activities array
+                                                    (option: any) => (
+                                                        <div className="form-check possible-days-form-check mr-3">
+                                                            <FormInput
+                                                                className="possible-days-input-check"
+                                                                register={register}
+                                                                key="activityList"
+                                                                name="activityList"
+                                                                value={option?.label}
+                                                                control={control}
+                                                                type="checkbox"
+                                                                containerClass="mb-3"
+                                                            />
+                                                            <label
+                                                                className="form-check-label"
+                                                                htmlFor={`${option?.label}`}
+                                                            >
+                                                                {option?.label}
+                                                            </label>
+                                                        </div>
+                                                    ),
+                                                )}
+                                                {((errors as ActivitesErrors)?.activityList?.message ?? "") && (
                                                     <span className="text-danger">
-                                                        {
-                                                            (
-                                                                errors as ActivitesErrors
-                                                            ).activityList
-                                                                ?.message
-                                                        }
+                                                        {(errors as ActivitesErrors).activityList?.message}
                                                     </span>
                                                 )}
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+
                                 <div className="row">
-                                    <div className="col-lg-12 mb-3">
+                                    <div className="col-lg-12 mb-3 mt-3 text-label">
                                         <FormInput
                                             type="textarea"
                                             name="otheractivities"
@@ -698,15 +716,16 @@ const SubmitVolunteer = () => {
                                             errors={errors}
                                             control={control}
                                             containerClass="mb-3"
+                                            className="cs-form__field"
                                         />
                                     </div>
                                 </div>
                                 <div className="row text-center">
                                     <div className="col-sm-12">
-                                        <div className="text-center d-flex mb-3 update-profile-btn">
+                                        <div className="text-center mb-3">
                                             <Button
                                                 type="submit"
-                                                className="btn btn-primary submit-btn mr-1 waves-effect waves-light"
+                                                className="btn btn-primary submit-btn mr-1 waves-effect waves-light cs-btn cs-style1 cs-color1 cs-primary__font w-50"
                                                 disabled={loading}
                                             >
                                                 Submit
