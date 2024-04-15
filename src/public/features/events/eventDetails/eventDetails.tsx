@@ -149,7 +149,7 @@ function EventDetails() {
                                     </ul>
                                 </div>
                                 <div className="event-details__map">
-                                <div style={{ height: '100vh', width: '100%' }}>
+                                <div style={{ height: '60vh', width: '100%' }}>
                                     <GMap location={addressComponents[0]} />
                                 </div>
                                 </div>
