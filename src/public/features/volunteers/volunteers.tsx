@@ -720,12 +720,12 @@ const SubmitVolunteer = () => {
                                         />
                                     </div>
                                 </div>
-                                <div className="row text-center">
+                                <div className="row text-right">
                                     <div className="col-sm-12">
-                                        <div className="text-center mb-3">
+                                        <div className="text-right mb-3">
                                             <Button
                                                 type="submit"
-                                                className="btn btn-primary submit-btn mr-1 waves-effect waves-light cs-btn cs-style1 cs-color1 cs-primary__font w-50"
+                                                className="btn btn-primary submit-btn mr-1 waves-effect waves-light cs-btn cs-style1 cs-color1 cs-primary__font"
                                                 disabled={loading}
                                             >
                                                 Submit
