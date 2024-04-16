@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     Col, Container, Row, Card,
 } from 'react-bootstrap';
@@ -12,6 +12,28 @@ import ViewMore from 'sharedComponents/viewmorebtn/viewmorebtn';
 /* eslint no-underscore-dangle: 0 */
 export default function Services() {
     const { dispatch, appSelector } = useRedux();
+    const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+    const [slideOnPage, setSlideOnPage] = useState(1);
+    /* eslint-disable */
+    useEffect(() => {
+        const handleResize = () => {
+          setScreenWidth(window.innerWidth);
+        };
+    
+        window.addEventListener('resize', handleResize);
+    
+        return () => {
+          window.removeEventListener('resize', handleResize);
+        };
+      }, []);
+
+    useEffect(() => {
+        if (screenWidth < 768) {
+            setSlideOnPage(1);
+        } else {
+            setSlideOnPage(4);
+        }
+      }, [screenWidth]);
 
     useEffect(() => {
         dispatch(serviceActions.getAllServices());
@@ -48,7 +70,7 @@ export default function Services() {
                                 <SlickSlider
                                     arrowClassPrev="booking-home-next-pr"
                                     arrowClassNext="booking-home-prev-ar"
-                                    NumOfSlide={4}
+                                    NumOfSlide={slideOnPage}
                                     autoPly
                                     autoplaySpeedVal={6000}
                                 >

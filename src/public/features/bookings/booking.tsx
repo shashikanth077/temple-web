@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import { Card } from 'primereact/card';
 import { myBookingsActions } from './bookingSlice';
@@ -11,7 +11,29 @@ import ViewMore from 'sharedComponents/viewmorebtn/viewmorebtn';
 /* eslint-disable */
 export default function Bookings() {
     const { dispatch, appSelector } = useRedux();
+    const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+    const [slideOnPage, setSlideOnPage] = useState(1);
+     /* eslint-disable */
+     useEffect(() => {
+        const handleResize = () => {
+          setScreenWidth(window.innerWidth);
+        };
+    
+        window.addEventListener('resize', handleResize);
+    
+        return () => {
+          window.removeEventListener('resize', handleResize);
+        };
+      }, []);
 
+    useEffect(() => {
+        if (screenWidth < 768) {
+            setSlideOnPage(1);
+        } else {
+            setSlideOnPage(4);
+        }
+      }, [screenWidth]);
+      
     useEffect(() => {
         dispatch(myBookingsActions.getSevaList({}));
     }, [dispatch]);
@@ -47,7 +69,7 @@ export default function Bookings() {
                                 <SlickSlider
                                     arrowClassPrev="booking-home-next-pr"
                                     arrowClassNext="booking-home-prev-ar"
-                                    NumOfSlide={4}
+                                    NumOfSlide={slideOnPage}
                                     autoPly
                                     autoplaySpeedVal={6000}
                                 >
