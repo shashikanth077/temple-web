@@ -20,3 +20,21 @@
         }
     }
 }
+/* Styles for mobile devices */
+@media (max-width: 767px) {
+    .d-flex.align-items-center {
+        /* Adjust alignment for mobile */
+        flex-direction: column;
+    }
+
+    .col {
+        /* Adjust column styles for mobile */
+        width: 100%;
+    }
+
+    .d-flex.justify-content-between {
+        /* Adjust spacing between items for mobile */
+        justify-content: center;
+        margin-top: 10px; /* Example margin */
+    }
+}
