@@ -15,21 +15,24 @@ const RegularSponsorsCommon = (props: {
 
     return (
         <section className="regular-event-sponsors area-padding">
-            <Container>
-                <Row>
-                <div className="d-flex align-items-center">
-                        <div className="col d-flex justify-content-between">
-                            <span>{title1}</span>
-                            <a href={url1} className="anchor-box btn btn-link">{buttonTitle}</a>
-                        </div>
-                        <div className="col d-flex justify-content-between">
-                            <span>{title2}</span>
-                            <a href={url2} className="anchor-box btn btn-link">{buttonTitle}</a>
-                        </div>
-                    </div>
-                </Row>
-            </Container>
+        <Container>
+            <Row>
+            <div className="col-md-6">
+                <div className="d-flex flex-column align-items-center">
+                <span>{title1}</span>
+                <a href={url1} className="anchor-box btn btn-link">{buttonTitle}</a>
+                </div>
+            </div>
+            <div className="col-md-6">
+                <div className="d-flex flex-column align-items-center">
+                <span>{title2}</span>
+                <a href={url2} className="anchor-box btn btn-link">{buttonTitle}</a>
+                </div>
+            </div>
+            </Row>
+        </Container>
         </section>
+
     );
 };
 
