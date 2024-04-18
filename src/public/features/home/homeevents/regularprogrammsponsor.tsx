@@ -1,8 +1,8 @@
 import React from 'react-bootstrap';
 import { useEffect } from 'react';
 import HomeEvents from './homeevents';
-import { eventsActions } from 'public/features/events/eventsSlice';
-import { selectEventsList } from 'public/features/events/eventSelector';
+import { adminDonationTypeActions } from 'admin/features/donations/donationSlice';
+import { selectDonationTypes } from 'admin/features/donations/donationSelector';
 import Anchor from 'sharedComponents/button/anchor';
 import useRedux from 'hooks/useRedux';
 
@@ -11,12 +11,12 @@ export default function RegularEventSlides() {
     const { dispatch, appSelector } = useRedux();
 
     useEffect(() => {
-        dispatch(eventsActions.fetchEvents());
+        dispatch(adminDonationTypeActions.getDonationDetails());
     }, [dispatch]);
 
-    const eventsList = appSelector(selectEventsList);
+    const donationList = appSelector(selectDonationTypes);
 
-    const RegularSponsorsmap = eventsList.map((item:any) => (
+    const RegularSponsorsmap = donationList.map((item:any) => (
         <div key={item._id}>
             <div
                 className="slider-item"
