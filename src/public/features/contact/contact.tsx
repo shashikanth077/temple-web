@@ -113,10 +113,9 @@ function Contact() {
         classes="text-center mt-3"
     /></h2>
         <div className="cs-height__25 cs-height__lg__15"></div>
-        <div className="cs-section__subtitle">{ContactFormStatic?.heading}</div>
         {loading && <Loader />}
     </div>
-    <div className="cs-height__70 cs-height__lg__50"></div>
+    <div className="cs-height__lg__50"></div>
     <div className="row">
         <div className="col-lg-6">
             <div className="cs-vertical__middle">
