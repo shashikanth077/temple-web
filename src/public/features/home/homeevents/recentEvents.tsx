@@ -10,13 +10,13 @@ import useRedux from 'hooks/useRedux';
 /* eslint no-underscore-dangle: 0 */
 export default function Recentevents() {
     const { dispatch, appSelector } = useRedux();
-    
+
     useEffect(() => {
         dispatch(eventsActions.fetchEventByFilter());
     }, [dispatch]);
 
     const eventsList = appSelector(selectEventsFilterList);
-console.log(eventsList);
+    console.log(eventsList);
     const RecenteventMap = eventsList?.recentevents?.map((item:any) => (
         <div key={item._id}>
             <div
