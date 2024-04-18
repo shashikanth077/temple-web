@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import { selectStaticAbout } from 'contents/content/contactSelectors';
@@ -8,9 +8,30 @@ import useRedux from 'hooks/useRedux';
 /* eslint max-len: ["error", { "code": 400 }] */
 export default function AboutImage() {
     const { appSelector } = useRedux();
+    /* eslint-disable */
+    const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+    const [slideOnPage, setSlideOnPage] = useState(1);
+    useEffect(() => {
+        const handleResize = () => {
+          setScreenWidth(window.innerWidth);
+        };
+    
+        window.addEventListener('resize', handleResize);
+    
+        return () => {
+          window.removeEventListener('resize', handleResize);
+        };
+      }, []);
 
+    useEffect(() => {
+        if (screenWidth < 768) {
+            setSlideOnPage(1);
+        } else {
+            setSlideOnPage(3);
+        }
+      }, [screenWidth]);
+      
     const aboutList = appSelector(selectStaticAbout);
-    console.table(aboutList);
 
     return (
         <section className="home-about area-padding">
@@ -20,7 +41,7 @@ export default function AboutImage() {
                         <SlickSlider
                             arrowClassPrev="aboutimages-home-next-pr"
                             arrowClassNext="aboutimages-home-prev-ar"
-                            NumOfSlide={3}
+                            NumOfSlide={slideOnPage}
                             autoPly
                             autoplaySpeedVal={2000}
                         >

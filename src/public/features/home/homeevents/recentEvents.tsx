@@ -1,16 +1,22 @@
 import React from 'react-bootstrap';
+import { useEffect } from 'react';
 import moment from 'moment';
 import HomeEvents from './homeevents';
 import { selectEventsFilterList } from 'public/features/events/eventSelector';
+import { eventsActions } from 'public/features/events/eventsSlice';
 import Anchor from 'sharedComponents/button/anchor';
 import useRedux from 'hooks/useRedux';
 
 /* eslint no-underscore-dangle: 0 */
 export default function Recentevents() {
-    const { appSelector } = useRedux();
+    const { dispatch, appSelector } = useRedux();
+    
+    useEffect(() => {
+        dispatch(eventsActions.fetchEventByFilter());
+    }, [dispatch]);
 
     const eventsList = appSelector(selectEventsFilterList);
-
+console.log(eventsList);
     const RecenteventMap = eventsList?.recentevents?.map((item:any) => (
         <div key={item._id}>
             <div
