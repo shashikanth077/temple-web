@@ -110,6 +110,8 @@
    .product-wrap,
   .product-list-image-wrap {
     position: relative;
+    border: 1px solid #ddd;
+    padding: 5px;
     .product-img {
       position: relative;
       overflow: hidden;
@@ -245,7 +247,7 @@
     .product-content {
       margin: 20px 0 0;
       a {
-        color:$black;
+        color:$theme-color;
         &:hover {
           color:$theme-color;
         }
@@ -271,7 +273,7 @@
       .product-price {
         span {
           font-size: 15px;
-          font-weight: 500;
+          font-weight: 700;
   
           position: relative;
   
