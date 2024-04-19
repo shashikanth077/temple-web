@@ -22,7 +22,7 @@ export default function RegularEventSlides() {
                 className="slider-item"
                 style={{ backgroundImage: `url(${item.image})` }}
             >
-                <Anchor classnames="sponsor-details" title="Sponsor" />
+                <Anchor classnames="sponsor-details sponsor-btn" title="Sponsor" />
             </div>
         </div>
     ));
