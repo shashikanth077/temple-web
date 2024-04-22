@@ -15,7 +15,7 @@ interface ProductSingleProps {
 }
 
 /* eslint no-underscore-dangle: 0 */
-const ProductGridListSingle = (props:ProductSingleProps) => {
+const ProductGridListSingle = (props: ProductSingleProps) => {
     const { dispatch } = useRedux();
     const [loggedInUser] = useUser();
     const navigate = useNavigate();
@@ -24,7 +24,7 @@ const ProductGridListSingle = (props:ProductSingleProps) => {
     const { loading, error, successMessage } = useSelector(getApiState);
     const toast = useRef<any>(null);
 
-    const showToast = (severity:any, summary:any, detail:any) => {
+    const showToast = (severity: any, summary: any, detail: any) => {
         toast.current.show({ severity, summary, detail });
     };
 
@@ -45,7 +45,7 @@ const ProductGridListSingle = (props:ProductSingleProps) => {
         }
     }, [successMessage, error, dispatch]);
 
-    const AddtoCartItems = (productid:number, quantity:number) => {
+    const AddtoCartItems = (productid: number, quantity: number) => {
         if (!loggedInUser?.id) {
             navigate('/login');
         }
@@ -103,34 +103,15 @@ const ProductGridListSingle = (props:ProductSingleProps) => {
                             src={product?.image}
                             alt=""
                         />
-                        {/* {product.image.length > 1 ? (
-                            <img
-                                className="hover-img"
-                                src={process.env.PUBLIC_URL + product.image[1]}
-                                alt=""
-                            />
-                        ) : (
-                            ''
-                        )} */}
+
                     </Link>
-                    {product.discount || product.new ? (
-                        <div className="product-img-badges">
-                            {product.new ? <span className="purple">New</span> : ''}
-                        </div>
-                    ) : (
-                        ''
-                    )}
 
                     <div className="product-action">
                         <div className="pro-same-action pro-cart">
                             {affiliateLink}
                             {StockElement}
                         </div>
-                        {/* <div className="pro-same-action pro-quickview">
-                            <button type="button" aria-label="quickview" onClick={() => setModalShow(true)} title="Quick View">
-                                <i className="fas fa-low-vision" />
-                            </button>
-                        </div> */}
+
                     </div>
                 </div>
                 <div className="product-content text-center">
@@ -150,21 +131,13 @@ const ProductGridListSingle = (props:ProductSingleProps) => {
                     <div className="col-xl-4 col-md-5 col-sm-6">
                         <div className="product-list-image-wrap">
                             <div className="product-img">
-                                <Link to={`${config.PUBLIC_URL}/products/details/${product.id}`}>
+                                <Link to={`/products/details/${product.id}`}>
                                     <img
                                         className="default-img img-fluid"
                                         src={product.image}
                                         alt={product.name}
                                     />
-                                    {/* {product.image.length > 1 ? (
-                                        <img
-                                            className="hover-img img-fluid"
-                                            src={process.env.PUBLIC_URL + product.image[1]}
-                                            alt=""
-                                        />
-                                    ) : (
-                                        ''
-                                    )} */}
+
                                 </Link>
 
                             </div>
@@ -173,12 +146,12 @@ const ProductGridListSingle = (props:ProductSingleProps) => {
                     <div className="col-xl-8 col-md-7 col-sm-6">
                         <div className="shop-list-content">
                             <h3>
-                                <Link to={`${config.PUBLIC_URL}/products/details/${product._id}`}>
+                                <Link to={`/products/details/${product._id}`}>
                                     {product.name}
                                 </Link>
                             </h3>
                             <div className="product-list-price">
-                                <span>{ formatCurrency(intl, finalProductPrice)} </span>
+                                <span>{formatCurrency(intl, finalProductPrice)} </span>
                             </div>
                             {product.shortDescription ? (
                                 <p>{product.shortDescription}</p>
@@ -198,16 +171,7 @@ const ProductGridListSingle = (props:ProductSingleProps) => {
                     </div>
                 </div>
             </div>
-            {/* product modal */}
-            {/* <ProductModal
-                show={modalShow}
-                onHide={() => setModalShow(false)}
-                product={product}
-                currency={currency}
-                discountedPrice={discountedPrice}
-                finalProductPrice={finalProductPrice}
-                finalDiscountedPrice={finalDiscountedPrice}
-            /> */}
+
         </>
     );
 };

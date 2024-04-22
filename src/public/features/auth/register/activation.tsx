@@ -12,18 +12,6 @@ import { clearState } from 'storeConfig/apiStatus/apiSlice';
 import { getApiState } from 'storeConfig/apiStatus/apiSelector';
 
 /* bottom links */
-const BottomLink = () => (
-    <Row className="mt-3">
-        <Col xs={12} className="text-center">
-            <p className="text-muted">
-                Already have an account?
-                <Link to="/login" className="text-dark fw--medium ms-1">
-                    <b>Sign In</b>
-                </Link>
-            </p>
-        </Col>
-    </Row>
-);
 
 const Activation = () => {
     const { dispatch } = useRedux();
@@ -73,7 +61,7 @@ const Activation = () => {
     }, [successMessage, error, dispatch]);
 
     return (
-        <AuthLayout bottomLinks={<BottomLink />}>
+        <AuthLayout>
             <div className="text-center mb-4">
                 {successMessage && !loading && !error && (
                     <Alert variant="success" className="my-5">

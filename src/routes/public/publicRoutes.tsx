@@ -211,9 +211,11 @@ const flattenRoutes = (routes: RoutesProps[]) => {
     return flatRoutes;
 };
 
-const publicRoutes = [...authRoutes, ...otherPublicRoutes];
+const publicRoutes = [...otherPublicRoutes];
 
 const publicProtectedFlattenRoutes = flattenRoutes([...publicRoutes]);
+const publicAuthFlattenRoutes = flattenRoutes([...authRoutes]);
+
 export {
-    publicProtectedFlattenRoutes,
+    publicProtectedFlattenRoutes, publicAuthFlattenRoutes
 };
