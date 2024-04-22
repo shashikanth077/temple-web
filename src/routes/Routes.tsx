@@ -9,11 +9,13 @@ import {
     memberFlatterRoutes,
     AuthProtectedFlattenRoutes,
     AuthpublicFlattenRoutes,
+    publicAuthFlattenRoutes,
 } from './index';
 import { AuthProtected } from './PrivateRoute';
 import DefaultLayout from 'public/layout';
 import PageNotFound from 'sharedComponents/404Page';
 import AuthLayout from 'admin/layout/index';
+import AuthLayoutPage from 'public/layout/authPage';
 import { useUser } from 'hooks';
 import { selectCurrentUser } from 'public/features/auth/login/loginSelectors';
 
@@ -45,6 +47,20 @@ const AllRoutes = (props: RoutesProps) => {
     
     return (
         <Routes>
+            <Route>
+                {publicAuthFlattenRoutes.map((route, idx) => (
+                    <Route
+                        path={route.path}
+                        element={(
+                            <AuthLayoutPage {...props} >
+                                {route.element}
+                            </AuthLayoutPage>
+                        )}
+                        key={idx}
+                    />
+                ))}
+            </Route>
+
             <Route>
                 {publicProtectedFlattenRoutes.map((route, idx) => (
                     <Route
