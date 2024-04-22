@@ -1,16 +1,11 @@
 import React, { useEffect, Suspense } from 'react';
 import { RingLoader } from 'react-spinners';
-import Header from './header/header';
-import Drawer from './menu/mobileMenu/drawer';
-import Footer from './footer/footer';
 import { admincontentActions } from 'contents/content/contentSlice';
-import BackToTop from 'sharedComponents/BacktoTop/backtotop';
 import { useToggle } from 'hooks/useToggle';
-import Topbar from 'public/features/home/topbar/topbar';
 import { useRedux } from 'hooks';
 import { PublicImageURL } from 'constants/publicUrl';
 
-interface DefaultLayoutProps {
+interface AuthLayoutProps {
      children?: any;
   }
 const CustomLoader = () => (
@@ -19,7 +14,7 @@ const CustomLoader = () => (
         {/* <RingLoader color="#007bff" loading size={50} /> */}
     </div>
 );
-const Layout = (props: DefaultLayoutProps) => {
+const AuthLayoutPage = (props: AuthLayoutProps) => {
     const { children } = props;
 
     const [drawer, toggle] = useToggle(false);
@@ -28,19 +23,14 @@ const Layout = (props: DefaultLayoutProps) => {
     useEffect(() => {
         dispatch(admincontentActions.getStaticContent());
     }, [dispatch]);
-console.log("default page");
+
     return (
         <>
-            <Drawer drawer={drawer} action={toggle} />
-            <Topbar />
-            <Header action={toggle} />
-            <main className="main">
-                <Suspense fallback={<CustomLoader />}>{children}</Suspense>
-            </main>
-            <Footer />
-            <BackToTop className="bdd" />
+        <main className="main">
+            <Suspense fallback={<CustomLoader />}>{children}</Suspense>
+        </main>
         </>
     );
 };
 
-export default React.memo(Layout);
+export default React.memo(AuthLayoutPage);
