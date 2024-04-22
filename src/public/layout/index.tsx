@@ -1,5 +1,4 @@
 import React, { useEffect, Suspense } from 'react';
-import { RingLoader } from 'react-spinners';
 import Header from './header/header';
 import Drawer from './menu/mobileMenu/drawer';
 import Footer from './footer/footer';
@@ -16,14 +15,13 @@ interface DefaultLayoutProps {
 const CustomLoader = () => (
     <div className="custom-loader">
         <img src={`${window.location.origin}/${PublicImageURL}/logo/logo.jpg`} alt="Temple Logo" className="Temple-logo" />
-        {/* <RingLoader color="#007bff" loading size={50} /> */}
     </div>
 );
 const Layout = (props: DefaultLayoutProps) => {
     const { children } = props;
 
     const [drawer, toggle] = useToggle(false);
-    const { dispatch, appSelector } = useRedux();
+    const { dispatch } = useRedux();
 
     useEffect(() => {
         dispatch(admincontentActions.getStaticContent());
