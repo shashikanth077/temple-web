@@ -25,11 +25,9 @@ const AuthLayoutPage = (props: AuthLayoutProps) => {
     }, [dispatch]);
 
     return (
-        <>
         <main className="main">
             <Suspense fallback={<CustomLoader />}>{children}</Suspense>
         </main>
-        </>
     );
 };
 

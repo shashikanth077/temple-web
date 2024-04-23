@@ -1,8 +1,7 @@
 import React, { useEffect } from 'react';
 import {
-    Container, Row, Col, Card,
+    Container,
 } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
 
 type AccountLayoutProps = {
     hasLogo?: boolean;

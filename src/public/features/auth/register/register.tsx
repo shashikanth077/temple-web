@@ -1,7 +1,7 @@
 /* eslint-disable */
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Button, Alert, Row, Col } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useSelector } from "react-redux";
@@ -222,42 +222,46 @@ const Register = () => {
                                                     ?.email
                                             }
                                         />
-                                        <div className="code-phonenumber">
-                                            <FormInput
-                                                register={register}
-                                                key="countrycode"
-                                                errors={errors}
-                                                control={control}
-                                                type="select"
-                                                containerClass="mb-3 country-code"
-                                                id="countrycode"
-                                                name="countrycode"
-                                            >
-                                                {countryCodes?.map(
-                                                    (option: any) => (
-                                                        <option
-                                                            key={option?.label}
-                                                            value={option.label}
-                                                        >
-                                                            {option.label}{" "}
-                                                        </option>
-                                                    ),
-                                                )}
-                                            </FormInput>
-                                            <FormInput
-                                                register={register}
-                                                key="phonenumber"
-                                                errors={errors}
-                                                control={control}
-                                                type="phonenumber"
-                                                name="phonenumber"
-                                                placeholder={
-                                                    RegisterContent
-                                                        .formPlaceHolder
-                                                        ?.phonenumber
-                                                }
-                                                containerClass="mb-3 phone-number"
-                                            />
+                                        <div className="row">
+                                            <div className="col-sm-3">
+                                                <FormInput
+                                                    register={register}
+                                                    key="countrycode"
+                                                    errors={errors}
+                                                    control={control}
+                                                    type="select"
+                                                    containerClass="mb-3 country-code"
+                                                    id="countrycode"
+                                                    name="countrycode"
+                                                >
+                                                    {countryCodes?.map(
+                                                        (option: any) => (
+                                                            <option
+                                                                key={option?.label}
+                                                                value={option.label}
+                                                            >
+                                                                {option.label}{" "}
+                                                            </option>
+                                                        ),
+                                                    )}
+                                                </FormInput>
+                                            </div>
+                                            <div className="col-sm-9">
+                                                <FormInput
+                                                    register={register}
+                                                    key="phonenumber"
+                                                    errors={errors}
+                                                    control={control}
+                                                    type="phonenumber"
+                                                    name="phonenumber"
+                                                    placeholder={
+                                                        RegisterContent
+                                                            .formPlaceHolder
+                                                            ?.phonenumber
+                                                    }
+                                                    containerClass="mb-3 phone-number"
+                                                />
+                                            </div>
                                         </div>
                                         <FormInput
                                             register={register}
