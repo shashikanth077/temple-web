@@ -8,7 +8,6 @@ import { clearState } from 'storeConfig/apiStatus/apiSlice';
 import { formatCurrency } from 'helpers/currency';
 import { useRedux, useUser } from 'hooks';
 import { getApiState } from 'storeConfig/apiStatus/apiSelector';
-import { config } from 'config/Env';
 
 interface ProductSingleProps {
     product: any;
@@ -97,7 +96,7 @@ const ProductGridListSingle = (props: ProductSingleProps) => {
             {loading && <Loader />}
             <div className="product-wrap mb-25">
                 <div className="product-img">
-                    <Link to={`${config.PUBLIC_URL}/products/details/${product._id}`}>
+                    <Link to={`/products/details/${product._id}`}>
                         <img
                             className="default-img"
                             src={product?.image}
@@ -116,7 +115,7 @@ const ProductGridListSingle = (props: ProductSingleProps) => {
                 </div>
                 <div className="product-content text-center">
                     <h3>
-                        <Link to={`${config.PUBLIC_URL}/products/details/${product._id}`}>
+                        <Link to={`/products/details/${product._id}`}>
                             {product.name}
                         </Link>
                     </h3>
