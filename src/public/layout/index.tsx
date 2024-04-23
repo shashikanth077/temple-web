@@ -26,7 +26,7 @@ const Layout = (props: DefaultLayoutProps) => {
     useEffect(() => {
         dispatch(admincontentActions.getStaticContent());
     }, [dispatch]);
-console.log("default page");
+
     return (
         <>
             <Drawer drawer={drawer} action={toggle} />

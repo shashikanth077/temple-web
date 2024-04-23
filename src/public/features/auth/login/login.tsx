@@ -5,7 +5,7 @@ import { useNavigate, Link, useLocation } from "react-router-dom";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useSelector } from "react-redux";
-import Swal from "sweetalert2"; // Import SweetAlert
+import Swal from "sweetalert2"; 
 import AuthLayout from "../AuthLayout";
 import { authActions } from "./loginSlice";
 import Loader from "sharedComponents/loader/loader";
