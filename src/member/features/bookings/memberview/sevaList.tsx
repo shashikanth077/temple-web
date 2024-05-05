@@ -54,7 +54,6 @@ export function BookingTypes() {
                                 />
                             </div>
                         </div>
-
                     ))}
                 </div>
             </div>

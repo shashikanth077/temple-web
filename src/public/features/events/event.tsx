@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Col, Container } from 'react-bootstrap';
+import { Container } from 'react-bootstrap';
 import { eventsActions } from './eventsSlice';
 import { selectEventsList } from './eventSelector';
 import EventTopBar from './eventTopbar';
@@ -8,6 +8,7 @@ import EventDate from './eventDate';
 import useRedux from 'hooks/useRedux';
 import { getFilterEvents } from 'helpers/event';
 import Heading from 'sharedComponents/heading/heading';
+import DataNotFound from 'sharedComponents/DataNotFound';
 
 function Events() {
     const { dispatch, appSelector } = useRedux();
@@ -72,6 +73,10 @@ function Events() {
         setPageCount(pageCounts);
         setCurrentData(filterSortedEvents.slice(offset, offset + pageLimit));
     }, [offset, filterSortType, filterSortValue, eventsList]);
+
+    if (!eventsList || !eventsList || eventsList.length === 0) {
+        return <DataNotFound />;
+    }
 
     return (
         <section className="area-padding">
