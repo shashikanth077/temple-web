@@ -8,6 +8,7 @@ import { admingodActions } from 'admin/features/godmaster/godSlice';
 import { selectGods } from 'admin/features/godmaster/godSelector';
 import ButtonV1 from 'sharedComponents/button/buttonv1';
 import Heading from 'sharedComponents/heading/heading';
+import DataNotFound from 'sharedComponents/DataNotFound';
 
 /* eslint no-underscore-dangle: 0 */
 export function GodList() {
@@ -73,9 +74,7 @@ export function GodList() {
                             </div>
                         ))
                     ) : (
-                        <div className="no-services-found">
-                            <p>No god found </p>
-                        </div>
+                        <DataNotFound />
                     )}
                 </div>
             </div>

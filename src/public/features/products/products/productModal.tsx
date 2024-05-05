@@ -18,7 +18,7 @@ export {};
 
 // /* eslint no-underscore-dangle: 0 */
 // interface productModalProps{
-//     show:boolean;
+//     show:boolean;~
 //     onHide:any;
 //     product:any;
 //     currency:string;

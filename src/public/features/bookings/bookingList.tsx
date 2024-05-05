@@ -37,6 +37,7 @@ export function BookingTypes() {
     if (!bookingTypes || !bookingTypes.bookings || bookingTypes.bookings.length === 0) {
         return <DataNotFound />;
     }
+
     return (
         <section className="seva-list-section area-padding">
             <div className="container">
