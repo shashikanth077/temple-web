@@ -2,7 +2,7 @@ import {
     call, put, all, fork, takeLatest,
 } from 'redux-saga/effects';
 import {
-    addDeasedRow, getDeceasedList, getFamilyList, editDeasedRow, deleteDeceasedRow, getMyProfileDetails, updateProfiles, getDeasedIdData, addFamily, editFamily, deleteFamily, getFamilyIdData,
+    addDeasedRow, updatePassword, getDeceasedList, getFamilyList, editDeasedRow, deleteDeceasedRow, getMyProfileDetails, updateProfiles, getDeasedIdData, addFamily, editFamily, deleteFamily, getFamilyIdData,
 } from './myprofileApi';
 import { myprofileActions } from './myProfileSlice';
 import {
@@ -18,6 +18,24 @@ function* getDeseasedPersonId(action:any) {
         const response: DeasedSingleResponse = yield call(getDeasedIdData, action.payload);
         if (response.success) {
             yield put(myprofileActions.getDeceasedByIdSuccess(response));
+        } else {
+            yield put(setError(response.errorMessage));
+        }
+    } catch (error) {
+        if (error instanceof Error) {
+            yield put(setError(error.message));
+        }
+    } finally {
+        yield put(endLoading());
+    }
+}
+
+function* changePassword(action:any) {
+    try {
+        yield put(startLoading());
+        const response: DeasedSingleResponse = yield call(updatePassword, action.payload);
+        if (response.success) {
+            yield put(setSuccessMessage('Updated successfully!'));
         } else {
             yield put(setError(response.errorMessage));
         }
@@ -273,6 +291,10 @@ export function* watchEditDeased() {
     yield takeLatest(myprofileActions.updateDeceased.type, editDeasedPerson);
 }
 
+export function* watchUpdatePassword() {
+    yield takeLatest(myprofileActions.ChangePassword.type, changePassword);
+}
+
 function* myProfileSaga() {
     yield all([
         fork(watchDeceasedPersonList),
@@ -287,6 +309,7 @@ function* myProfileSaga() {
         fork(watchAddFamily),
         fork(watchUpdateFamily),
         fork(watchDeceasedPersonRow),
+        fork(watchUpdatePassword),
     ]);
 }
 
