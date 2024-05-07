@@ -40,7 +40,6 @@ const CartGrocery = (prop: CartItems) => {
             MySwal.fire({
                 title: <p>Please donate minimum $50</p>,
             }).then(() => {
-                // return MySwal.fire(<p>Shorthand works too</p>)
             })
         } else {
             navigate("/donation/grocery/checkout");
@@ -109,8 +108,8 @@ const CartGrocery = (prop: CartItems) => {
                             <button type="button" onClick={() => CheckoutGrocery()} className="btn btn-sm grocery-btn mr-2">
                                 <i className="fa fa-check-circle" /> Checkout
                             </button>
-                            <button type="button" className="btn btn-sm grocery-btn">
-                                <i className="fa fa-trash" onClick={() => CleanGroceryCart()} /> Clear
+                            <button type="button" onClick={() => CleanGroceryCart()} className="btn btn-sm grocery-btn">
+                                <i className="fa fa-trash"  /> Clear
                             </button>
                         </div>
                     </div>
