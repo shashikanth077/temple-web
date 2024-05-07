@@ -12,12 +12,13 @@ import { Form, FormInput } from "sharedComponents/inputs";
 import { useRedux, useUser } from "hooks";
 import { clearState } from "storeConfig/apiStatus/apiSlice";
 import Loader from "sharedComponents/loader/loader";
+import {myprofileActions} from "../myProfileSlice";
 import { getApiState } from "storeConfig/apiStatus/apiSelector";
 
 type UserData = {
-    oldpassword: string;
-    userid: string;
-    newpassword: string;
+    oldPassword: string;
+    userId: string;
+    newPassword: string;
     confirmpassword: string;
 };
 
@@ -34,15 +35,15 @@ const ChangePassword = () => {
      */
     const schemaResolver = yupResolver(
         yup.object().shape({
-            oldpassword: yup
+            oldPassword: yup
                 .string()
                 .required("Please enter old password"),
-            newpassword: yup
+            newPassword: yup
                 .string()
                 .required("Please enter new password"),
             confirmpassword: yup
                 .string()
-                .oneOf([yup.ref("password"), ""], "Passwords must match")
+                .oneOf([yup.ref("newPassword"), ""], "Passwords must match")
                 .required("Please confirm new password"),
         }),
     );
@@ -51,7 +52,7 @@ const ChangePassword = () => {
      * handle form submission
      */
     const onSubmit = (formData: UserData) => {
-        //dispatch(forgotpasswodActions.resetPassword(formData));
+        dispatch(myprofileActions.ChangePassword(formData));
     };
 
     useEffect(() => {
@@ -59,11 +60,10 @@ const ChangePassword = () => {
             // Display SweetAlert when there is a success message
             Swal.fire({
                 icon: "success",
-                title: "Password Reset Successful",
+                title: "Password changed Successfully",
                 text: successMessage,
             }).then(() => {
-                // Redirect or perform any other action after the alert is closed
-                navigate("/login"); // Redirect to login page, for example
+                navigate("/myprofile/profileview");
             });
 
             // Clear local error and reset form
@@ -107,12 +107,15 @@ const ChangePassword = () => {
                         <Form<UserData>
                             onSubmit={onSubmit}
                             resolver={schemaResolver}
+                            defaultValues={{
+                                userId: loggedInUser?.id || "",
+                            }}
                                  >
                             <FormInput
                                 label="Old password"
                                 type="password"
-                                name="oldpassword"
-                                key="oldpassword"
+                                name="oldPassword"
+                                key="oldPassword"
                                 placeholder="Enter the old password"
                                 containerClass="mb-3"
                             />
@@ -120,8 +123,8 @@ const ChangePassword = () => {
                             <FormInput
                                 label="New password"
                                 type="password"
-                                name="newpassword"
-                                key="newpassword"
+                                name="newPassword"
+                                key="newPassword"
                                 placeholder="Enter the new password"
                                 containerClass="mb-3"
                             />
@@ -136,8 +139,8 @@ const ChangePassword = () => {
                             />
                             <FormInput
                                 type="hidden"
-                                key="userid"
-                                name="userid"
+                                key="userId"
+                                name="userId"
                                 value={loggedInUser?.id}
                             />
 

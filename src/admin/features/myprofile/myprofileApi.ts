@@ -75,3 +75,9 @@ export function getDeasedIdData(payload:any) {
     const response = APICore.get(`${baseUrl}`, payload);
     return response;
 }
+
+export function updatePassword(payload:any) {
+    const baseUrl = `${config.API_BASE_URL}/api/profile/changePassword/${payload.userId}`;
+    const response = APICore.update(`${baseUrl}`, payload);
+    return response;
+}

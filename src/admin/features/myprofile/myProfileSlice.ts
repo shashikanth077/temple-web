@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import ChangePassword from './changepassword/changePassword';
 import {
     SuccesResponse, DeasedListResponse, ProfileData, FamilySingleResponse, DeasedSingleResponse, DeceasedData, FamilyData, FamilyResponse,
 } from 'models';
@@ -119,6 +120,9 @@ const MyProfileSlice = createSlice({
             state.loading = false;
             state.loading = false;
             state.error = action.payload;
+        },
+        ChangePassword(state, action: PayloadAction<any>) {
+            state.loading = false;
         },
     },
 });
