@@ -17,6 +17,7 @@ const AddFamily = React.lazy(() => import('admin/features/myprofile/family/addFa
 const EditFamily = React.lazy(() => import('admin/features/myprofile/family/editFamily'));
 const AddDeceased = React.lazy(() => import('admin/features/myprofile/deceased/addDeceased'));
 const EditDeceased = React.lazy(() => import('admin/features/myprofile/deceased/editDeceased'));
+const ChangePassword = React.lazy(() => import('admin/features/myprofile/changepassword/changePassword'));
 const Logout = React.lazy(() => import('public/features/auth/logout'));
 
 export interface RoutesProps {
@@ -124,6 +125,11 @@ const profileRoutes: RoutesProps[] = [{
             path: '/auth/logout',
             name: 'Logout',
             element: <Logout />,
+        },
+        {
+            path: '/change-password',
+            name: 'chnagePassword',
+            element: <ChangePassword />,
         },
     ],
 }];

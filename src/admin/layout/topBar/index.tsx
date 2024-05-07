@@ -24,6 +24,11 @@ const profileMenus: ProfileOption[] = [
         redirectTo: '/myprofile/profileview',
     },
     {
+        label: 'Change password',
+        icon: 'ri-account-circle-line',
+        redirectTo: '/change-password',
+    },
+    {
         label: 'Logout',
         icon: 'ri-logout-box-line',
         redirectTo: '/auth/logout',
