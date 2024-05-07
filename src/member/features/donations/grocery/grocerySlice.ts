@@ -23,12 +23,10 @@ const cartSlice = createSlice({
                 newArray=[state.cart]
             }
             let itemInCart = newArray?.find((item:any) => item._id === action.payload._id);
-            console.log("newarry",state.cart);
 
             if (itemInCart) {
                 itemInCart.quantity++;
             } else {
-                console.log("itemInCart",product);
                 state.cart?.push({ ...product, quantity: 1 });
             }
         },
@@ -49,8 +47,8 @@ const cartSlice = createSlice({
             } else {
                 newArray=[state.cart]
             }
-            const removeItem = newArray?.find((item:any) => item._id === action.payload._id);
-            state.cart = [removeItem];
+            const removeItem = newArray?.filter((item:any) => item._id !== action.payload._id);
+            state.cart = removeItem;
         },
         ClearCart : (state) =>{
             state.cart = [];

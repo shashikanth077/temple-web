@@ -1048,6 +1048,51 @@
                 }
             ]
             
-        }
+        },
+        "groceries":[
+            {
+                "_id":1,
+                "name":"Laxmi Toor Dal 55lb",
+                "price":55,
+                "image":"assets/images/grocery/1.jpg",
+                "description":"Sometinh............."
+            },
+            {
+                "_id":2,
+                "name":"Laxmi Basmati Rice 40lb",
+                "price":55,
+                "image":"assets/images/grocery/1.jpg",
+                "description":"Sometinh............."
+            },
+            {
+                "_id":3,
+                "name":"Deep Fennel Seeds 70oz",
+                "price":55,
+                "image":"assets/images/grocery/1.jpg",
+                "description":"Sometinh............."
+            },
+            {
+                "_id":4,
+                "name":"Laxmi Urad Gota 55 lb",
+                "price":55,
+                "image":"assets/images/grocery/1.jpg",
+                "description":"Sometinh............."
+            },
+            {
+                "_id":5,
+                "name":"Laxmi Tamarind 1.25 kg",
+                "price":55,
+                "image":"assets/images/grocery/1.jpg",
+                "description":"Sometinh............."
+            },
+            {
+                "_id":6,
+                "name":"Kirkland Whole Almonds 3 lbs",
+                "price":55,
+                "image":"assets/images/grocery/1.jpg",
+                "description":"Sometinh............."
+            }
+        ]
     }
+    
 }

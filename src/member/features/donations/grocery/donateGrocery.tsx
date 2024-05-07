@@ -6,9 +6,7 @@ import CartGrocery from './groceryCart';
 import { selectCurrentGroceryCartItems } from './grocerySelector';
 import { addToCart } from './grocerySlice';
 import { selectGroceries } from 'admin/features/grocery/adminGrocerySelector';
-// import { groceryDonateAction } from 'features/donations/grocery/grocerySlice';
 import { useRedux } from 'hooks';
-import { clearState } from 'storeConfig/apiStatus/apiSlice';
 import { Grocery } from 'models';
 import { adminGroceryActions } from 'admin/features/grocery/adminGrocerySlice';
 import { getApiState } from 'storeConfig/apiStatus/apiSelector';
@@ -24,16 +22,10 @@ export default function Grocerys() {
         image:  '',
         price:0,
     }
-     
-
-    const [groceries, setGroceries] = useState([]);
 
     const toast = useRef<any>(null);
     const dt = useRef<any>(null);
     const { dispatch, appSelector } = useRedux();
-    const { loading, error, successMessage } = useSelector(getApiState);
-    const [quantityCount, setQuantityCount] = useState(1);
-    let [CurrentcartItems,SetItems] = useState<any>([]);
     const [layout, setLayout] = useState<any>('grid');
 
     useEffect(() => {
@@ -50,18 +42,6 @@ export default function Grocerys() {
             ...product
         }))
     }
- 
-    // useEffect(() => {
-    //     if (successMessage) {
-    //         showToast('success', 'Success', successMessage);
-    //         dispatch(clearState());
-    //     }
-
-    //     if (error) {
-    //         showToast('error', 'Error', error);
-    //         dispatch(clearState());
-    //     }
-    // }, [successMessage, error, dispatch]);
 
     const listItem = (product:any) => {
         return (
