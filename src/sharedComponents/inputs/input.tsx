@@ -16,6 +16,7 @@ type FormInputProps = InputHTMLAttributes<HTMLInputElement> & {
     control?: Control<any>;
     className?: string;
     labelClassName?: string;
+    parentClassName?: string;
     containerClass?: string;
     textClassName?: string;
     refCallback?: any;
@@ -226,6 +227,7 @@ const FormInput = ({
     children,
     action,
     rows,
+    parentClassName,
     ...otherProps
 }: FormInputProps) => {
     // handle input type
@@ -313,7 +315,7 @@ const FormInput = ({
     }
 
     return (
-        <div>
+        <div className={parentClassName}>
             { element }
         </div>
     );
