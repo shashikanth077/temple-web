@@ -183,8 +183,8 @@ const Otpverification = () => {
                                         onSubmit={onSubmit}
                                     >
                                         <div className="col-12">
-                                            <div className="input-group">
-                                                <div className="input-group-prepend">
+                                            <div className="input-group col-12">
+                                                <div className="input-group-prepend  col-md-2">
                                                     <span className="input-group-text py-3">
                                                         <i className="fal fa-mobile" />
                                                     </span>
@@ -196,6 +196,7 @@ const Otpverification = () => {
                                                     key="otp"
                                                     placeholder="verification code"
                                                     errors={errors}
+                                                    parentClassName='col-md-10'
                                                     control={control}
                                                 />
                                             </div>
